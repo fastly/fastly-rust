@@ -1,0 +1,11 @@
+# TlsDomainsResponseAllOf
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**data** | Option<[**Vec&lt;crate::models::TlsDomainData&gt;**](TlsDomainData.md)> |  | 
+
+[[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+
