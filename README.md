@@ -11,7 +11,7 @@ Rust 2021 Edition
 Add the following to `Cargo.toml` under `[dependencies]`:
 
 ```toml
-fastly-api = "1.0.0-beta.0"
+fastly-api = "1.0.0"
 ```
 
 ## Usage
