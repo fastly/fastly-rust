@@ -308,6 +308,9 @@ pub struct Results {
     /// Number of responses sent with status code 404 (Not Found).
     #[serde(rename = "status_404", skip_serializing_if = "Option::is_none")]
     pub status_404: Option<i32>,
+    /// Number of responses sent with status code 406 (Not Acceptable).
+    #[serde(rename = "status_406", skip_serializing_if = "Option::is_none")]
+    pub status_406: Option<i32>,
     /// Number of responses sent with status code 416 (Range Not Satisfiable).
     #[serde(rename = "status_416", skip_serializing_if = "Option::is_none")]
     pub status_416: Option<i32>,
@@ -602,6 +605,33 @@ pub struct Results {
     /// The total number of writes received for the object store.
     #[serde(rename = "object_store_write_requests", skip_serializing_if = "Option::is_none")]
     pub object_store_write_requests: Option<i32>,
+    /// Total header bytes received from end users over Fanout connections.
+    #[serde(rename = "fanout_req_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub fanout_req_header_bytes: Option<i32>,
+    /// Total body or message content bytes received from end users over Fanout connections.
+    #[serde(rename = "fanout_req_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub fanout_req_body_bytes: Option<i32>,
+    /// Total header bytes sent to end users over Fanout connections.
+    #[serde(rename = "fanout_resp_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub fanout_resp_header_bytes: Option<i32>,
+    /// Total body or message content bytes sent to end users over Fanout connections, excluding published message content.
+    #[serde(rename = "fanout_resp_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub fanout_resp_body_bytes: Option<i32>,
+    /// Total header bytes sent to backends over Fanout connections.
+    #[serde(rename = "fanout_bereq_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub fanout_bereq_header_bytes: Option<i32>,
+    /// Total body or message content bytes sent to backends over Fanout connections.
+    #[serde(rename = "fanout_bereq_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub fanout_bereq_body_bytes: Option<i32>,
+    /// Total header bytes received from backends over Fanout connections.
+    #[serde(rename = "fanout_beresp_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub fanout_beresp_header_bytes: Option<i32>,
+    /// Total body or message content bytes received from backends over Fanout connections.
+    #[serde(rename = "fanout_beresp_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub fanout_beresp_body_bytes: Option<i32>,
+    /// Total duration of Fanout connections with end users.
+    #[serde(rename = "fanout_conn_time_ms", skip_serializing_if = "Option::is_none")]
+    pub fanout_conn_time_ms: Option<i32>,
 }
 
 impl Results {
@@ -707,6 +737,7 @@ impl Results {
             status_401: None,
             status_403: None,
             status_404: None,
+            status_406: None,
             status_416: None,
             status_429: None,
             status_500: None,
@@ -805,6 +836,15 @@ impl Results {
             fanout_send_publishes: None,
             object_store_read_requests: None,
             object_store_write_requests: None,
+            fanout_req_header_bytes: None,
+            fanout_req_body_bytes: None,
+            fanout_resp_header_bytes: None,
+            fanout_resp_body_bytes: None,
+            fanout_bereq_header_bytes: None,
+            fanout_bereq_body_bytes: None,
+            fanout_beresp_header_bytes: None,
+            fanout_beresp_body_bytes: None,
+            fanout_conn_time_ms: None,
         }
     }
 }

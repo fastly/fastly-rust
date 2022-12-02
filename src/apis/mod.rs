@@ -85,6 +85,7 @@ pub mod enabled_products_api;
 pub mod gzip_api;
 pub mod header_api;
 pub mod healthcheck_api;
+pub mod http3_api;
 pub mod iam_permissions_api;
 pub mod iam_roles_api;
 pub mod iam_service_groups_api;

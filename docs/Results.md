@@ -103,6 +103,7 @@ Name | Type | Description | Notes
 **status_401** | Option<**i32**> | Number of responses sent with status code 401 (Unauthorized). | 
 **status_403** | Option<**i32**> | Number of responses sent with status code 403 (Forbidden). | 
 **status_404** | Option<**i32**> | Number of responses sent with status code 404 (Not Found). | 
+**status_406** | Option<**i32**> | Number of responses sent with status code 406 (Not Acceptable). | 
 **status_416** | Option<**i32**> | Number of responses sent with status code 416 (Range Not Satisfiable). | 
 **status_429** | Option<**i32**> | Number of responses sent with status code 429 (Too Many Requests). | 
 **status_500** | Option<**i32**> | Number of responses sent with status code 500 (Internal Server Error). | 
@@ -201,6 +202,15 @@ Name | Type | Description | Notes
 **fanout_send_publishes** | Option<**i32**> | Total published messages sent to end users. | 
 **object_store_read_requests** | Option<**i32**> | The total number of reads received for the object store. | 
 **object_store_write_requests** | Option<**i32**> | The total number of writes received for the object store. | 
+**fanout_req_header_bytes** | Option<**i32**> | Total header bytes received from end users over Fanout connections. | 
+**fanout_req_body_bytes** | Option<**i32**> | Total body or message content bytes received from end users over Fanout connections. | 
+**fanout_resp_header_bytes** | Option<**i32**> | Total header bytes sent to end users over Fanout connections. | 
+**fanout_resp_body_bytes** | Option<**i32**> | Total body or message content bytes sent to end users over Fanout connections, excluding published message content. | 
+**fanout_bereq_header_bytes** | Option<**i32**> | Total header bytes sent to backends over Fanout connections. | 
+**fanout_bereq_body_bytes** | Option<**i32**> | Total body or message content bytes sent to backends over Fanout connections. | 
+**fanout_beresp_header_bytes** | Option<**i32**> | Total header bytes received from backends over Fanout connections. | 
+**fanout_beresp_body_bytes** | Option<**i32**> | Total body or message content bytes received from backends over Fanout connections. | 
+**fanout_conn_time_ms** | Option<**i32**> | Total duration of Fanout connections with end users. | 
 
 [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

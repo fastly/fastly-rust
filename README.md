@@ -167,6 +167,9 @@ Class | Method | HTTP request | Description
 *HealthcheckApi* | [**get_healthcheck**](docs/HealthcheckApi.md#get_healthcheck) | **GET** /service/{service_id}/version/{version_id}/healthcheck/{healthcheck_name} | Get a health check
 *HealthcheckApi* | [**list_healthchecks**](docs/HealthcheckApi.md#list_healthchecks) | **GET** /service/{service_id}/version/{version_id}/healthcheck | List health checks
 *HealthcheckApi* | [**update_healthcheck**](docs/HealthcheckApi.md#update_healthcheck) | **PUT** /service/{service_id}/version/{version_id}/healthcheck/{healthcheck_name} | Update a health check
+*Http3Api* | [**create_http3**](docs/Http3Api.md#create_http3) | **POST** /service/{service_id}/version/{version_id}/http3 | Enable support for HTTP/3
+*Http3Api* | [**delete_http3**](docs/Http3Api.md#delete_http3) | **DELETE** /service/{service_id}/version/{version_id}/http3 | Disable support for HTTP/3
+*Http3Api* | [**get_http3**](docs/Http3Api.md#get_http3) | **GET** /service/{service_id}/version/{version_id}/http3 | Get HTTP/3 status
 *IamPermissionsApi* | [**list_permissions**](docs/IamPermissionsApi.md#list_permissions) | **GET** /permissions | List permissions
 *IamRolesApi* | [**delete_a_role**](docs/IamRolesApi.md#delete_a_role) | **DELETE** /roles/{role_id} | Delete a role
 *IamRolesApi* | [**get_a_role**](docs/IamRolesApi.md#get_a_role) | **GET** /roles/{role_id} | Get a role
