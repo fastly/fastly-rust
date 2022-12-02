@@ -4,17 +4,17 @@ All URIs are relative to *https://api.fastly.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**create_healthcheck**](HealthcheckApi.md#create_healthcheck) | **POST** /service/{service_id}/version/{version_id}/healthcheck | Create a healthcheck
-[**delete_healthcheck**](HealthcheckApi.md#delete_healthcheck) | **DELETE** /service/{service_id}/version/{version_id}/healthcheck/{healthcheck_name} | Delete a healthcheck
-[**get_healthcheck**](HealthcheckApi.md#get_healthcheck) | **GET** /service/{service_id}/version/{version_id}/healthcheck/{healthcheck_name} | Get a healthcheck
-[**list_healthchecks**](HealthcheckApi.md#list_healthchecks) | **GET** /service/{service_id}/version/{version_id}/healthcheck | List healthchecks
-[**update_healthcheck**](HealthcheckApi.md#update_healthcheck) | **PUT** /service/{service_id}/version/{version_id}/healthcheck/{healthcheck_name} | Update a healthcheck
+[**create_healthcheck**](HealthcheckApi.md#create_healthcheck) | **POST** /service/{service_id}/version/{version_id}/healthcheck | Create a health check
+[**delete_healthcheck**](HealthcheckApi.md#delete_healthcheck) | **DELETE** /service/{service_id}/version/{version_id}/healthcheck/{healthcheck_name} | Delete a health check
+[**get_healthcheck**](HealthcheckApi.md#get_healthcheck) | **GET** /service/{service_id}/version/{version_id}/healthcheck/{healthcheck_name} | Get a health check
+[**list_healthchecks**](HealthcheckApi.md#list_healthchecks) | **GET** /service/{service_id}/version/{version_id}/healthcheck | List health checks
+[**update_healthcheck**](HealthcheckApi.md#update_healthcheck) | **PUT** /service/{service_id}/version/{version_id}/healthcheck/{healthcheck_name} | Update a health check
 
 
 
 ## create_healthcheck
 
-Create a healthcheck for a particular service and version.
+Create a health check for a particular service and version.
 
 ```rust
 let cfg = &Configuration::default();
@@ -31,18 +31,19 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **service_id** | **String** | Alphanumeric string identifying the service. | [required] |
 **version_id** | **i32** | Integer identifying a service version. | [required] |
-**check_interval** | Option\<**i32**> | How often to run the healthcheck in milliseconds. |  |
+**check_interval** | Option\<**i32**> | How often to run the health check in milliseconds. |  |
 **comment** | Option\<**String**> | A freeform descriptive note. |  |
 **expected_response** | Option\<**i32**> | The status code expected from the host. |  |
+**headers** | Option\<[**Vec&lt;String&gt;**](String.md)> | Array of custom headers that will be added to the health check probes. This feature is part of an **alpha release**, which may be subject to breaking changes and improvements over time. |  |
 **host** | Option\<**String**> | Which host to check. |  |
 **http_version** | Option\<**String**> | Whether to use version 1.0 or 1.1 HTTP. |  |
 **initial** | Option\<**i32**> | When loading a config, the initial number of probes to be seen as OK. |  |
 **method** | Option\<**String**> | Which HTTP method to use. |  |
-**name** | Option\<**String**> | The name of the healthcheck. |  |
+**name** | Option\<**String**> | The name of the health check. |  |
 **path** | Option\<**String**> | The path to check. |  |
-**threshold** | Option\<**i32**> | How many healthchecks must succeed to be considered healthy. |  |
+**threshold** | Option\<**i32**> | How many health checks must succeed to be considered healthy. |  |
 **timeout** | Option\<**i32**> | Timeout in milliseconds. |  |
-**window** | Option\<**i32**> | The number of most recent healthcheck queries to keep for this healthcheck. |  |
+**window** | Option\<**i32**> | The number of most recent health check queries to keep for this health check. |  |
 
 ### Return type
 
@@ -62,7 +63,7 @@ Name | Type | Description  | Required | Notes
 
 ## delete_healthcheck
 
-Delete the healthcheck for a particular service and version.
+Delete the health check for a particular service and version.
 
 ```rust
 let cfg = &Configuration::default();
@@ -79,7 +80,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **service_id** | **String** | Alphanumeric string identifying the service. | [required] |
 **version_id** | **i32** | Integer identifying a service version. | [required] |
-**healthcheck_name** | **String** | The name of the healthcheck. | [required] |
+**healthcheck_name** | **String** | The name of the health check. | [required] |
 
 ### Return type
 
@@ -99,7 +100,7 @@ Name | Type | Description  | Required | Notes
 
 ## get_healthcheck
 
-Get the healthcheck for a particular service and version.
+Get the health check for a particular service and version.
 
 ```rust
 let cfg = &Configuration::default();
@@ -116,7 +117,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **service_id** | **String** | Alphanumeric string identifying the service. | [required] |
 **version_id** | **i32** | Integer identifying a service version. | [required] |
-**healthcheck_name** | **String** | The name of the healthcheck. | [required] |
+**healthcheck_name** | **String** | The name of the health check. | [required] |
 
 ### Return type
 
@@ -136,7 +137,7 @@ Name | Type | Description  | Required | Notes
 
 ## list_healthchecks
 
-List all of the healthchecks for a particular service and version.
+List all of the health checks for a particular service and version.
 
 ```rust
 let cfg = &Configuration::default();
@@ -172,7 +173,7 @@ Name | Type | Description  | Required | Notes
 
 ## update_healthcheck
 
-Update the healthcheck for a particular service and version.
+Update the health check for a particular service and version.
 
 ```rust
 let cfg = &Configuration::default();
@@ -189,19 +190,20 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **service_id** | **String** | Alphanumeric string identifying the service. | [required] |
 **version_id** | **i32** | Integer identifying a service version. | [required] |
-**healthcheck_name** | **String** | The name of the healthcheck. | [required] |
-**check_interval** | Option\<**i32**> | How often to run the healthcheck in milliseconds. |  |
+**healthcheck_name** | **String** | The name of the health check. | [required] |
+**check_interval** | Option\<**i32**> | How often to run the health check in milliseconds. |  |
 **comment** | Option\<**String**> | A freeform descriptive note. |  |
 **expected_response** | Option\<**i32**> | The status code expected from the host. |  |
+**headers** | Option\<[**Vec&lt;String&gt;**](String.md)> | Array of custom headers that will be added to the health check probes. This feature is part of an **alpha release**, which may be subject to breaking changes and improvements over time. |  |
 **host** | Option\<**String**> | Which host to check. |  |
 **http_version** | Option\<**String**> | Whether to use version 1.0 or 1.1 HTTP. |  |
 **initial** | Option\<**i32**> | When loading a config, the initial number of probes to be seen as OK. |  |
 **method** | Option\<**String**> | Which HTTP method to use. |  |
-**name** | Option\<**String**> | The name of the healthcheck. |  |
+**name** | Option\<**String**> | The name of the health check. |  |
 **path** | Option\<**String**> | The path to check. |  |
-**threshold** | Option\<**i32**> | How many healthchecks must succeed to be considered healthy. |  |
+**threshold** | Option\<**i32**> | How many health checks must succeed to be considered healthy. |  |
 **timeout** | Option\<**i32**> | Timeout in milliseconds. |  |
-**window** | Option\<**i32**> | The number of most recent healthcheck queries to keep for this healthcheck. |  |
+**window** | Option\<**i32**> | The number of most recent health check queries to keep for this health check. |  |
 
 ### Return type
 

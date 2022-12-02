@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 **deleted_at** | Option<**String**> | Date and time in ISO 8601 format. | [readonly]
 **updated_at** | Option<**String**> | Date and time in ISO 8601 format. | [readonly]
 **id** | Option<**String**> |  | [readonly]
-**email_hash** | Option<**String**> | The alphanumeric string identifying a email login. | 
+**email_hash** | Option<**String**> | The alphanumeric string identifying a email login. | [readonly]
 **customer_id** | Option<**String**> |  | [readonly]
 
 [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

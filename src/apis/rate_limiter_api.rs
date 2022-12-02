@@ -58,7 +58,7 @@ pub enum ListRateLimitersError {
 
 
 /// Delete a rate limiter by its ID.
-pub async fn delete_rate_limiter(configuration: &configuration::Configuration, params: DeleteRateLimiterParams) -> Result<crate::models::InlineResponse200, Error<DeleteRateLimiterError>> {
+pub async fn delete_rate_limiter(configuration: &mut configuration::Configuration, params: DeleteRateLimiterParams) -> Result<crate::models::InlineResponse200, Error<DeleteRateLimiterError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -85,6 +85,18 @@ pub async fn delete_rate_limiter(configuration: &configuration::Configuration, p
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -98,7 +110,7 @@ pub async fn delete_rate_limiter(configuration: &configuration::Configuration, p
 }
 
 /// Get a rate limiter by its ID.
-pub async fn get_rate_limiter(configuration: &configuration::Configuration, params: GetRateLimiterParams) -> Result<crate::models::RateLimiterResponse, Error<GetRateLimiterError>> {
+pub async fn get_rate_limiter(configuration: &mut configuration::Configuration, params: GetRateLimiterParams) -> Result<crate::models::RateLimiterResponse, Error<GetRateLimiterError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -125,6 +137,18 @@ pub async fn get_rate_limiter(configuration: &configuration::Configuration, para
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -138,7 +162,7 @@ pub async fn get_rate_limiter(configuration: &configuration::Configuration, para
 }
 
 /// List all rate limiters for a particular service and version.
-pub async fn list_rate_limiters(configuration: &configuration::Configuration, params: ListRateLimitersParams) -> Result<Vec<crate::models::RateLimiterResponse>, Error<ListRateLimitersError>> {
+pub async fn list_rate_limiters(configuration: &mut configuration::Configuration, params: ListRateLimitersParams) -> Result<Vec<crate::models::RateLimiterResponse>, Error<ListRateLimitersError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -165,6 +189,18 @@ pub async fn list_rate_limiters(configuration: &configuration::Configuration, pa
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

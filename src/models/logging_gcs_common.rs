@@ -10,12 +10,15 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct LoggingGcsCommon {
-    /// Your Google Cloud Platform service account email address. The `client_email` field in your service account authentication JSON. Required.
+    /// Your Google Cloud Platform service account email address. The `client_email` field in your service account authentication JSON. Not required if `account_name` is specified.
     #[serde(rename = "user", skip_serializing_if = "Option::is_none")]
     pub user: Option<String>,
-    /// Your Google Cloud Platform account secret key. The `private_key` field in your service account authentication JSON. Required.
+    /// Your Google Cloud Platform account secret key. The `private_key` field in your service account authentication JSON. Not required if `account_name` is specified.
     #[serde(rename = "secret_key", skip_serializing_if = "Option::is_none")]
     pub secret_key: Option<String>,
+    /// The name of the Google Cloud Platform service account associated with the target log collection service. Not required if `user` and `secret_key` are provided.
+    #[serde(rename = "account_name", skip_serializing_if = "Option::is_none")]
+    pub account_name: Option<String>,
 }
 
 impl LoggingGcsCommon {
@@ -23,6 +26,7 @@ impl LoggingGcsCommon {
         LoggingGcsCommon {
             user: None,
             secret_key: None,
+            account_name: None,
         }
     }
 }

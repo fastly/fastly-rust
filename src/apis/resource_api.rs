@@ -106,7 +106,7 @@ pub enum UpdateResourceError {
 
 
 /// Create a resource.
-pub async fn create_resource(configuration: &configuration::Configuration, params: CreateResourceParams) -> Result<crate::models::ResourceResponse, Error<CreateResourceError>> {
+pub async fn create_resource(configuration: &mut configuration::Configuration, params: CreateResourceParams) -> Result<crate::models::ResourceResponse, Error<CreateResourceError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -144,6 +144,18 @@ pub async fn create_resource(configuration: &configuration::Configuration, param
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -157,7 +169,7 @@ pub async fn create_resource(configuration: &configuration::Configuration, param
 }
 
 /// Delete a resource.
-pub async fn delete_resource(configuration: &configuration::Configuration, params: DeleteResourceParams) -> Result<crate::models::InlineResponse200, Error<DeleteResourceError>> {
+pub async fn delete_resource(configuration: &mut configuration::Configuration, params: DeleteResourceParams) -> Result<crate::models::InlineResponse200, Error<DeleteResourceError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -186,6 +198,18 @@ pub async fn delete_resource(configuration: &configuration::Configuration, param
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -199,7 +223,7 @@ pub async fn delete_resource(configuration: &configuration::Configuration, param
 }
 
 /// Display a resource by its identifier.
-pub async fn get_resource(configuration: &configuration::Configuration, params: GetResourceParams) -> Result<crate::models::ResourceResponse, Error<GetResourceError>> {
+pub async fn get_resource(configuration: &mut configuration::Configuration, params: GetResourceParams) -> Result<crate::models::ResourceResponse, Error<GetResourceError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -228,6 +252,18 @@ pub async fn get_resource(configuration: &configuration::Configuration, params: 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -241,7 +277,7 @@ pub async fn get_resource(configuration: &configuration::Configuration, params: 
 }
 
 /// List resources.
-pub async fn list_resources(configuration: &configuration::Configuration, params: ListResourcesParams) -> Result<Vec<crate::models::ResourceResponse>, Error<ListResourcesError>> {
+pub async fn list_resources(configuration: &mut configuration::Configuration, params: ListResourcesParams) -> Result<Vec<crate::models::ResourceResponse>, Error<ListResourcesError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -269,6 +305,18 @@ pub async fn list_resources(configuration: &configuration::Configuration, params
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -282,7 +330,7 @@ pub async fn list_resources(configuration: &configuration::Configuration, params
 }
 
 /// Update a resource.
-pub async fn update_resource(configuration: &configuration::Configuration, params: UpdateResourceParams) -> Result<crate::models::ResourceResponse, Error<UpdateResourceError>> {
+pub async fn update_resource(configuration: &mut configuration::Configuration, params: UpdateResourceParams) -> Result<crate::models::ResourceResponse, Error<UpdateResourceError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -316,6 +364,18 @@ pub async fn update_resource(configuration: &configuration::Configuration, param
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

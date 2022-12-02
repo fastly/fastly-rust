@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**data** | Option<[**Vec&lt;crate::models::RelationshipMemberMutualAuthentication&gt;**](RelationshipMemberMutualAuthentication.md)> |  | 
+**data** | Option<[**crate::models::RelationshipMemberMutualAuthentication**](RelationshipMemberMutualAuthentication.md)> |  | 
 
 [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

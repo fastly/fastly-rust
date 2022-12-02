@@ -116,7 +116,7 @@ pub enum UpdateWafFirewallVersionError {
 
 
 /// Clone a specific, existing firewall version into a new, draft firewall version.
-pub async fn clone_waf_firewall_version(configuration: &configuration::Configuration, params: CloneWafFirewallVersionParams) -> Result<crate::models::WafFirewallVersionResponse, Error<CloneWafFirewallVersionError>> {
+pub async fn clone_waf_firewall_version(configuration: &mut configuration::Configuration, params: CloneWafFirewallVersionParams) -> Result<crate::models::WafFirewallVersionResponse, Error<CloneWafFirewallVersionError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -144,6 +144,18 @@ pub async fn clone_waf_firewall_version(configuration: &configuration::Configura
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -157,7 +169,7 @@ pub async fn clone_waf_firewall_version(configuration: &configuration::Configura
 }
 
 /// Create a new, draft firewall version.
-pub async fn create_waf_firewall_version(configuration: &configuration::Configuration, params: CreateWafFirewallVersionParams) -> Result<crate::models::WafFirewallVersionResponse, Error<CreateWafFirewallVersionError>> {
+pub async fn create_waf_firewall_version(configuration: &mut configuration::Configuration, params: CreateWafFirewallVersionParams) -> Result<crate::models::WafFirewallVersionResponse, Error<CreateWafFirewallVersionError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -186,6 +198,18 @@ pub async fn create_waf_firewall_version(configuration: &configuration::Configur
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -199,7 +223,7 @@ pub async fn create_waf_firewall_version(configuration: &configuration::Configur
 }
 
 /// Deploy or activate a specific firewall version. If a firewall has been disabled, deploying a firewall version will automatically enable the firewall again.
-pub async fn deploy_activate_waf_firewall_version(configuration: &configuration::Configuration, params: DeployActivateWafFirewallVersionParams) -> Result<serde_json::Value, Error<DeployActivateWafFirewallVersionError>> {
+pub async fn deploy_activate_waf_firewall_version(configuration: &mut configuration::Configuration, params: DeployActivateWafFirewallVersionParams) -> Result<serde_json::Value, Error<DeployActivateWafFirewallVersionError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -227,6 +251,18 @@ pub async fn deploy_activate_waf_firewall_version(configuration: &configuration:
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -240,7 +276,7 @@ pub async fn deploy_activate_waf_firewall_version(configuration: &configuration:
 }
 
 /// Get details about a specific firewall version.
-pub async fn get_waf_firewall_version(configuration: &configuration::Configuration, params: GetWafFirewallVersionParams) -> Result<crate::models::WafFirewallVersionResponse, Error<GetWafFirewallVersionError>> {
+pub async fn get_waf_firewall_version(configuration: &mut configuration::Configuration, params: GetWafFirewallVersionParams) -> Result<crate::models::WafFirewallVersionResponse, Error<GetWafFirewallVersionError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -272,6 +308,18 @@ pub async fn get_waf_firewall_version(configuration: &configuration::Configurati
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -285,7 +333,7 @@ pub async fn get_waf_firewall_version(configuration: &configuration::Configurati
 }
 
 /// Get a list of firewall versions associated with a specific firewall.
-pub async fn list_waf_firewall_versions(configuration: &configuration::Configuration, params: ListWafFirewallVersionsParams) -> Result<crate::models::WafFirewallVersionsResponse, Error<ListWafFirewallVersionsError>> {
+pub async fn list_waf_firewall_versions(configuration: &mut configuration::Configuration, params: ListWafFirewallVersionsParams) -> Result<crate::models::WafFirewallVersionsResponse, Error<ListWafFirewallVersionsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -324,6 +372,18 @@ pub async fn list_waf_firewall_versions(configuration: &configuration::Configura
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -337,7 +397,7 @@ pub async fn list_waf_firewall_versions(configuration: &configuration::Configura
 }
 
 /// Update a specific firewall version.
-pub async fn update_waf_firewall_version(configuration: &configuration::Configuration, params: UpdateWafFirewallVersionParams) -> Result<crate::models::WafFirewallVersionResponse, Error<UpdateWafFirewallVersionError>> {
+pub async fn update_waf_firewall_version(configuration: &mut configuration::Configuration, params: UpdateWafFirewallVersionParams) -> Result<crate::models::WafFirewallVersionResponse, Error<UpdateWafFirewallVersionError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -366,6 +426,18 @@ pub async fn update_waf_firewall_version(configuration: &configuration::Configur
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PATCH" != "GET" && "PATCH" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

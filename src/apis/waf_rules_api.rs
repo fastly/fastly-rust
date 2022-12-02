@@ -56,7 +56,7 @@ pub enum ListWafRulesError {
 
 
 /// Get a specific rule. The `id` provided can be the ModSecurity Rule ID or the Fastly generated rule ID.
-pub async fn get_waf_rule(configuration: &configuration::Configuration, params: GetWafRuleParams) -> Result<crate::models::WafRuleResponse, Error<GetWafRuleError>> {
+pub async fn get_waf_rule(configuration: &mut configuration::Configuration, params: GetWafRuleParams) -> Result<crate::models::WafRuleResponse, Error<GetWafRuleError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -87,6 +87,18 @@ pub async fn get_waf_rule(configuration: &configuration::Configuration, params: 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -100,7 +112,7 @@ pub async fn get_waf_rule(configuration: &configuration::Configuration, params: 
 }
 
 /// List all available WAF rules.
-pub async fn list_waf_rules(configuration: &configuration::Configuration, params: ListWafRulesParams) -> Result<crate::models::WafRulesResponse, Error<ListWafRulesError>> {
+pub async fn list_waf_rules(configuration: &mut configuration::Configuration, params: ListWafRulesParams) -> Result<crate::models::WafRulesResponse, Error<ListWafRulesError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -153,6 +165,18 @@ pub async fn list_waf_rules(configuration: &configuration::Configuration, params
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

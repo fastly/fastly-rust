@@ -126,7 +126,7 @@ pub enum UpdateDomainError {
 
 
 /// Checks the status of a specific domain's DNS record for a Service Version. Returns an array in the same format as domain/check_all.
-pub async fn check_domain(configuration: &configuration::Configuration, params: CheckDomainParams) -> Result<Vec<crate::models::DomainCheckItem>, Error<CheckDomainError>> {
+pub async fn check_domain(configuration: &mut configuration::Configuration, params: CheckDomainParams) -> Result<Vec<crate::models::DomainCheckItem>, Error<CheckDomainError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -155,6 +155,18 @@ pub async fn check_domain(configuration: &configuration::Configuration, params: 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -168,7 +180,7 @@ pub async fn check_domain(configuration: &configuration::Configuration, params: 
 }
 
 /// Create a domain for a particular service and version.
-pub async fn create_domain(configuration: &configuration::Configuration, params: CreateDomainParams) -> Result<crate::models::DomainResponse, Error<CreateDomainError>> {
+pub async fn create_domain(configuration: &mut configuration::Configuration, params: CreateDomainParams) -> Result<crate::models::DomainResponse, Error<CreateDomainError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -206,6 +218,18 @@ pub async fn create_domain(configuration: &configuration::Configuration, params:
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -219,7 +243,7 @@ pub async fn create_domain(configuration: &configuration::Configuration, params:
 }
 
 /// Delete the domain for a particular service and versions.
-pub async fn delete_domain(configuration: &configuration::Configuration, params: DeleteDomainParams) -> Result<crate::models::InlineResponse200, Error<DeleteDomainError>> {
+pub async fn delete_domain(configuration: &mut configuration::Configuration, params: DeleteDomainParams) -> Result<crate::models::InlineResponse200, Error<DeleteDomainError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -248,6 +272,18 @@ pub async fn delete_domain(configuration: &configuration::Configuration, params:
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -261,7 +297,7 @@ pub async fn delete_domain(configuration: &configuration::Configuration, params:
 }
 
 /// Get the domain for a particular service and version.
-pub async fn get_domain(configuration: &configuration::Configuration, params: GetDomainParams) -> Result<crate::models::DomainResponse, Error<GetDomainError>> {
+pub async fn get_domain(configuration: &mut configuration::Configuration, params: GetDomainParams) -> Result<crate::models::DomainResponse, Error<GetDomainError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -290,6 +326,18 @@ pub async fn get_domain(configuration: &configuration::Configuration, params: Ge
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -303,7 +351,7 @@ pub async fn get_domain(configuration: &configuration::Configuration, params: Ge
 }
 
 /// List all the domains for a particular service and version.
-pub async fn list_domains(configuration: &configuration::Configuration, params: ListDomainsParams) -> Result<Vec<crate::models::DomainResponse>, Error<ListDomainsError>> {
+pub async fn list_domains(configuration: &mut configuration::Configuration, params: ListDomainsParams) -> Result<Vec<crate::models::DomainResponse>, Error<ListDomainsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -331,6 +379,18 @@ pub async fn list_domains(configuration: &configuration::Configuration, params: 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -344,7 +404,7 @@ pub async fn list_domains(configuration: &configuration::Configuration, params: 
 }
 
 /// Update the domain for a particular service and version.
-pub async fn update_domain(configuration: &configuration::Configuration, params: UpdateDomainParams) -> Result<crate::models::DomainResponse, Error<UpdateDomainError>> {
+pub async fn update_domain(configuration: &mut configuration::Configuration, params: UpdateDomainParams) -> Result<crate::models::DomainResponse, Error<UpdateDomainError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -382,6 +442,18 @@ pub async fn update_domain(configuration: &configuration::Configuration, params:
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

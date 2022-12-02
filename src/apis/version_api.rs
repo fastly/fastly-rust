@@ -168,7 +168,7 @@ pub enum ValidateServiceVersionError {
 
 
 /// Activate the current version.
-pub async fn activate_service_version(configuration: &configuration::Configuration, params: ActivateServiceVersionParams) -> Result<crate::models::VersionResponse, Error<ActivateServiceVersionError>> {
+pub async fn activate_service_version(configuration: &mut configuration::Configuration, params: ActivateServiceVersionParams) -> Result<crate::models::VersionResponse, Error<ActivateServiceVersionError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -196,6 +196,18 @@ pub async fn activate_service_version(configuration: &configuration::Configurati
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -209,7 +221,7 @@ pub async fn activate_service_version(configuration: &configuration::Configurati
 }
 
 /// Clone the current configuration into a new version.
-pub async fn clone_service_version(configuration: &configuration::Configuration, params: CloneServiceVersionParams) -> Result<crate::models::Version, Error<CloneServiceVersionError>> {
+pub async fn clone_service_version(configuration: &mut configuration::Configuration, params: CloneServiceVersionParams) -> Result<crate::models::Version, Error<CloneServiceVersionError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -237,6 +249,18 @@ pub async fn clone_service_version(configuration: &configuration::Configuration,
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -250,7 +274,7 @@ pub async fn clone_service_version(configuration: &configuration::Configuration,
 }
 
 /// Create a version for a particular service.
-pub async fn create_service_version(configuration: &configuration::Configuration, params: CreateServiceVersionParams) -> Result<crate::models::VersionCreateResponse, Error<CreateServiceVersionError>> {
+pub async fn create_service_version(configuration: &mut configuration::Configuration, params: CreateServiceVersionParams) -> Result<crate::models::VersionCreateResponse, Error<CreateServiceVersionError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -277,6 +301,18 @@ pub async fn create_service_version(configuration: &configuration::Configuration
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -290,7 +326,7 @@ pub async fn create_service_version(configuration: &configuration::Configuration
 }
 
 /// Deactivate the current version.
-pub async fn deactivate_service_version(configuration: &configuration::Configuration, params: DeactivateServiceVersionParams) -> Result<crate::models::VersionResponse, Error<DeactivateServiceVersionError>> {
+pub async fn deactivate_service_version(configuration: &mut configuration::Configuration, params: DeactivateServiceVersionParams) -> Result<crate::models::VersionResponse, Error<DeactivateServiceVersionError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -318,6 +354,18 @@ pub async fn deactivate_service_version(configuration: &configuration::Configura
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -331,7 +379,7 @@ pub async fn deactivate_service_version(configuration: &configuration::Configura
 }
 
 /// Get the version for a particular service.
-pub async fn get_service_version(configuration: &configuration::Configuration, params: GetServiceVersionParams) -> Result<crate::models::VersionResponse, Error<GetServiceVersionError>> {
+pub async fn get_service_version(configuration: &mut configuration::Configuration, params: GetServiceVersionParams) -> Result<crate::models::VersionResponse, Error<GetServiceVersionError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -359,6 +407,18 @@ pub async fn get_service_version(configuration: &configuration::Configuration, p
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -372,7 +432,7 @@ pub async fn get_service_version(configuration: &configuration::Configuration, p
 }
 
 /// List the versions for a particular service.
-pub async fn list_service_versions(configuration: &configuration::Configuration, params: ListServiceVersionsParams) -> Result<Vec<crate::models::VersionResponse>, Error<ListServiceVersionsError>> {
+pub async fn list_service_versions(configuration: &mut configuration::Configuration, params: ListServiceVersionsParams) -> Result<Vec<crate::models::VersionResponse>, Error<ListServiceVersionsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -399,6 +459,18 @@ pub async fn list_service_versions(configuration: &configuration::Configuration,
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -412,7 +484,7 @@ pub async fn list_service_versions(configuration: &configuration::Configuration,
 }
 
 /// Locks the specified version.
-pub async fn lock_service_version(configuration: &configuration::Configuration, params: LockServiceVersionParams) -> Result<crate::models::Version, Error<LockServiceVersionError>> {
+pub async fn lock_service_version(configuration: &mut configuration::Configuration, params: LockServiceVersionParams) -> Result<crate::models::Version, Error<LockServiceVersionError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -440,6 +512,18 @@ pub async fn lock_service_version(configuration: &configuration::Configuration, 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -453,7 +537,7 @@ pub async fn lock_service_version(configuration: &configuration::Configuration, 
 }
 
 /// Update a particular version for a particular service.
-pub async fn update_service_version(configuration: &configuration::Configuration, params: UpdateServiceVersionParams) -> Result<crate::models::VersionResponse, Error<UpdateServiceVersionError>> {
+pub async fn update_service_version(configuration: &mut configuration::Configuration, params: UpdateServiceVersionParams) -> Result<crate::models::VersionResponse, Error<UpdateServiceVersionError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -511,6 +595,18 @@ pub async fn update_service_version(configuration: &configuration::Configuration
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -524,7 +620,7 @@ pub async fn update_service_version(configuration: &configuration::Configuration
 }
 
 /// Validate the version for a particular service and version.
-pub async fn validate_service_version(configuration: &configuration::Configuration, params: ValidateServiceVersionParams) -> Result<crate::models::InlineResponse200, Error<ValidateServiceVersionError>> {
+pub async fn validate_service_version(configuration: &mut configuration::Configuration, params: ValidateServiceVersionParams) -> Result<crate::models::InlineResponse200, Error<ValidateServiceVersionError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -551,6 +647,18 @@ pub async fn validate_service_version(configuration: &configuration::Configurati
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

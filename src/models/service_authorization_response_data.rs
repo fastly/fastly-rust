@@ -15,7 +15,7 @@ pub struct ServiceAuthorizationResponseData {
     #[serde(rename = "attributes", skip_serializing_if = "Option::is_none")]
     pub attributes: Option<Box<crate::models::Timestamps>>,
     #[serde(rename = "relationships", skip_serializing_if = "Option::is_none")]
-    pub relationships: Option<Box<serde_json::Value>>,
+    pub relationships: Option<Box<crate::models::ServiceAuthorizationDataRelationships>>,
     #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
     pub id: Option<Box<String>>,
 }

@@ -13,7 +13,7 @@ pub struct RelationshipsForStar {
     #[serde(rename = "user", skip_serializing_if = "Option::is_none")]
     pub user: Option<Box<crate::models::RelationshipUserUser>>,
     #[serde(rename = "service", skip_serializing_if = "Option::is_none")]
-    pub service: Option<Box<crate::models::RelationshipServiceService>>,
+    pub service: Option<Box<crate::models::RelationshipMemberService>>,
 }
 
 impl RelationshipsForStar {

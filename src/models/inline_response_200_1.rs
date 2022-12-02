@@ -10,7 +10,7 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct InlineResponse2001 {
-    /// List of alphanumeric strings identifying services (optional). If no services are specified, the token will have access to all services on the account.
+    /// The service IDs of the services the token will have access to. Separate service IDs with a space.
     #[serde(rename = "data", skip_serializing_if = "Option::is_none")]
     pub data: Option<Vec<String>>,
 }

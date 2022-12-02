@@ -35,7 +35,7 @@ Name | Type | Description  | Required | Notes
 **name** | Option\<**String**> | Name of the condition. Required. |  |
 **priority** | Option\<**String**> | A numeric string. Priority determines execution order. Lower numbers execute first. |  |[default to 100]
 **statement** | Option\<**String**> | A conditional expression in VCL used to determine if the condition is met. |  |
-**service_id2** | Option\<[**String**](String.md)> |  |  |
+**service_id2** | Option\<**String**> |  |  |
 **version** | Option\<**String**> | A numeric string that represents the service version. |  |
 **_type** | Option\<**String**> | Type of the condition. Required. |  |
 
@@ -189,7 +189,7 @@ Name | Type | Description  | Required | Notes
 **name** | Option\<**String**> | Name of the condition. Required. |  |
 **priority** | Option\<**String**> | A numeric string. Priority determines execution order. Lower numbers execute first. |  |[default to 100]
 **statement** | Option\<**String**> | A conditional expression in VCL used to determine if the condition is met. |  |
-**service_id2** | Option\<[**String**](String.md)> |  |  |
+**service_id2** | Option\<**String**> |  |  |
 **version** | Option\<**String**> | A numeric string that represents the service version. |  |
 **_type** | Option\<**String**> | Type of the condition. Required. |  |
 

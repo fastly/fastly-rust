@@ -184,7 +184,7 @@ pub enum UpdateLogAwsS3Error {
 
 
 /// Create a S3 for a particular service and version.
-pub async fn create_log_aws_s3(configuration: &configuration::Configuration, params: CreateLogAwsS3Params) -> Result<crate::models::LoggingS3Response, Error<CreateLogAwsS3Error>> {
+pub async fn create_log_aws_s3(configuration: &mut configuration::Configuration, params: CreateLogAwsS3Params) -> Result<crate::models::LoggingS3Response, Error<CreateLogAwsS3Error>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -298,6 +298,18 @@ pub async fn create_log_aws_s3(configuration: &configuration::Configuration, par
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -311,7 +323,7 @@ pub async fn create_log_aws_s3(configuration: &configuration::Configuration, par
 }
 
 /// Delete the S3 for a particular service and version.
-pub async fn delete_log_aws_s3(configuration: &configuration::Configuration, params: DeleteLogAwsS3Params) -> Result<crate::models::InlineResponse200, Error<DeleteLogAwsS3Error>> {
+pub async fn delete_log_aws_s3(configuration: &mut configuration::Configuration, params: DeleteLogAwsS3Params) -> Result<crate::models::InlineResponse200, Error<DeleteLogAwsS3Error>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -340,6 +352,18 @@ pub async fn delete_log_aws_s3(configuration: &configuration::Configuration, par
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -353,7 +377,7 @@ pub async fn delete_log_aws_s3(configuration: &configuration::Configuration, par
 }
 
 /// Get the S3 for a particular service and version.
-pub async fn get_log_aws_s3(configuration: &configuration::Configuration, params: GetLogAwsS3Params) -> Result<crate::models::LoggingS3Response, Error<GetLogAwsS3Error>> {
+pub async fn get_log_aws_s3(configuration: &mut configuration::Configuration, params: GetLogAwsS3Params) -> Result<crate::models::LoggingS3Response, Error<GetLogAwsS3Error>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -382,6 +406,18 @@ pub async fn get_log_aws_s3(configuration: &configuration::Configuration, params
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -395,7 +431,7 @@ pub async fn get_log_aws_s3(configuration: &configuration::Configuration, params
 }
 
 /// List all of the S3s for a particular service and version.
-pub async fn list_log_aws_s3(configuration: &configuration::Configuration, params: ListLogAwsS3Params) -> Result<Vec<crate::models::LoggingS3Response>, Error<ListLogAwsS3Error>> {
+pub async fn list_log_aws_s3(configuration: &mut configuration::Configuration, params: ListLogAwsS3Params) -> Result<Vec<crate::models::LoggingS3Response>, Error<ListLogAwsS3Error>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -423,6 +459,18 @@ pub async fn list_log_aws_s3(configuration: &configuration::Configuration, param
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -436,7 +484,7 @@ pub async fn list_log_aws_s3(configuration: &configuration::Configuration, param
 }
 
 /// Update the S3 for a particular service and version.
-pub async fn update_log_aws_s3(configuration: &configuration::Configuration, params: UpdateLogAwsS3Params) -> Result<crate::models::LoggingS3Response, Error<UpdateLogAwsS3Error>> {
+pub async fn update_log_aws_s3(configuration: &mut configuration::Configuration, params: UpdateLogAwsS3Params) -> Result<crate::models::LoggingS3Response, Error<UpdateLogAwsS3Error>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -550,6 +598,18 @@ pub async fn update_log_aws_s3(configuration: &configuration::Configuration, par
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

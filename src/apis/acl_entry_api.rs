@@ -127,7 +127,7 @@ pub enum UpdateAclEntryError {
 
 
 /// Update multiple ACL entries on the same ACL.
-pub async fn bulk_update_acl_entries(configuration: &configuration::Configuration, params: BulkUpdateAclEntriesParams) -> Result<crate::models::InlineResponse200, Error<BulkUpdateAclEntriesError>> {
+pub async fn bulk_update_acl_entries(configuration: &mut configuration::Configuration, params: BulkUpdateAclEntriesParams) -> Result<crate::models::InlineResponse200, Error<BulkUpdateAclEntriesError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -157,6 +157,18 @@ pub async fn bulk_update_acl_entries(configuration: &configuration::Configuratio
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "PATCH" != "GET" && "PATCH" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -170,7 +182,7 @@ pub async fn bulk_update_acl_entries(configuration: &configuration::Configuratio
 }
 
 /// Add an ACL entry to an ACL.
-pub async fn create_acl_entry(configuration: &configuration::Configuration, params: CreateAclEntryParams) -> Result<crate::models::AclEntryResponse, Error<CreateAclEntryError>> {
+pub async fn create_acl_entry(configuration: &mut configuration::Configuration, params: CreateAclEntryParams) -> Result<crate::models::AclEntryResponse, Error<CreateAclEntryError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -200,6 +212,18 @@ pub async fn create_acl_entry(configuration: &configuration::Configuration, para
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -213,7 +237,7 @@ pub async fn create_acl_entry(configuration: &configuration::Configuration, para
 }
 
 /// Delete an ACL entry from a specified ACL.
-pub async fn delete_acl_entry(configuration: &configuration::Configuration, params: DeleteAclEntryParams) -> Result<crate::models::InlineResponse200, Error<DeleteAclEntryError>> {
+pub async fn delete_acl_entry(configuration: &mut configuration::Configuration, params: DeleteAclEntryParams) -> Result<crate::models::InlineResponse200, Error<DeleteAclEntryError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -242,6 +266,18 @@ pub async fn delete_acl_entry(configuration: &configuration::Configuration, para
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -255,7 +291,7 @@ pub async fn delete_acl_entry(configuration: &configuration::Configuration, para
 }
 
 /// Retrieve a single ACL entry.
-pub async fn get_acl_entry(configuration: &configuration::Configuration, params: GetAclEntryParams) -> Result<crate::models::AclEntryResponse, Error<GetAclEntryError>> {
+pub async fn get_acl_entry(configuration: &mut configuration::Configuration, params: GetAclEntryParams) -> Result<crate::models::AclEntryResponse, Error<GetAclEntryError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -284,6 +320,18 @@ pub async fn get_acl_entry(configuration: &configuration::Configuration, params:
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -297,7 +345,7 @@ pub async fn get_acl_entry(configuration: &configuration::Configuration, params:
 }
 
 /// List ACL entries for a specified ACL.
-pub async fn list_acl_entries(configuration: &configuration::Configuration, params: ListAclEntriesParams) -> Result<Vec<crate::models::AclEntryResponse>, Error<ListAclEntriesError>> {
+pub async fn list_acl_entries(configuration: &mut configuration::Configuration, params: ListAclEntriesParams) -> Result<Vec<crate::models::AclEntryResponse>, Error<ListAclEntriesError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -341,6 +389,18 @@ pub async fn list_acl_entries(configuration: &configuration::Configuration, para
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -354,7 +414,7 @@ pub async fn list_acl_entries(configuration: &configuration::Configuration, para
 }
 
 /// Update an ACL entry for a specified ACL.
-pub async fn update_acl_entry(configuration: &configuration::Configuration, params: UpdateAclEntryParams) -> Result<crate::models::AclEntryResponse, Error<UpdateAclEntryError>> {
+pub async fn update_acl_entry(configuration: &mut configuration::Configuration, params: UpdateAclEntryParams) -> Result<crate::models::AclEntryResponse, Error<UpdateAclEntryError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -384,6 +444,18 @@ pub async fn update_acl_entry(configuration: &configuration::Configuration, para
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PATCH" != "GET" && "PATCH" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

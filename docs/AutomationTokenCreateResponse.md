@@ -4,21 +4,21 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**name** | Option<**String**> | The name of the token. | 
+**role** | Option<**String**> | The role on the token. | 
+**services** | Option<**Vec<String>**> | (Optional) The service IDs of the services the token will have access to. Separate service IDs with a space. If no services are specified, the token will have access to all services on the account.  | 
+**scope** | Option<**String**> | A space-delimited list of authorization scope. | [default to Scope_Global]
+**expires_at** | Option<**String**> | A UTC time-stamp of when the token expires. | 
+**created_at** | Option<**String**> | A UTC time-stamp of when the token was created.  | [readonly]
+**deleted_at** | Option<**String**> | Date and time in ISO 8601 format. | [readonly]
+**updated_at** | Option<**String**> | Date and time in ISO 8601 format. | [readonly]
 **id** | Option<**String**> |  | [readonly]
-**user_id** | Option<**String**> |  | 
-**customer_id** | Option<**String**> |  | 
-**name** | Option<**String**> |  | 
-**role** | Option<**String**> |  | 
-**scopes** | Option<**String**> |  | [default to Scopes_Global]
-**scope** | Option<**String**> |  | 
-**services** | Option<**Vec<String>**> | List of alphanumeric strings identifying services (optional). If no services are specified, the token will have access to all services on the account. | 
-**sudo_expires_at** | Option<**String**> |  | 
-**created_at** | Option<**String**> | Time-stamp (UTC) of when the token was created.  | 
-**expires_at** | Option<**String**> |  | 
-**object** | Option<**String**> |  | 
-**access_token** | Option<**String**> |  | 
-**last_used_at** | Option<**String**> | Time-stamp (UTC) of when the token was last used. | 
-**user_agent** | Option<**String**> | User-Agent header of the client that last used the token. | 
+**user_id** | Option<**String**> |  | [readonly]
+**customer_id** | Option<**String**> |  | [readonly]
+**sudo_expires_at** | Option<**String**> |  | [readonly]
+**access_token** | Option<**String**> |  | [readonly]
+**last_used_at** | Option<**String**> | A UTC time-stamp of when the token was last used. | [readonly]
+**user_agent** | Option<**String**> | The User-Agent header of the client that last used the token. | 
 
 [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

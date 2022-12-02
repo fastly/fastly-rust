@@ -14,11 +14,13 @@ Name | Type | Description | Notes
 **period** | Option<**i32**> | How frequently log files are finalized so they can be available for reading (in seconds). | [default to 3600]
 **gzip_level** | Option<**i32**> | The level of gzip encoding when sending logs (default `0`, no compression). Specifying both `compression_codec` and `gzip_level` in the same API request will result in an error. | [default to 0]
 **compression_codec** | Option<**String**> | The codec used for compressing your logs. Valid values are `zstd`, `snappy`, and `gzip`. Specifying both `compression_codec` and `gzip_level` in the same API request will result in an error. | 
-**user** | Option<**String**> | Your Google Cloud Platform service account email address. The `client_email` field in your service account authentication JSON. Required. | 
-**secret_key** | Option<**String**> | Your Google Cloud Platform account secret key. The `private_key` field in your service account authentication JSON. Required. | 
+**user** | Option<**String**> | Your Google Cloud Platform service account email address. The `client_email` field in your service account authentication JSON. Not required if `account_name` is specified. | 
+**secret_key** | Option<**String**> | Your Google Cloud Platform account secret key. The `private_key` field in your service account authentication JSON. Not required if `account_name` is specified. | 
+**account_name** | Option<**String**> | The name of the Google Cloud Platform service account associated with the target log collection service. Not required if `user` and `secret_key` are provided. | 
 **bucket_name** | Option<**String**> | The name of the GCS bucket. | 
 **path** | Option<**String**> | The path to upload logs to. | 
 **public_key** | Option<**String**> | A PGP public key that Fastly will use to encrypt your log files before writing them to disk. | [default to null]
+**project_id** | Option<**String**> | Your Google Cloud Platform project ID. Required | 
 
 [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

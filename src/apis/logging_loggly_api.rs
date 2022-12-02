@@ -124,7 +124,7 @@ pub enum UpdateLogLogglyError {
 
 
 /// Create a Loggly logging object for a particular service and version.
-pub async fn create_log_loggly(configuration: &configuration::Configuration, params: CreateLogLogglyParams) -> Result<crate::models::LoggingLogglyResponse, Error<CreateLogLogglyError>> {
+pub async fn create_log_loggly(configuration: &mut configuration::Configuration, params: CreateLogLogglyParams) -> Result<crate::models::LoggingLogglyResponse, Error<CreateLogLogglyError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -178,6 +178,18 @@ pub async fn create_log_loggly(configuration: &configuration::Configuration, par
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -191,7 +203,7 @@ pub async fn create_log_loggly(configuration: &configuration::Configuration, par
 }
 
 /// Delete the Loggly logging object for a particular service and version.
-pub async fn delete_log_loggly(configuration: &configuration::Configuration, params: DeleteLogLogglyParams) -> Result<crate::models::InlineResponse200, Error<DeleteLogLogglyError>> {
+pub async fn delete_log_loggly(configuration: &mut configuration::Configuration, params: DeleteLogLogglyParams) -> Result<crate::models::InlineResponse200, Error<DeleteLogLogglyError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -220,6 +232,18 @@ pub async fn delete_log_loggly(configuration: &configuration::Configuration, par
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -233,7 +257,7 @@ pub async fn delete_log_loggly(configuration: &configuration::Configuration, par
 }
 
 /// Get the Loggly logging object for a particular service and version.
-pub async fn get_log_loggly(configuration: &configuration::Configuration, params: GetLogLogglyParams) -> Result<crate::models::LoggingLogglyResponse, Error<GetLogLogglyError>> {
+pub async fn get_log_loggly(configuration: &mut configuration::Configuration, params: GetLogLogglyParams) -> Result<crate::models::LoggingLogglyResponse, Error<GetLogLogglyError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -262,6 +286,18 @@ pub async fn get_log_loggly(configuration: &configuration::Configuration, params
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -275,7 +311,7 @@ pub async fn get_log_loggly(configuration: &configuration::Configuration, params
 }
 
 /// List all Loggly logging objects for a particular service and version.
-pub async fn list_log_loggly(configuration: &configuration::Configuration, params: ListLogLogglyParams) -> Result<Vec<crate::models::LoggingLogglyResponse>, Error<ListLogLogglyError>> {
+pub async fn list_log_loggly(configuration: &mut configuration::Configuration, params: ListLogLogglyParams) -> Result<Vec<crate::models::LoggingLogglyResponse>, Error<ListLogLogglyError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -303,6 +339,18 @@ pub async fn list_log_loggly(configuration: &configuration::Configuration, param
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -316,7 +364,7 @@ pub async fn list_log_loggly(configuration: &configuration::Configuration, param
 }
 
 /// Update the Loggly logging object for a particular service and version.
-pub async fn update_log_loggly(configuration: &configuration::Configuration, params: UpdateLogLogglyParams) -> Result<crate::models::LoggingLogglyResponse, Error<UpdateLogLogglyError>> {
+pub async fn update_log_loggly(configuration: &mut configuration::Configuration, params: UpdateLogLogglyParams) -> Result<crate::models::LoggingLogglyResponse, Error<UpdateLogLogglyError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -370,6 +418,18 @@ pub async fn update_log_loggly(configuration: &configuration::Configuration, par
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

@@ -66,7 +66,7 @@ pub enum ListResponseObjectsError {
 
 
 /// Deletes the specified Response Object.
-pub async fn delete_response_object(configuration: &configuration::Configuration, params: DeleteResponseObjectParams) -> Result<crate::models::InlineResponse200, Error<DeleteResponseObjectError>> {
+pub async fn delete_response_object(configuration: &mut configuration::Configuration, params: DeleteResponseObjectParams) -> Result<crate::models::InlineResponse200, Error<DeleteResponseObjectError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -95,6 +95,18 @@ pub async fn delete_response_object(configuration: &configuration::Configuration
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -108,7 +120,7 @@ pub async fn delete_response_object(configuration: &configuration::Configuration
 }
 
 /// Gets the specified Response Object.
-pub async fn get_response_object(configuration: &configuration::Configuration, params: GetResponseObjectParams) -> Result<crate::models::ResponseObjectResponse, Error<GetResponseObjectError>> {
+pub async fn get_response_object(configuration: &mut configuration::Configuration, params: GetResponseObjectParams) -> Result<crate::models::ResponseObjectResponse, Error<GetResponseObjectError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -137,6 +149,18 @@ pub async fn get_response_object(configuration: &configuration::Configuration, p
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -150,7 +174,7 @@ pub async fn get_response_object(configuration: &configuration::Configuration, p
 }
 
 /// Returns all Response Objects for the specified service and version.
-pub async fn list_response_objects(configuration: &configuration::Configuration, params: ListResponseObjectsParams) -> Result<Vec<crate::models::ResponseObjectResponse>, Error<ListResponseObjectsError>> {
+pub async fn list_response_objects(configuration: &mut configuration::Configuration, params: ListResponseObjectsParams) -> Result<Vec<crate::models::ResponseObjectResponse>, Error<ListResponseObjectsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -177,6 +201,18 @@ pub async fn list_response_objects(configuration: &configuration::Configuration,
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

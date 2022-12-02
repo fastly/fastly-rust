@@ -57,7 +57,7 @@ pub enum ListInvitationsError {
 
 
 /// Create an invitation.
-pub async fn create_invitation(configuration: &configuration::Configuration, params: CreateInvitationParams) -> Result<crate::models::InvitationResponse, Error<CreateInvitationError>> {
+pub async fn create_invitation(configuration: &mut configuration::Configuration, params: CreateInvitationParams) -> Result<crate::models::InvitationResponse, Error<CreateInvitationError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -85,6 +85,18 @@ pub async fn create_invitation(configuration: &configuration::Configuration, par
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -98,7 +110,7 @@ pub async fn create_invitation(configuration: &configuration::Configuration, par
 }
 
 /// Delete an invitation.
-pub async fn delete_invitation(configuration: &configuration::Configuration, params: DeleteInvitationParams) -> Result<(), Error<DeleteInvitationError>> {
+pub async fn delete_invitation(configuration: &mut configuration::Configuration, params: DeleteInvitationParams) -> Result<(), Error<DeleteInvitationError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -125,6 +137,18 @@ pub async fn delete_invitation(configuration: &configuration::Configuration, par
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -138,7 +162,7 @@ pub async fn delete_invitation(configuration: &configuration::Configuration, par
 }
 
 /// List all invitations.
-pub async fn list_invitations(configuration: &configuration::Configuration, params: ListInvitationsParams) -> Result<crate::models::InvitationsResponse, Error<ListInvitationsError>> {
+pub async fn list_invitations(configuration: &mut configuration::Configuration, params: ListInvitationsParams) -> Result<crate::models::InvitationsResponse, Error<ListInvitationsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -171,6 +195,18 @@ pub async fn list_invitations(configuration: &configuration::Configuration, para
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

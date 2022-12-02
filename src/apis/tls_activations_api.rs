@@ -96,7 +96,7 @@ pub enum UpdateTlsActivationError {
 
 
 /// Enable TLS for a particular TLS domain and certificate combination. These relationships must be specified to create the TLS activation.
-pub async fn create_tls_activation(configuration: &configuration::Configuration, params: CreateTlsActivationParams) -> Result<crate::models::TlsActivationResponse, Error<CreateTlsActivationError>> {
+pub async fn create_tls_activation(configuration: &mut configuration::Configuration, params: CreateTlsActivationParams) -> Result<crate::models::TlsActivationResponse, Error<CreateTlsActivationError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -124,6 +124,18 @@ pub async fn create_tls_activation(configuration: &configuration::Configuration,
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -137,7 +149,7 @@ pub async fn create_tls_activation(configuration: &configuration::Configuration,
 }
 
 /// Disable TLS on the domain associated with this TLS activation.
-pub async fn delete_tls_activation(configuration: &configuration::Configuration, params: DeleteTlsActivationParams) -> Result<(), Error<DeleteTlsActivationError>> {
+pub async fn delete_tls_activation(configuration: &mut configuration::Configuration, params: DeleteTlsActivationParams) -> Result<(), Error<DeleteTlsActivationError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -164,6 +176,18 @@ pub async fn delete_tls_activation(configuration: &configuration::Configuration,
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -177,7 +201,7 @@ pub async fn delete_tls_activation(configuration: &configuration::Configuration,
 }
 
 /// Show a TLS activation.
-pub async fn get_tls_activation(configuration: &configuration::Configuration, params: GetTlsActivationParams) -> Result<crate::models::TlsActivationResponse, Error<GetTlsActivationError>> {
+pub async fn get_tls_activation(configuration: &mut configuration::Configuration, params: GetTlsActivationParams) -> Result<crate::models::TlsActivationResponse, Error<GetTlsActivationError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -208,6 +232,18 @@ pub async fn get_tls_activation(configuration: &configuration::Configuration, pa
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -221,7 +257,7 @@ pub async fn get_tls_activation(configuration: &configuration::Configuration, pa
 }
 
 /// List all TLS activations.
-pub async fn list_tls_activations(configuration: &configuration::Configuration, params: ListTlsActivationsParams) -> Result<crate::models::TlsActivationsResponse, Error<ListTlsActivationsError>> {
+pub async fn list_tls_activations(configuration: &mut configuration::Configuration, params: ListTlsActivationsParams) -> Result<crate::models::TlsActivationsResponse, Error<ListTlsActivationsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -271,6 +307,18 @@ pub async fn list_tls_activations(configuration: &configuration::Configuration, 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -284,7 +332,7 @@ pub async fn list_tls_activations(configuration: &configuration::Configuration, 
 }
 
 /// Update the certificate used to terminate TLS traffic for the domain associated with this TLS activation.
-pub async fn update_tls_activation(configuration: &configuration::Configuration, params: UpdateTlsActivationParams) -> Result<crate::models::TlsActivationResponse, Error<UpdateTlsActivationError>> {
+pub async fn update_tls_activation(configuration: &mut configuration::Configuration, params: UpdateTlsActivationParams) -> Result<crate::models::TlsActivationResponse, Error<UpdateTlsActivationError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -312,6 +360,18 @@ pub async fn update_tls_activation(configuration: &configuration::Configuration,
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PATCH" != "GET" && "PATCH" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

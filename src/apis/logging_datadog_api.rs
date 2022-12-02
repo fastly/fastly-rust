@@ -128,7 +128,7 @@ pub enum UpdateLogDatadogError {
 
 
 /// Create a Datadog logging object for a particular service and version.
-pub async fn create_log_datadog(configuration: &configuration::Configuration, params: CreateLogDatadogParams) -> Result<crate::models::LoggingDatadogResponse, Error<CreateLogDatadogError>> {
+pub async fn create_log_datadog(configuration: &mut configuration::Configuration, params: CreateLogDatadogParams) -> Result<crate::models::LoggingDatadogResponse, Error<CreateLogDatadogError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -186,6 +186,18 @@ pub async fn create_log_datadog(configuration: &configuration::Configuration, pa
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -199,7 +211,7 @@ pub async fn create_log_datadog(configuration: &configuration::Configuration, pa
 }
 
 /// Delete the Datadog logging object for a particular service and version.
-pub async fn delete_log_datadog(configuration: &configuration::Configuration, params: DeleteLogDatadogParams) -> Result<crate::models::InlineResponse200, Error<DeleteLogDatadogError>> {
+pub async fn delete_log_datadog(configuration: &mut configuration::Configuration, params: DeleteLogDatadogParams) -> Result<crate::models::InlineResponse200, Error<DeleteLogDatadogError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -228,6 +240,18 @@ pub async fn delete_log_datadog(configuration: &configuration::Configuration, pa
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -241,7 +265,7 @@ pub async fn delete_log_datadog(configuration: &configuration::Configuration, pa
 }
 
 /// Get the details for a Datadog logging object for a particular service and version.
-pub async fn get_log_datadog(configuration: &configuration::Configuration, params: GetLogDatadogParams) -> Result<crate::models::LoggingDatadogResponse, Error<GetLogDatadogError>> {
+pub async fn get_log_datadog(configuration: &mut configuration::Configuration, params: GetLogDatadogParams) -> Result<crate::models::LoggingDatadogResponse, Error<GetLogDatadogError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -270,6 +294,18 @@ pub async fn get_log_datadog(configuration: &configuration::Configuration, param
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -283,7 +319,7 @@ pub async fn get_log_datadog(configuration: &configuration::Configuration, param
 }
 
 /// List all of the Datadog logging objects for a particular service and version.
-pub async fn list_log_datadog(configuration: &configuration::Configuration, params: ListLogDatadogParams) -> Result<Vec<crate::models::LoggingDatadogResponse>, Error<ListLogDatadogError>> {
+pub async fn list_log_datadog(configuration: &mut configuration::Configuration, params: ListLogDatadogParams) -> Result<Vec<crate::models::LoggingDatadogResponse>, Error<ListLogDatadogError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -311,6 +347,18 @@ pub async fn list_log_datadog(configuration: &configuration::Configuration, para
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -324,7 +372,7 @@ pub async fn list_log_datadog(configuration: &configuration::Configuration, para
 }
 
 /// Update the Datadog logging object for a particular service and version.
-pub async fn update_log_datadog(configuration: &configuration::Configuration, params: UpdateLogDatadogParams) -> Result<crate::models::LoggingDatadogResponse, Error<UpdateLogDatadogError>> {
+pub async fn update_log_datadog(configuration: &mut configuration::Configuration, params: UpdateLogDatadogParams) -> Result<crate::models::LoggingDatadogResponse, Error<UpdateLogDatadogError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -382,6 +430,18 @@ pub async fn update_log_datadog(configuration: &configuration::Configuration, pa
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

@@ -11,7 +11,7 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct RelationshipTlsPrivateKeyTlsPrivateKey {
     #[serde(rename = "data", skip_serializing_if = "Option::is_none")]
-    pub data: Option<Vec<crate::models::RelationshipMemberTlsPrivateKey>>,
+    pub data: Option<Box<crate::models::RelationshipMemberTlsPrivateKey>>,
 }
 
 impl RelationshipTlsPrivateKeyTlsPrivateKey {

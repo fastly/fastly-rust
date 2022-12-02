@@ -51,7 +51,7 @@ pub enum GetDocsSubjectError {
 
 
 /// Gets all documentation associated with the Fastly API.
-pub async fn get_docs(configuration: &configuration::Configuration) -> Result<Vec<serde_json::Value>, Error<GetDocsError>> {
+pub async fn get_docs(configuration: &mut configuration::Configuration) -> Result<Vec<serde_json::Value>, Error<GetDocsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -77,6 +77,18 @@ pub async fn get_docs(configuration: &configuration::Configuration) -> Result<Ve
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -90,7 +102,7 @@ pub async fn get_docs(configuration: &configuration::Configuration) -> Result<Ve
 }
 
 /// Gets all documentation associated with a given Categorical Section where `section` is a regular_expression. Passing `invert=true` will force a return of everything that does not match the given regular expression.
-pub async fn get_docs_section(configuration: &configuration::Configuration, params: GetDocsSectionParams) -> Result<(), Error<GetDocsSectionError>> {
+pub async fn get_docs_section(configuration: &mut configuration::Configuration, params: GetDocsSectionParams) -> Result<(), Error<GetDocsSectionError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -119,6 +131,18 @@ pub async fn get_docs_section(configuration: &configuration::Configuration, para
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -132,7 +156,7 @@ pub async fn get_docs_section(configuration: &configuration::Configuration, para
 }
 
 /// Gets all documentation relating to a given 'Subject'.
-pub async fn get_docs_subject(configuration: &configuration::Configuration, params: GetDocsSubjectParams) -> Result<(), Error<GetDocsSubjectError>> {
+pub async fn get_docs_subject(configuration: &mut configuration::Configuration, params: GetDocsSubjectParams) -> Result<(), Error<GetDocsSubjectError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -158,6 +182,18 @@ pub async fn get_docs_subject(configuration: &configuration::Configuration, para
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

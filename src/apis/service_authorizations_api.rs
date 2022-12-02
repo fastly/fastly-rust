@@ -86,7 +86,7 @@ pub enum UpdateServiceAuthorizationError {
 
 
 /// Create service authorization.
-pub async fn create_service_authorization(configuration: &configuration::Configuration, params: CreateServiceAuthorizationParams) -> Result<crate::models::ServiceAuthorizationResponse, Error<CreateServiceAuthorizationError>> {
+pub async fn create_service_authorization(configuration: &mut configuration::Configuration, params: CreateServiceAuthorizationParams) -> Result<crate::models::ServiceAuthorizationResponse, Error<CreateServiceAuthorizationError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -114,6 +114,18 @@ pub async fn create_service_authorization(configuration: &configuration::Configu
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -127,7 +139,7 @@ pub async fn create_service_authorization(configuration: &configuration::Configu
 }
 
 /// Delete service authorization.
-pub async fn delete_service_authorization(configuration: &configuration::Configuration, params: DeleteServiceAuthorizationParams) -> Result<(), Error<DeleteServiceAuthorizationError>> {
+pub async fn delete_service_authorization(configuration: &mut configuration::Configuration, params: DeleteServiceAuthorizationParams) -> Result<(), Error<DeleteServiceAuthorizationError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -154,6 +166,18 @@ pub async fn delete_service_authorization(configuration: &configuration::Configu
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -167,7 +191,7 @@ pub async fn delete_service_authorization(configuration: &configuration::Configu
 }
 
 /// List service authorizations.
-pub async fn list_service_authorization(configuration: &configuration::Configuration, params: ListServiceAuthorizationParams) -> Result<crate::models::ServiceAuthorizationsResponse, Error<ListServiceAuthorizationError>> {
+pub async fn list_service_authorization(configuration: &mut configuration::Configuration, params: ListServiceAuthorizationParams) -> Result<crate::models::ServiceAuthorizationsResponse, Error<ListServiceAuthorizationError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -201,6 +225,18 @@ pub async fn list_service_authorization(configuration: &configuration::Configura
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -214,7 +250,7 @@ pub async fn list_service_authorization(configuration: &configuration::Configura
 }
 
 /// Show service authorization.
-pub async fn show_service_authorization(configuration: &configuration::Configuration, params: ShowServiceAuthorizationParams) -> Result<crate::models::ServiceAuthorizationResponse, Error<ShowServiceAuthorizationError>> {
+pub async fn show_service_authorization(configuration: &mut configuration::Configuration, params: ShowServiceAuthorizationParams) -> Result<crate::models::ServiceAuthorizationResponse, Error<ShowServiceAuthorizationError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -241,6 +277,18 @@ pub async fn show_service_authorization(configuration: &configuration::Configura
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -254,7 +302,7 @@ pub async fn show_service_authorization(configuration: &configuration::Configura
 }
 
 /// Update service authorization.
-pub async fn update_service_authorization(configuration: &configuration::Configuration, params: UpdateServiceAuthorizationParams) -> Result<crate::models::ServiceAuthorizationResponse, Error<UpdateServiceAuthorizationError>> {
+pub async fn update_service_authorization(configuration: &mut configuration::Configuration, params: UpdateServiceAuthorizationParams) -> Result<crate::models::ServiceAuthorizationResponse, Error<UpdateServiceAuthorizationError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -282,6 +330,18 @@ pub async fn update_service_authorization(configuration: &configuration::Configu
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PATCH" != "GET" && "PATCH" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

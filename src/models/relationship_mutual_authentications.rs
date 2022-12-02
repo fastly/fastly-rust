@@ -11,7 +11,7 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct RelationshipMutualAuthentications {
     #[serde(rename = "mutual_authentications", skip_serializing_if = "Option::is_none")]
-    pub mutual_authentications: Option<Box<crate::models::RelationshipMutualAuthenticationMutualAuthentication>>,
+    pub mutual_authentications: Option<Box<crate::models::RelationshipMutualAuthenticationsMutualAuthentications>>,
 }
 
 impl RelationshipMutualAuthentications {

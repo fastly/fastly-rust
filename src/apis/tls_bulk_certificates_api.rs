@@ -90,7 +90,7 @@ pub enum UploadTlsBulkCertError {
 
 
 /// Destroy a certificate. This disables TLS for all domains listed as SAN entries.
-pub async fn delete_bulk_tls_cert(configuration: &configuration::Configuration, params: DeleteBulkTlsCertParams) -> Result<(), Error<DeleteBulkTlsCertError>> {
+pub async fn delete_bulk_tls_cert(configuration: &mut configuration::Configuration, params: DeleteBulkTlsCertParams) -> Result<(), Error<DeleteBulkTlsCertError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -117,6 +117,18 @@ pub async fn delete_bulk_tls_cert(configuration: &configuration::Configuration, 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -130,7 +142,7 @@ pub async fn delete_bulk_tls_cert(configuration: &configuration::Configuration, 
 }
 
 /// Retrieve a single certificate.
-pub async fn get_tls_bulk_cert(configuration: &configuration::Configuration, params: GetTlsBulkCertParams) -> Result<crate::models::TlsBulkCertificateResponse, Error<GetTlsBulkCertError>> {
+pub async fn get_tls_bulk_cert(configuration: &mut configuration::Configuration, params: GetTlsBulkCertParams) -> Result<crate::models::TlsBulkCertificateResponse, Error<GetTlsBulkCertError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -157,6 +169,18 @@ pub async fn get_tls_bulk_cert(configuration: &configuration::Configuration, par
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -170,7 +194,7 @@ pub async fn get_tls_bulk_cert(configuration: &configuration::Configuration, par
 }
 
 /// List all certificates.
-pub async fn list_tls_bulk_certs(configuration: &configuration::Configuration, params: ListTlsBulkCertsParams) -> Result<crate::models::TlsBulkCertificatesResponse, Error<ListTlsBulkCertsError>> {
+pub async fn list_tls_bulk_certs(configuration: &mut configuration::Configuration, params: ListTlsBulkCertsParams) -> Result<crate::models::TlsBulkCertificatesResponse, Error<ListTlsBulkCertsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -212,6 +236,18 @@ pub async fn list_tls_bulk_certs(configuration: &configuration::Configuration, p
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -225,7 +261,7 @@ pub async fn list_tls_bulk_certs(configuration: &configuration::Configuration, p
 }
 
 /// Replace a certificate with a newly reissued certificate. By using this endpoint, the original certificate will cease to be used for future TLS handshakes. Thus, only SAN entries that appear in the replacement certificate will become TLS enabled. Any SAN entries that are missing in the replacement certificate will become disabled.
-pub async fn update_bulk_tls_cert(configuration: &configuration::Configuration, params: UpdateBulkTlsCertParams) -> Result<crate::models::TlsBulkCertificateResponse, Error<UpdateBulkTlsCertError>> {
+pub async fn update_bulk_tls_cert(configuration: &mut configuration::Configuration, params: UpdateBulkTlsCertParams) -> Result<crate::models::TlsBulkCertificateResponse, Error<UpdateBulkTlsCertError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -254,6 +290,18 @@ pub async fn update_bulk_tls_cert(configuration: &configuration::Configuration, 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "PATCH" != "GET" && "PATCH" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -267,7 +315,7 @@ pub async fn update_bulk_tls_cert(configuration: &configuration::Configuration, 
 }
 
 /// Upload a new certificate. TLS domains are automatically enabled upon certificate creation. If a domain is already enabled on a previously uploaded certificate, that domain will be updated to use the new certificate for all future TLS handshake requests.
-pub async fn upload_tls_bulk_cert(configuration: &configuration::Configuration, params: UploadTlsBulkCertParams) -> Result<crate::models::TlsBulkCertificateResponse, Error<UploadTlsBulkCertError>> {
+pub async fn upload_tls_bulk_cert(configuration: &mut configuration::Configuration, params: UploadTlsBulkCertParams) -> Result<crate::models::TlsBulkCertificateResponse, Error<UploadTlsBulkCertError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -294,6 +342,18 @@ pub async fn upload_tls_bulk_cert(configuration: &configuration::Configuration, 
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

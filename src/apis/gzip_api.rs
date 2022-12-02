@@ -116,7 +116,7 @@ pub enum UpdateGzipConfigError {
 
 
 /// Create a named gzip configuration on a particular service and version.
-pub async fn create_gzip_config(configuration: &configuration::Configuration, params: CreateGzipConfigParams) -> Result<crate::models::GzipResponse, Error<CreateGzipConfigError>> {
+pub async fn create_gzip_config(configuration: &mut configuration::Configuration, params: CreateGzipConfigParams) -> Result<crate::models::GzipResponse, Error<CreateGzipConfigError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -162,6 +162,18 @@ pub async fn create_gzip_config(configuration: &configuration::Configuration, pa
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -175,7 +187,7 @@ pub async fn create_gzip_config(configuration: &configuration::Configuration, pa
 }
 
 /// Delete a named gzip configuration on a particular service and version.
-pub async fn delete_gzip_config(configuration: &configuration::Configuration, params: DeleteGzipConfigParams) -> Result<crate::models::InlineResponse200, Error<DeleteGzipConfigError>> {
+pub async fn delete_gzip_config(configuration: &mut configuration::Configuration, params: DeleteGzipConfigParams) -> Result<crate::models::InlineResponse200, Error<DeleteGzipConfigError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -204,6 +216,18 @@ pub async fn delete_gzip_config(configuration: &configuration::Configuration, pa
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -217,7 +241,7 @@ pub async fn delete_gzip_config(configuration: &configuration::Configuration, pa
 }
 
 /// Get the gzip configuration for a particular service, version, and name.
-pub async fn get_gzip_configs(configuration: &configuration::Configuration, params: GetGzipConfigsParams) -> Result<crate::models::GzipResponse, Error<GetGzipConfigsError>> {
+pub async fn get_gzip_configs(configuration: &mut configuration::Configuration, params: GetGzipConfigsParams) -> Result<crate::models::GzipResponse, Error<GetGzipConfigsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -246,6 +270,18 @@ pub async fn get_gzip_configs(configuration: &configuration::Configuration, para
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -259,7 +295,7 @@ pub async fn get_gzip_configs(configuration: &configuration::Configuration, para
 }
 
 /// List all gzip configurations for a particular service and version.
-pub async fn list_gzip_configs(configuration: &configuration::Configuration, params: ListGzipConfigsParams) -> Result<Vec<crate::models::GzipResponse>, Error<ListGzipConfigsError>> {
+pub async fn list_gzip_configs(configuration: &mut configuration::Configuration, params: ListGzipConfigsParams) -> Result<Vec<crate::models::GzipResponse>, Error<ListGzipConfigsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -287,6 +323,18 @@ pub async fn list_gzip_configs(configuration: &configuration::Configuration, par
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -300,7 +348,7 @@ pub async fn list_gzip_configs(configuration: &configuration::Configuration, par
 }
 
 /// Update a named gzip configuration on a particular service and version.
-pub async fn update_gzip_config(configuration: &configuration::Configuration, params: UpdateGzipConfigParams) -> Result<crate::models::GzipResponse, Error<UpdateGzipConfigError>> {
+pub async fn update_gzip_config(configuration: &mut configuration::Configuration, params: UpdateGzipConfigParams) -> Result<crate::models::GzipResponse, Error<UpdateGzipConfigError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -346,6 +394,18 @@ pub async fn update_gzip_config(configuration: &configuration::Configuration, pa
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

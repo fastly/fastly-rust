@@ -132,7 +132,7 @@ pub enum UpdateLogScalyrError {
 
 
 /// Create a Scalyr for a particular service and version.
-pub async fn create_log_scalyr(configuration: &configuration::Configuration, params: CreateLogScalyrParams) -> Result<crate::models::LoggingScalyrResponse, Error<CreateLogScalyrError>> {
+pub async fn create_log_scalyr(configuration: &mut configuration::Configuration, params: CreateLogScalyrParams) -> Result<crate::models::LoggingScalyrResponse, Error<CreateLogScalyrError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -194,6 +194,18 @@ pub async fn create_log_scalyr(configuration: &configuration::Configuration, par
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -207,7 +219,7 @@ pub async fn create_log_scalyr(configuration: &configuration::Configuration, par
 }
 
 /// Delete the Scalyr for a particular service and version.
-pub async fn delete_log_scalyr(configuration: &configuration::Configuration, params: DeleteLogScalyrParams) -> Result<crate::models::InlineResponse200, Error<DeleteLogScalyrError>> {
+pub async fn delete_log_scalyr(configuration: &mut configuration::Configuration, params: DeleteLogScalyrParams) -> Result<crate::models::InlineResponse200, Error<DeleteLogScalyrError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -236,6 +248,18 @@ pub async fn delete_log_scalyr(configuration: &configuration::Configuration, par
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -249,7 +273,7 @@ pub async fn delete_log_scalyr(configuration: &configuration::Configuration, par
 }
 
 /// Get the Scalyr for a particular service and version.
-pub async fn get_log_scalyr(configuration: &configuration::Configuration, params: GetLogScalyrParams) -> Result<crate::models::LoggingScalyrResponse, Error<GetLogScalyrError>> {
+pub async fn get_log_scalyr(configuration: &mut configuration::Configuration, params: GetLogScalyrParams) -> Result<crate::models::LoggingScalyrResponse, Error<GetLogScalyrError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -278,6 +302,18 @@ pub async fn get_log_scalyr(configuration: &configuration::Configuration, params
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -291,7 +327,7 @@ pub async fn get_log_scalyr(configuration: &configuration::Configuration, params
 }
 
 /// List all of the Scalyrs for a particular service and version.
-pub async fn list_log_scalyr(configuration: &configuration::Configuration, params: ListLogScalyrParams) -> Result<Vec<crate::models::LoggingScalyrResponse>, Error<ListLogScalyrError>> {
+pub async fn list_log_scalyr(configuration: &mut configuration::Configuration, params: ListLogScalyrParams) -> Result<Vec<crate::models::LoggingScalyrResponse>, Error<ListLogScalyrError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -319,6 +355,18 @@ pub async fn list_log_scalyr(configuration: &configuration::Configuration, param
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -332,7 +380,7 @@ pub async fn list_log_scalyr(configuration: &configuration::Configuration, param
 }
 
 /// Update the Scalyr for a particular service and version.
-pub async fn update_log_scalyr(configuration: &configuration::Configuration, params: UpdateLogScalyrParams) -> Result<crate::models::LoggingScalyrResponse, Error<UpdateLogScalyrError>> {
+pub async fn update_log_scalyr(configuration: &mut configuration::Configuration, params: UpdateLogScalyrParams) -> Result<crate::models::LoggingScalyrResponse, Error<UpdateLogScalyrError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -394,6 +442,18 @@ pub async fn update_log_scalyr(configuration: &configuration::Configuration, par
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

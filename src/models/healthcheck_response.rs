@@ -10,7 +10,7 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct HealthcheckResponse {
-    /// How often to run the healthcheck in milliseconds.
+    /// How often to run the health check in milliseconds.
     #[serde(rename = "check_interval", skip_serializing_if = "Option::is_none")]
     pub check_interval: Option<i32>,
     /// A freeform descriptive note.
@@ -19,6 +19,9 @@ pub struct HealthcheckResponse {
     /// The status code expected from the host.
     #[serde(rename = "expected_response", skip_serializing_if = "Option::is_none")]
     pub expected_response: Option<i32>,
+    /// Array of custom headers that will be added to the health check probes. This feature is part of an **alpha release**, which may be subject to breaking changes and improvements over time.
+    #[serde(rename = "headers", skip_serializing_if = "Option::is_none")]
+    pub headers: Option<Vec<String>>,
     /// Which host to check.
     #[serde(rename = "host", skip_serializing_if = "Option::is_none")]
     pub host: Option<String>,
@@ -31,19 +34,19 @@ pub struct HealthcheckResponse {
     /// Which HTTP method to use.
     #[serde(rename = "method", skip_serializing_if = "Option::is_none")]
     pub method: Option<String>,
-    /// The name of the healthcheck.
+    /// The name of the health check.
     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
     /// The path to check.
     #[serde(rename = "path", skip_serializing_if = "Option::is_none")]
     pub path: Option<String>,
-    /// How many healthchecks must succeed to be considered healthy.
+    /// How many health checks must succeed to be considered healthy.
     #[serde(rename = "threshold", skip_serializing_if = "Option::is_none")]
     pub threshold: Option<i32>,
     /// Timeout in milliseconds.
     #[serde(rename = "timeout", skip_serializing_if = "Option::is_none")]
     pub timeout: Option<i32>,
-    /// The number of most recent healthcheck queries to keep for this healthcheck.
+    /// The number of most recent health check queries to keep for this health check.
     #[serde(rename = "window", skip_serializing_if = "Option::is_none")]
     pub window: Option<i32>,
     #[serde(rename = "service_id", skip_serializing_if = "Option::is_none")]
@@ -67,6 +70,7 @@ impl HealthcheckResponse {
             check_interval: None,
             comment: None,
             expected_response: None,
+            headers: None,
             host: None,
             http_version: None,
             initial: None,

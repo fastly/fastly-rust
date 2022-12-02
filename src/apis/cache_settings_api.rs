@@ -120,7 +120,7 @@ pub enum UpdateCacheSettingsError {
 
 
 /// Create a cache settings object.
-pub async fn create_cache_settings(configuration: &configuration::Configuration, params: CreateCacheSettingsParams) -> Result<crate::models::CacheSettingResponse, Error<CreateCacheSettingsError>> {
+pub async fn create_cache_settings(configuration: &mut configuration::Configuration, params: CreateCacheSettingsParams) -> Result<crate::models::CacheSettingResponse, Error<CreateCacheSettingsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -170,6 +170,18 @@ pub async fn create_cache_settings(configuration: &configuration::Configuration,
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -183,7 +195,7 @@ pub async fn create_cache_settings(configuration: &configuration::Configuration,
 }
 
 /// Delete a specific cache settings object.
-pub async fn delete_cache_settings(configuration: &configuration::Configuration, params: DeleteCacheSettingsParams) -> Result<crate::models::InlineResponse200, Error<DeleteCacheSettingsError>> {
+pub async fn delete_cache_settings(configuration: &mut configuration::Configuration, params: DeleteCacheSettingsParams) -> Result<crate::models::InlineResponse200, Error<DeleteCacheSettingsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -212,6 +224,18 @@ pub async fn delete_cache_settings(configuration: &configuration::Configuration,
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -225,7 +249,7 @@ pub async fn delete_cache_settings(configuration: &configuration::Configuration,
 }
 
 /// Get a specific cache settings object.
-pub async fn get_cache_settings(configuration: &configuration::Configuration, params: GetCacheSettingsParams) -> Result<crate::models::CacheSettingResponse, Error<GetCacheSettingsError>> {
+pub async fn get_cache_settings(configuration: &mut configuration::Configuration, params: GetCacheSettingsParams) -> Result<crate::models::CacheSettingResponse, Error<GetCacheSettingsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -254,6 +278,18 @@ pub async fn get_cache_settings(configuration: &configuration::Configuration, pa
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -267,7 +303,7 @@ pub async fn get_cache_settings(configuration: &configuration::Configuration, pa
 }
 
 /// Get a list of all cache settings for a particular service and version.
-pub async fn list_cache_settings(configuration: &configuration::Configuration, params: ListCacheSettingsParams) -> Result<Vec<crate::models::CacheSettingResponse>, Error<ListCacheSettingsError>> {
+pub async fn list_cache_settings(configuration: &mut configuration::Configuration, params: ListCacheSettingsParams) -> Result<Vec<crate::models::CacheSettingResponse>, Error<ListCacheSettingsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -295,6 +331,18 @@ pub async fn list_cache_settings(configuration: &configuration::Configuration, p
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -308,7 +356,7 @@ pub async fn list_cache_settings(configuration: &configuration::Configuration, p
 }
 
 /// Update a specific cache settings object.
-pub async fn update_cache_settings(configuration: &configuration::Configuration, params: UpdateCacheSettingsParams) -> Result<crate::models::CacheSettingResponse, Error<UpdateCacheSettingsError>> {
+pub async fn update_cache_settings(configuration: &mut configuration::Configuration, params: UpdateCacheSettingsParams) -> Result<crate::models::CacheSettingResponse, Error<UpdateCacheSettingsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -358,6 +406,18 @@ pub async fn update_cache_settings(configuration: &configuration::Configuration,
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

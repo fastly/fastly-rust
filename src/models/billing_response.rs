@@ -20,6 +20,9 @@ pub struct BillingResponse {
     pub invoice_id: Option<Box<String>>,
     #[serde(rename = "customer_id", skip_serializing_if = "Option::is_none")]
     pub customer_id: Option<Box<String>>,
+    /// The current state of our third-party billing vendor. One of `up` or `down`.
+    #[serde(rename = "vendor_state", skip_serializing_if = "Option::is_none")]
+    pub vendor_state: Option<String>,
     #[serde(rename = "status", skip_serializing_if = "Option::is_none")]
     pub status: Option<Box<crate::models::BillingStatus>>,
     #[serde(rename = "total", skip_serializing_if = "Option::is_none")]
@@ -38,6 +41,7 @@ impl BillingResponse {
             start_time: None,
             invoice_id: None,
             customer_id: None,
+            vendor_state: None,
             status: None,
             total: None,
             regions: None,

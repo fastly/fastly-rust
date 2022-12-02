@@ -43,6 +43,9 @@ pub struct Backend {
     /// IPv6 address of the backend. May be used as an alternative to `address` to set the backend location.
     #[serde(rename = "ipv6", skip_serializing_if = "Option::is_none")]
     pub ipv6: Option<String>,
+    /// How long to keep a persistent connection to the backend between requests.
+    #[serde(rename = "keepalive_time", skip_serializing_if = "Option::is_none")]
+    pub keepalive_time: Option<i32>,
     /// Maximum number of concurrent connections this backend will accept.
     #[serde(rename = "max_conn", skip_serializing_if = "Option::is_none")]
     pub max_conn: Option<i32>,
@@ -113,6 +116,7 @@ impl Backend {
             hostname: None,
             ipv4: None,
             ipv6: None,
+            keepalive_time: None,
             max_conn: None,
             max_tls_version: None,
             min_tls_version: None,

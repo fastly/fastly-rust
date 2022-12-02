@@ -48,6 +48,7 @@ pub struct UpdateBillingAddrParams {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AddBillingAddrError {
+    Status400(crate::models::BillingAddressVerificationErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -69,12 +70,13 @@ pub enum GetBillingAddrError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateBillingAddrError {
+    Status400(crate::models::BillingAddressVerificationErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
 
 /// Add a billing address to a customer.
-pub async fn add_billing_addr(configuration: &configuration::Configuration, params: AddBillingAddrParams) -> Result<crate::models::BillingAddressResponse, Error<AddBillingAddrError>> {
+pub async fn add_billing_addr(configuration: &mut configuration::Configuration, params: AddBillingAddrParams) -> Result<crate::models::BillingAddressResponse, Error<AddBillingAddrError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -103,6 +105,18 @@ pub async fn add_billing_addr(configuration: &configuration::Configuration, para
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -116,7 +130,7 @@ pub async fn add_billing_addr(configuration: &configuration::Configuration, para
 }
 
 /// Delete a customer's billing address.
-pub async fn delete_billing_addr(configuration: &configuration::Configuration, params: DeleteBillingAddrParams) -> Result<(), Error<DeleteBillingAddrError>> {
+pub async fn delete_billing_addr(configuration: &mut configuration::Configuration, params: DeleteBillingAddrParams) -> Result<(), Error<DeleteBillingAddrError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -143,6 +157,18 @@ pub async fn delete_billing_addr(configuration: &configuration::Configuration, p
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -156,7 +182,7 @@ pub async fn delete_billing_addr(configuration: &configuration::Configuration, p
 }
 
 /// Get a customer's billing address.
-pub async fn get_billing_addr(configuration: &configuration::Configuration, params: GetBillingAddrParams) -> Result<crate::models::BillingAddressResponse, Error<GetBillingAddrError>> {
+pub async fn get_billing_addr(configuration: &mut configuration::Configuration, params: GetBillingAddrParams) -> Result<crate::models::BillingAddressResponse, Error<GetBillingAddrError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -183,6 +209,18 @@ pub async fn get_billing_addr(configuration: &configuration::Configuration, para
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -196,7 +234,7 @@ pub async fn get_billing_addr(configuration: &configuration::Configuration, para
 }
 
 /// Update a customer's billing address. You may update only part of the customer's billing address.
-pub async fn update_billing_addr(configuration: &configuration::Configuration, params: UpdateBillingAddrParams) -> Result<crate::models::BillingAddressResponse, Error<UpdateBillingAddrError>> {
+pub async fn update_billing_addr(configuration: &mut configuration::Configuration, params: UpdateBillingAddrParams) -> Result<crate::models::BillingAddressResponse, Error<UpdateBillingAddrError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -224,6 +262,18 @@ pub async fn update_billing_addr(configuration: &configuration::Configuration, p
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PATCH" != "GET" && "PATCH" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

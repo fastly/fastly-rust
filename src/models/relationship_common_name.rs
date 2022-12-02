@@ -11,7 +11,7 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct RelationshipCommonName {
     #[serde(rename = "common_name", skip_serializing_if = "Option::is_none")]
-    pub common_name: Option<Box<crate::models::RelationshipTlsDomainTlsDomain>>,
+    pub common_name: Option<Box<crate::models::RelationshipMemberTlsDomain>>,
 }
 
 impl RelationshipCommonName {

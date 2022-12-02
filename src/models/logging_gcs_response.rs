@@ -40,12 +40,15 @@ pub struct LoggingGcsResponse {
     /// The codec used for compressing your logs. Valid values are `zstd`, `snappy`, and `gzip`. Specifying both `compression_codec` and `gzip_level` in the same API request will result in an error.
     #[serde(rename = "compression_codec", skip_serializing_if = "Option::is_none")]
     pub compression_codec: Option<CompressionCodec>,
-    /// Your Google Cloud Platform service account email address. The `client_email` field in your service account authentication JSON. Required.
+    /// Your Google Cloud Platform service account email address. The `client_email` field in your service account authentication JSON. Not required if `account_name` is specified.
     #[serde(rename = "user", skip_serializing_if = "Option::is_none")]
     pub user: Option<String>,
-    /// Your Google Cloud Platform account secret key. The `private_key` field in your service account authentication JSON. Required.
+    /// Your Google Cloud Platform account secret key. The `private_key` field in your service account authentication JSON. Not required if `account_name` is specified.
     #[serde(rename = "secret_key", skip_serializing_if = "Option::is_none")]
     pub secret_key: Option<String>,
+    /// The name of the Google Cloud Platform service account associated with the target log collection service. Not required if `user` and `secret_key` are provided.
+    #[serde(rename = "account_name", skip_serializing_if = "Option::is_none")]
+    pub account_name: Option<String>,
     /// The name of the GCS bucket.
     #[serde(rename = "bucket_name", skip_serializing_if = "Option::is_none")]
     pub bucket_name: Option<String>,
@@ -55,6 +58,9 @@ pub struct LoggingGcsResponse {
     /// A PGP public key that Fastly will use to encrypt your log files before writing them to disk.
     #[serde(rename = "public_key", skip_serializing_if = "Option::is_none")]
     pub public_key: Option<String>,
+    /// Your Google Cloud Platform project ID. Required
+    #[serde(rename = "project_id", skip_serializing_if = "Option::is_none")]
+    pub project_id: Option<String>,
     /// Date and time in ISO 8601 format.
     #[serde(rename = "created_at", skip_serializing_if = "Option::is_none")]
     pub created_at: Option<String>,
@@ -85,9 +91,11 @@ impl LoggingGcsResponse {
             compression_codec: None,
             user: None,
             secret_key: None,
+            account_name: None,
             bucket_name: None,
             path: None,
             public_key: None,
+            project_id: None,
             created_at: None,
             deleted_at: None,
             updated_at: None,

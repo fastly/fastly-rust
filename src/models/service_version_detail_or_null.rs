@@ -72,9 +72,8 @@ pub struct ServiceVersionDetailOrNull {
     /// List of response objects for this service.
     #[serde(rename = "response_objects", skip_serializing_if = "Option::is_none")]
     pub response_objects: Option<Vec<crate::models::ResponseObjectResponse>>,
-    /// List of default settings for this service.
     #[serde(rename = "settings", skip_serializing_if = "Option::is_none")]
-    pub settings: Option<Box<crate::models::Settings>>,
+    pub settings: Option<Box<crate::models::VersionDetailSettings>>,
     /// List of VCL snippets for this service.
     #[serde(rename = "snippets", skip_serializing_if = "Option::is_none")]
     pub snippets: Option<Vec<crate::models::SchemasSnippetResponse>>,

@@ -126,7 +126,7 @@ pub enum UpdateConditionError {
 
 
 /// Creates a new condition.
-pub async fn create_condition(configuration: &configuration::Configuration, params: CreateConditionParams) -> Result<crate::models::ConditionResponse, Error<CreateConditionError>> {
+pub async fn create_condition(configuration: &mut configuration::Configuration, params: CreateConditionParams) -> Result<crate::models::ConditionResponse, Error<CreateConditionError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -184,6 +184,18 @@ pub async fn create_condition(configuration: &configuration::Configuration, para
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -197,7 +209,7 @@ pub async fn create_condition(configuration: &configuration::Configuration, para
 }
 
 /// Deletes the specified condition.
-pub async fn delete_condition(configuration: &configuration::Configuration, params: DeleteConditionParams) -> Result<crate::models::InlineResponse200, Error<DeleteConditionError>> {
+pub async fn delete_condition(configuration: &mut configuration::Configuration, params: DeleteConditionParams) -> Result<crate::models::InlineResponse200, Error<DeleteConditionError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -226,6 +238,18 @@ pub async fn delete_condition(configuration: &configuration::Configuration, para
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -239,7 +263,7 @@ pub async fn delete_condition(configuration: &configuration::Configuration, para
 }
 
 /// Gets the specified condition.
-pub async fn get_condition(configuration: &configuration::Configuration, params: GetConditionParams) -> Result<crate::models::ConditionResponse, Error<GetConditionError>> {
+pub async fn get_condition(configuration: &mut configuration::Configuration, params: GetConditionParams) -> Result<crate::models::ConditionResponse, Error<GetConditionError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -268,6 +292,18 @@ pub async fn get_condition(configuration: &configuration::Configuration, params:
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -281,7 +317,7 @@ pub async fn get_condition(configuration: &configuration::Configuration, params:
 }
 
 /// Gets all conditions for a particular service and version.
-pub async fn list_conditions(configuration: &configuration::Configuration, params: ListConditionsParams) -> Result<Vec<crate::models::ConditionResponse>, Error<ListConditionsError>> {
+pub async fn list_conditions(configuration: &mut configuration::Configuration, params: ListConditionsParams) -> Result<Vec<crate::models::ConditionResponse>, Error<ListConditionsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -309,6 +345,18 @@ pub async fn list_conditions(configuration: &configuration::Configuration, param
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -322,7 +370,7 @@ pub async fn list_conditions(configuration: &configuration::Configuration, param
 }
 
 /// Updates the specified condition.
-pub async fn update_condition(configuration: &configuration::Configuration, params: UpdateConditionParams) -> Result<crate::models::ConditionResponse, Error<UpdateConditionError>> {
+pub async fn update_condition(configuration: &mut configuration::Configuration, params: UpdateConditionParams) -> Result<crate::models::ConditionResponse, Error<UpdateConditionError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -380,6 +428,18 @@ pub async fn update_condition(configuration: &configuration::Configuration, para
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

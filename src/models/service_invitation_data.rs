@@ -14,9 +14,8 @@ pub struct ServiceInvitationData {
     pub _type: Option<crate::models::TypeServiceInvitation>,
     #[serde(rename = "attributes", skip_serializing_if = "Option::is_none")]
     pub attributes: Option<Box<crate::models::ServiceInvitationDataAttributes>>,
-    /// Service the accepting user will have access to.
     #[serde(rename = "relationships", skip_serializing_if = "Option::is_none")]
-    pub relationships: Option<Box<crate::models::RelationshipService>>,
+    pub relationships: Option<Box<crate::models::ServiceInvitationDataRelationships>>,
 }
 
 impl ServiceInvitationData {

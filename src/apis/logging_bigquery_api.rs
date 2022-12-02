@@ -28,10 +28,12 @@ pub struct CreateLogBigqueryParams {
     pub response_condition: Option<String>,
     /// A Fastly [log format string](https://docs.fastly.com/en/guides/custom-log-formats). Must produce JSON that matches the schema of your BigQuery table.
     pub format: Option<String>,
-    /// Your Google Cloud Platform service account email address. The `client_email` field in your service account authentication JSON. Required.
+    /// Your Google Cloud Platform service account email address. The `client_email` field in your service account authentication JSON. Not required if `account_name` is specified.
     pub user: Option<String>,
-    /// Your Google Cloud Platform account secret key. The `private_key` field in your service account authentication JSON. Required.
+    /// Your Google Cloud Platform account secret key. The `private_key` field in your service account authentication JSON. Not required if `account_name` is specified.
     pub secret_key: Option<String>,
+    /// The name of the Google Cloud Platform service account associated with the target log collection service. Not required if `user` and `secret_key` are provided.
+    pub account_name: Option<String>,
     /// Your BigQuery dataset.
     pub dataset: Option<String>,
     /// Your BigQuery table.
@@ -92,10 +94,12 @@ pub struct UpdateLogBigqueryParams {
     pub response_condition: Option<String>,
     /// A Fastly [log format string](https://docs.fastly.com/en/guides/custom-log-formats). Must produce JSON that matches the schema of your BigQuery table.
     pub format: Option<String>,
-    /// Your Google Cloud Platform service account email address. The `client_email` field in your service account authentication JSON. Required.
+    /// Your Google Cloud Platform service account email address. The `client_email` field in your service account authentication JSON. Not required if `account_name` is specified.
     pub user: Option<String>,
-    /// Your Google Cloud Platform account secret key. The `private_key` field in your service account authentication JSON. Required.
+    /// Your Google Cloud Platform account secret key. The `private_key` field in your service account authentication JSON. Not required if `account_name` is specified.
     pub secret_key: Option<String>,
+    /// The name of the Google Cloud Platform service account associated with the target log collection service. Not required if `user` and `secret_key` are provided.
+    pub account_name: Option<String>,
     /// Your BigQuery dataset.
     pub dataset: Option<String>,
     /// Your BigQuery table.
@@ -144,7 +148,7 @@ pub enum UpdateLogBigqueryError {
 
 
 /// Create a BigQuery logging object for a particular service and version.
-pub async fn create_log_bigquery(configuration: &configuration::Configuration, params: CreateLogBigqueryParams) -> Result<crate::models::LoggingBigqueryResponse, Error<CreateLogBigqueryError>> {
+pub async fn create_log_bigquery(configuration: &mut configuration::Configuration, params: CreateLogBigqueryParams) -> Result<crate::models::LoggingBigqueryResponse, Error<CreateLogBigqueryError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -157,6 +161,7 @@ pub async fn create_log_bigquery(configuration: &configuration::Configuration, p
     let format = params.format;
     let user = params.user;
     let secret_key = params.secret_key;
+    let account_name = params.account_name;
     let dataset = params.dataset;
     let table = params.table;
     let template_suffix = params.template_suffix;
@@ -201,6 +206,9 @@ pub async fn create_log_bigquery(configuration: &configuration::Configuration, p
     if let Some(local_var_param_value) = secret_key {
         local_var_form_params.insert("secret_key", local_var_param_value.to_string());
     }
+    if let Some(local_var_param_value) = account_name {
+        local_var_form_params.insert("account_name", local_var_param_value.to_string());
+    }
     if let Some(local_var_param_value) = dataset {
         local_var_form_params.insert("dataset", local_var_param_value.to_string());
     }
@@ -218,6 +226,18 @@ pub async fn create_log_bigquery(configuration: &configuration::Configuration, p
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -231,7 +251,7 @@ pub async fn create_log_bigquery(configuration: &configuration::Configuration, p
 }
 
 /// Delete a BigQuery logging object for a particular service and version.
-pub async fn delete_log_bigquery(configuration: &configuration::Configuration, params: DeleteLogBigqueryParams) -> Result<crate::models::InlineResponse200, Error<DeleteLogBigqueryError>> {
+pub async fn delete_log_bigquery(configuration: &mut configuration::Configuration, params: DeleteLogBigqueryParams) -> Result<crate::models::InlineResponse200, Error<DeleteLogBigqueryError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -260,6 +280,18 @@ pub async fn delete_log_bigquery(configuration: &configuration::Configuration, p
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -273,7 +305,7 @@ pub async fn delete_log_bigquery(configuration: &configuration::Configuration, p
 }
 
 /// Get the details for a BigQuery logging object for a particular service and version.
-pub async fn get_log_bigquery(configuration: &configuration::Configuration, params: GetLogBigqueryParams) -> Result<crate::models::LoggingBigqueryResponse, Error<GetLogBigqueryError>> {
+pub async fn get_log_bigquery(configuration: &mut configuration::Configuration, params: GetLogBigqueryParams) -> Result<crate::models::LoggingBigqueryResponse, Error<GetLogBigqueryError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -302,6 +334,18 @@ pub async fn get_log_bigquery(configuration: &configuration::Configuration, para
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -315,7 +359,7 @@ pub async fn get_log_bigquery(configuration: &configuration::Configuration, para
 }
 
 /// List all of the BigQuery logging objects for a particular service and version.
-pub async fn list_log_bigquery(configuration: &configuration::Configuration, params: ListLogBigqueryParams) -> Result<Vec<crate::models::LoggingBigqueryResponse>, Error<ListLogBigqueryError>> {
+pub async fn list_log_bigquery(configuration: &mut configuration::Configuration, params: ListLogBigqueryParams) -> Result<Vec<crate::models::LoggingBigqueryResponse>, Error<ListLogBigqueryError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -343,6 +387,18 @@ pub async fn list_log_bigquery(configuration: &configuration::Configuration, par
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -356,7 +412,7 @@ pub async fn list_log_bigquery(configuration: &configuration::Configuration, par
 }
 
 /// Update a BigQuery logging object for a particular service and version.
-pub async fn update_log_bigquery(configuration: &configuration::Configuration, params: UpdateLogBigqueryParams) -> Result<crate::models::LoggingBigqueryResponse, Error<UpdateLogBigqueryError>> {
+pub async fn update_log_bigquery(configuration: &mut configuration::Configuration, params: UpdateLogBigqueryParams) -> Result<crate::models::LoggingBigqueryResponse, Error<UpdateLogBigqueryError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -370,6 +426,7 @@ pub async fn update_log_bigquery(configuration: &configuration::Configuration, p
     let format = params.format;
     let user = params.user;
     let secret_key = params.secret_key;
+    let account_name = params.account_name;
     let dataset = params.dataset;
     let table = params.table;
     let template_suffix = params.template_suffix;
@@ -414,6 +471,9 @@ pub async fn update_log_bigquery(configuration: &configuration::Configuration, p
     if let Some(local_var_param_value) = secret_key {
         local_var_form_params.insert("secret_key", local_var_param_value.to_string());
     }
+    if let Some(local_var_param_value) = account_name {
+        local_var_form_params.insert("account_name", local_var_param_value.to_string());
+    }
     if let Some(local_var_param_value) = dataset {
         local_var_form_params.insert("dataset", local_var_param_value.to_string());
     }
@@ -430,6 +490,18 @@ pub async fn update_log_bigquery(configuration: &configuration::Configuration, p
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

@@ -41,7 +41,7 @@ pub struct Results {
     /// Ratio of cache hits to cache misses (between 0 and 1).
     #[serde(rename = "hit_ratio", skip_serializing_if = "Option::is_none")]
     pub hit_ratio: Option<f32>,
-    /// Total bytes delivered (`resp_header_bytes` + `resp_body_bytes` + `bereq_header_bytes` + `bereq_body_bytes` + `compute_resp_header_bytes` + `compute_resp_body_bytes` + `compute_bereq_header_bytes` + `compute_bereq_body_bytes`).
+    /// Total bytes delivered (`resp_header_bytes` + `resp_body_bytes` + `bereq_header_bytes` + `bereq_body_bytes` + `compute_resp_header_bytes` + `compute_resp_body_bytes` + `compute_bereq_header_bytes` + `compute_bereq_body_bytes` + `websocket_resp_header_bytes` + `websocket_resp_body_bytes` + `websocket_bereq_header_bytes` + `websocket_bereq_body_bytes`).
     #[serde(rename = "bandwidth", skip_serializing_if = "Option::is_none")]
     pub bandwidth: Option<i32>,
     /// Total body bytes delivered (alias for resp_body_bytes).
@@ -563,6 +563,9 @@ pub struct Results {
     /// Body bytes delivered for shield misses.
     #[serde(rename = "shield_miss_resp_body_bytes", skip_serializing_if = "Option::is_none")]
     pub shield_miss_resp_body_bytes: Option<i32>,
+    /// Total header bytes received from end users over passthrough WebSocket connections.
+    #[serde(rename = "websocket_req_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub websocket_req_header_bytes: Option<i32>,
     /// Total message content bytes received from end users over passthrough WebSocket connections.
     #[serde(rename = "websocket_req_body_bytes", skip_serializing_if = "Option::is_none")]
     pub websocket_req_body_bytes: Option<i32>,
@@ -572,12 +575,33 @@ pub struct Results {
     /// Total message content bytes sent to end users over passthrough WebSocket connections.
     #[serde(rename = "websocket_resp_body_bytes", skip_serializing_if = "Option::is_none")]
     pub websocket_resp_body_bytes: Option<i32>,
+    /// Total header bytes sent to backends over passthrough WebSocket connections.
+    #[serde(rename = "websocket_bereq_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub websocket_bereq_header_bytes: Option<i32>,
+    /// Total message content bytes sent to backends over passthrough WebSocket connections.
+    #[serde(rename = "websocket_bereq_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub websocket_bereq_body_bytes: Option<i32>,
+    /// Total header bytes received from backends over passthrough WebSocket connections.
+    #[serde(rename = "websocket_beresp_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub websocket_beresp_header_bytes: Option<i32>,
+    /// Total message content bytes received from backends over passthrough WebSocket connections.
+    #[serde(rename = "websocket_beresp_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub websocket_beresp_body_bytes: Option<i32>,
+    /// Total duration of passthrough WebSocket connections with end users.
+    #[serde(rename = "websocket_conn_time_ms", skip_serializing_if = "Option::is_none")]
+    pub websocket_conn_time_ms: Option<i32>,
     /// Total published messages received from the publish API endpoint.
     #[serde(rename = "fanout_recv_publishes", skip_serializing_if = "Option::is_none")]
     pub fanout_recv_publishes: Option<i32>,
     /// Total published messages sent to end users.
     #[serde(rename = "fanout_send_publishes", skip_serializing_if = "Option::is_none")]
     pub fanout_send_publishes: Option<i32>,
+    /// The total number of reads received for the object store.
+    #[serde(rename = "object_store_read_requests", skip_serializing_if = "Option::is_none")]
+    pub object_store_read_requests: Option<i32>,
+    /// The total number of writes received for the object store.
+    #[serde(rename = "object_store_write_requests", skip_serializing_if = "Option::is_none")]
+    pub object_store_write_requests: Option<i32>,
 }
 
 impl Results {
@@ -768,11 +792,19 @@ impl Results {
             shield_hit_resp_body_bytes: None,
             shield_miss_resp_header_bytes: None,
             shield_miss_resp_body_bytes: None,
+            websocket_req_header_bytes: None,
             websocket_req_body_bytes: None,
             websocket_resp_header_bytes: None,
             websocket_resp_body_bytes: None,
+            websocket_bereq_header_bytes: None,
+            websocket_bereq_body_bytes: None,
+            websocket_beresp_header_bytes: None,
+            websocket_beresp_body_bytes: None,
+            websocket_conn_time_ms: None,
             fanout_recv_publishes: None,
             fanout_send_publishes: None,
+            object_store_read_requests: None,
+            object_store_write_requests: None,
         }
     }
 }

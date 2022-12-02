@@ -31,7 +31,7 @@ create_user(cfg, params)
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**login** | Option\<[**String**](String.md)> |  |  |
+**login** | Option\<**String**> |  |  |
 **name** | Option\<**String**> | The real life name of the user. |  |
 **limit_services** | Option\<**bool**> | Indicates that the user has limited access to the customer's services. |  |
 **locked** | Option\<**bool**> | Indicates whether the is account is locked for editing or not. |  |
@@ -211,7 +211,7 @@ update_user(cfg, params)
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **user_id** | **String** | Alphanumeric string identifying the user. | [required] |
-**login** | Option\<[**String**](String.md)> |  |  |
+**login** | Option\<**String**> |  |  |
 **name** | Option\<**String**> | The real life name of the user. |  |
 **limit_services** | Option\<**bool**> | Indicates that the user has limited access to the customer's services. |  |
 **locked** | Option\<**bool**> | Indicates whether the is account is locked for editing or not. |  |

@@ -138,7 +138,7 @@ pub enum UpsertDictionaryItemError {
 
 
 /// Create DictionaryItem given service, dictionary ID, item key, and item value.
-pub async fn create_dictionary_item(configuration: &configuration::Configuration, params: CreateDictionaryItemParams) -> Result<crate::models::DictionaryItemResponse, Error<CreateDictionaryItemError>> {
+pub async fn create_dictionary_item(configuration: &mut configuration::Configuration, params: CreateDictionaryItemParams) -> Result<crate::models::DictionaryItemResponse, Error<CreateDictionaryItemError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -176,6 +176,18 @@ pub async fn create_dictionary_item(configuration: &configuration::Configuration
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -189,7 +201,7 @@ pub async fn create_dictionary_item(configuration: &configuration::Configuration
 }
 
 /// Delete DictionaryItem given service, dictionary ID, and item key.
-pub async fn delete_dictionary_item(configuration: &configuration::Configuration, params: DeleteDictionaryItemParams) -> Result<crate::models::InlineResponse200, Error<DeleteDictionaryItemError>> {
+pub async fn delete_dictionary_item(configuration: &mut configuration::Configuration, params: DeleteDictionaryItemParams) -> Result<crate::models::InlineResponse200, Error<DeleteDictionaryItemError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -218,6 +230,18 @@ pub async fn delete_dictionary_item(configuration: &configuration::Configuration
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -231,7 +255,7 @@ pub async fn delete_dictionary_item(configuration: &configuration::Configuration
 }
 
 /// Retrieve a single DictionaryItem given service, dictionary ID and item key.
-pub async fn get_dictionary_item(configuration: &configuration::Configuration, params: GetDictionaryItemParams) -> Result<crate::models::DictionaryItemResponse, Error<GetDictionaryItemError>> {
+pub async fn get_dictionary_item(configuration: &mut configuration::Configuration, params: GetDictionaryItemParams) -> Result<crate::models::DictionaryItemResponse, Error<GetDictionaryItemError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -260,6 +284,18 @@ pub async fn get_dictionary_item(configuration: &configuration::Configuration, p
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -273,7 +309,7 @@ pub async fn get_dictionary_item(configuration: &configuration::Configuration, p
 }
 
 /// List of DictionaryItems given service and dictionary ID.
-pub async fn list_dictionary_items(configuration: &configuration::Configuration, params: ListDictionaryItemsParams) -> Result<Vec<crate::models::DictionaryItemResponse>, Error<ListDictionaryItemsError>> {
+pub async fn list_dictionary_items(configuration: &mut configuration::Configuration, params: ListDictionaryItemsParams) -> Result<Vec<crate::models::DictionaryItemResponse>, Error<ListDictionaryItemsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -317,6 +353,18 @@ pub async fn list_dictionary_items(configuration: &configuration::Configuration,
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -330,7 +378,7 @@ pub async fn list_dictionary_items(configuration: &configuration::Configuration,
 }
 
 /// Update DictionaryItem given service, dictionary ID, item key, and item value.
-pub async fn update_dictionary_item(configuration: &configuration::Configuration, params: UpdateDictionaryItemParams) -> Result<crate::models::DictionaryItemResponse, Error<UpdateDictionaryItemError>> {
+pub async fn update_dictionary_item(configuration: &mut configuration::Configuration, params: UpdateDictionaryItemParams) -> Result<crate::models::DictionaryItemResponse, Error<UpdateDictionaryItemError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -369,6 +417,18 @@ pub async fn update_dictionary_item(configuration: &configuration::Configuration
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "PATCH" != "GET" && "PATCH" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -382,7 +442,7 @@ pub async fn update_dictionary_item(configuration: &configuration::Configuration
 }
 
 /// Upsert DictionaryItem given service, dictionary ID, item key, and item value.
-pub async fn upsert_dictionary_item(configuration: &configuration::Configuration, params: UpsertDictionaryItemParams) -> Result<crate::models::DictionaryItemResponse, Error<UpsertDictionaryItemError>> {
+pub async fn upsert_dictionary_item(configuration: &mut configuration::Configuration, params: UpsertDictionaryItemParams) -> Result<crate::models::DictionaryItemResponse, Error<UpsertDictionaryItemError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -420,6 +480,18 @@ pub async fn upsert_dictionary_item(configuration: &configuration::Configuration
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

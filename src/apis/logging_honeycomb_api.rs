@@ -128,7 +128,7 @@ pub enum UpdateLogHoneycombError {
 
 
 /// Create a Honeycomb logging object for a particular service and version.
-pub async fn create_log_honeycomb(configuration: &configuration::Configuration, params: CreateLogHoneycombParams) -> Result<crate::models::LoggingHoneycomb, Error<CreateLogHoneycombError>> {
+pub async fn create_log_honeycomb(configuration: &mut configuration::Configuration, params: CreateLogHoneycombParams) -> Result<crate::models::LoggingHoneycomb, Error<CreateLogHoneycombError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -186,6 +186,18 @@ pub async fn create_log_honeycomb(configuration: &configuration::Configuration, 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -199,7 +211,7 @@ pub async fn create_log_honeycomb(configuration: &configuration::Configuration, 
 }
 
 /// Delete the Honeycomb logging object for a particular service and version.
-pub async fn delete_log_honeycomb(configuration: &configuration::Configuration, params: DeleteLogHoneycombParams) -> Result<crate::models::InlineResponse200, Error<DeleteLogHoneycombError>> {
+pub async fn delete_log_honeycomb(configuration: &mut configuration::Configuration, params: DeleteLogHoneycombParams) -> Result<crate::models::InlineResponse200, Error<DeleteLogHoneycombError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -228,6 +240,18 @@ pub async fn delete_log_honeycomb(configuration: &configuration::Configuration, 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -241,7 +265,7 @@ pub async fn delete_log_honeycomb(configuration: &configuration::Configuration, 
 }
 
 /// Get the details of a Honeycomb logging object for a particular service and version.
-pub async fn get_log_honeycomb(configuration: &configuration::Configuration, params: GetLogHoneycombParams) -> Result<crate::models::LoggingHoneycomb, Error<GetLogHoneycombError>> {
+pub async fn get_log_honeycomb(configuration: &mut configuration::Configuration, params: GetLogHoneycombParams) -> Result<crate::models::LoggingHoneycomb, Error<GetLogHoneycombError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -270,6 +294,18 @@ pub async fn get_log_honeycomb(configuration: &configuration::Configuration, par
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -283,7 +319,7 @@ pub async fn get_log_honeycomb(configuration: &configuration::Configuration, par
 }
 
 /// List all of the Honeycomb logging objects for a particular service and version.
-pub async fn list_log_honeycomb(configuration: &configuration::Configuration, params: ListLogHoneycombParams) -> Result<Vec<crate::models::LoggingHoneycombResponse>, Error<ListLogHoneycombError>> {
+pub async fn list_log_honeycomb(configuration: &mut configuration::Configuration, params: ListLogHoneycombParams) -> Result<Vec<crate::models::LoggingHoneycombResponse>, Error<ListLogHoneycombError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -311,6 +347,18 @@ pub async fn list_log_honeycomb(configuration: &configuration::Configuration, pa
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -324,7 +372,7 @@ pub async fn list_log_honeycomb(configuration: &configuration::Configuration, pa
 }
 
 /// Update a Honeycomb logging object for a particular service and version.
-pub async fn update_log_honeycomb(configuration: &configuration::Configuration, params: UpdateLogHoneycombParams) -> Result<crate::models::LoggingHoneycombResponse, Error<UpdateLogHoneycombError>> {
+pub async fn update_log_honeycomb(configuration: &mut configuration::Configuration, params: UpdateLogHoneycombParams) -> Result<crate::models::LoggingHoneycombResponse, Error<UpdateLogHoneycombError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -382,6 +430,18 @@ pub async fn update_log_honeycomb(configuration: &configuration::Configuration, 
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

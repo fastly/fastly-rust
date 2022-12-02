@@ -32,7 +32,7 @@ pub enum GetDictionaryInfoError {
 
 
 /// Retrieve metadata for a single dictionary by ID for a version and service.
-pub async fn get_dictionary_info(configuration: &configuration::Configuration, params: GetDictionaryInfoParams) -> Result<crate::models::DictionaryInfoResponse, Error<GetDictionaryInfoError>> {
+pub async fn get_dictionary_info(configuration: &mut configuration::Configuration, params: GetDictionaryInfoParams) -> Result<crate::models::DictionaryInfoResponse, Error<GetDictionaryInfoError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -60,6 +60,18 @@ pub async fn get_dictionary_info(configuration: &configuration::Configuration, p
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

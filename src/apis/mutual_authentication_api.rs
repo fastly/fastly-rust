@@ -86,7 +86,7 @@ pub enum PatchMutualAuthenticationError {
 
 
 /// Create a mutual authentication using a bundle of certificates to enable client-to-server mutual TLS.
-pub async fn create_mutual_tls_authentication(configuration: &configuration::Configuration, params: CreateMutualTlsAuthenticationParams) -> Result<crate::models::MutualAuthenticationResponse, Error<CreateMutualTlsAuthenticationError>> {
+pub async fn create_mutual_tls_authentication(configuration: &mut configuration::Configuration, params: CreateMutualTlsAuthenticationParams) -> Result<crate::models::MutualAuthenticationResponse, Error<CreateMutualTlsAuthenticationError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -114,6 +114,18 @@ pub async fn create_mutual_tls_authentication(configuration: &configuration::Con
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -127,7 +139,7 @@ pub async fn create_mutual_tls_authentication(configuration: &configuration::Con
 }
 
 /// Remove a Mutual TLS authentication
-pub async fn delete_mutual_tls(configuration: &configuration::Configuration, params: DeleteMutualTlsParams) -> Result<(), Error<DeleteMutualTlsError>> {
+pub async fn delete_mutual_tls(configuration: &mut configuration::Configuration, params: DeleteMutualTlsParams) -> Result<(), Error<DeleteMutualTlsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -154,6 +166,18 @@ pub async fn delete_mutual_tls(configuration: &configuration::Configuration, par
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -167,7 +191,7 @@ pub async fn delete_mutual_tls(configuration: &configuration::Configuration, par
 }
 
 /// Show a Mutual Authentication.
-pub async fn get_mutual_authentication(configuration: &configuration::Configuration, params: GetMutualAuthenticationParams) -> Result<crate::models::MutualAuthenticationResponse, Error<GetMutualAuthenticationError>> {
+pub async fn get_mutual_authentication(configuration: &mut configuration::Configuration, params: GetMutualAuthenticationParams) -> Result<crate::models::MutualAuthenticationResponse, Error<GetMutualAuthenticationError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -194,6 +218,18 @@ pub async fn get_mutual_authentication(configuration: &configuration::Configurat
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -207,7 +243,7 @@ pub async fn get_mutual_authentication(configuration: &configuration::Configurat
 }
 
 /// List all mutual authentications.
-pub async fn list_mutual_authentications(configuration: &configuration::Configuration, params: ListMutualAuthenticationsParams) -> Result<crate::models::MutualAuthenticationsResponse, Error<ListMutualAuthenticationsError>> {
+pub async fn list_mutual_authentications(configuration: &mut configuration::Configuration, params: ListMutualAuthenticationsParams) -> Result<crate::models::MutualAuthenticationsResponse, Error<ListMutualAuthenticationsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -241,6 +277,18 @@ pub async fn list_mutual_authentications(configuration: &configuration::Configur
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -254,7 +302,7 @@ pub async fn list_mutual_authentications(configuration: &configuration::Configur
 }
 
 /// Update a Mutual Authentication.
-pub async fn patch_mutual_authentication(configuration: &configuration::Configuration, params: PatchMutualAuthenticationParams) -> Result<crate::models::MutualAuthenticationResponse, Error<PatchMutualAuthenticationError>> {
+pub async fn patch_mutual_authentication(configuration: &mut configuration::Configuration, params: PatchMutualAuthenticationParams) -> Result<crate::models::MutualAuthenticationResponse, Error<PatchMutualAuthenticationError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -282,6 +330,18 @@ pub async fn patch_mutual_authentication(configuration: &configuration::Configur
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PATCH" != "GET" && "PATCH" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

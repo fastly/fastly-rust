@@ -137,7 +137,7 @@ pub enum PatchTlsSubError {
 
 
 /// Creates an email challenge for a domain on a GlobalSign subscription. An email challenge will generate an email that can be used to validate domain ownership. If this challenge is created, then the domain can only be validated using email for the given subscription. 
-pub async fn create_globalsign_email_challenge(configuration: &configuration::Configuration, params: CreateGlobalsignEmailChallengeParams) -> Result<serde_json::Value, Error<CreateGlobalsignEmailChallengeError>> {
+pub async fn create_globalsign_email_challenge(configuration: &mut configuration::Configuration, params: CreateGlobalsignEmailChallengeParams) -> Result<serde_json::Value, Error<CreateGlobalsignEmailChallengeError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -167,6 +167,18 @@ pub async fn create_globalsign_email_challenge(configuration: &configuration::Co
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -180,7 +192,7 @@ pub async fn create_globalsign_email_challenge(configuration: &configuration::Co
 }
 
 /// Create a new TLS subscription. This response includes a list of possible challenges to verify domain ownership.
-pub async fn create_tls_sub(configuration: &configuration::Configuration, params: CreateTlsSubParams) -> Result<crate::models::TlsSubscriptionResponse, Error<CreateTlsSubError>> {
+pub async fn create_tls_sub(configuration: &mut configuration::Configuration, params: CreateTlsSubParams) -> Result<crate::models::TlsSubscriptionResponse, Error<CreateTlsSubError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -212,6 +224,18 @@ pub async fn create_tls_sub(configuration: &configuration::Configuration, params
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -225,7 +249,7 @@ pub async fn create_tls_sub(configuration: &configuration::Configuration, params
 }
 
 /// Deletes a GlobalSign email challenge. After a GlobalSign email challenge is deleted, the domain can use HTTP and DNS validation methods again.
-pub async fn delete_globalsign_email_challenge(configuration: &configuration::Configuration, params: DeleteGlobalsignEmailChallengeParams) -> Result<(), Error<DeleteGlobalsignEmailChallengeError>> {
+pub async fn delete_globalsign_email_challenge(configuration: &mut configuration::Configuration, params: DeleteGlobalsignEmailChallengeParams) -> Result<(), Error<DeleteGlobalsignEmailChallengeError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -254,6 +278,18 @@ pub async fn delete_globalsign_email_challenge(configuration: &configuration::Co
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -267,7 +303,7 @@ pub async fn delete_globalsign_email_challenge(configuration: &configuration::Co
 }
 
 /// Destroy a TLS subscription. A subscription cannot be destroyed if there are domains in the TLS enabled state.
-pub async fn delete_tls_sub(configuration: &configuration::Configuration, params: DeleteTlsSubParams) -> Result<(), Error<DeleteTlsSubError>> {
+pub async fn delete_tls_sub(configuration: &mut configuration::Configuration, params: DeleteTlsSubParams) -> Result<(), Error<DeleteTlsSubError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -294,6 +330,18 @@ pub async fn delete_tls_sub(configuration: &configuration::Configuration, params
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -307,7 +355,7 @@ pub async fn delete_tls_sub(configuration: &configuration::Configuration, params
 }
 
 /// Show a TLS subscription.
-pub async fn get_tls_sub(configuration: &configuration::Configuration, params: GetTlsSubParams) -> Result<crate::models::TlsSubscriptionResponse, Error<GetTlsSubError>> {
+pub async fn get_tls_sub(configuration: &mut configuration::Configuration, params: GetTlsSubParams) -> Result<crate::models::TlsSubscriptionResponse, Error<GetTlsSubError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -338,6 +386,18 @@ pub async fn get_tls_sub(configuration: &configuration::Configuration, params: G
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -351,7 +411,7 @@ pub async fn get_tls_sub(configuration: &configuration::Configuration, params: G
 }
 
 /// List all TLS subscriptions.
-pub async fn list_tls_subs(configuration: &configuration::Configuration, params: ListTlsSubsParams) -> Result<crate::models::TlsSubscriptionsResponse, Error<ListTlsSubsError>> {
+pub async fn list_tls_subs(configuration: &mut configuration::Configuration, params: ListTlsSubsParams) -> Result<crate::models::TlsSubscriptionsResponse, Error<ListTlsSubsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -405,6 +465,18 @@ pub async fn list_tls_subs(configuration: &configuration::Configuration, params:
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -418,7 +490,7 @@ pub async fn list_tls_subs(configuration: &configuration::Configuration, params:
 }
 
 /// Change the TLS domains or common name associated with this subscription, or update the TLS configuration for this set of domains.
-pub async fn patch_tls_sub(configuration: &configuration::Configuration, params: PatchTlsSubParams) -> Result<crate::models::TlsSubscriptionResponse, Error<PatchTlsSubError>> {
+pub async fn patch_tls_sub(configuration: &mut configuration::Configuration, params: PatchTlsSubParams) -> Result<crate::models::TlsSubscriptionResponse, Error<PatchTlsSubError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -450,6 +522,18 @@ pub async fn patch_tls_sub(configuration: &configuration::Configuration, params:
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PATCH" != "GET" && "PATCH" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

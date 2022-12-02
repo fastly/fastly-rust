@@ -62,7 +62,7 @@ pub enum ListServiceStarsError {
 
 
 /// Create star.
-pub async fn create_service_star(configuration: &configuration::Configuration, params: CreateServiceStarParams) -> Result<crate::models::StarResponse, Error<CreateServiceStarError>> {
+pub async fn create_service_star(configuration: &mut configuration::Configuration, params: CreateServiceStarParams) -> Result<crate::models::StarResponse, Error<CreateServiceStarError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -90,6 +90,18 @@ pub async fn create_service_star(configuration: &configuration::Configuration, p
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -103,7 +115,7 @@ pub async fn create_service_star(configuration: &configuration::Configuration, p
 }
 
 /// Delete star.
-pub async fn delete_service_star(configuration: &configuration::Configuration, params: DeleteServiceStarParams) -> Result<(), Error<DeleteServiceStarError>> {
+pub async fn delete_service_star(configuration: &mut configuration::Configuration, params: DeleteServiceStarParams) -> Result<(), Error<DeleteServiceStarError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -130,6 +142,18 @@ pub async fn delete_service_star(configuration: &configuration::Configuration, p
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -143,7 +167,7 @@ pub async fn delete_service_star(configuration: &configuration::Configuration, p
 }
 
 /// Show star.
-pub async fn get_service_star(configuration: &configuration::Configuration, params: GetServiceStarParams) -> Result<crate::models::StarResponse, Error<GetServiceStarError>> {
+pub async fn get_service_star(configuration: &mut configuration::Configuration, params: GetServiceStarParams) -> Result<crate::models::StarResponse, Error<GetServiceStarError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -170,6 +194,18 @@ pub async fn get_service_star(configuration: &configuration::Configuration, para
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -183,7 +219,7 @@ pub async fn get_service_star(configuration: &configuration::Configuration, para
 }
 
 /// List stars.
-pub async fn list_service_stars(configuration: &configuration::Configuration) -> Result<crate::models::Pagination, Error<ListServiceStarsError>> {
+pub async fn list_service_stars(configuration: &mut configuration::Configuration) -> Result<crate::models::Pagination, Error<ListServiceStarsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -208,6 +244,18 @@ pub async fn list_service_stars(configuration: &configuration::Configuration) ->
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

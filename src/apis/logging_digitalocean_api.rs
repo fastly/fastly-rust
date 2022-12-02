@@ -164,7 +164,7 @@ pub enum UpdateLogDigoceanError {
 
 
 /// Create a DigitalOcean Space for a particular service and version.
-pub async fn create_log_digocean(configuration: &configuration::Configuration, params: CreateLogDigoceanParams) -> Result<crate::models::LoggingDigitaloceanResponse, Error<CreateLogDigoceanError>> {
+pub async fn create_log_digocean(configuration: &mut configuration::Configuration, params: CreateLogDigoceanParams) -> Result<crate::models::LoggingDigitaloceanResponse, Error<CreateLogDigoceanError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -258,6 +258,18 @@ pub async fn create_log_digocean(configuration: &configuration::Configuration, p
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -271,7 +283,7 @@ pub async fn create_log_digocean(configuration: &configuration::Configuration, p
 }
 
 /// Delete the DigitalOcean Space for a particular service and version.
-pub async fn delete_log_digocean(configuration: &configuration::Configuration, params: DeleteLogDigoceanParams) -> Result<crate::models::InlineResponse200, Error<DeleteLogDigoceanError>> {
+pub async fn delete_log_digocean(configuration: &mut configuration::Configuration, params: DeleteLogDigoceanParams) -> Result<crate::models::InlineResponse200, Error<DeleteLogDigoceanError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -300,6 +312,18 @@ pub async fn delete_log_digocean(configuration: &configuration::Configuration, p
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -313,7 +337,7 @@ pub async fn delete_log_digocean(configuration: &configuration::Configuration, p
 }
 
 /// Get the DigitalOcean Space for a particular service and version.
-pub async fn get_log_digocean(configuration: &configuration::Configuration, params: GetLogDigoceanParams) -> Result<crate::models::LoggingDigitaloceanResponse, Error<GetLogDigoceanError>> {
+pub async fn get_log_digocean(configuration: &mut configuration::Configuration, params: GetLogDigoceanParams) -> Result<crate::models::LoggingDigitaloceanResponse, Error<GetLogDigoceanError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -342,6 +366,18 @@ pub async fn get_log_digocean(configuration: &configuration::Configuration, para
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -355,7 +391,7 @@ pub async fn get_log_digocean(configuration: &configuration::Configuration, para
 }
 
 /// List all of the DigitalOcean Spaces for a particular service and version.
-pub async fn list_log_digocean(configuration: &configuration::Configuration, params: ListLogDigoceanParams) -> Result<Vec<crate::models::LoggingDigitaloceanResponse>, Error<ListLogDigoceanError>> {
+pub async fn list_log_digocean(configuration: &mut configuration::Configuration, params: ListLogDigoceanParams) -> Result<Vec<crate::models::LoggingDigitaloceanResponse>, Error<ListLogDigoceanError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -383,6 +419,18 @@ pub async fn list_log_digocean(configuration: &configuration::Configuration, par
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -396,7 +444,7 @@ pub async fn list_log_digocean(configuration: &configuration::Configuration, par
 }
 
 /// Update the DigitalOcean Space for a particular service and version.
-pub async fn update_log_digocean(configuration: &configuration::Configuration, params: UpdateLogDigoceanParams) -> Result<crate::models::LoggingDigitaloceanResponse, Error<UpdateLogDigoceanError>> {
+pub async fn update_log_digocean(configuration: &mut configuration::Configuration, params: UpdateLogDigoceanParams) -> Result<crate::models::LoggingDigitaloceanResponse, Error<UpdateLogDigoceanError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -490,6 +538,18 @@ pub async fn update_log_digocean(configuration: &configuration::Configuration, p
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

@@ -44,7 +44,7 @@ pub enum ListContactsError {
 
 
 /// Delete a contact.
-pub async fn delete_contact(configuration: &configuration::Configuration, params: DeleteContactParams) -> Result<crate::models::InlineResponse200, Error<DeleteContactError>> {
+pub async fn delete_contact(configuration: &mut configuration::Configuration, params: DeleteContactParams) -> Result<crate::models::InlineResponse200, Error<DeleteContactError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -72,6 +72,18 @@ pub async fn delete_contact(configuration: &configuration::Configuration, params
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -85,7 +97,7 @@ pub async fn delete_contact(configuration: &configuration::Configuration, params
 }
 
 /// List all contacts from a specified customer ID.
-pub async fn list_contacts(configuration: &configuration::Configuration, params: ListContactsParams) -> Result<Vec<crate::models::SchemasContactResponse>, Error<ListContactsError>> {
+pub async fn list_contacts(configuration: &mut configuration::Configuration, params: ListContactsParams) -> Result<Vec<crate::models::SchemasContactResponse>, Error<ListContactsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -111,6 +123,18 @@ pub async fn list_contacts(configuration: &configuration::Configuration, params:
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

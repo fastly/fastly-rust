@@ -11,7 +11,7 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct RelationshipTlsDomains {
     #[serde(rename = "tls_domains", skip_serializing_if = "Option::is_none")]
-    pub tls_domains: Option<Box<crate::models::RelationshipTlsDomainTlsDomain>>,
+    pub tls_domains: Option<Box<crate::models::RelationshipTlsDomainsTlsDomains>>,
 }
 
 impl RelationshipTlsDomains {

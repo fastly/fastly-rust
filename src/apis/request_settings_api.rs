@@ -108,7 +108,7 @@ pub enum UpdateRequestSettingsError {
 
 
 /// Removes the specified Request Settings object.
-pub async fn delete_request_settings(configuration: &configuration::Configuration, params: DeleteRequestSettingsParams) -> Result<crate::models::InlineResponse200, Error<DeleteRequestSettingsError>> {
+pub async fn delete_request_settings(configuration: &mut configuration::Configuration, params: DeleteRequestSettingsParams) -> Result<crate::models::InlineResponse200, Error<DeleteRequestSettingsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -137,6 +137,18 @@ pub async fn delete_request_settings(configuration: &configuration::Configuratio
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -150,7 +162,7 @@ pub async fn delete_request_settings(configuration: &configuration::Configuratio
 }
 
 /// Gets the specified Request Settings object.
-pub async fn get_request_settings(configuration: &configuration::Configuration, params: GetRequestSettingsParams) -> Result<crate::models::RequestSettingsResponse, Error<GetRequestSettingsError>> {
+pub async fn get_request_settings(configuration: &mut configuration::Configuration, params: GetRequestSettingsParams) -> Result<crate::models::RequestSettingsResponse, Error<GetRequestSettingsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -179,6 +191,18 @@ pub async fn get_request_settings(configuration: &configuration::Configuration, 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -192,7 +216,7 @@ pub async fn get_request_settings(configuration: &configuration::Configuration, 
 }
 
 /// Returns a list of all Request Settings objects for the given service and version.
-pub async fn list_request_settings(configuration: &configuration::Configuration, params: ListRequestSettingsParams) -> Result<Vec<crate::models::RequestSettingsResponse>, Error<ListRequestSettingsError>> {
+pub async fn list_request_settings(configuration: &mut configuration::Configuration, params: ListRequestSettingsParams) -> Result<Vec<crate::models::RequestSettingsResponse>, Error<ListRequestSettingsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -220,6 +244,18 @@ pub async fn list_request_settings(configuration: &configuration::Configuration,
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -233,7 +269,7 @@ pub async fn list_request_settings(configuration: &configuration::Configuration,
 }
 
 /// Updates the specified Request Settings object.
-pub async fn update_request_settings(configuration: &configuration::Configuration, params: UpdateRequestSettingsParams) -> Result<crate::models::RequestSettingsResponse, Error<UpdateRequestSettingsError>> {
+pub async fn update_request_settings(configuration: &mut configuration::Configuration, params: UpdateRequestSettingsParams) -> Result<crate::models::RequestSettingsResponse, Error<UpdateRequestSettingsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -311,6 +347,18 @@ pub async fn update_request_settings(configuration: &configuration::Configuratio
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

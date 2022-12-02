@@ -75,7 +75,7 @@ pub enum GetDirectorBackendError {
 
 
 /// Establishes a relationship between a Backend and a Director. The Backend is then considered a member of the Director and can be used to balance traffic onto.
-pub async fn create_director_backend(configuration: &configuration::Configuration, params: CreateDirectorBackendParams) -> Result<crate::models::DirectorBackend, Error<CreateDirectorBackendError>> {
+pub async fn create_director_backend(configuration: &mut configuration::Configuration, params: CreateDirectorBackendParams) -> Result<crate::models::DirectorBackend, Error<CreateDirectorBackendError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -105,6 +105,18 @@ pub async fn create_director_backend(configuration: &configuration::Configuratio
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -118,7 +130,7 @@ pub async fn create_director_backend(configuration: &configuration::Configuratio
 }
 
 /// Deletes the relationship between a Backend and a Director. The Backend is no longer considered a member of the Director and thus will not have traffic balanced onto it from this Director.
-pub async fn delete_director_backend(configuration: &configuration::Configuration, params: DeleteDirectorBackendParams) -> Result<crate::models::InlineResponse200, Error<DeleteDirectorBackendError>> {
+pub async fn delete_director_backend(configuration: &mut configuration::Configuration, params: DeleteDirectorBackendParams) -> Result<crate::models::InlineResponse200, Error<DeleteDirectorBackendError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -148,6 +160,18 @@ pub async fn delete_director_backend(configuration: &configuration::Configuratio
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -161,7 +185,7 @@ pub async fn delete_director_backend(configuration: &configuration::Configuratio
 }
 
 /// Returns the relationship between a Backend and a Director. If the Backend has been associated with the Director, it returns a simple record indicating this. Otherwise, returns a 404.
-pub async fn get_director_backend(configuration: &configuration::Configuration, params: GetDirectorBackendParams) -> Result<crate::models::DirectorBackend, Error<GetDirectorBackendError>> {
+pub async fn get_director_backend(configuration: &mut configuration::Configuration, params: GetDirectorBackendParams) -> Result<crate::models::DirectorBackend, Error<GetDirectorBackendError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -190,6 +214,18 @@ pub async fn get_director_backend(configuration: &configuration::Configuration, 
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

@@ -18,12 +18,14 @@ pub struct CreateHealthcheckParams {
     pub service_id: String,
     /// Integer identifying a service version.
     pub version_id: i32,
-    /// How often to run the healthcheck in milliseconds.
+    /// How often to run the health check in milliseconds.
     pub check_interval: Option<i32>,
     /// A freeform descriptive note.
     pub comment: Option<String>,
     /// The status code expected from the host.
     pub expected_response: Option<i32>,
+    /// Array of custom headers that will be added to the health check probes. This feature is part of an **alpha release**, which may be subject to breaking changes and improvements over time.
+    pub headers: Option<Vec<String>>,
     /// Which host to check.
     pub host: Option<String>,
     /// Whether to use version 1.0 or 1.1 HTTP.
@@ -32,15 +34,15 @@ pub struct CreateHealthcheckParams {
     pub initial: Option<i32>,
     /// Which HTTP method to use.
     pub method: Option<String>,
-    /// The name of the healthcheck.
+    /// The name of the health check.
     pub name: Option<String>,
     /// The path to check.
     pub path: Option<String>,
-    /// How many healthchecks must succeed to be considered healthy.
+    /// How many health checks must succeed to be considered healthy.
     pub threshold: Option<i32>,
     /// Timeout in milliseconds.
     pub timeout: Option<i32>,
-    /// The number of most recent healthcheck queries to keep for this healthcheck.
+    /// The number of most recent health check queries to keep for this health check.
     pub window: Option<i32>
 }
 
@@ -51,7 +53,7 @@ pub struct DeleteHealthcheckParams {
     pub service_id: String,
     /// Integer identifying a service version.
     pub version_id: i32,
-    /// The name of the healthcheck.
+    /// The name of the health check.
     pub healthcheck_name: String
 }
 
@@ -62,7 +64,7 @@ pub struct GetHealthcheckParams {
     pub service_id: String,
     /// Integer identifying a service version.
     pub version_id: i32,
-    /// The name of the healthcheck.
+    /// The name of the health check.
     pub healthcheck_name: String
 }
 
@@ -82,14 +84,16 @@ pub struct UpdateHealthcheckParams {
     pub service_id: String,
     /// Integer identifying a service version.
     pub version_id: i32,
-    /// The name of the healthcheck.
+    /// The name of the health check.
     pub healthcheck_name: String,
-    /// How often to run the healthcheck in milliseconds.
+    /// How often to run the health check in milliseconds.
     pub check_interval: Option<i32>,
     /// A freeform descriptive note.
     pub comment: Option<String>,
     /// The status code expected from the host.
     pub expected_response: Option<i32>,
+    /// Array of custom headers that will be added to the health check probes. This feature is part of an **alpha release**, which may be subject to breaking changes and improvements over time.
+    pub headers: Option<Vec<String>>,
     /// Which host to check.
     pub host: Option<String>,
     /// Whether to use version 1.0 or 1.1 HTTP.
@@ -98,15 +102,15 @@ pub struct UpdateHealthcheckParams {
     pub initial: Option<i32>,
     /// Which HTTP method to use.
     pub method: Option<String>,
-    /// The name of the healthcheck.
+    /// The name of the health check.
     pub name: Option<String>,
     /// The path to check.
     pub path: Option<String>,
-    /// How many healthchecks must succeed to be considered healthy.
+    /// How many health checks must succeed to be considered healthy.
     pub threshold: Option<i32>,
     /// Timeout in milliseconds.
     pub timeout: Option<i32>,
-    /// The number of most recent healthcheck queries to keep for this healthcheck.
+    /// The number of most recent health check queries to keep for this health check.
     pub window: Option<i32>
 }
 
@@ -147,8 +151,8 @@ pub enum UpdateHealthcheckError {
 }
 
 
-/// Create a healthcheck for a particular service and version.
-pub async fn create_healthcheck(configuration: &configuration::Configuration, params: CreateHealthcheckParams) -> Result<crate::models::HealthcheckResponse, Error<CreateHealthcheckError>> {
+/// Create a health check for a particular service and version.
+pub async fn create_healthcheck(configuration: &mut configuration::Configuration, params: CreateHealthcheckParams) -> Result<crate::models::HealthcheckResponse, Error<CreateHealthcheckError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -157,6 +161,7 @@ pub async fn create_healthcheck(configuration: &configuration::Configuration, pa
     let check_interval = params.check_interval;
     let comment = params.comment;
     let expected_response = params.expected_response;
+    let headers = params.headers;
     let host = params.host;
     let http_version = params.http_version;
     let initial = params.initial;
@@ -194,6 +199,9 @@ pub async fn create_healthcheck(configuration: &configuration::Configuration, pa
     if let Some(local_var_param_value) = expected_response {
         local_var_form_params.insert("expected_response", local_var_param_value.to_string());
     }
+    if let Some(local_var_param_value) = headers {
+        local_var_form_params.insert("headers", local_var_param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string());
+    }
     if let Some(local_var_param_value) = host {
         local_var_form_params.insert("host", local_var_param_value.to_string());
     }
@@ -226,6 +234,18 @@ pub async fn create_healthcheck(configuration: &configuration::Configuration, pa
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -238,8 +258,8 @@ pub async fn create_healthcheck(configuration: &configuration::Configuration, pa
     }
 }
 
-/// Delete the healthcheck for a particular service and version.
-pub async fn delete_healthcheck(configuration: &configuration::Configuration, params: DeleteHealthcheckParams) -> Result<crate::models::InlineResponse200, Error<DeleteHealthcheckError>> {
+/// Delete the health check for a particular service and version.
+pub async fn delete_healthcheck(configuration: &mut configuration::Configuration, params: DeleteHealthcheckParams) -> Result<crate::models::InlineResponse200, Error<DeleteHealthcheckError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -268,6 +288,18 @@ pub async fn delete_healthcheck(configuration: &configuration::Configuration, pa
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -280,8 +312,8 @@ pub async fn delete_healthcheck(configuration: &configuration::Configuration, pa
     }
 }
 
-/// Get the healthcheck for a particular service and version.
-pub async fn get_healthcheck(configuration: &configuration::Configuration, params: GetHealthcheckParams) -> Result<crate::models::HealthcheckResponse, Error<GetHealthcheckError>> {
+/// Get the health check for a particular service and version.
+pub async fn get_healthcheck(configuration: &mut configuration::Configuration, params: GetHealthcheckParams) -> Result<crate::models::HealthcheckResponse, Error<GetHealthcheckError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -310,6 +342,18 @@ pub async fn get_healthcheck(configuration: &configuration::Configuration, param
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -322,8 +366,8 @@ pub async fn get_healthcheck(configuration: &configuration::Configuration, param
     }
 }
 
-/// List all of the healthchecks for a particular service and version.
-pub async fn list_healthchecks(configuration: &configuration::Configuration, params: ListHealthchecksParams) -> Result<Vec<crate::models::HealthcheckResponse>, Error<ListHealthchecksError>> {
+/// List all of the health checks for a particular service and version.
+pub async fn list_healthchecks(configuration: &mut configuration::Configuration, params: ListHealthchecksParams) -> Result<Vec<crate::models::HealthcheckResponse>, Error<ListHealthchecksError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -351,6 +395,18 @@ pub async fn list_healthchecks(configuration: &configuration::Configuration, par
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -363,8 +419,8 @@ pub async fn list_healthchecks(configuration: &configuration::Configuration, par
     }
 }
 
-/// Update the healthcheck for a particular service and version.
-pub async fn update_healthcheck(configuration: &configuration::Configuration, params: UpdateHealthcheckParams) -> Result<crate::models::HealthcheckResponse, Error<UpdateHealthcheckError>> {
+/// Update the health check for a particular service and version.
+pub async fn update_healthcheck(configuration: &mut configuration::Configuration, params: UpdateHealthcheckParams) -> Result<crate::models::HealthcheckResponse, Error<UpdateHealthcheckError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -374,6 +430,7 @@ pub async fn update_healthcheck(configuration: &configuration::Configuration, pa
     let check_interval = params.check_interval;
     let comment = params.comment;
     let expected_response = params.expected_response;
+    let headers = params.headers;
     let host = params.host;
     let http_version = params.http_version;
     let initial = params.initial;
@@ -411,6 +468,9 @@ pub async fn update_healthcheck(configuration: &configuration::Configuration, pa
     if let Some(local_var_param_value) = expected_response {
         local_var_form_params.insert("expected_response", local_var_param_value.to_string());
     }
+    if let Some(local_var_param_value) = headers {
+        local_var_form_params.insert("headers", local_var_param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string());
+    }
     if let Some(local_var_param_value) = host {
         local_var_form_params.insert("host", local_var_param_value.to_string());
     }
@@ -442,6 +502,18 @@ pub async fn update_healthcheck(configuration: &configuration::Configuration, pa
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

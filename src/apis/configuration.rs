@@ -9,6 +9,9 @@
 use reqwest;
 use std::env;
 
+// https://developer.fastly.com/reference/api/#rate-limiting
+pub const DEFAULT_RATELIMIT: u64 = 1000;
+
 #[derive(Debug, Clone)]
 pub struct Configuration {
     pub base_path: String,
@@ -18,6 +21,8 @@ pub struct Configuration {
     pub oauth_access_token: Option<String>,
     pub bearer_access_token: Option<String>,
     pub api_key: Option<ApiKey>,
+    pub rate_limit_remaining: u64,
+    pub rate_limit_reset: u64,
     // TODO: take an oauth2 token source, similar to the go one
 }
 
@@ -53,6 +58,8 @@ impl Default for Configuration {
               prefix: None,
               key: api_key,
             }),
+            rate_limit_remaining: DEFAULT_RATELIMIT,
+            rate_limit_reset: 0,
         }
     }
 }

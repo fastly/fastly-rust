@@ -34,7 +34,7 @@ pub enum VclDiffServiceVersionsError {
 
 
 /// Get a comparison of the VCL changes between two service versions.
-pub async fn vcl_diff_service_versions(configuration: &configuration::Configuration, params: VclDiffServiceVersionsParams) -> Result<crate::models::VclDiff, Error<VclDiffServiceVersionsError>> {
+pub async fn vcl_diff_service_versions(configuration: &mut configuration::Configuration, params: VclDiffServiceVersionsParams) -> Result<crate::models::VclDiff, Error<VclDiffServiceVersionsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -66,6 +66,18 @@ pub async fn vcl_diff_service_versions(configuration: &configuration::Configurat
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

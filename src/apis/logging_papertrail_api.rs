@@ -128,7 +128,7 @@ pub enum UpdateLogPapertrailError {
 
 
 /// Create a Papertrail for a particular service and version.
-pub async fn create_log_papertrail(configuration: &configuration::Configuration, params: CreateLogPapertrailParams) -> Result<crate::models::LoggingPapertrailResponse, Error<CreateLogPapertrailError>> {
+pub async fn create_log_papertrail(configuration: &mut configuration::Configuration, params: CreateLogPapertrailParams) -> Result<crate::models::LoggingPapertrailResponse, Error<CreateLogPapertrailError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -186,6 +186,18 @@ pub async fn create_log_papertrail(configuration: &configuration::Configuration,
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -199,7 +211,7 @@ pub async fn create_log_papertrail(configuration: &configuration::Configuration,
 }
 
 /// Delete the Papertrail for a particular service and version.
-pub async fn delete_log_papertrail(configuration: &configuration::Configuration, params: DeleteLogPapertrailParams) -> Result<crate::models::InlineResponse200, Error<DeleteLogPapertrailError>> {
+pub async fn delete_log_papertrail(configuration: &mut configuration::Configuration, params: DeleteLogPapertrailParams) -> Result<crate::models::InlineResponse200, Error<DeleteLogPapertrailError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -228,6 +240,18 @@ pub async fn delete_log_papertrail(configuration: &configuration::Configuration,
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -241,7 +265,7 @@ pub async fn delete_log_papertrail(configuration: &configuration::Configuration,
 }
 
 /// Get the Papertrail for a particular service and version.
-pub async fn get_log_papertrail(configuration: &configuration::Configuration, params: GetLogPapertrailParams) -> Result<crate::models::LoggingPapertrailResponse, Error<GetLogPapertrailError>> {
+pub async fn get_log_papertrail(configuration: &mut configuration::Configuration, params: GetLogPapertrailParams) -> Result<crate::models::LoggingPapertrailResponse, Error<GetLogPapertrailError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -270,6 +294,18 @@ pub async fn get_log_papertrail(configuration: &configuration::Configuration, pa
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -283,7 +319,7 @@ pub async fn get_log_papertrail(configuration: &configuration::Configuration, pa
 }
 
 /// List all of the Papertrails for a particular service and version.
-pub async fn list_log_papertrail(configuration: &configuration::Configuration, params: ListLogPapertrailParams) -> Result<Vec<crate::models::LoggingPapertrailResponse>, Error<ListLogPapertrailError>> {
+pub async fn list_log_papertrail(configuration: &mut configuration::Configuration, params: ListLogPapertrailParams) -> Result<Vec<crate::models::LoggingPapertrailResponse>, Error<ListLogPapertrailError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -311,6 +347,18 @@ pub async fn list_log_papertrail(configuration: &configuration::Configuration, p
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -324,7 +372,7 @@ pub async fn list_log_papertrail(configuration: &configuration::Configuration, p
 }
 
 /// Update the Papertrail for a particular service and version.
-pub async fn update_log_papertrail(configuration: &configuration::Configuration, params: UpdateLogPapertrailParams) -> Result<crate::models::LoggingPapertrailResponse, Error<UpdateLogPapertrailError>> {
+pub async fn update_log_papertrail(configuration: &mut configuration::Configuration, params: UpdateLogPapertrailParams) -> Result<crate::models::LoggingPapertrailResponse, Error<UpdateLogPapertrailError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -382,6 +430,18 @@ pub async fn update_log_papertrail(configuration: &configuration::Configuration,
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

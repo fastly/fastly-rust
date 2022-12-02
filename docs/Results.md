@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 **errors** | Option<**i32**> | Number of cache errors. | 
 **restarts** | Option<**i32**> | Number of restarts performed. | 
 **hit_ratio** | Option<**f32**> | Ratio of cache hits to cache misses (between 0 and 1). | 
-**bandwidth** | Option<**i32**> | Total bytes delivered (`resp_header_bytes` + `resp_body_bytes` + `bereq_header_bytes` + `bereq_body_bytes` + `compute_resp_header_bytes` + `compute_resp_body_bytes` + `compute_bereq_header_bytes` + `compute_bereq_body_bytes`). | 
+**bandwidth** | Option<**i32**> | Total bytes delivered (`resp_header_bytes` + `resp_body_bytes` + `bereq_header_bytes` + `bereq_body_bytes` + `compute_resp_header_bytes` + `compute_resp_body_bytes` + `compute_bereq_header_bytes` + `compute_bereq_body_bytes` + `websocket_resp_header_bytes` + `websocket_resp_body_bytes` + `websocket_bereq_header_bytes` + `websocket_bereq_body_bytes`). | 
 **body_size** | Option<**i32**> | Total body bytes delivered (alias for resp_body_bytes). | 
 **header_size** | Option<**i32**> | Total header bytes delivered (alias for resp_header_bytes). | 
 **req_body_bytes** | Option<**i32**> | Total body bytes received. | 
@@ -188,11 +188,19 @@ Name | Type | Description | Notes
 **shield_hit_resp_body_bytes** | Option<**i32**> | Body bytes delivered for shield hits. | 
 **shield_miss_resp_header_bytes** | Option<**i32**> | Header bytes delivered for shield misses. | 
 **shield_miss_resp_body_bytes** | Option<**i32**> | Body bytes delivered for shield misses. | 
+**websocket_req_header_bytes** | Option<**i32**> | Total header bytes received from end users over passthrough WebSocket connections. | 
 **websocket_req_body_bytes** | Option<**i32**> | Total message content bytes received from end users over passthrough WebSocket connections. | 
 **websocket_resp_header_bytes** | Option<**i32**> | Total header bytes sent to end users over passthrough WebSocket connections. | 
 **websocket_resp_body_bytes** | Option<**i32**> | Total message content bytes sent to end users over passthrough WebSocket connections. | 
+**websocket_bereq_header_bytes** | Option<**i32**> | Total header bytes sent to backends over passthrough WebSocket connections. | 
+**websocket_bereq_body_bytes** | Option<**i32**> | Total message content bytes sent to backends over passthrough WebSocket connections. | 
+**websocket_beresp_header_bytes** | Option<**i32**> | Total header bytes received from backends over passthrough WebSocket connections. | 
+**websocket_beresp_body_bytes** | Option<**i32**> | Total message content bytes received from backends over passthrough WebSocket connections. | 
+**websocket_conn_time_ms** | Option<**i32**> | Total duration of passthrough WebSocket connections with end users. | 
 **fanout_recv_publishes** | Option<**i32**> | Total published messages received from the publish API endpoint. | 
 **fanout_send_publishes** | Option<**i32**> | Total published messages sent to end users. | 
+**object_store_read_requests** | Option<**i32**> | The total number of reads received for the object store. | 
+**object_store_write_requests** | Option<**i32**> | The total number of writes received for the object store. | 
 
 [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

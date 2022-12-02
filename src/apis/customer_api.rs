@@ -125,7 +125,7 @@ pub enum UpdateCustomerError {
 
 
 /// Delete a customer.
-pub async fn delete_customer(configuration: &configuration::Configuration, params: DeleteCustomerParams) -> Result<crate::models::InlineResponse200, Error<DeleteCustomerError>> {
+pub async fn delete_customer(configuration: &mut configuration::Configuration, params: DeleteCustomerParams) -> Result<crate::models::InlineResponse200, Error<DeleteCustomerError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -152,6 +152,18 @@ pub async fn delete_customer(configuration: &configuration::Configuration, param
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -165,7 +177,7 @@ pub async fn delete_customer(configuration: &configuration::Configuration, param
 }
 
 /// Get a specific customer.
-pub async fn get_customer(configuration: &configuration::Configuration, params: GetCustomerParams) -> Result<crate::models::CustomerResponse, Error<GetCustomerError>> {
+pub async fn get_customer(configuration: &mut configuration::Configuration, params: GetCustomerParams) -> Result<crate::models::CustomerResponse, Error<GetCustomerError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -192,6 +204,18 @@ pub async fn get_customer(configuration: &configuration::Configuration, params: 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -205,7 +229,7 @@ pub async fn get_customer(configuration: &configuration::Configuration, params: 
 }
 
 /// Get the logged in customer.
-pub async fn get_logged_in_customer(configuration: &configuration::Configuration) -> Result<crate::models::CustomerResponse, Error<GetLoggedInCustomerError>> {
+pub async fn get_logged_in_customer(configuration: &mut configuration::Configuration) -> Result<crate::models::CustomerResponse, Error<GetLoggedInCustomerError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -231,6 +255,18 @@ pub async fn get_logged_in_customer(configuration: &configuration::Configuration
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -244,7 +280,7 @@ pub async fn get_logged_in_customer(configuration: &configuration::Configuration
 }
 
 /// List all users from a specified customer id.
-pub async fn list_users(configuration: &configuration::Configuration, params: ListUsersParams) -> Result<Vec<crate::models::SchemasUserResponse>, Error<ListUsersError>> {
+pub async fn list_users(configuration: &mut configuration::Configuration, params: ListUsersParams) -> Result<Vec<crate::models::SchemasUserResponse>, Error<ListUsersError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -271,6 +307,18 @@ pub async fn list_users(configuration: &configuration::Configuration, params: Li
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -284,7 +332,7 @@ pub async fn list_users(configuration: &configuration::Configuration, params: Li
 }
 
 /// Update a customer.
-pub async fn update_customer(configuration: &configuration::Configuration, params: UpdateCustomerParams) -> Result<crate::models::CustomerResponse, Error<UpdateCustomerError>> {
+pub async fn update_customer(configuration: &mut configuration::Configuration, params: UpdateCustomerParams) -> Result<crate::models::CustomerResponse, Error<UpdateCustomerError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -408,6 +456,18 @@ pub async fn update_customer(configuration: &configuration::Configuration, param
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
