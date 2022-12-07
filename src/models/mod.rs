@@ -196,8 +196,6 @@ pub mod inline_response_200;
 pub use self::inline_response_200::InlineResponse200;
 pub mod inline_response_200_1;
 pub use self::inline_response_200_1::InlineResponse2001;
-pub mod inline_response_200_2;
-pub use self::inline_response_200_2::InlineResponse2002;
 pub mod invitation;
 pub use self::invitation::Invitation;
 pub mod invitation_data;

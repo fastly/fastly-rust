@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **check_interval** | Option<**i32**> | How often to run the health check in milliseconds. | 
 **comment** | Option<**String**> | A freeform descriptive note. | 
 **expected_response** | Option<**i32**> | The status code expected from the host. | 
-**headers** | Option<**Vec<String>**> | Array of custom headers that will be added to the health check probes. This feature is part of an **alpha release**, which may be subject to breaking changes and improvements over time. | 
+**headers** | Option<**Vec<String>**> | Array of custom headers that will be added to the health check probes. | 
 **host** | Option<**String**> | Which host to check. | 
 **http_version** | Option<**String**> | Whether to use version 1.0 or 1.1 HTTP. | 
 **initial** | Option<**i32**> | When loading a config, the initial number of probes to be seen as OK. | 

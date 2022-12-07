@@ -19,7 +19,7 @@ pub struct Healthcheck {
     /// The status code expected from the host.
     #[serde(rename = "expected_response", skip_serializing_if = "Option::is_none")]
     pub expected_response: Option<i32>,
-    /// Array of custom headers that will be added to the health check probes. This feature is part of an **alpha release**, which may be subject to breaking changes and improvements over time.
+    /// Array of custom headers that will be added to the health check probes.
     #[serde(rename = "headers", skip_serializing_if = "Option::is_none")]
     pub headers: Option<Vec<String>>,
     /// Which host to check.

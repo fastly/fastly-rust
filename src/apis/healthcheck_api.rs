@@ -24,7 +24,7 @@ pub struct CreateHealthcheckParams {
     pub comment: Option<String>,
     /// The status code expected from the host.
     pub expected_response: Option<i32>,
-    /// Array of custom headers that will be added to the health check probes. This feature is part of an **alpha release**, which may be subject to breaking changes and improvements over time.
+    /// Array of custom headers that will be added to the health check probes.
     pub headers: Option<Vec<String>>,
     /// Which host to check.
     pub host: Option<String>,
@@ -92,7 +92,7 @@ pub struct UpdateHealthcheckParams {
     pub comment: Option<String>,
     /// The status code expected from the host.
     pub expected_response: Option<i32>,
-    /// Array of custom headers that will be added to the health check probes. This feature is part of an **alpha release**, which may be subject to breaking changes and improvements over time.
+    /// Array of custom headers that will be added to the health check probes.
     pub headers: Option<Vec<String>>,
     /// Which host to check.
     pub host: Option<String>,
