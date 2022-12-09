@@ -164,7 +164,7 @@ pub enum UpdateLogCloudfilesError {
 
 
 /// Create a Cloud Files log endpoint for a particular service and version.
-pub async fn create_log_cloudfiles(configuration: &configuration::Configuration, params: CreateLogCloudfilesParams) -> Result<crate::models::LoggingCloudfilesResponse, Error<CreateLogCloudfilesError>> {
+pub async fn create_log_cloudfiles(configuration: &mut configuration::Configuration, params: CreateLogCloudfilesParams) -> Result<crate::models::LoggingCloudfilesResponse, Error<CreateLogCloudfilesError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -258,6 +258,18 @@ pub async fn create_log_cloudfiles(configuration: &configuration::Configuration,
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -271,7 +283,7 @@ pub async fn create_log_cloudfiles(configuration: &configuration::Configuration,
 }
 
 /// Delete the Cloud Files log endpoint for a particular service and version.
-pub async fn delete_log_cloudfiles(configuration: &configuration::Configuration, params: DeleteLogCloudfilesParams) -> Result<crate::models::InlineResponse200, Error<DeleteLogCloudfilesError>> {
+pub async fn delete_log_cloudfiles(configuration: &mut configuration::Configuration, params: DeleteLogCloudfilesParams) -> Result<crate::models::InlineResponse200, Error<DeleteLogCloudfilesError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -300,6 +312,18 @@ pub async fn delete_log_cloudfiles(configuration: &configuration::Configuration,
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -313,7 +337,7 @@ pub async fn delete_log_cloudfiles(configuration: &configuration::Configuration,
 }
 
 /// Get the Cloud Files log endpoint for a particular service and version.
-pub async fn get_log_cloudfiles(configuration: &configuration::Configuration, params: GetLogCloudfilesParams) -> Result<crate::models::LoggingCloudfilesResponse, Error<GetLogCloudfilesError>> {
+pub async fn get_log_cloudfiles(configuration: &mut configuration::Configuration, params: GetLogCloudfilesParams) -> Result<crate::models::LoggingCloudfilesResponse, Error<GetLogCloudfilesError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -342,6 +366,18 @@ pub async fn get_log_cloudfiles(configuration: &configuration::Configuration, pa
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -355,7 +391,7 @@ pub async fn get_log_cloudfiles(configuration: &configuration::Configuration, pa
 }
 
 /// List all of the Cloud Files log endpoints for a particular service and version.
-pub async fn list_log_cloudfiles(configuration: &configuration::Configuration, params: ListLogCloudfilesParams) -> Result<Vec<crate::models::LoggingCloudfilesResponse>, Error<ListLogCloudfilesError>> {
+pub async fn list_log_cloudfiles(configuration: &mut configuration::Configuration, params: ListLogCloudfilesParams) -> Result<Vec<crate::models::LoggingCloudfilesResponse>, Error<ListLogCloudfilesError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -383,6 +419,18 @@ pub async fn list_log_cloudfiles(configuration: &configuration::Configuration, p
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -396,7 +444,7 @@ pub async fn list_log_cloudfiles(configuration: &configuration::Configuration, p
 }
 
 /// Update the Cloud Files log endpoint for a particular service and version.
-pub async fn update_log_cloudfiles(configuration: &configuration::Configuration, params: UpdateLogCloudfilesParams) -> Result<crate::models::LoggingCloudfilesResponse, Error<UpdateLogCloudfilesError>> {
+pub async fn update_log_cloudfiles(configuration: &mut configuration::Configuration, params: UpdateLogCloudfilesParams) -> Result<crate::models::LoggingCloudfilesResponse, Error<UpdateLogCloudfilesError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -490,6 +538,18 @@ pub async fn update_log_cloudfiles(configuration: &configuration::Configuration,
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

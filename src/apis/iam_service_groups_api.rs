@@ -76,7 +76,7 @@ pub enum ListServiceGroupsError {
 
 
 /// Delete a service group.
-pub async fn delete_a_service_group(configuration: &configuration::Configuration, params: DeleteAServiceGroupParams) -> Result<(), Error<DeleteAServiceGroupError>> {
+pub async fn delete_a_service_group(configuration: &mut configuration::Configuration, params: DeleteAServiceGroupParams) -> Result<(), Error<DeleteAServiceGroupError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -103,6 +103,18 @@ pub async fn delete_a_service_group(configuration: &configuration::Configuration
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -116,7 +128,7 @@ pub async fn delete_a_service_group(configuration: &configuration::Configuration
 }
 
 /// Get a service group.
-pub async fn get_a_service_group(configuration: &configuration::Configuration, params: GetAServiceGroupParams) -> Result<serde_json::Value, Error<GetAServiceGroupError>> {
+pub async fn get_a_service_group(configuration: &mut configuration::Configuration, params: GetAServiceGroupParams) -> Result<serde_json::Value, Error<GetAServiceGroupError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -143,6 +155,18 @@ pub async fn get_a_service_group(configuration: &configuration::Configuration, p
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -156,7 +180,7 @@ pub async fn get_a_service_group(configuration: &configuration::Configuration, p
 }
 
 /// List services to a service group.
-pub async fn list_service_group_services(configuration: &configuration::Configuration, params: ListServiceGroupServicesParams) -> Result<serde_json::Value, Error<ListServiceGroupServicesError>> {
+pub async fn list_service_group_services(configuration: &mut configuration::Configuration, params: ListServiceGroupServicesParams) -> Result<serde_json::Value, Error<ListServiceGroupServicesError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -191,6 +215,18 @@ pub async fn list_service_group_services(configuration: &configuration::Configur
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -204,7 +240,7 @@ pub async fn list_service_group_services(configuration: &configuration::Configur
 }
 
 /// List all service groups.
-pub async fn list_service_groups(configuration: &configuration::Configuration, params: ListServiceGroupsParams) -> Result<serde_json::Value, Error<ListServiceGroupsError>> {
+pub async fn list_service_groups(configuration: &mut configuration::Configuration, params: ListServiceGroupsParams) -> Result<serde_json::Value, Error<ListServiceGroupsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -237,6 +273,18 @@ pub async fn list_service_groups(configuration: &configuration::Configuration, p
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

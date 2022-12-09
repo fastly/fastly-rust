@@ -154,7 +154,7 @@ pub enum UpdateWafActiveRuleError {
 
 
 /// Bulk update all active rules on a [firewall version](https://developer.fastly.com/reference/api/waf/firewall-version/). This endpoint will not add new active rules, only update existing active rules.
-pub async fn bulk_update_waf_active_rules(configuration: &configuration::Configuration, params: BulkUpdateWafActiveRulesParams) -> Result<(), Error<BulkUpdateWafActiveRulesError>> {
+pub async fn bulk_update_waf_active_rules(configuration: &mut configuration::Configuration, params: BulkUpdateWafActiveRulesParams) -> Result<(), Error<BulkUpdateWafActiveRulesError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -184,6 +184,18 @@ pub async fn bulk_update_waf_active_rules(configuration: &configuration::Configu
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "PATCH" != "GET" && "PATCH" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -197,7 +209,7 @@ pub async fn bulk_update_waf_active_rules(configuration: &configuration::Configu
 }
 
 /// Create an active rule for a particular firewall version.
-pub async fn create_waf_active_rule(configuration: &configuration::Configuration, params: CreateWafActiveRuleParams) -> Result<crate::models::WafActiveRuleCreationResponse, Error<CreateWafActiveRuleError>> {
+pub async fn create_waf_active_rule(configuration: &mut configuration::Configuration, params: CreateWafActiveRuleParams) -> Result<crate::models::WafActiveRuleCreationResponse, Error<CreateWafActiveRuleError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -227,6 +239,18 @@ pub async fn create_waf_active_rule(configuration: &configuration::Configuration
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -240,7 +264,7 @@ pub async fn create_waf_active_rule(configuration: &configuration::Configuration
 }
 
 /// Create active rules by tag. This endpoint will create active rules using the latest revision available for each rule.
-pub async fn create_waf_active_rules_tag(configuration: &configuration::Configuration, params: CreateWafActiveRulesTagParams) -> Result<(), Error<CreateWafActiveRulesTagError>> {
+pub async fn create_waf_active_rules_tag(configuration: &mut configuration::Configuration, params: CreateWafActiveRulesTagParams) -> Result<(), Error<CreateWafActiveRulesTagError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -271,6 +295,18 @@ pub async fn create_waf_active_rules_tag(configuration: &configuration::Configur
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -284,7 +320,7 @@ pub async fn create_waf_active_rules_tag(configuration: &configuration::Configur
 }
 
 /// Delete an active rule for a particular firewall version.
-pub async fn delete_waf_active_rule(configuration: &configuration::Configuration, params: DeleteWafActiveRuleParams) -> Result<(), Error<DeleteWafActiveRuleError>> {
+pub async fn delete_waf_active_rule(configuration: &mut configuration::Configuration, params: DeleteWafActiveRuleParams) -> Result<(), Error<DeleteWafActiveRuleError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -313,6 +349,18 @@ pub async fn delete_waf_active_rule(configuration: &configuration::Configuration
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -326,7 +374,7 @@ pub async fn delete_waf_active_rule(configuration: &configuration::Configuration
 }
 
 /// Get a specific active rule object. Includes details of the rule revision associated with the active rule object by default.
-pub async fn get_waf_active_rule(configuration: &configuration::Configuration, params: GetWafActiveRuleParams) -> Result<crate::models::WafActiveRuleResponse, Error<GetWafActiveRuleError>> {
+pub async fn get_waf_active_rule(configuration: &mut configuration::Configuration, params: GetWafActiveRuleParams) -> Result<crate::models::WafActiveRuleResponse, Error<GetWafActiveRuleError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -359,6 +407,18 @@ pub async fn get_waf_active_rule(configuration: &configuration::Configuration, p
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -372,7 +432,7 @@ pub async fn get_waf_active_rule(configuration: &configuration::Configuration, p
 }
 
 /// List all active rules for a particular firewall version.
-pub async fn list_waf_active_rules(configuration: &configuration::Configuration, params: ListWafActiveRulesParams) -> Result<crate::models::WafActiveRulesResponse, Error<ListWafActiveRulesError>> {
+pub async fn list_waf_active_rules(configuration: &mut configuration::Configuration, params: ListWafActiveRulesParams) -> Result<crate::models::WafActiveRulesResponse, Error<ListWafActiveRulesError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -428,6 +488,18 @@ pub async fn list_waf_active_rules(configuration: &configuration::Configuration,
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -441,7 +513,7 @@ pub async fn list_waf_active_rules(configuration: &configuration::Configuration,
 }
 
 /// Update an active rule's status for a particular firewall version.
-pub async fn update_waf_active_rule(configuration: &configuration::Configuration, params: UpdateWafActiveRuleParams) -> Result<crate::models::WafActiveRuleResponse, Error<UpdateWafActiveRuleError>> {
+pub async fn update_waf_active_rule(configuration: &mut configuration::Configuration, params: UpdateWafActiveRuleParams) -> Result<crate::models::WafActiveRuleResponse, Error<UpdateWafActiveRuleError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -471,6 +543,18 @@ pub async fn update_waf_active_rule(configuration: &configuration::Configuration
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PATCH" != "GET" && "PATCH" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

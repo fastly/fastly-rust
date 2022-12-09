@@ -11,7 +11,7 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct RelationshipUserUser {
     #[serde(rename = "data", skip_serializing_if = "Option::is_none")]
-    pub data: Option<Box<crate::models::RelationshipUserUserData>>,
+    pub data: Option<Box<crate::models::ServiceAuthorizationDataRelationshipsUserData>>,
 }
 
 impl RelationshipUserUser {

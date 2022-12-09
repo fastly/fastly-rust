@@ -128,7 +128,7 @@ pub enum UpdateLogHerokuError {
 
 
 /// Create a Heroku for a particular service and version.
-pub async fn create_log_heroku(configuration: &configuration::Configuration, params: CreateLogHerokuParams) -> Result<crate::models::LoggingHerokuResponse, Error<CreateLogHerokuError>> {
+pub async fn create_log_heroku(configuration: &mut configuration::Configuration, params: CreateLogHerokuParams) -> Result<crate::models::LoggingHerokuResponse, Error<CreateLogHerokuError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -186,6 +186,18 @@ pub async fn create_log_heroku(configuration: &configuration::Configuration, par
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -199,7 +211,7 @@ pub async fn create_log_heroku(configuration: &configuration::Configuration, par
 }
 
 /// Delete the Heroku for a particular service and version.
-pub async fn delete_log_heroku(configuration: &configuration::Configuration, params: DeleteLogHerokuParams) -> Result<crate::models::InlineResponse200, Error<DeleteLogHerokuError>> {
+pub async fn delete_log_heroku(configuration: &mut configuration::Configuration, params: DeleteLogHerokuParams) -> Result<crate::models::InlineResponse200, Error<DeleteLogHerokuError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -228,6 +240,18 @@ pub async fn delete_log_heroku(configuration: &configuration::Configuration, par
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -241,7 +265,7 @@ pub async fn delete_log_heroku(configuration: &configuration::Configuration, par
 }
 
 /// Get the Heroku for a particular service and version.
-pub async fn get_log_heroku(configuration: &configuration::Configuration, params: GetLogHerokuParams) -> Result<crate::models::LoggingHerokuResponse, Error<GetLogHerokuError>> {
+pub async fn get_log_heroku(configuration: &mut configuration::Configuration, params: GetLogHerokuParams) -> Result<crate::models::LoggingHerokuResponse, Error<GetLogHerokuError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -270,6 +294,18 @@ pub async fn get_log_heroku(configuration: &configuration::Configuration, params
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -283,7 +319,7 @@ pub async fn get_log_heroku(configuration: &configuration::Configuration, params
 }
 
 /// List all of the Herokus for a particular service and version.
-pub async fn list_log_heroku(configuration: &configuration::Configuration, params: ListLogHerokuParams) -> Result<Vec<crate::models::LoggingHerokuResponse>, Error<ListLogHerokuError>> {
+pub async fn list_log_heroku(configuration: &mut configuration::Configuration, params: ListLogHerokuParams) -> Result<Vec<crate::models::LoggingHerokuResponse>, Error<ListLogHerokuError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -311,6 +347,18 @@ pub async fn list_log_heroku(configuration: &configuration::Configuration, param
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -324,7 +372,7 @@ pub async fn list_log_heroku(configuration: &configuration::Configuration, param
 }
 
 /// Update the Heroku for a particular service and version.
-pub async fn update_log_heroku(configuration: &configuration::Configuration, params: UpdateLogHerokuParams) -> Result<crate::models::LoggingHerokuResponse, Error<UpdateLogHerokuError>> {
+pub async fn update_log_heroku(configuration: &mut configuration::Configuration, params: UpdateLogHerokuParams) -> Result<crate::models::LoggingHerokuResponse, Error<UpdateLogHerokuError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -382,6 +430,18 @@ pub async fn update_log_heroku(configuration: &configuration::Configuration, par
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

@@ -21,7 +21,7 @@ pub enum ListFastlyIpsError {
 
 
 /// List the public IP addresses for the Fastly network.
-pub async fn list_fastly_ips(configuration: &configuration::Configuration) -> Result<crate::models::PublicIpList, Error<ListFastlyIpsError>> {
+pub async fn list_fastly_ips(configuration: &mut configuration::Configuration) -> Result<crate::models::PublicIpList, Error<ListFastlyIpsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -46,6 +46,18 @@ pub async fn list_fastly_ips(configuration: &configuration::Configuration) -> Re
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

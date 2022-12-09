@@ -134,7 +134,7 @@ pub enum UpdateSnippetDynamicError {
 
 
 /// Create a snippet for a particular service and version.
-pub async fn create_snippet(configuration: &configuration::Configuration, params: CreateSnippetParams) -> Result<crate::models::SnippetResponse, Error<CreateSnippetError>> {
+pub async fn create_snippet(configuration: &mut configuration::Configuration, params: CreateSnippetParams) -> Result<crate::models::SnippetResponse, Error<CreateSnippetError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -184,6 +184,18 @@ pub async fn create_snippet(configuration: &configuration::Configuration, params
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -197,7 +209,7 @@ pub async fn create_snippet(configuration: &configuration::Configuration, params
 }
 
 /// Delete a specific snippet for a particular service and version.
-pub async fn delete_snippet(configuration: &configuration::Configuration, params: DeleteSnippetParams) -> Result<crate::models::InlineResponse200, Error<DeleteSnippetError>> {
+pub async fn delete_snippet(configuration: &mut configuration::Configuration, params: DeleteSnippetParams) -> Result<crate::models::InlineResponse200, Error<DeleteSnippetError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -226,6 +238,18 @@ pub async fn delete_snippet(configuration: &configuration::Configuration, params
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -239,7 +263,7 @@ pub async fn delete_snippet(configuration: &configuration::Configuration, params
 }
 
 /// Get a single snippet for a particular service and version.
-pub async fn get_snippet(configuration: &configuration::Configuration, params: GetSnippetParams) -> Result<crate::models::SnippetResponse, Error<GetSnippetError>> {
+pub async fn get_snippet(configuration: &mut configuration::Configuration, params: GetSnippetParams) -> Result<crate::models::SnippetResponse, Error<GetSnippetError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -268,6 +292,18 @@ pub async fn get_snippet(configuration: &configuration::Configuration, params: G
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -281,7 +317,7 @@ pub async fn get_snippet(configuration: &configuration::Configuration, params: G
 }
 
 /// Get a single dynamic snippet for a particular service.
-pub async fn get_snippet_dynamic(configuration: &configuration::Configuration, params: GetSnippetDynamicParams) -> Result<crate::models::SnippetResponse, Error<GetSnippetDynamicError>> {
+pub async fn get_snippet_dynamic(configuration: &mut configuration::Configuration, params: GetSnippetDynamicParams) -> Result<crate::models::SnippetResponse, Error<GetSnippetDynamicError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -309,6 +345,18 @@ pub async fn get_snippet_dynamic(configuration: &configuration::Configuration, p
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -322,7 +370,7 @@ pub async fn get_snippet_dynamic(configuration: &configuration::Configuration, p
 }
 
 /// List all snippets for a particular service and version.
-pub async fn list_snippets(configuration: &configuration::Configuration, params: ListSnippetsParams) -> Result<Vec<crate::models::SnippetResponse>, Error<ListSnippetsError>> {
+pub async fn list_snippets(configuration: &mut configuration::Configuration, params: ListSnippetsParams) -> Result<Vec<crate::models::SnippetResponse>, Error<ListSnippetsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -350,6 +398,18 @@ pub async fn list_snippets(configuration: &configuration::Configuration, params:
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -363,7 +423,7 @@ pub async fn list_snippets(configuration: &configuration::Configuration, params:
 }
 
 /// Update a dynamic snippet for a particular service.
-pub async fn update_snippet_dynamic(configuration: &configuration::Configuration, params: UpdateSnippetDynamicParams) -> Result<crate::models::SnippetResponse, Error<UpdateSnippetDynamicError>> {
+pub async fn update_snippet_dynamic(configuration: &mut configuration::Configuration, params: UpdateSnippetDynamicParams) -> Result<crate::models::SnippetResponse, Error<UpdateSnippetDynamicError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -412,6 +472,18 @@ pub async fn update_snippet_dynamic(configuration: &configuration::Configuration
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

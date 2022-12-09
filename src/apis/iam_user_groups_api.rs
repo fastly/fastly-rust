@@ -112,7 +112,7 @@ pub enum ListUserGroupsError {
 
 
 /// Delete a user group.
-pub async fn delete_a_user_group(configuration: &configuration::Configuration, params: DeleteAUserGroupParams) -> Result<(), Error<DeleteAUserGroupError>> {
+pub async fn delete_a_user_group(configuration: &mut configuration::Configuration, params: DeleteAUserGroupParams) -> Result<(), Error<DeleteAUserGroupError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -139,6 +139,18 @@ pub async fn delete_a_user_group(configuration: &configuration::Configuration, p
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -152,7 +164,7 @@ pub async fn delete_a_user_group(configuration: &configuration::Configuration, p
 }
 
 /// Get a user group.
-pub async fn get_a_user_group(configuration: &configuration::Configuration, params: GetAUserGroupParams) -> Result<serde_json::Value, Error<GetAUserGroupError>> {
+pub async fn get_a_user_group(configuration: &mut configuration::Configuration, params: GetAUserGroupParams) -> Result<serde_json::Value, Error<GetAUserGroupError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -179,6 +191,18 @@ pub async fn get_a_user_group(configuration: &configuration::Configuration, para
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -192,7 +216,7 @@ pub async fn get_a_user_group(configuration: &configuration::Configuration, para
 }
 
 /// List members of a user group.
-pub async fn list_user_group_members(configuration: &configuration::Configuration, params: ListUserGroupMembersParams) -> Result<serde_json::Value, Error<ListUserGroupMembersError>> {
+pub async fn list_user_group_members(configuration: &mut configuration::Configuration, params: ListUserGroupMembersParams) -> Result<serde_json::Value, Error<ListUserGroupMembersError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -227,6 +251,18 @@ pub async fn list_user_group_members(configuration: &configuration::Configuratio
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -240,7 +276,7 @@ pub async fn list_user_group_members(configuration: &configuration::Configuratio
 }
 
 /// List roles in a user group.
-pub async fn list_user_group_roles(configuration: &configuration::Configuration, params: ListUserGroupRolesParams) -> Result<serde_json::Value, Error<ListUserGroupRolesError>> {
+pub async fn list_user_group_roles(configuration: &mut configuration::Configuration, params: ListUserGroupRolesParams) -> Result<serde_json::Value, Error<ListUserGroupRolesError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -275,6 +311,18 @@ pub async fn list_user_group_roles(configuration: &configuration::Configuration,
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -288,7 +336,7 @@ pub async fn list_user_group_roles(configuration: &configuration::Configuration,
 }
 
 /// List service groups in a user group.
-pub async fn list_user_group_service_groups(configuration: &configuration::Configuration, params: ListUserGroupServiceGroupsParams) -> Result<serde_json::Value, Error<ListUserGroupServiceGroupsError>> {
+pub async fn list_user_group_service_groups(configuration: &mut configuration::Configuration, params: ListUserGroupServiceGroupsParams) -> Result<serde_json::Value, Error<ListUserGroupServiceGroupsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -323,6 +371,18 @@ pub async fn list_user_group_service_groups(configuration: &configuration::Confi
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -336,7 +396,7 @@ pub async fn list_user_group_service_groups(configuration: &configuration::Confi
 }
 
 /// List all user groups.
-pub async fn list_user_groups(configuration: &configuration::Configuration, params: ListUserGroupsParams) -> Result<serde_json::Value, Error<ListUserGroupsError>> {
+pub async fn list_user_groups(configuration: &mut configuration::Configuration, params: ListUserGroupsParams) -> Result<serde_json::Value, Error<ListUserGroupsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -369,6 +429,18 @@ pub async fn list_user_groups(configuration: &configuration::Configuration, para
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

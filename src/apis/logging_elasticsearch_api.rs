@@ -164,7 +164,7 @@ pub enum UpdateLogElasticsearchError {
 
 
 /// Create a Elasticsearch logging endpoint for a particular service and version.
-pub async fn create_log_elasticsearch(configuration: &configuration::Configuration, params: CreateLogElasticsearchParams) -> Result<crate::models::LoggingElasticsearchResponse, Error<CreateLogElasticsearchError>> {
+pub async fn create_log_elasticsearch(configuration: &mut configuration::Configuration, params: CreateLogElasticsearchParams) -> Result<crate::models::LoggingElasticsearchResponse, Error<CreateLogElasticsearchError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -258,6 +258,18 @@ pub async fn create_log_elasticsearch(configuration: &configuration::Configurati
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -271,7 +283,7 @@ pub async fn create_log_elasticsearch(configuration: &configuration::Configurati
 }
 
 /// Delete the Elasticsearch logging endpoint for a particular service and version.
-pub async fn delete_log_elasticsearch(configuration: &configuration::Configuration, params: DeleteLogElasticsearchParams) -> Result<crate::models::InlineResponse200, Error<DeleteLogElasticsearchError>> {
+pub async fn delete_log_elasticsearch(configuration: &mut configuration::Configuration, params: DeleteLogElasticsearchParams) -> Result<crate::models::InlineResponse200, Error<DeleteLogElasticsearchError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -300,6 +312,18 @@ pub async fn delete_log_elasticsearch(configuration: &configuration::Configurati
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -313,7 +337,7 @@ pub async fn delete_log_elasticsearch(configuration: &configuration::Configurati
 }
 
 /// Get the Elasticsearch logging endpoint for a particular service and version.
-pub async fn get_log_elasticsearch(configuration: &configuration::Configuration, params: GetLogElasticsearchParams) -> Result<crate::models::LoggingElasticsearchResponse, Error<GetLogElasticsearchError>> {
+pub async fn get_log_elasticsearch(configuration: &mut configuration::Configuration, params: GetLogElasticsearchParams) -> Result<crate::models::LoggingElasticsearchResponse, Error<GetLogElasticsearchError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -342,6 +366,18 @@ pub async fn get_log_elasticsearch(configuration: &configuration::Configuration,
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -355,7 +391,7 @@ pub async fn get_log_elasticsearch(configuration: &configuration::Configuration,
 }
 
 /// List all of the Elasticsearch logging endpoints for a particular service and version.
-pub async fn list_log_elasticsearch(configuration: &configuration::Configuration, params: ListLogElasticsearchParams) -> Result<Vec<crate::models::LoggingElasticsearchResponse>, Error<ListLogElasticsearchError>> {
+pub async fn list_log_elasticsearch(configuration: &mut configuration::Configuration, params: ListLogElasticsearchParams) -> Result<Vec<crate::models::LoggingElasticsearchResponse>, Error<ListLogElasticsearchError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -383,6 +419,18 @@ pub async fn list_log_elasticsearch(configuration: &configuration::Configuration
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -396,7 +444,7 @@ pub async fn list_log_elasticsearch(configuration: &configuration::Configuration
 }
 
 /// Update the Elasticsearch logging endpoint for a particular service and version.
-pub async fn update_log_elasticsearch(configuration: &configuration::Configuration, params: UpdateLogElasticsearchParams) -> Result<crate::models::LoggingElasticsearchResponse, Error<UpdateLogElasticsearchError>> {
+pub async fn update_log_elasticsearch(configuration: &mut configuration::Configuration, params: UpdateLogElasticsearchParams) -> Result<crate::models::LoggingElasticsearchResponse, Error<UpdateLogElasticsearchError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -490,6 +538,18 @@ pub async fn update_log_elasticsearch(configuration: &configuration::Configurati
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

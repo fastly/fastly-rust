@@ -146,7 +146,7 @@ pub enum UpdateServiceError {
 
 
 /// Create a service.
-pub async fn create_service(configuration: &configuration::Configuration, params: CreateServiceParams) -> Result<crate::models::ServiceResponse, Error<CreateServiceError>> {
+pub async fn create_service(configuration: &mut configuration::Configuration, params: CreateServiceParams) -> Result<crate::models::ServiceResponse, Error<CreateServiceError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -190,6 +190,18 @@ pub async fn create_service(configuration: &configuration::Configuration, params
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -203,7 +215,7 @@ pub async fn create_service(configuration: &configuration::Configuration, params
 }
 
 /// Delete a service.
-pub async fn delete_service(configuration: &configuration::Configuration, params: DeleteServiceParams) -> Result<crate::models::InlineResponse200, Error<DeleteServiceError>> {
+pub async fn delete_service(configuration: &mut configuration::Configuration, params: DeleteServiceParams) -> Result<crate::models::InlineResponse200, Error<DeleteServiceError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -230,6 +242,18 @@ pub async fn delete_service(configuration: &configuration::Configuration, params
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -243,7 +267,7 @@ pub async fn delete_service(configuration: &configuration::Configuration, params
 }
 
 /// Get a specific service by id.
-pub async fn get_service(configuration: &configuration::Configuration, params: GetServiceParams) -> Result<crate::models::ServiceResponse, Error<GetServiceError>> {
+pub async fn get_service(configuration: &mut configuration::Configuration, params: GetServiceParams) -> Result<crate::models::ServiceResponse, Error<GetServiceError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -270,6 +294,18 @@ pub async fn get_service(configuration: &configuration::Configuration, params: G
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -283,7 +319,7 @@ pub async fn get_service(configuration: &configuration::Configuration, params: G
 }
 
 /// List detailed information on a specified service.
-pub async fn get_service_detail(configuration: &configuration::Configuration, params: GetServiceDetailParams) -> Result<crate::models::ServiceDetail, Error<GetServiceDetailError>> {
+pub async fn get_service_detail(configuration: &mut configuration::Configuration, params: GetServiceDetailParams) -> Result<crate::models::ServiceDetail, Error<GetServiceDetailError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -314,6 +350,18 @@ pub async fn get_service_detail(configuration: &configuration::Configuration, pa
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -327,7 +375,7 @@ pub async fn get_service_detail(configuration: &configuration::Configuration, pa
 }
 
 /// List the domains within a service.
-pub async fn list_service_domains(configuration: &configuration::Configuration, params: ListServiceDomainsParams) -> Result<Vec<crate::models::DomainResponse>, Error<ListServiceDomainsError>> {
+pub async fn list_service_domains(configuration: &mut configuration::Configuration, params: ListServiceDomainsParams) -> Result<Vec<crate::models::DomainResponse>, Error<ListServiceDomainsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -354,6 +402,18 @@ pub async fn list_service_domains(configuration: &configuration::Configuration, 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -367,7 +427,7 @@ pub async fn list_service_domains(configuration: &configuration::Configuration, 
 }
 
 /// List services.
-pub async fn list_services(configuration: &configuration::Configuration, params: ListServicesParams) -> Result<Vec<crate::models::ServiceListResponse>, Error<ListServicesError>> {
+pub async fn list_services(configuration: &mut configuration::Configuration, params: ListServicesParams) -> Result<Vec<crate::models::ServiceListResponse>, Error<ListServicesError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -409,6 +469,18 @@ pub async fn list_services(configuration: &configuration::Configuration, params:
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -422,7 +494,7 @@ pub async fn list_services(configuration: &configuration::Configuration, params:
 }
 
 /// Get a specific service by name.
-pub async fn search_service(configuration: &configuration::Configuration, params: SearchServiceParams) -> Result<crate::models::ServiceResponse, Error<SearchServiceError>> {
+pub async fn search_service(configuration: &mut configuration::Configuration, params: SearchServiceParams) -> Result<crate::models::ServiceResponse, Error<SearchServiceError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -450,6 +522,18 @@ pub async fn search_service(configuration: &configuration::Configuration, params
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -463,7 +547,7 @@ pub async fn search_service(configuration: &configuration::Configuration, params
 }
 
 /// Update a service.
-pub async fn update_service(configuration: &configuration::Configuration, params: UpdateServiceParams) -> Result<crate::models::ServiceResponse, Error<UpdateServiceError>> {
+pub async fn update_service(configuration: &mut configuration::Configuration, params: UpdateServiceParams) -> Result<crate::models::ServiceResponse, Error<UpdateServiceError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -503,6 +587,18 @@ pub async fn update_service(configuration: &configuration::Configuration, params
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

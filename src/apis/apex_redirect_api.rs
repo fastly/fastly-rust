@@ -83,7 +83,7 @@ pub enum UpdateApexRedirectError {
 
 
 /// Delete an apex redirect by its ID.
-pub async fn delete_apex_redirect(configuration: &configuration::Configuration, params: DeleteApexRedirectParams) -> Result<crate::models::InlineResponse200, Error<DeleteApexRedirectError>> {
+pub async fn delete_apex_redirect(configuration: &mut configuration::Configuration, params: DeleteApexRedirectParams) -> Result<crate::models::InlineResponse200, Error<DeleteApexRedirectError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -110,6 +110,18 @@ pub async fn delete_apex_redirect(configuration: &configuration::Configuration, 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -123,7 +135,7 @@ pub async fn delete_apex_redirect(configuration: &configuration::Configuration, 
 }
 
 /// Get an apex redirect by its ID.
-pub async fn get_apex_redirect(configuration: &configuration::Configuration, params: GetApexRedirectParams) -> Result<crate::models::ApexRedirect, Error<GetApexRedirectError>> {
+pub async fn get_apex_redirect(configuration: &mut configuration::Configuration, params: GetApexRedirectParams) -> Result<crate::models::ApexRedirect, Error<GetApexRedirectError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -150,6 +162,18 @@ pub async fn get_apex_redirect(configuration: &configuration::Configuration, par
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -163,7 +187,7 @@ pub async fn get_apex_redirect(configuration: &configuration::Configuration, par
 }
 
 /// List all apex redirects for a particular service and version.
-pub async fn list_apex_redirects(configuration: &configuration::Configuration, params: ListApexRedirectsParams) -> Result<Vec<crate::models::ApexRedirect>, Error<ListApexRedirectsError>> {
+pub async fn list_apex_redirects(configuration: &mut configuration::Configuration, params: ListApexRedirectsParams) -> Result<Vec<crate::models::ApexRedirect>, Error<ListApexRedirectsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -191,6 +215,18 @@ pub async fn list_apex_redirects(configuration: &configuration::Configuration, p
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -204,7 +240,7 @@ pub async fn list_apex_redirects(configuration: &configuration::Configuration, p
 }
 
 /// Update an apex redirect by its ID.
-pub async fn update_apex_redirect(configuration: &configuration::Configuration, params: UpdateApexRedirectParams) -> Result<crate::models::ApexRedirect, Error<UpdateApexRedirectError>> {
+pub async fn update_apex_redirect(configuration: &mut configuration::Configuration, params: UpdateApexRedirectParams) -> Result<crate::models::ApexRedirect, Error<UpdateApexRedirectError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -264,6 +300,18 @@ pub async fn update_apex_redirect(configuration: &configuration::Configuration, 
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

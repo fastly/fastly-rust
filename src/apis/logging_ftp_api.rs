@@ -172,7 +172,7 @@ pub enum UpdateLogFtpError {
 
 
 /// Create a FTP for a particular service and version.
-pub async fn create_log_ftp(configuration: &configuration::Configuration, params: CreateLogFtpParams) -> Result<crate::models::LoggingFtpResponse, Error<CreateLogFtpError>> {
+pub async fn create_log_ftp(configuration: &mut configuration::Configuration, params: CreateLogFtpParams) -> Result<crate::models::LoggingFtpResponse, Error<CreateLogFtpError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -274,6 +274,18 @@ pub async fn create_log_ftp(configuration: &configuration::Configuration, params
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -287,7 +299,7 @@ pub async fn create_log_ftp(configuration: &configuration::Configuration, params
 }
 
 /// Delete the FTP for a particular service and version.
-pub async fn delete_log_ftp(configuration: &configuration::Configuration, params: DeleteLogFtpParams) -> Result<crate::models::InlineResponse200, Error<DeleteLogFtpError>> {
+pub async fn delete_log_ftp(configuration: &mut configuration::Configuration, params: DeleteLogFtpParams) -> Result<crate::models::InlineResponse200, Error<DeleteLogFtpError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -316,6 +328,18 @@ pub async fn delete_log_ftp(configuration: &configuration::Configuration, params
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -329,7 +353,7 @@ pub async fn delete_log_ftp(configuration: &configuration::Configuration, params
 }
 
 /// Get the FTP for a particular service and version.
-pub async fn get_log_ftp(configuration: &configuration::Configuration, params: GetLogFtpParams) -> Result<crate::models::LoggingFtpResponse, Error<GetLogFtpError>> {
+pub async fn get_log_ftp(configuration: &mut configuration::Configuration, params: GetLogFtpParams) -> Result<crate::models::LoggingFtpResponse, Error<GetLogFtpError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -358,6 +382,18 @@ pub async fn get_log_ftp(configuration: &configuration::Configuration, params: G
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -371,7 +407,7 @@ pub async fn get_log_ftp(configuration: &configuration::Configuration, params: G
 }
 
 /// List all of the FTPs for a particular service and version.
-pub async fn list_log_ftp(configuration: &configuration::Configuration, params: ListLogFtpParams) -> Result<Vec<crate::models::LoggingFtpResponse>, Error<ListLogFtpError>> {
+pub async fn list_log_ftp(configuration: &mut configuration::Configuration, params: ListLogFtpParams) -> Result<Vec<crate::models::LoggingFtpResponse>, Error<ListLogFtpError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -399,6 +435,18 @@ pub async fn list_log_ftp(configuration: &configuration::Configuration, params: 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -412,7 +460,7 @@ pub async fn list_log_ftp(configuration: &configuration::Configuration, params: 
 }
 
 /// Update the FTP for a particular service and version.
-pub async fn update_log_ftp(configuration: &configuration::Configuration, params: UpdateLogFtpParams) -> Result<crate::models::LoggingFtpResponse, Error<UpdateLogFtpError>> {
+pub async fn update_log_ftp(configuration: &mut configuration::Configuration, params: UpdateLogFtpParams) -> Result<crate::models::LoggingFtpResponse, Error<UpdateLogFtpError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -514,6 +562,18 @@ pub async fn update_log_ftp(configuration: &configuration::Configuration, params
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

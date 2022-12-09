@@ -33,8 +33,8 @@ pub struct PurgeAllParams {
 /// struct for passing parameters to the method [`purge_single_url`]
 #[derive(Clone, Debug, Default)]
 pub struct PurgeSingleUrlParams {
-    /// The hostname for the content you'll be purging.
-    pub host: String,
+    /// URL of object in cache to be purged.
+    pub cached_url: String,
     /// If present, this header triggers the purge to be 'soft', which marks the affected object as stale rather than making it inaccessible.  Typically set to \"1\" when used, but the value is not important.
     pub fastly_soft_purge: Option<i32>
 }
@@ -81,7 +81,7 @@ pub enum PurgeTagError {
 
 
 /// Instant Purge a particular service of items tagged with surrogate keys. Up to 256 surrogate keys can be purged in one batch request. As an alternative to sending the keys in a JSON object in the body of the request, this endpoint also supports listing keys in a <code>Surrogate-Key</code> request header, e.g. <code>Surrogate-Key: key_1 key_2 key_3</code>. 
-pub async fn bulk_purge_tag(configuration: &configuration::Configuration, params: BulkPurgeTagParams) -> Result<::std::collections::HashMap<String, String>, Error<BulkPurgeTagError>> {
+pub async fn bulk_purge_tag(configuration: &mut configuration::Configuration, params: BulkPurgeTagParams) -> Result<::std::collections::HashMap<String, String>, Error<BulkPurgeTagError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -118,6 +118,18 @@ pub async fn bulk_purge_tag(configuration: &configuration::Configuration, params
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -131,7 +143,7 @@ pub async fn bulk_purge_tag(configuration: &configuration::Configuration, params
 }
 
 /// Instant Purge everything from a service.  Purge-all requests cannot be done in soft mode and will always immediately invalidate all cached content associated with the service. To do a soft-purge-all, consider applying a constant [surrogate key](https://docs.fastly.com/en/guides/getting-started-with-surrogate-keys) tag (e.g., `\"all\"`) to all objects. 
-pub async fn purge_all(configuration: &configuration::Configuration, params: PurgeAllParams) -> Result<crate::models::InlineResponse200, Error<PurgeAllError>> {
+pub async fn purge_all(configuration: &mut configuration::Configuration, params: PurgeAllParams) -> Result<crate::models::InlineResponse200, Error<PurgeAllError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -158,6 +170,18 @@ pub async fn purge_all(configuration: &configuration::Configuration, params: Pur
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -171,18 +195,18 @@ pub async fn purge_all(configuration: &configuration::Configuration, params: Pur
 }
 
 /// Instant Purge an individual URL.
-pub async fn purge_single_url(configuration: &configuration::Configuration, params: PurgeSingleUrlParams) -> Result<crate::models::PurgeResponse, Error<PurgeSingleUrlError>> {
+pub async fn purge_single_url(configuration: &mut configuration::Configuration, params: PurgeSingleUrlParams) -> Result<crate::models::PurgeResponse, Error<PurgeSingleUrlError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
-    let host = params.host;
+    let cached_url = params.cached_url;
     let fastly_soft_purge = params.fastly_soft_purge;
 
 
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/*", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+    let local_var_uri_str = format!("{}/purge/{cached_url}", local_var_configuration.base_path, cached_url=crate::apis::urlencode(cached_url));
+    let mut local_var_req_builder = local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
@@ -190,13 +214,24 @@ pub async fn purge_single_url(configuration: &configuration::Configuration, para
     if let Some(local_var_param_value) = fastly_soft_purge {
         local_var_req_builder = local_var_req_builder.header("fastly-soft-purge", local_var_param_value.to_string());
     }
-    local_var_req_builder = local_var_req_builder.header("host", host.to_string());
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         local_var_req_builder = local_var_req_builder.basic_auth(local_var_auth_conf.0.to_owned(), local_var_auth_conf.1.to_owned());
     };
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
@@ -211,7 +246,7 @@ pub async fn purge_single_url(configuration: &configuration::Configuration, para
 }
 
 /// Instant Purge a particular service of items tagged with a Surrogate Key. Only one surrogate key can be purged at a time. Multiple keys can be purged using a batch surrogate key purge request.
-pub async fn purge_tag(configuration: &configuration::Configuration, params: PurgeTagParams) -> Result<crate::models::PurgeResponse, Error<PurgeTagError>> {
+pub async fn purge_tag(configuration: &mut configuration::Configuration, params: PurgeTagParams) -> Result<crate::models::PurgeResponse, Error<PurgeTagError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -242,6 +277,18 @@ pub async fn purge_tag(configuration: &configuration::Configuration, params: Pur
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

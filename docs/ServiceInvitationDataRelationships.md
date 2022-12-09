@@ -1,11 +1,10 @@
-# RelationshipUserUserData
+# ServiceInvitationDataRelationships
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**_type** | Option<[**crate::models::TypeUser**](TypeUser.md)> |  | 
-**id** | Option<**String**> |  | [readonly]
+**service** | Option<[**crate::models::RelationshipMemberService**](RelationshipMemberService.md)> |  | 
 
 [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

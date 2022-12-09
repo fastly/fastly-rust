@@ -19,7 +19,7 @@ pub struct BulkUpdateAclEntry {
     /// An IP address.
     #[serde(rename = "ip", skip_serializing_if = "Option::is_none")]
     pub ip: Option<String>,
-    /// Number of bits for the subnet mask applied to the IP address.  For IPv4 addresses, a value of 32 represents the smallest subnet mask (1 address), 24 represents a class C subnet mask (256 addresses), 16 represents a class B subnet mask (65k addresses),  and 8 is class A subnet mask (16m addresses). If not provided, no mask is applied.
+    /// Number of bits for the subnet mask applied to the IP address. For IPv4 addresses, a value of 32 represents the smallest subnet mask (1 address), 24 represents a class C subnet mask (256 addresses), 16 represents a class B subnet mask (65k addresses), and 8 is class A subnet mask (16m addresses). If not provided, no mask is applied.
     #[serde(rename = "subnet", skip_serializing_if = "Option::is_none")]
     pub subnet: Option<i32>,
     #[serde(rename = "op", skip_serializing_if = "Option::is_none")]

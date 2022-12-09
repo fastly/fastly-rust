@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 ## disable_product
 
-Disable a product on a service. Supported product IDs: `origin_inspector` and `domain_inspector`.
+Disable a product on a service. Supported product IDs: `origin_inspector`,`domain_inspector`,`image_optimizer`, and `websockets`.
 
 ```rust
 let cfg = &Configuration::default();
@@ -48,7 +48,7 @@ Name | Type | Description  | Required | Notes
 
 ## enable_product
 
-Enable a product on a service. Supported product IDs: `origin_inspector` and `domain_inspector`.
+Enable a product on a service. Supported product IDs: `origin_inspector`,`domain_inspector`,`image_optimizer`, and `websockets`.
 
 ```rust
 let cfg = &Configuration::default();
@@ -84,7 +84,7 @@ Name | Type | Description  | Required | Notes
 
 ## get_enabled_product
 
-Get enabled product on a service. Supported product IDs: `origin_inspector` and `domain_inspector`.
+Get enabled product on a service. Supported product IDs: `origin_inspector`,`domain_inspector`,`image_optimizer`, and `websockets`.
 
 ```rust
 let cfg = &Configuration::default();

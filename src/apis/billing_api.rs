@@ -64,7 +64,7 @@ pub enum GetInvoiceMtdError {
 
 
 /// Get the invoice for a given year and month. Can be any month from when the Customer was created to the current month.
-pub async fn get_invoice(configuration: &configuration::Configuration, params: GetInvoiceParams) -> Result<crate::models::BillingResponse, Error<GetInvoiceError>> {
+pub async fn get_invoice(configuration: &mut configuration::Configuration, params: GetInvoiceParams) -> Result<crate::models::BillingResponse, Error<GetInvoiceError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -92,6 +92,18 @@ pub async fn get_invoice(configuration: &configuration::Configuration, params: G
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -105,7 +117,7 @@ pub async fn get_invoice(configuration: &configuration::Configuration, params: G
 }
 
 /// Get the invoice for the given invoice_id.
-pub async fn get_invoice_by_id(configuration: &configuration::Configuration, params: GetInvoiceByIdParams) -> Result<crate::models::BillingResponse, Error<GetInvoiceByIdError>> {
+pub async fn get_invoice_by_id(configuration: &mut configuration::Configuration, params: GetInvoiceByIdParams) -> Result<crate::models::BillingResponse, Error<GetInvoiceByIdError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -133,6 +145,18 @@ pub async fn get_invoice_by_id(configuration: &configuration::Configuration, par
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -146,7 +170,7 @@ pub async fn get_invoice_by_id(configuration: &configuration::Configuration, par
 }
 
 /// Get the current month-to-date estimate. This endpoint has two different responses. Under normal circumstances, it generally takes less than 5 seconds to generate but in certain cases can take up to 60 seconds. Once generated the month-to-date estimate is cached for 4 hours, and is available the next request will return the JSON representation of the month-to-date estimate. While a report is being generated in the background, this endpoint will return a `202 Accepted` response. The full format of which can be found in detail in our [billing calculation guide](https://docs.fastly.com/en/guides/how-we-calculate-your-bill). There are certain accounts for which we are unable to generate a month-to-date estimate. For example, accounts who have parent-pay are unable to generate an MTD estimate. The parent accounts are able to generate a month-to-date estimate but that estimate will not include the child accounts amounts at this time.
-pub async fn get_invoice_mtd(configuration: &configuration::Configuration, params: GetInvoiceMtdParams) -> Result<crate::models::BillingEstimateResponse, Error<GetInvoiceMtdError>> {
+pub async fn get_invoice_mtd(configuration: &mut configuration::Configuration, params: GetInvoiceMtdParams) -> Result<crate::models::BillingEstimateResponse, Error<GetInvoiceMtdError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -180,6 +204,18 @@ pub async fn get_invoice_mtd(configuration: &configuration::Configuration, param
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

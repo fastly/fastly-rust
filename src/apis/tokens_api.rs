@@ -74,7 +74,7 @@ pub enum RevokeTokenCurrentError {
 
 
 /// Get a single token based on the access_token used in the request.
-pub async fn get_token_current(configuration: &configuration::Configuration) -> Result<crate::models::TokenResponse, Error<GetTokenCurrentError>> {
+pub async fn get_token_current(configuration: &mut configuration::Configuration) -> Result<crate::models::TokenResponse, Error<GetTokenCurrentError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -100,6 +100,18 @@ pub async fn get_token_current(configuration: &configuration::Configuration) -> 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -113,7 +125,7 @@ pub async fn get_token_current(configuration: &configuration::Configuration) -> 
 }
 
 /// List all tokens belonging to a specific customer.
-pub async fn list_tokens_customer(configuration: &configuration::Configuration, params: ListTokensCustomerParams) -> Result<Vec<crate::models::TokenResponse>, Error<ListTokensCustomerError>> {
+pub async fn list_tokens_customer(configuration: &mut configuration::Configuration, params: ListTokensCustomerParams) -> Result<Vec<crate::models::TokenResponse>, Error<ListTokensCustomerError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -140,6 +152,18 @@ pub async fn list_tokens_customer(configuration: &configuration::Configuration, 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -153,7 +177,7 @@ pub async fn list_tokens_customer(configuration: &configuration::Configuration, 
 }
 
 /// List all tokens belonging to the authenticated user.
-pub async fn list_tokens_user(configuration: &configuration::Configuration) -> Result<Vec<crate::models::TokenResponse>, Error<ListTokensUserError>> {
+pub async fn list_tokens_user(configuration: &mut configuration::Configuration) -> Result<Vec<crate::models::TokenResponse>, Error<ListTokensUserError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -179,6 +203,18 @@ pub async fn list_tokens_user(configuration: &configuration::Configuration) -> R
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -192,7 +228,7 @@ pub async fn list_tokens_user(configuration: &configuration::Configuration) -> R
 }
 
 /// Revoke a specific token by its id.
-pub async fn revoke_token(configuration: &configuration::Configuration, params: RevokeTokenParams) -> Result<(), Error<RevokeTokenError>> {
+pub async fn revoke_token(configuration: &mut configuration::Configuration, params: RevokeTokenParams) -> Result<(), Error<RevokeTokenError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -219,6 +255,18 @@ pub async fn revoke_token(configuration: &configuration::Configuration, params: 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -232,7 +280,7 @@ pub async fn revoke_token(configuration: &configuration::Configuration, params: 
 }
 
 /// Revoke a token that is used to authenticate the request.
-pub async fn revoke_token_current(configuration: &configuration::Configuration) -> Result<(), Error<RevokeTokenCurrentError>> {
+pub async fn revoke_token_current(configuration: &mut configuration::Configuration) -> Result<(), Error<RevokeTokenCurrentError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -257,6 +305,18 @@ pub async fn revoke_token_current(configuration: &configuration::Configuration) 
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

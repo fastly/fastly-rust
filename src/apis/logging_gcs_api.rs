@@ -38,16 +38,20 @@ pub struct CreateLogGcsParams {
     pub gzip_level: Option<i32>,
     /// The codec used for compressing your logs. Valid values are `zstd`, `snappy`, and `gzip`. Specifying both `compression_codec` and `gzip_level` in the same API request will result in an error.
     pub compression_codec: Option<String>,
-    /// Your Google Cloud Platform service account email address. The `client_email` field in your service account authentication JSON. Required.
+    /// Your Google Cloud Platform service account email address. The `client_email` field in your service account authentication JSON. Not required if `account_name` is specified.
     pub user: Option<String>,
-    /// Your Google Cloud Platform account secret key. The `private_key` field in your service account authentication JSON. Required.
+    /// Your Google Cloud Platform account secret key. The `private_key` field in your service account authentication JSON. Not required if `account_name` is specified.
     pub secret_key: Option<String>,
+    /// The name of the Google Cloud Platform service account associated with the target log collection service. Not required if `user` and `secret_key` are provided.
+    pub account_name: Option<String>,
     /// The name of the GCS bucket.
     pub bucket_name: Option<String>,
     /// The path to upload logs to.
     pub path: Option<String>,
     /// A PGP public key that Fastly will use to encrypt your log files before writing them to disk.
-    pub public_key: Option<String>
+    pub public_key: Option<String>,
+    /// Your Google Cloud Platform project ID. Required
+    pub project_id: Option<String>
 }
 
 /// struct for passing parameters to the method [`delete_log_gcs`]
@@ -110,16 +114,20 @@ pub struct UpdateLogGcsParams {
     pub gzip_level: Option<i32>,
     /// The codec used for compressing your logs. Valid values are `zstd`, `snappy`, and `gzip`. Specifying both `compression_codec` and `gzip_level` in the same API request will result in an error.
     pub compression_codec: Option<String>,
-    /// Your Google Cloud Platform service account email address. The `client_email` field in your service account authentication JSON. Required.
+    /// Your Google Cloud Platform service account email address. The `client_email` field in your service account authentication JSON. Not required if `account_name` is specified.
     pub user: Option<String>,
-    /// Your Google Cloud Platform account secret key. The `private_key` field in your service account authentication JSON. Required.
+    /// Your Google Cloud Platform account secret key. The `private_key` field in your service account authentication JSON. Not required if `account_name` is specified.
     pub secret_key: Option<String>,
+    /// The name of the Google Cloud Platform service account associated with the target log collection service. Not required if `user` and `secret_key` are provided.
+    pub account_name: Option<String>,
     /// The name of the GCS bucket.
     pub bucket_name: Option<String>,
     /// The path to upload logs to.
     pub path: Option<String>,
     /// A PGP public key that Fastly will use to encrypt your log files before writing them to disk.
-    pub public_key: Option<String>
+    pub public_key: Option<String>,
+    /// Your Google Cloud Platform project ID. Required
+    pub project_id: Option<String>
 }
 
 
@@ -160,7 +168,7 @@ pub enum UpdateLogGcsError {
 
 
 /// Create GCS logging for a particular service and version.
-pub async fn create_log_gcs(configuration: &configuration::Configuration, params: CreateLogGcsParams) -> Result<crate::models::LoggingGcsResponse, Error<CreateLogGcsError>> {
+pub async fn create_log_gcs(configuration: &mut configuration::Configuration, params: CreateLogGcsParams) -> Result<crate::models::LoggingGcsResponse, Error<CreateLogGcsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -178,9 +186,11 @@ pub async fn create_log_gcs(configuration: &configuration::Configuration, params
     let compression_codec = params.compression_codec;
     let user = params.user;
     let secret_key = params.secret_key;
+    let account_name = params.account_name;
     let bucket_name = params.bucket_name;
     let path = params.path;
     let public_key = params.public_key;
+    let project_id = params.project_id;
 
 
     let local_var_client = &local_var_configuration.client;
@@ -236,6 +246,9 @@ pub async fn create_log_gcs(configuration: &configuration::Configuration, params
     if let Some(local_var_param_value) = secret_key {
         local_var_form_params.insert("secret_key", local_var_param_value.to_string());
     }
+    if let Some(local_var_param_value) = account_name {
+        local_var_form_params.insert("account_name", local_var_param_value.to_string());
+    }
     if let Some(local_var_param_value) = bucket_name {
         local_var_form_params.insert("bucket_name", local_var_param_value.to_string());
     }
@@ -245,10 +258,25 @@ pub async fn create_log_gcs(configuration: &configuration::Configuration, params
     if let Some(local_var_param_value) = public_key {
         local_var_form_params.insert("public_key", local_var_param_value.to_string());
     }
+    if let Some(local_var_param_value) = project_id {
+        local_var_form_params.insert("project_id", local_var_param_value.to_string());
+    }
     local_var_req_builder = local_var_req_builder.form(&local_var_form_params);
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
@@ -263,7 +291,7 @@ pub async fn create_log_gcs(configuration: &configuration::Configuration, params
 }
 
 /// Delete the GCS Logging for a particular service and version.
-pub async fn delete_log_gcs(configuration: &configuration::Configuration, params: DeleteLogGcsParams) -> Result<crate::models::InlineResponse200, Error<DeleteLogGcsError>> {
+pub async fn delete_log_gcs(configuration: &mut configuration::Configuration, params: DeleteLogGcsParams) -> Result<crate::models::InlineResponse200, Error<DeleteLogGcsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -292,6 +320,18 @@ pub async fn delete_log_gcs(configuration: &configuration::Configuration, params
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -305,7 +345,7 @@ pub async fn delete_log_gcs(configuration: &configuration::Configuration, params
 }
 
 /// Get the GCS Logging for a particular service and version.
-pub async fn get_log_gcs(configuration: &configuration::Configuration, params: GetLogGcsParams) -> Result<crate::models::LoggingGcsResponse, Error<GetLogGcsError>> {
+pub async fn get_log_gcs(configuration: &mut configuration::Configuration, params: GetLogGcsParams) -> Result<crate::models::LoggingGcsResponse, Error<GetLogGcsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -334,6 +374,18 @@ pub async fn get_log_gcs(configuration: &configuration::Configuration, params: G
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -347,7 +399,7 @@ pub async fn get_log_gcs(configuration: &configuration::Configuration, params: G
 }
 
 /// List all of the GCS log endpoints for a particular service and version.
-pub async fn list_log_gcs(configuration: &configuration::Configuration, params: ListLogGcsParams) -> Result<Vec<crate::models::LoggingGcsResponse>, Error<ListLogGcsError>> {
+pub async fn list_log_gcs(configuration: &mut configuration::Configuration, params: ListLogGcsParams) -> Result<Vec<crate::models::LoggingGcsResponse>, Error<ListLogGcsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -375,6 +427,18 @@ pub async fn list_log_gcs(configuration: &configuration::Configuration, params: 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -388,7 +452,7 @@ pub async fn list_log_gcs(configuration: &configuration::Configuration, params: 
 }
 
 /// Update the GCS for a particular service and version.
-pub async fn update_log_gcs(configuration: &configuration::Configuration, params: UpdateLogGcsParams) -> Result<crate::models::LoggingGcsResponse, Error<UpdateLogGcsError>> {
+pub async fn update_log_gcs(configuration: &mut configuration::Configuration, params: UpdateLogGcsParams) -> Result<crate::models::LoggingGcsResponse, Error<UpdateLogGcsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -407,9 +471,11 @@ pub async fn update_log_gcs(configuration: &configuration::Configuration, params
     let compression_codec = params.compression_codec;
     let user = params.user;
     let secret_key = params.secret_key;
+    let account_name = params.account_name;
     let bucket_name = params.bucket_name;
     let path = params.path;
     let public_key = params.public_key;
+    let project_id = params.project_id;
 
 
     let local_var_client = &local_var_configuration.client;
@@ -465,6 +531,9 @@ pub async fn update_log_gcs(configuration: &configuration::Configuration, params
     if let Some(local_var_param_value) = secret_key {
         local_var_form_params.insert("secret_key", local_var_param_value.to_string());
     }
+    if let Some(local_var_param_value) = account_name {
+        local_var_form_params.insert("account_name", local_var_param_value.to_string());
+    }
     if let Some(local_var_param_value) = bucket_name {
         local_var_form_params.insert("bucket_name", local_var_param_value.to_string());
     }
@@ -474,10 +543,25 @@ pub async fn update_log_gcs(configuration: &configuration::Configuration, params
     if let Some(local_var_param_value) = public_key {
         local_var_form_params.insert("public_key", local_var_param_value.to_string());
     }
+    if let Some(local_var_param_value) = project_id {
+        local_var_form_params.insert("project_id", local_var_param_value.to_string());
+    }
     local_var_req_builder = local_var_req_builder.form(&local_var_form_params);
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

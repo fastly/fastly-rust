@@ -58,8 +58,8 @@ pub enum GetEnabledProductError {
 }
 
 
-/// Disable a product on a service. Supported product IDs: `origin_inspector` and `domain_inspector`.
-pub async fn disable_product(configuration: &configuration::Configuration, params: DisableProductParams) -> Result<(), Error<DisableProductError>> {
+/// Disable a product on a service. Supported product IDs: `origin_inspector`,`domain_inspector`,`image_optimizer`, and `websockets`.
+pub async fn disable_product(configuration: &mut configuration::Configuration, params: DisableProductParams) -> Result<(), Error<DisableProductError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -87,6 +87,18 @@ pub async fn disable_product(configuration: &configuration::Configuration, param
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -99,8 +111,8 @@ pub async fn disable_product(configuration: &configuration::Configuration, param
     }
 }
 
-/// Enable a product on a service. Supported product IDs: `origin_inspector` and `domain_inspector`.
-pub async fn enable_product(configuration: &configuration::Configuration, params: EnableProductParams) -> Result<crate::models::EnabledProduct, Error<EnableProductError>> {
+/// Enable a product on a service. Supported product IDs: `origin_inspector`,`domain_inspector`,`image_optimizer`, and `websockets`.
+pub async fn enable_product(configuration: &mut configuration::Configuration, params: EnableProductParams) -> Result<crate::models::EnabledProduct, Error<EnableProductError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -128,6 +140,18 @@ pub async fn enable_product(configuration: &configuration::Configuration, params
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -140,8 +164,8 @@ pub async fn enable_product(configuration: &configuration::Configuration, params
     }
 }
 
-/// Get enabled product on a service. Supported product IDs: `origin_inspector` and `domain_inspector`.
-pub async fn get_enabled_product(configuration: &configuration::Configuration, params: GetEnabledProductParams) -> Result<crate::models::EnabledProduct, Error<GetEnabledProductError>> {
+/// Get enabled product on a service. Supported product IDs: `origin_inspector`,`domain_inspector`,`image_optimizer`, and `websockets`.
+pub async fn get_enabled_product(configuration: &mut configuration::Configuration, params: GetEnabledProductParams) -> Result<crate::models::EnabledProduct, Error<GetEnabledProductError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -168,6 +192,18 @@ pub async fn get_enabled_product(configuration: &configuration::Configuration, p
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

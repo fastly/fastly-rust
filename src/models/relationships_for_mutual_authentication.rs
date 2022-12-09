@@ -10,14 +10,14 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct RelationshipsForMutualAuthentication {
-    #[serde(rename = "tls_domains", skip_serializing_if = "Option::is_none")]
-    pub tls_domains: Option<Box<crate::models::RelationshipTlsDomainTlsDomain>>,
+    #[serde(rename = "tls_activations", skip_serializing_if = "Option::is_none")]
+    pub tls_activations: Option<Box<crate::models::RelationshipTlsActivationTlsActivation>>,
 }
 
 impl RelationshipsForMutualAuthentication {
     pub fn new() -> RelationshipsForMutualAuthentication {
         RelationshipsForMutualAuthentication {
-            tls_domains: None,
+            tls_activations: None,
         }
     }
 }

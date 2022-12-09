@@ -164,7 +164,7 @@ pub enum UpdateLogOpenstackError {
 
 
 /// Create a openstack for a particular service and version.
-pub async fn create_log_openstack(configuration: &configuration::Configuration, params: CreateLogOpenstackParams) -> Result<crate::models::LoggingOpenstackResponse, Error<CreateLogOpenstackError>> {
+pub async fn create_log_openstack(configuration: &mut configuration::Configuration, params: CreateLogOpenstackParams) -> Result<crate::models::LoggingOpenstackResponse, Error<CreateLogOpenstackError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -258,6 +258,18 @@ pub async fn create_log_openstack(configuration: &configuration::Configuration, 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -271,7 +283,7 @@ pub async fn create_log_openstack(configuration: &configuration::Configuration, 
 }
 
 /// Delete the openstack for a particular service and version.
-pub async fn delete_log_openstack(configuration: &configuration::Configuration, params: DeleteLogOpenstackParams) -> Result<crate::models::InlineResponse200, Error<DeleteLogOpenstackError>> {
+pub async fn delete_log_openstack(configuration: &mut configuration::Configuration, params: DeleteLogOpenstackParams) -> Result<crate::models::InlineResponse200, Error<DeleteLogOpenstackError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -300,6 +312,18 @@ pub async fn delete_log_openstack(configuration: &configuration::Configuration, 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -313,7 +337,7 @@ pub async fn delete_log_openstack(configuration: &configuration::Configuration, 
 }
 
 /// Get the openstack for a particular service and version.
-pub async fn get_log_openstack(configuration: &configuration::Configuration, params: GetLogOpenstackParams) -> Result<crate::models::LoggingOpenstackResponse, Error<GetLogOpenstackError>> {
+pub async fn get_log_openstack(configuration: &mut configuration::Configuration, params: GetLogOpenstackParams) -> Result<crate::models::LoggingOpenstackResponse, Error<GetLogOpenstackError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -342,6 +366,18 @@ pub async fn get_log_openstack(configuration: &configuration::Configuration, par
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -355,7 +391,7 @@ pub async fn get_log_openstack(configuration: &configuration::Configuration, par
 }
 
 /// List all of the openstacks for a particular service and version.
-pub async fn list_log_openstack(configuration: &configuration::Configuration, params: ListLogOpenstackParams) -> Result<Vec<crate::models::LoggingOpenstackResponse>, Error<ListLogOpenstackError>> {
+pub async fn list_log_openstack(configuration: &mut configuration::Configuration, params: ListLogOpenstackParams) -> Result<Vec<crate::models::LoggingOpenstackResponse>, Error<ListLogOpenstackError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -383,6 +419,18 @@ pub async fn list_log_openstack(configuration: &configuration::Configuration, pa
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -396,7 +444,7 @@ pub async fn list_log_openstack(configuration: &configuration::Configuration, pa
 }
 
 /// Update the openstack for a particular service and version.
-pub async fn update_log_openstack(configuration: &configuration::Configuration, params: UpdateLogOpenstackParams) -> Result<crate::models::LoggingOpenstackResponse, Error<UpdateLogOpenstackError>> {
+pub async fn update_log_openstack(configuration: &mut configuration::Configuration, params: UpdateLogOpenstackParams) -> Result<crate::models::LoggingOpenstackResponse, Error<UpdateLogOpenstackError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -490,6 +538,18 @@ pub async fn update_log_openstack(configuration: &configuration::Configuration, 
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

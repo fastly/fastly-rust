@@ -39,7 +39,7 @@ Name | Type | Description  | Required | Notes
 **priority** | Option\<**i32**> | Priority determines execution order. Lower numbers execute first. |  |[default to 100]
 **regex** | Option\<**String**> | Regular expression to use. Only applies to `regex` and `regex_repeat` actions. |  |
 **request_condition** | Option\<**String**> | Condition which, if met, will select this configuration during a request. Optional. |  |
-**response_condition** | Option\<[**String**](String.md)> | Optional name of a response condition to apply. |  |
+**response_condition** | Option\<**String**> | Optional name of a response condition to apply. |  |
 **src** | Option\<**String**> | Variable to be used as a source for the header content. Does not apply to `delete` action. |  |
 **substitution** | Option\<**String**> | Value to substitute in place of regular expression. Only applies to `regex` and `regex_repeat` actions. |  |
 **_type** | Option\<**String**> | Accepts a string value. |  |
@@ -198,7 +198,7 @@ Name | Type | Description  | Required | Notes
 **priority** | Option\<**i32**> | Priority determines execution order. Lower numbers execute first. |  |[default to 100]
 **regex** | Option\<**String**> | Regular expression to use. Only applies to `regex` and `regex_repeat` actions. |  |
 **request_condition** | Option\<**String**> | Condition which, if met, will select this configuration during a request. Optional. |  |
-**response_condition** | Option\<[**String**](String.md)> | Optional name of a response condition to apply. |  |
+**response_condition** | Option\<**String**> | Optional name of a response condition to apply. |  |
 **src** | Option\<**String**> | Variable to be used as a source for the header content. Does not apply to `delete` action. |  |
 **substitution** | Option\<**String**> | Value to substitute in place of regular expression. Only applies to `regex` and `regex_repeat` actions. |  |
 **_type** | Option\<**String**> | Accepts a string value. |  |

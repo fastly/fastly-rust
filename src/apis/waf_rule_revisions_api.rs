@@ -52,7 +52,7 @@ pub enum ListWafRuleRevisionsError {
 
 
 /// Get a specific rule revision.
-pub async fn get_waf_rule_revision(configuration: &configuration::Configuration, params: GetWafRuleRevisionParams) -> Result<crate::models::WafRuleRevisionResponse, Error<GetWafRuleRevisionError>> {
+pub async fn get_waf_rule_revision(configuration: &mut configuration::Configuration, params: GetWafRuleRevisionParams) -> Result<crate::models::WafRuleRevisionResponse, Error<GetWafRuleRevisionError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -84,6 +84,18 @@ pub async fn get_waf_rule_revision(configuration: &configuration::Configuration,
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -97,7 +109,7 @@ pub async fn get_waf_rule_revision(configuration: &configuration::Configuration,
 }
 
 /// List all revisions for a specific rule. The `rule_id` provided can be the ModSecurity Rule ID or the Fastly generated rule ID.
-pub async fn list_waf_rule_revisions(configuration: &configuration::Configuration, params: ListWafRuleRevisionsParams) -> Result<crate::models::WafRuleRevisionsResponse, Error<ListWafRuleRevisionsError>> {
+pub async fn list_waf_rule_revisions(configuration: &mut configuration::Configuration, params: ListWafRuleRevisionsParams) -> Result<crate::models::WafRuleRevisionsResponse, Error<ListWafRuleRevisionsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -135,6 +147,18 @@ pub async fn list_waf_rule_revisions(configuration: &configuration::Configuratio
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

@@ -6,7 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**bulk_purge_tag**](PurgeApi.md#bulk_purge_tag) | **POST** /service/{service_id}/purge | Purge multiple surrogate key tags
 [**purge_all**](PurgeApi.md#purge_all) | **POST** /service/{service_id}/purge_all | Purge everything from a service
-[**purge_single_url**](PurgeApi.md#purge_single_url) | **GET** /* | Purge a URL
+[**purge_single_url**](PurgeApi.md#purge_single_url) | **POST** /purge/{cached_url} | Purge a URL
 [**purge_tag**](PurgeApi.md#purge_tag) | **POST** /service/{service_id}/purge/{surrogate_key} | Purge by surrogate key tag
 
 
@@ -101,7 +101,7 @@ purge_single_url(cfg, params)
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**host** | **String** | The hostname for the content you'll be purging. | [required] |
+**cached_url** | **String** | URL of object in cache to be purged. | [required] |
 **fastly_soft_purge** | Option\<**i32**> | If present, this header triggers the purge to be 'soft', which marks the affected object as stale rather than making it inaccessible.  Typically set to \"1\" when used, but the value is not important. |  |
 
 ### Return type

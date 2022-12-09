@@ -40,6 +40,8 @@ pub struct CreateBackendParams {
     pub ipv4: Option<String>,
     /// IPv6 address of the backend. May be used as an alternative to `address` to set the backend location.
     pub ipv6: Option<String>,
+    /// How long to keep a persistent connection to the backend between requests.
+    pub keepalive_time: Option<i32>,
     /// Maximum number of concurrent connections this backend will accept.
     pub max_conn: Option<i32>,
     /// Maximum allowed TLS version on SSL connections to this backend. If your backend server is not able to negotiate a connection meeting this constraint, a synthetic `503` error response will be generated.
@@ -140,6 +142,8 @@ pub struct UpdateBackendParams {
     pub ipv4: Option<String>,
     /// IPv6 address of the backend. May be used as an alternative to `address` to set the backend location.
     pub ipv6: Option<String>,
+    /// How long to keep a persistent connection to the backend between requests.
+    pub keepalive_time: Option<i32>,
     /// Maximum number of concurrent connections this backend will accept.
     pub max_conn: Option<i32>,
     /// Maximum allowed TLS version on SSL connections to this backend. If your backend server is not able to negotiate a connection meeting this constraint, a synthetic `503` error response will be generated.
@@ -216,7 +220,7 @@ pub enum UpdateBackendError {
 
 
 /// Create a backend for a particular service and version.
-pub async fn create_backend(configuration: &configuration::Configuration, params: CreateBackendParams) -> Result<crate::models::BackendResponse, Error<CreateBackendError>> {
+pub async fn create_backend(configuration: &mut configuration::Configuration, params: CreateBackendParams) -> Result<crate::models::BackendResponse, Error<CreateBackendError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -233,6 +237,7 @@ pub async fn create_backend(configuration: &configuration::Configuration, params
     let hostname = params.hostname;
     let ipv4 = params.ipv4;
     let ipv6 = params.ipv6;
+    let keepalive_time = params.keepalive_time;
     let max_conn = params.max_conn;
     let max_tls_version = params.max_tls_version;
     let min_tls_version = params.min_tls_version;
@@ -303,6 +308,9 @@ pub async fn create_backend(configuration: &configuration::Configuration, params
     if let Some(local_var_param_value) = ipv6 {
         local_var_form_params.insert("ipv6", local_var_param_value.to_string());
     }
+    if let Some(local_var_param_value) = keepalive_time {
+        local_var_form_params.insert("keepalive_time", local_var_param_value.to_string());
+    }
     if let Some(local_var_param_value) = max_conn {
         local_var_form_params.insert("max_conn", local_var_param_value.to_string());
     }
@@ -362,6 +370,18 @@ pub async fn create_backend(configuration: &configuration::Configuration, params
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -375,7 +395,7 @@ pub async fn create_backend(configuration: &configuration::Configuration, params
 }
 
 /// Delete the backend for a particular service and version.
-pub async fn delete_backend(configuration: &configuration::Configuration, params: DeleteBackendParams) -> Result<crate::models::InlineResponse200, Error<DeleteBackendError>> {
+pub async fn delete_backend(configuration: &mut configuration::Configuration, params: DeleteBackendParams) -> Result<crate::models::InlineResponse200, Error<DeleteBackendError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -404,6 +424,18 @@ pub async fn delete_backend(configuration: &configuration::Configuration, params
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -417,7 +449,7 @@ pub async fn delete_backend(configuration: &configuration::Configuration, params
 }
 
 /// Get the backend for a particular service and version.
-pub async fn get_backend(configuration: &configuration::Configuration, params: GetBackendParams) -> Result<crate::models::BackendResponse, Error<GetBackendError>> {
+pub async fn get_backend(configuration: &mut configuration::Configuration, params: GetBackendParams) -> Result<crate::models::BackendResponse, Error<GetBackendError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -446,6 +478,18 @@ pub async fn get_backend(configuration: &configuration::Configuration, params: G
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -459,7 +503,7 @@ pub async fn get_backend(configuration: &configuration::Configuration, params: G
 }
 
 /// List all backends for a particular service and version.
-pub async fn list_backends(configuration: &configuration::Configuration, params: ListBackendsParams) -> Result<Vec<crate::models::BackendResponse>, Error<ListBackendsError>> {
+pub async fn list_backends(configuration: &mut configuration::Configuration, params: ListBackendsParams) -> Result<Vec<crate::models::BackendResponse>, Error<ListBackendsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -487,6 +531,18 @@ pub async fn list_backends(configuration: &configuration::Configuration, params:
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -500,7 +556,7 @@ pub async fn list_backends(configuration: &configuration::Configuration, params:
 }
 
 /// Update the backend for a particular service and version.
-pub async fn update_backend(configuration: &configuration::Configuration, params: UpdateBackendParams) -> Result<crate::models::BackendResponse, Error<UpdateBackendError>> {
+pub async fn update_backend(configuration: &mut configuration::Configuration, params: UpdateBackendParams) -> Result<crate::models::BackendResponse, Error<UpdateBackendError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -518,6 +574,7 @@ pub async fn update_backend(configuration: &configuration::Configuration, params
     let hostname = params.hostname;
     let ipv4 = params.ipv4;
     let ipv6 = params.ipv6;
+    let keepalive_time = params.keepalive_time;
     let max_conn = params.max_conn;
     let max_tls_version = params.max_tls_version;
     let min_tls_version = params.min_tls_version;
@@ -588,6 +645,9 @@ pub async fn update_backend(configuration: &configuration::Configuration, params
     if let Some(local_var_param_value) = ipv6 {
         local_var_form_params.insert("ipv6", local_var_param_value.to_string());
     }
+    if let Some(local_var_param_value) = keepalive_time {
+        local_var_form_params.insert("keepalive_time", local_var_param_value.to_string());
+    }
     if let Some(local_var_param_value) = max_conn {
         local_var_form_params.insert("max_conn", local_var_param_value.to_string());
     }
@@ -646,6 +706,18 @@ pub async fn update_backend(configuration: &configuration::Configuration, params
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

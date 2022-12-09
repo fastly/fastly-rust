@@ -73,7 +73,7 @@ pub enum ListTlsKeysError {
 
 
 /// Create a TLS private key.
-pub async fn create_tls_key(configuration: &configuration::Configuration, params: CreateTlsKeyParams) -> Result<crate::models::TlsPrivateKeyResponse, Error<CreateTlsKeyError>> {
+pub async fn create_tls_key(configuration: &mut configuration::Configuration, params: CreateTlsKeyParams) -> Result<crate::models::TlsPrivateKeyResponse, Error<CreateTlsKeyError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -101,6 +101,18 @@ pub async fn create_tls_key(configuration: &configuration::Configuration, params
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -114,7 +126,7 @@ pub async fn create_tls_key(configuration: &configuration::Configuration, params
 }
 
 /// Destroy a TLS private key. Only private keys not already matched to any certificates can be deleted.
-pub async fn delete_tls_key(configuration: &configuration::Configuration, params: DeleteTlsKeyParams) -> Result<(), Error<DeleteTlsKeyError>> {
+pub async fn delete_tls_key(configuration: &mut configuration::Configuration, params: DeleteTlsKeyParams) -> Result<(), Error<DeleteTlsKeyError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -141,6 +153,18 @@ pub async fn delete_tls_key(configuration: &configuration::Configuration, params
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -154,7 +178,7 @@ pub async fn delete_tls_key(configuration: &configuration::Configuration, params
 }
 
 /// Show a TLS private key.
-pub async fn get_tls_key(configuration: &configuration::Configuration, params: GetTlsKeyParams) -> Result<crate::models::TlsPrivateKeyResponse, Error<GetTlsKeyError>> {
+pub async fn get_tls_key(configuration: &mut configuration::Configuration, params: GetTlsKeyParams) -> Result<crate::models::TlsPrivateKeyResponse, Error<GetTlsKeyError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -181,6 +205,18 @@ pub async fn get_tls_key(configuration: &configuration::Configuration, params: G
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -194,7 +230,7 @@ pub async fn get_tls_key(configuration: &configuration::Configuration, params: G
 }
 
 /// List all TLS private keys.
-pub async fn list_tls_keys(configuration: &configuration::Configuration, params: ListTlsKeysParams) -> Result<crate::models::TlsPrivateKeysResponse, Error<ListTlsKeysError>> {
+pub async fn list_tls_keys(configuration: &mut configuration::Configuration, params: ListTlsKeysParams) -> Result<crate::models::TlsPrivateKeysResponse, Error<ListTlsKeysError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -231,6 +267,18 @@ pub async fn list_tls_keys(configuration: &configuration::Configuration, params:
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

@@ -11,9 +11,9 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct RelationshipsForTlsSubscription {
     #[serde(rename = "tls_domains", skip_serializing_if = "Option::is_none")]
-    pub tls_domains: Option<Box<crate::models::RelationshipTlsDomainTlsDomain>>,
+    pub tls_domains: Option<Box<crate::models::RelationshipTlsDomainsTlsDomains>>,
     #[serde(rename = "tls_certificates", skip_serializing_if = "Option::is_none")]
-    pub tls_certificates: Option<Box<crate::models::RelationshipTlsCertificateTlsCertificate>>,
+    pub tls_certificates: Option<Box<crate::models::RelationshipTlsCertificatesTlsCertificates>>,
     #[serde(rename = "tls_configuration", skip_serializing_if = "Option::is_none")]
     pub tls_configuration: Option<Box<crate::models::RelationshipTlsConfigurationTlsConfiguration>>,
 }

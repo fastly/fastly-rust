@@ -128,7 +128,7 @@ pub enum UpdatePoolServerError {
 
 
 /// Creates a single server for a particular service and pool.
-pub async fn create_pool_server(configuration: &configuration::Configuration, params: CreatePoolServerParams) -> Result<crate::models::ServerResponse, Error<CreatePoolServerError>> {
+pub async fn create_pool_server(configuration: &mut configuration::Configuration, params: CreatePoolServerParams) -> Result<crate::models::ServerResponse, Error<CreatePoolServerError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -186,6 +186,18 @@ pub async fn create_pool_server(configuration: &configuration::Configuration, pa
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -199,7 +211,7 @@ pub async fn create_pool_server(configuration: &configuration::Configuration, pa
 }
 
 /// Deletes a single server for a particular service and pool.
-pub async fn delete_pool_server(configuration: &configuration::Configuration, params: DeletePoolServerParams) -> Result<crate::models::InlineResponse200, Error<DeletePoolServerError>> {
+pub async fn delete_pool_server(configuration: &mut configuration::Configuration, params: DeletePoolServerParams) -> Result<crate::models::InlineResponse200, Error<DeletePoolServerError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -228,6 +240,18 @@ pub async fn delete_pool_server(configuration: &configuration::Configuration, pa
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -241,7 +265,7 @@ pub async fn delete_pool_server(configuration: &configuration::Configuration, pa
 }
 
 /// Gets a single server for a particular service and pool.
-pub async fn get_pool_server(configuration: &configuration::Configuration, params: GetPoolServerParams) -> Result<crate::models::ServerResponse, Error<GetPoolServerError>> {
+pub async fn get_pool_server(configuration: &mut configuration::Configuration, params: GetPoolServerParams) -> Result<crate::models::ServerResponse, Error<GetPoolServerError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -270,6 +294,18 @@ pub async fn get_pool_server(configuration: &configuration::Configuration, param
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -283,7 +319,7 @@ pub async fn get_pool_server(configuration: &configuration::Configuration, param
 }
 
 /// Lists all servers for a particular service and pool.
-pub async fn list_pool_servers(configuration: &configuration::Configuration, params: ListPoolServersParams) -> Result<Vec<crate::models::ServerResponse>, Error<ListPoolServersError>> {
+pub async fn list_pool_servers(configuration: &mut configuration::Configuration, params: ListPoolServersParams) -> Result<Vec<crate::models::ServerResponse>, Error<ListPoolServersError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -311,6 +347,18 @@ pub async fn list_pool_servers(configuration: &configuration::Configuration, par
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -324,7 +372,7 @@ pub async fn list_pool_servers(configuration: &configuration::Configuration, par
 }
 
 /// Updates a single server for a particular service and pool.
-pub async fn update_pool_server(configuration: &configuration::Configuration, params: UpdatePoolServerParams) -> Result<crate::models::ServerResponse, Error<UpdatePoolServerError>> {
+pub async fn update_pool_server(configuration: &mut configuration::Configuration, params: UpdatePoolServerParams) -> Result<crate::models::ServerResponse, Error<UpdatePoolServerError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -382,6 +430,18 @@ pub async fn update_pool_server(configuration: &configuration::Configuration, pa
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

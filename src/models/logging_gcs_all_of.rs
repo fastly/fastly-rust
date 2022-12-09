@@ -19,6 +19,9 @@ pub struct LoggingGcsAllOf {
     /// A PGP public key that Fastly will use to encrypt your log files before writing them to disk.
     #[serde(rename = "public_key", skip_serializing_if = "Option::is_none")]
     pub public_key: Option<String>,
+    /// Your Google Cloud Platform project ID. Required
+    #[serde(rename = "project_id", skip_serializing_if = "Option::is_none")]
+    pub project_id: Option<String>,
 }
 
 impl LoggingGcsAllOf {
@@ -27,6 +30,7 @@ impl LoggingGcsAllOf {
             bucket_name: None,
             path: None,
             public_key: None,
+            project_id: None,
         }
     }
 }

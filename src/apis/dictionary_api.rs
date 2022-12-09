@@ -108,7 +108,7 @@ pub enum UpdateDictionaryError {
 
 
 /// Create named dictionary for a particular service and version.
-pub async fn create_dictionary(configuration: &configuration::Configuration, params: CreateDictionaryParams) -> Result<crate::models::DictionaryResponse, Error<CreateDictionaryError>> {
+pub async fn create_dictionary(configuration: &mut configuration::Configuration, params: CreateDictionaryParams) -> Result<crate::models::DictionaryResponse, Error<CreateDictionaryError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -146,6 +146,18 @@ pub async fn create_dictionary(configuration: &configuration::Configuration, par
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -159,7 +171,7 @@ pub async fn create_dictionary(configuration: &configuration::Configuration, par
 }
 
 /// Delete named dictionary for a particular service and version.
-pub async fn delete_dictionary(configuration: &configuration::Configuration, params: DeleteDictionaryParams) -> Result<crate::models::InlineResponse200, Error<DeleteDictionaryError>> {
+pub async fn delete_dictionary(configuration: &mut configuration::Configuration, params: DeleteDictionaryParams) -> Result<crate::models::InlineResponse200, Error<DeleteDictionaryError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -188,6 +200,18 @@ pub async fn delete_dictionary(configuration: &configuration::Configuration, par
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -201,7 +225,7 @@ pub async fn delete_dictionary(configuration: &configuration::Configuration, par
 }
 
 /// Retrieve a single dictionary by name for the version and service.
-pub async fn get_dictionary(configuration: &configuration::Configuration, params: GetDictionaryParams) -> Result<crate::models::DictionaryResponse, Error<GetDictionaryError>> {
+pub async fn get_dictionary(configuration: &mut configuration::Configuration, params: GetDictionaryParams) -> Result<crate::models::DictionaryResponse, Error<GetDictionaryError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -230,6 +254,18 @@ pub async fn get_dictionary(configuration: &configuration::Configuration, params
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -243,7 +279,7 @@ pub async fn get_dictionary(configuration: &configuration::Configuration, params
 }
 
 /// List all dictionaries for the version of the service.
-pub async fn list_dictionaries(configuration: &configuration::Configuration, params: ListDictionariesParams) -> Result<Vec<crate::models::DictionaryResponse>, Error<ListDictionariesError>> {
+pub async fn list_dictionaries(configuration: &mut configuration::Configuration, params: ListDictionariesParams) -> Result<Vec<crate::models::DictionaryResponse>, Error<ListDictionariesError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -271,6 +307,18 @@ pub async fn list_dictionaries(configuration: &configuration::Configuration, par
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -284,7 +332,7 @@ pub async fn list_dictionaries(configuration: &configuration::Configuration, par
 }
 
 /// Update named dictionary for a particular service and version.
-pub async fn update_dictionary(configuration: &configuration::Configuration, params: UpdateDictionaryParams) -> Result<crate::models::DictionaryResponse, Error<UpdateDictionaryError>> {
+pub async fn update_dictionary(configuration: &mut configuration::Configuration, params: UpdateDictionaryParams) -> Result<crate::models::DictionaryResponse, Error<UpdateDictionaryError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -322,6 +370,18 @@ pub async fn update_dictionary(configuration: &configuration::Configuration, par
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;

@@ -133,7 +133,7 @@ pub enum UpdateUserPasswordError {
 
 
 /// Create a user.
-pub async fn create_user(configuration: &configuration::Configuration, params: CreateUserParams) -> Result<crate::models::UserResponse, Error<CreateUserError>> {
+pub async fn create_user(configuration: &mut configuration::Configuration, params: CreateUserParams) -> Result<crate::models::UserResponse, Error<CreateUserError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -193,6 +193,18 @@ pub async fn create_user(configuration: &configuration::Configuration, params: C
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -206,7 +218,7 @@ pub async fn create_user(configuration: &configuration::Configuration, params: C
 }
 
 /// Delete a user.
-pub async fn delete_user(configuration: &configuration::Configuration, params: DeleteUserParams) -> Result<crate::models::InlineResponse200, Error<DeleteUserError>> {
+pub async fn delete_user(configuration: &mut configuration::Configuration, params: DeleteUserParams) -> Result<crate::models::InlineResponse200, Error<DeleteUserError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -233,6 +245,18 @@ pub async fn delete_user(configuration: &configuration::Configuration, params: D
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -246,7 +270,7 @@ pub async fn delete_user(configuration: &configuration::Configuration, params: D
 }
 
 /// Get the logged in user.
-pub async fn get_current_user(configuration: &configuration::Configuration) -> Result<crate::models::UserResponse, Error<GetCurrentUserError>> {
+pub async fn get_current_user(configuration: &mut configuration::Configuration) -> Result<crate::models::UserResponse, Error<GetCurrentUserError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -272,6 +296,18 @@ pub async fn get_current_user(configuration: &configuration::Configuration) -> R
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -285,7 +321,7 @@ pub async fn get_current_user(configuration: &configuration::Configuration) -> R
 }
 
 /// Get a specific user.
-pub async fn get_user(configuration: &configuration::Configuration, params: GetUserParams) -> Result<crate::models::UserResponse, Error<GetUserError>> {
+pub async fn get_user(configuration: &mut configuration::Configuration, params: GetUserParams) -> Result<crate::models::UserResponse, Error<GetUserError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -312,6 +348,18 @@ pub async fn get_user(configuration: &configuration::Configuration, params: GetU
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -325,7 +373,7 @@ pub async fn get_user(configuration: &configuration::Configuration, params: GetU
 }
 
 /// Requests a password reset for the specified user.
-pub async fn request_password_reset(configuration: &configuration::Configuration, params: RequestPasswordResetParams) -> Result<crate::models::InlineResponse200, Error<RequestPasswordResetError>> {
+pub async fn request_password_reset(configuration: &mut configuration::Configuration, params: RequestPasswordResetParams) -> Result<crate::models::InlineResponse200, Error<RequestPasswordResetError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -352,6 +400,18 @@ pub async fn request_password_reset(configuration: &configuration::Configuration
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -365,7 +425,7 @@ pub async fn request_password_reset(configuration: &configuration::Configuration
 }
 
 /// Update a user. Only users with the role of `superuser` can make changes to other users on the account. Non-superusers may use this endpoint to make changes to their own account. Modifications to `login` email require a valid password in the request body. Two-factor attributes are not editable via this endpoint.
-pub async fn update_user(configuration: &configuration::Configuration, params: UpdateUserParams) -> Result<crate::models::UserResponse, Error<UpdateUserError>> {
+pub async fn update_user(configuration: &mut configuration::Configuration, params: UpdateUserParams) -> Result<crate::models::UserResponse, Error<UpdateUserError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -426,6 +486,18 @@ pub async fn update_user(configuration: &configuration::Configuration, params: U
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
 
@@ -439,7 +511,7 @@ pub async fn update_user(configuration: &configuration::Configuration, params: U
 }
 
 /// Update the user's password to a new one.
-pub async fn update_user_password(configuration: &configuration::Configuration, params: UpdateUserPasswordParams) -> Result<crate::models::UserResponse, Error<UpdateUserPasswordError>> {
+pub async fn update_user_password(configuration: &mut configuration::Configuration, params: UpdateUserPasswordParams) -> Result<crate::models::UserResponse, Error<UpdateUserPasswordError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -469,6 +541,18 @@ pub async fn update_user_password(configuration: &configuration::Configuration, 
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
 
     let local_var_status = local_var_resp.status();
     let local_var_content = local_var_resp.text().await?;
