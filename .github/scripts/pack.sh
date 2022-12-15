@@ -1,4 +1,4 @@
-# tag the version
+# mark version
 cargo install cargo-bump
 cargo bump "${VERSION}"
 
