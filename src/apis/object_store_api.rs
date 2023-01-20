@@ -11,145 +11,130 @@ use reqwest;
 use crate::apis::ResponseContent;
 use super::{Error, configuration};
 
-/// struct for passing parameters to the method [`create_user`]
+/// struct for passing parameters to the method [`create_store`]
 #[derive(Clone, Debug, Default)]
-pub struct CreateUserParams {
-    pub login: Option<String>,
-    /// The real life name of the user.
-    pub name: Option<String>,
-    /// Indicates that the user has limited access to the customer's services.
-    pub limit_services: Option<bool>,
-    /// Indicates whether the is account is locked for editing or not.
-    pub locked: Option<bool>,
-    /// Indicates if a new password is required at next login.
-    pub require_new_password: Option<bool>,
-    pub role: Option<crate::models::RoleUser>,
-    /// Indicates if 2FA is enabled on the user.
-    pub two_factor_auth_enabled: Option<bool>,
-    /// Indicates if 2FA is required by the user's customer account.
-    pub two_factor_setup_required: Option<bool>
+pub struct CreateStoreParams {
+    pub store: Option<crate::models::Store>
 }
 
-/// struct for passing parameters to the method [`delete_user`]
+/// struct for passing parameters to the method [`delete_key_from_store`]
 #[derive(Clone, Debug, Default)]
-pub struct DeleteUserParams {
-    /// Alphanumeric string identifying the user.
-    pub user_id: String
+pub struct DeleteKeyFromStoreParams {
+    pub store_id: String,
+    pub key_name: String
 }
 
-/// struct for passing parameters to the method [`get_user`]
+/// struct for passing parameters to the method [`delete_store`]
 #[derive(Clone, Debug, Default)]
-pub struct GetUserParams {
-    /// Alphanumeric string identifying the user.
-    pub user_id: String
+pub struct DeleteStoreParams {
+    pub store_id: String
 }
 
-/// struct for passing parameters to the method [`request_password_reset`]
+/// struct for passing parameters to the method [`get_keys`]
 #[derive(Clone, Debug, Default)]
-pub struct RequestPasswordResetParams {
-    /// The login associated with the user (typically, an email address).
-    pub user_login: String
+pub struct GetKeysParams {
+    pub store_id: String,
+    pub cursor: Option<String>,
+    pub limit: Option<i32>
 }
 
-/// struct for passing parameters to the method [`update_user`]
+/// struct for passing parameters to the method [`get_store`]
 #[derive(Clone, Debug, Default)]
-pub struct UpdateUserParams {
-    /// Alphanumeric string identifying the user.
-    pub user_id: String,
-    pub login: Option<String>,
-    /// The real life name of the user.
-    pub name: Option<String>,
-    /// Indicates that the user has limited access to the customer's services.
-    pub limit_services: Option<bool>,
-    /// Indicates whether the is account is locked for editing or not.
-    pub locked: Option<bool>,
-    /// Indicates if a new password is required at next login.
-    pub require_new_password: Option<bool>,
-    pub role: Option<crate::models::RoleUser>,
-    /// Indicates if 2FA is enabled on the user.
-    pub two_factor_auth_enabled: Option<bool>,
-    /// Indicates if 2FA is required by the user's customer account.
-    pub two_factor_setup_required: Option<bool>
+pub struct GetStoreParams {
+    pub store_id: String
 }
 
-/// struct for passing parameters to the method [`update_user_password`]
+/// struct for passing parameters to the method [`get_stores`]
 #[derive(Clone, Debug, Default)]
-pub struct UpdateUserPasswordParams {
-    /// The user's current password.
-    pub old_password: Option<String>,
-    /// The user's new password.
-    pub new_password: Option<String>
+pub struct GetStoresParams {
+    pub cursor: Option<String>,
+    pub limit: Option<i32>
+}
+
+/// struct for passing parameters to the method [`get_value_for_key`]
+#[derive(Clone, Debug, Default)]
+pub struct GetValueForKeyParams {
+    pub store_id: String,
+    pub key_name: String
+}
+
+/// struct for passing parameters to the method [`set_value_for_key`]
+#[derive(Clone, Debug, Default)]
+pub struct SetValueForKeyParams {
+    pub store_id: String,
+    pub key_name: String,
+    pub body: Option<std::path::PathBuf>
 }
 
 
-/// struct for typed errors of method [`create_user`]
+/// struct for typed errors of method [`create_store`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum CreateUserError {
+pub enum CreateStoreError {
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`delete_user`]
+/// struct for typed errors of method [`delete_key_from_store`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum DeleteUserError {
+pub enum DeleteKeyFromStoreError {
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`get_current_user`]
+/// struct for typed errors of method [`delete_store`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum GetCurrentUserError {
+pub enum DeleteStoreError {
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`get_user`]
+/// struct for typed errors of method [`get_keys`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum GetUserError {
+pub enum GetKeysError {
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`request_password_reset`]
+/// struct for typed errors of method [`get_store`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum RequestPasswordResetError {
+pub enum GetStoreError {
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`update_user`]
+/// struct for typed errors of method [`get_stores`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum UpdateUserError {
+pub enum GetStoresError {
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`update_user_password`]
+/// struct for typed errors of method [`get_value_for_key`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum UpdateUserPasswordError {
+pub enum GetValueForKeyError {
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`set_value_for_key`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum SetValueForKeyError {
     UnknownValue(serde_json::Value),
 }
 
 
-/// Create a user.
-pub async fn create_user(configuration: &mut configuration::Configuration, params: CreateUserParams) -> Result<crate::models::UserResponse, Error<CreateUserError>> {
+/// Create a new object store.
+pub async fn create_store(configuration: &mut configuration::Configuration, params: CreateStoreParams) -> Result<crate::models::StoreResponse, Error<CreateStoreError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
-    let login = params.login;
-    let name = params.name;
-    let limit_services = params.limit_services;
-    let locked = params.locked;
-    let require_new_password = params.require_new_password;
-    let role = params.role;
-    let two_factor_auth_enabled = params.two_factor_auth_enabled;
-    let two_factor_setup_required = params.two_factor_setup_required;
+    let store = params.store;
 
 
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/user", local_var_configuration.base_path);
+    let local_var_uri_str = format!("{}/resources/stores/object", local_var_configuration.base_path);
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
@@ -163,32 +148,7 @@ pub async fn create_user(configuration: &mut configuration::Configuration, param
         };
         local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
     };
-    let mut local_var_form_params = std::collections::HashMap::new();
-    if let Some(local_var_param_value) = login {
-        local_var_form_params.insert("login", local_var_param_value.to_string());
-    }
-    if let Some(local_var_param_value) = name {
-        local_var_form_params.insert("name", local_var_param_value.to_string());
-    }
-    if let Some(local_var_param_value) = limit_services {
-        local_var_form_params.insert("limit_services", local_var_param_value.to_string());
-    }
-    if let Some(local_var_param_value) = locked {
-        local_var_form_params.insert("locked", local_var_param_value.to_string());
-    }
-    if let Some(local_var_param_value) = require_new_password {
-        local_var_form_params.insert("require_new_password", local_var_param_value.to_string());
-    }
-    if let Some(local_var_param_value) = role {
-        local_var_form_params.insert("role", local_var_param_value.to_string());
-    }
-    if let Some(local_var_param_value) = two_factor_auth_enabled {
-        local_var_form_params.insert("two_factor_auth_enabled", local_var_param_value.to_string());
-    }
-    if let Some(local_var_param_value) = two_factor_setup_required {
-        local_var_form_params.insert("two_factor_setup_required", local_var_param_value.to_string());
-    }
-    local_var_req_builder = local_var_req_builder.form(&local_var_form_params);
+    local_var_req_builder = local_var_req_builder.json(&store);
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
@@ -211,23 +171,24 @@ pub async fn create_user(configuration: &mut configuration::Configuration, param
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<CreateUserError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_entity: Option<CreateStoreError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
-/// Delete a user.
-pub async fn delete_user(configuration: &mut configuration::Configuration, params: DeleteUserParams) -> Result<crate::models::InlineResponse200, Error<DeleteUserError>> {
+/// Delete a key from a customer store.
+pub async fn delete_key_from_store(configuration: &mut configuration::Configuration, params: DeleteKeyFromStoreParams) -> Result<(), Error<DeleteKeyFromStoreError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
-    let user_id = params.user_id;
+    let store_id = params.store_id;
+    let key_name = params.key_name;
 
 
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/user/{user_id}", local_var_configuration.base_path, user_id=crate::apis::urlencode(user_id));
+    let local_var_uri_str = format!("{}/resources/stores/object/{store_id}/keys/{key_name}", local_var_configuration.base_path, store_id=crate::apis::urlencode(store_id), key_name=crate::apis::urlencode(key_name));
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::DELETE, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
@@ -261,24 +222,137 @@ pub async fn delete_user(configuration: &mut configuration::Configuration, param
     let local_var_content = local_var_resp.text().await?;
 
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
+        Ok(())
     } else {
-        let local_var_entity: Option<DeleteUserError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_entity: Option<DeleteKeyFromStoreError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
-/// Get the logged in user.
-pub async fn get_current_user(configuration: &mut configuration::Configuration) -> Result<crate::models::UserResponse, Error<GetCurrentUserError>> {
+/// An object store must be empty before it can be deleted.  Deleting an object store that still contains keys will result in a 409 Conflict.
+pub async fn delete_store(configuration: &mut configuration::Configuration, params: DeleteStoreParams) -> Result<(), Error<DeleteStoreError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
+    let store_id = params.store_id;
 
 
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/current_user", local_var_configuration.base_path);
+    let local_var_uri_str = format!("{}/resources/stores/object/{store_id}", local_var_configuration.base_path, store_id=crate::apis::urlencode(store_id));
+    let mut local_var_req_builder = local_var_client.request(reqwest::Method::DELETE, local_var_uri_str.as_str());
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+    if let Some(ref local_var_apikey) = local_var_configuration.api_key {
+        let local_var_key = local_var_apikey.key.clone();
+        let local_var_value = match local_var_apikey.prefix {
+            Some(ref local_var_prefix) => format!("{} {}", local_var_prefix, local_var_key),
+            None => local_var_key,
+        };
+        local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
+    };
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        Ok(())
+    } else {
+        let local_var_entity: Option<DeleteStoreError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        Err(Error::ResponseError(local_var_error))
+    }
+}
+
+/// List all keys within an object store.
+pub async fn get_keys(configuration: &mut configuration::Configuration, params: GetKeysParams) -> Result<crate::models::KeyResponse, Error<GetKeysError>> {
+    let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let store_id = params.store_id;
+    let cursor = params.cursor;
+    let limit = params.limit;
+
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!("{}/resources/stores/object/{store_id}/keys", local_var_configuration.base_path, store_id=crate::apis::urlencode(store_id));
+    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+
+    if let Some(ref local_var_str) = cursor {
+        local_var_req_builder = local_var_req_builder.query(&[("cursor", &local_var_str.to_string())]);
+    }
+    if let Some(ref local_var_str) = limit {
+        local_var_req_builder = local_var_req_builder.query(&[("limit", &local_var_str.to_string())]);
+    }
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+    if let Some(ref local_var_apikey) = local_var_configuration.api_key {
+        let local_var_key = local_var_apikey.key.clone();
+        let local_var_value = match local_var_apikey.prefix {
+            Some(ref local_var_prefix) => format!("{} {}", local_var_prefix, local_var_key),
+            None => local_var_key,
+        };
+        local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
+    };
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        serde_json::from_str(&local_var_content).map_err(Error::from)
+    } else {
+        let local_var_entity: Option<GetKeysError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        Err(Error::ResponseError(local_var_error))
+    }
+}
+
+/// Get an object store by ID.
+pub async fn get_store(configuration: &mut configuration::Configuration, params: GetStoreParams) -> Result<crate::models::StoreResponse, Error<GetStoreError>> {
+    let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let store_id = params.store_id;
+
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!("{}/resources/stores/object/{store_id}", local_var_configuration.base_path, store_id=crate::apis::urlencode(store_id));
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
@@ -314,23 +388,83 @@ pub async fn get_current_user(configuration: &mut configuration::Configuration) 
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<GetCurrentUserError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_entity: Option<GetStoreError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
-/// Get a specific user.
-pub async fn get_user(configuration: &mut configuration::Configuration, params: GetUserParams) -> Result<crate::models::UserResponse, Error<GetUserError>> {
+/// Get all stores for a given customer.
+pub async fn get_stores(configuration: &mut configuration::Configuration, params: GetStoresParams) -> Result<crate::models::GetStoresResponse, Error<GetStoresError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
-    let user_id = params.user_id;
+    let cursor = params.cursor;
+    let limit = params.limit;
 
 
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/user/{user_id}", local_var_configuration.base_path, user_id=crate::apis::urlencode(user_id));
+    let local_var_uri_str = format!("{}/resources/stores/object", local_var_configuration.base_path);
+    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+
+    if let Some(ref local_var_str) = cursor {
+        local_var_req_builder = local_var_req_builder.query(&[("cursor", &local_var_str.to_string())]);
+    }
+    if let Some(ref local_var_str) = limit {
+        local_var_req_builder = local_var_req_builder.query(&[("limit", &local_var_str.to_string())]);
+    }
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+    if let Some(ref local_var_apikey) = local_var_configuration.api_key {
+        let local_var_key = local_var_apikey.key.clone();
+        let local_var_value = match local_var_apikey.prefix {
+            Some(ref local_var_prefix) => format!("{} {}", local_var_prefix, local_var_key),
+            None => local_var_key,
+        };
+        local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
+    };
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        serde_json::from_str(&local_var_content).map_err(Error::from)
+    } else {
+        let local_var_entity: Option<GetStoresError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        Err(Error::ResponseError(local_var_error))
+    }
+}
+
+/// Get the value associated with a key.
+pub async fn get_value_for_key(configuration: &mut configuration::Configuration, params: GetValueForKeyParams) -> Result<std::path::PathBuf, Error<GetValueForKeyError>> {
+    let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let store_id = params.store_id;
+    let key_name = params.key_name;
+
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!("{}/resources/stores/object/{store_id}/keys/{key_name}", local_var_configuration.base_path, store_id=crate::apis::urlencode(store_id), key_name=crate::apis::urlencode(key_name));
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
@@ -366,83 +500,25 @@ pub async fn get_user(configuration: &mut configuration::Configuration, params: 
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<GetUserError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_entity: Option<GetValueForKeyError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
-/// Requests a password reset for the specified user.
-pub async fn request_password_reset(configuration: &mut configuration::Configuration, params: RequestPasswordResetParams) -> Result<crate::models::InlineResponse200, Error<RequestPasswordResetError>> {
+/// Insert a new key-value pair into an object store.
+pub async fn set_value_for_key(configuration: &mut configuration::Configuration, params: SetValueForKeyParams) -> Result<std::path::PathBuf, Error<SetValueForKeyError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
-    let user_login = params.user_login;
+    let store_id = params.store_id;
+    let key_name = params.key_name;
+    let body = params.body;
 
 
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/user/{user_login}/password/request_reset", local_var_configuration.base_path, user_login=crate::apis::urlencode(user_login));
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
-
-    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
-    }
-    if let Some(ref local_var_apikey) = local_var_configuration.api_key {
-        let local_var_key = local_var_apikey.key.clone();
-        let local_var_value = match local_var_apikey.prefix {
-            Some(ref local_var_prefix) => format!("{} {}", local_var_prefix, local_var_key),
-            None => local_var_key,
-        };
-        local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
-    };
-
-    let local_var_req = local_var_req_builder.build()?;
-    let local_var_resp = local_var_client.execute(local_var_req).await?;
-
-    if "POST" != "GET" && "POST" != "HEAD" {
-      let headers = local_var_resp.headers();
-      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
-          Some(v) => v.to_str().unwrap().parse().unwrap(),
-          None => configuration::DEFAULT_RATELIMIT,
-      };
-      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
-          Some(v) => v.to_str().unwrap().parse().unwrap(),
-          None => 0,
-      };
-    }
-
-    let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.text().await?;
-
-    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
-    } else {
-        let local_var_entity: Option<RequestPasswordResetError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
-        Err(Error::ResponseError(local_var_error))
-    }
-}
-
-/// Update a user. Only users with the role of `superuser` can make changes to other users on the account. Non-superusers may use this endpoint to make changes to their own account. Two-factor attributes are not editable via this endpoint.
-pub async fn update_user(configuration: &mut configuration::Configuration, params: UpdateUserParams) -> Result<crate::models::UserResponse, Error<UpdateUserError>> {
-    let local_var_configuration = configuration;
-
-    // unbox the parameters
-    let user_id = params.user_id;
-    let login = params.login;
-    let name = params.name;
-    let limit_services = params.limit_services;
-    let locked = params.locked;
-    let require_new_password = params.require_new_password;
-    let role = params.role;
-    let two_factor_auth_enabled = params.two_factor_auth_enabled;
-    let two_factor_setup_required = params.two_factor_setup_required;
-
-
-    let local_var_client = &local_var_configuration.client;
-
-    let local_var_uri_str = format!("{}/user/{user_id}", local_var_configuration.base_path, user_id=crate::apis::urlencode(user_id));
+    let local_var_uri_str = format!("{}/resources/stores/object/{store_id}/keys/{key_name}", local_var_configuration.base_path, store_id=crate::apis::urlencode(store_id), key_name=crate::apis::urlencode(key_name));
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::PUT, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
@@ -456,32 +532,7 @@ pub async fn update_user(configuration: &mut configuration::Configuration, param
         };
         local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
     };
-    let mut local_var_form_params = std::collections::HashMap::new();
-    if let Some(local_var_param_value) = login {
-        local_var_form_params.insert("login", local_var_param_value.to_string());
-    }
-    if let Some(local_var_param_value) = name {
-        local_var_form_params.insert("name", local_var_param_value.to_string());
-    }
-    if let Some(local_var_param_value) = limit_services {
-        local_var_form_params.insert("limit_services", local_var_param_value.to_string());
-    }
-    if let Some(local_var_param_value) = locked {
-        local_var_form_params.insert("locked", local_var_param_value.to_string());
-    }
-    if let Some(local_var_param_value) = require_new_password {
-        local_var_form_params.insert("require_new_password", local_var_param_value.to_string());
-    }
-    if let Some(local_var_param_value) = role {
-        local_var_form_params.insert("role", local_var_param_value.to_string());
-    }
-    if let Some(local_var_param_value) = two_factor_auth_enabled {
-        local_var_form_params.insert("two_factor_auth_enabled", local_var_param_value.to_string());
-    }
-    if let Some(local_var_param_value) = two_factor_setup_required {
-        local_var_form_params.insert("two_factor_setup_required", local_var_param_value.to_string());
-    }
-    local_var_req_builder = local_var_req_builder.form(&local_var_form_params);
+    local_var_req_builder = local_var_req_builder.json(&body);
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
@@ -504,63 +555,7 @@ pub async fn update_user(configuration: &mut configuration::Configuration, param
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<UpdateUserError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
-        Err(Error::ResponseError(local_var_error))
-    }
-}
-
-/// Update the user's password to a new one.
-pub async fn update_user_password(configuration: &mut configuration::Configuration, params: UpdateUserPasswordParams) -> Result<crate::models::UserResponse, Error<UpdateUserPasswordError>> {
-    let local_var_configuration = configuration;
-
-    // unbox the parameters
-    let old_password = params.old_password;
-    let new_password = params.new_password;
-
-
-    let local_var_client = &local_var_configuration.client;
-
-    let local_var_uri_str = format!("{}/current_user/password", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
-
-    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
-    }
-    if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
-        local_var_req_builder = local_var_req_builder.basic_auth(local_var_auth_conf.0.to_owned(), local_var_auth_conf.1.to_owned());
-    };
-    let mut local_var_form_params = std::collections::HashMap::new();
-    if let Some(local_var_param_value) = old_password {
-        local_var_form_params.insert("old_password", local_var_param_value.to_string());
-    }
-    if let Some(local_var_param_value) = new_password {
-        local_var_form_params.insert("new_password", local_var_param_value.to_string());
-    }
-    local_var_req_builder = local_var_req_builder.form(&local_var_form_params);
-
-    let local_var_req = local_var_req_builder.build()?;
-    let local_var_resp = local_var_client.execute(local_var_req).await?;
-
-    if "POST" != "GET" && "POST" != "HEAD" {
-      let headers = local_var_resp.headers();
-      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
-          Some(v) => v.to_str().unwrap().parse().unwrap(),
-          None => configuration::DEFAULT_RATELIMIT,
-      };
-      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
-          Some(v) => v.to_str().unwrap().parse().unwrap(),
-          None => 0,
-      };
-    }
-
-    let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.text().await?;
-
-    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
-    } else {
-        let local_var_entity: Option<UpdateUserPasswordError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_entity: Option<SetValueForKeyError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }

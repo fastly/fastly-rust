@@ -100,6 +100,7 @@ get_mutual_authentication(cfg, params)
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **mutual_authentication_id** | **String** | Alphanumeric string identifying a mutual authentication. | [required] |
+**include** | Option\<**String**> | Comma-separated list of related objects to include (optional). Permitted values: `tls_activations`. Including TLS activations will provide you with the TLS domain names that are related to your Mutual TLS authentication.  |  |
 
 ### Return type
 
@@ -134,6 +135,7 @@ list_mutual_authentications(cfg, params)
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
+**include** | Option\<**String**> | Comma-separated list of related objects to include (optional). Permitted values: `tls_activations`. Including TLS activations will provide you with the TLS domain names that are related to your Mutual TLS authentication.  |  |
 **page_number** | Option\<**i32**> | Current page. |  |
 **page_size** | Option\<**i32**> | Number of records per page. |  |[default to 20]
 

@@ -116,6 +116,7 @@ pub mod logging_splunk_api;
 pub mod logging_sumologic_api;
 pub mod logging_syslog_api;
 pub mod mutual_authentication_api;
+pub mod object_store_api;
 pub mod package_api;
 pub mod pool_api;
 pub mod pop_api;

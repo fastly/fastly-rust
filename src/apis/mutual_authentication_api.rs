@@ -28,12 +28,16 @@ pub struct DeleteMutualTlsParams {
 #[derive(Clone, Debug, Default)]
 pub struct GetMutualAuthenticationParams {
     /// Alphanumeric string identifying a mutual authentication.
-    pub mutual_authentication_id: String
+    pub mutual_authentication_id: String,
+    /// Comma-separated list of related objects to include (optional). Permitted values: `tls_activations`. Including TLS activations will provide you with the TLS domain names that are related to your Mutual TLS authentication. 
+    pub include: Option<String>
 }
 
 /// struct for passing parameters to the method [`list_mutual_authentications`]
 #[derive(Clone, Debug, Default)]
 pub struct ListMutualAuthenticationsParams {
+    /// Comma-separated list of related objects to include (optional). Permitted values: `tls_activations`. Including TLS activations will provide you with the TLS domain names that are related to your Mutual TLS authentication. 
+    pub include: Option<String>,
     /// Current page.
     pub page_number: Option<i32>,
     /// Number of records per page.
@@ -196,6 +200,7 @@ pub async fn get_mutual_authentication(configuration: &mut configuration::Config
 
     // unbox the parameters
     let mutual_authentication_id = params.mutual_authentication_id;
+    let include = params.include;
 
 
     let local_var_client = &local_var_configuration.client;
@@ -203,6 +208,9 @@ pub async fn get_mutual_authentication(configuration: &mut configuration::Config
     let local_var_uri_str = format!("{}/tls/mutual_authentications/{mutual_authentication_id}", local_var_configuration.base_path, mutual_authentication_id=crate::apis::urlencode(mutual_authentication_id));
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
+    if let Some(ref local_var_str) = include {
+        local_var_req_builder = local_var_req_builder.query(&[("include", &local_var_str.to_string())]);
+    }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
@@ -247,6 +255,7 @@ pub async fn list_mutual_authentications(configuration: &mut configuration::Conf
     let local_var_configuration = configuration;
 
     // unbox the parameters
+    let include = params.include;
     let page_number = params.page_number;
     let page_size = params.page_size;
 
@@ -256,6 +265,9 @@ pub async fn list_mutual_authentications(configuration: &mut configuration::Conf
     let local_var_uri_str = format!("{}/tls/mutual_authentications", local_var_configuration.base_path);
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
+    if let Some(ref local_var_str) = include {
+        local_var_req_builder = local_var_req_builder.query(&[("include", &local_var_str.to_string())]);
+    }
     if let Some(ref local_var_str) = page_number {
         local_var_req_builder = local_var_req_builder.query(&[("page[number]", &local_var_str.to_string())]);
     }

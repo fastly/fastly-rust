@@ -195,7 +195,7 @@ Name | Type | Description  | Required | Notes
 
 ## update_user
 
-Update a user. Only users with the role of `superuser` can make changes to other users on the account. Non-superusers may use this endpoint to make changes to their own account. Modifications to `login` email require a valid password in the request body. Two-factor attributes are not editable via this endpoint.
+Update a user. Only users with the role of `superuser` can make changes to other users on the account. Non-superusers may use this endpoint to make changes to their own account. Two-factor attributes are not editable via this endpoint.
 
 ```rust
 let cfg = &Configuration::default();
