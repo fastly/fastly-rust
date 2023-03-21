@@ -41,7 +41,7 @@ pub struct Results {
     /// Ratio of cache hits to cache misses (between 0 and 1).
     #[serde(rename = "hit_ratio", skip_serializing_if = "Option::is_none")]
     pub hit_ratio: Option<f32>,
-    /// Total bytes delivered (`resp_header_bytes` + `resp_body_bytes` + `bereq_header_bytes` + `bereq_body_bytes` + `compute_resp_header_bytes` + `compute_resp_body_bytes` + `compute_bereq_header_bytes` + `compute_bereq_body_bytes` + `websocket_resp_header_bytes` + `websocket_resp_body_bytes` + `websocket_bereq_header_bytes` + `websocket_bereq_body_bytes`).
+    /// Total bytes delivered (`resp_header_bytes` + `resp_body_bytes` + `bereq_header_bytes` + `bereq_body_bytes` + `compute_resp_header_bytes` + `compute_resp_body_bytes` + `compute_bereq_header_bytes` + `compute_bereq_body_bytes` + `websocket_resp_header_bytes` + `websocket_resp_body_bytes` + `websocket_bereq_header_bytes` + `websocket_bereq_body_bytes` + `fanout_resp_header_bytes` + `fanout_resp_body_bytes` + `fanout_bereq_header_bytes` + `fanout_bereq_body_bytes`).
     #[serde(rename = "bandwidth", skip_serializing_if = "Option::is_none")]
     pub bandwidth: Option<i32>,
     /// Total body bytes delivered (alias for resp_body_bytes).
@@ -599,10 +599,16 @@ pub struct Results {
     /// Total published messages sent to end users.
     #[serde(rename = "fanout_send_publishes", skip_serializing_if = "Option::is_none")]
     pub fanout_send_publishes: Option<i32>,
-    /// The total number of reads received for the object store.
+    /// The total number of class a operations for the object store.
+    #[serde(rename = "object_store_class_a_operations", skip_serializing_if = "Option::is_none")]
+    pub object_store_class_a_operations: Option<i32>,
+    /// The total number of class b operations for the object store.
+    #[serde(rename = "object_store_class_b_operations", skip_serializing_if = "Option::is_none")]
+    pub object_store_class_b_operations: Option<i32>,
+    /// Use object_store_class_b_operations.
     #[serde(rename = "object_store_read_requests", skip_serializing_if = "Option::is_none")]
     pub object_store_read_requests: Option<i32>,
-    /// The total number of writes received for the object store.
+    /// Use object_store_class_a_operations.
     #[serde(rename = "object_store_write_requests", skip_serializing_if = "Option::is_none")]
     pub object_store_write_requests: Option<i32>,
     /// Total header bytes received from end users over Fanout connections.
@@ -834,6 +840,8 @@ impl Results {
             websocket_conn_time_ms: None,
             fanout_recv_publishes: None,
             fanout_send_publishes: None,
+            object_store_class_a_operations: None,
+            object_store_class_b_operations: None,
             object_store_read_requests: None,
             object_store_write_requests: None,
             fanout_req_header_bytes: None,

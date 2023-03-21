@@ -12,6 +12,10 @@
 pub enum TypeResource {
     #[serde(rename = "object-store")]
     ObjectStore,
+    #[serde(rename = "secret-store")]
+    SecretStore,
+    #[serde(rename = "config-store")]
+    ConfigStore,
 
 }
 
@@ -19,6 +23,8 @@ impl ToString for TypeResource {
     fn to_string(&self) -> String {
         match self {
             Self::ObjectStore => String::from("object-store"),
+            Self::SecretStore => String::from("secret-store"),
+            Self::ConfigStore => String::from("config-store"),
         }
     }
 }

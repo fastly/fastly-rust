@@ -59,7 +59,7 @@ pub struct GetTlsSubParams {
 /// struct for passing parameters to the method [`list_tls_subs`]
 #[derive(Clone, Debug, Default)]
 pub struct ListTlsSubsParams {
-    /// Limit the returned subscriptions by state. Valid values are `pending`, `processing`, `issued`, and `renewing`. Accepts parameters: `not` (e.g., `filter[state][not]=renewing`). 
+    /// Limit the returned subscriptions by state. Valid values are `pending`, `processing`, `issued`, `renewing`, and `failed`. Accepts parameters: `not` (e.g., `filter[state][not]=renewing`). 
     pub filter_state: Option<String>,
     /// Limit the returned subscriptions to those that include the specific domain.
     pub filter_tls_domains_id: Option<String>,
@@ -489,7 +489,7 @@ pub async fn list_tls_subs(configuration: &mut configuration::Configuration, par
     }
 }
 
-/// Change the TLS domains or common name associated with this subscription, or update the TLS configuration for this set of domains.
+/// Change the TLS domains or common name associated with this subscription, update the TLS configuration for this set of domains, or retry a subscription with state `failed` by setting the state to `retry`.
 pub async fn patch_tls_sub(configuration: &mut configuration::Configuration, params: PatchTlsSubParams) -> Result<crate::models::TlsSubscriptionResponse, Error<PatchTlsSubError>> {
     let local_var_configuration = configuration;
 

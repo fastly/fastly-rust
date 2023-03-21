@@ -5,24 +5,24 @@
  *
  */
 
-/// PopCoordinates : the geographic location of the POP
 
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct PopCoordinates {
-    #[serde(rename = "latitude")]
-    pub latitude: f32,
-    #[serde(rename = "longitude")]
-    pub longitude: f32,
+pub struct EnabledProductResponseLinks {
+    /// Location of resource
+    #[serde(rename = "self", skip_serializing_if = "Option::is_none")]
+    pub _self: Option<String>,
+    /// Location of the service resource
+    #[serde(rename = "service", skip_serializing_if = "Option::is_none")]
+    pub service: Option<String>,
 }
 
-impl PopCoordinates {
-    /// the geographic location of the POP
-    pub fn new(latitude: f32, longitude: f32) -> PopCoordinates {
-        PopCoordinates {
-            latitude,
-            longitude,
+impl EnabledProductResponseLinks {
+    pub fn new() -> EnabledProductResponseLinks {
+        EnabledProductResponseLinks {
+            _self: None,
+            service: None,
         }
     }
 }

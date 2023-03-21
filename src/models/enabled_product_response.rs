@@ -5,24 +5,25 @@
  *
  */
 
-/// PopCoordinates : the geographic location of the POP
 
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct PopCoordinates {
-    #[serde(rename = "latitude")]
-    pub latitude: f32,
-    #[serde(rename = "longitude")]
-    pub longitude: f32,
+pub struct EnabledProductResponse {
+    #[serde(rename = "product", skip_serializing_if = "Option::is_none")]
+    pub product: Option<Box<crate::models::EnabledProductResponseProduct>>,
+    #[serde(rename = "service", skip_serializing_if = "Option::is_none")]
+    pub service: Option<Box<crate::models::EnabledProductResponseService>>,
+    #[serde(rename = "_links", skip_serializing_if = "Option::is_none")]
+    pub _links: Option<Box<crate::models::EnabledProductResponseLinks>>,
 }
 
-impl PopCoordinates {
-    /// the geographic location of the POP
-    pub fn new(latitude: f32, longitude: f32) -> PopCoordinates {
-        PopCoordinates {
-            latitude,
-            longitude,
+impl EnabledProductResponse {
+    pub fn new() -> EnabledProductResponse {
+        EnabledProductResponse {
+            product: None,
+            service: None,
+            _links: None,
         }
     }
 }

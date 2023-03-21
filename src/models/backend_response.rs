@@ -43,7 +43,7 @@ pub struct BackendResponse {
     /// IPv6 address of the backend. May be used as an alternative to `address` to set the backend location.
     #[serde(rename = "ipv6", skip_serializing_if = "Option::is_none")]
     pub ipv6: Option<String>,
-    /// How long to keep a persistent connection to the backend between requests.
+    /// How long in seconds to keep a persistent connection to the backend between requests.
     #[serde(rename = "keepalive_time", skip_serializing_if = "Option::is_none")]
     pub keepalive_time: Option<i32>,
     /// Maximum number of concurrent connections this backend will accept.

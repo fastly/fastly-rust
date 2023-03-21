@@ -110,7 +110,7 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-[url_purge](../README.md#url_purge)
+[token](../README.md#token)
 
 ### HTTP request headers
 

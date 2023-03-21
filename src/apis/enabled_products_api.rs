@@ -58,7 +58,7 @@ pub enum GetEnabledProductError {
 }
 
 
-/// Disable a product on a service. Supported product IDs: `origin_inspector`,`domain_inspector`,`image_optimizer`, and `websockets`.
+/// Disable a product on a service. Supported product IDs: `brotli_compression`,`domain_inspector`,`fanout`,`image_optimizer`,`origin_inspector`, and `websockets`.
 pub async fn disable_product(configuration: &mut configuration::Configuration, params: DisableProductParams) -> Result<(), Error<DisableProductError>> {
     let local_var_configuration = configuration;
 
@@ -111,8 +111,8 @@ pub async fn disable_product(configuration: &mut configuration::Configuration, p
     }
 }
 
-/// Enable a product on a service. Supported product IDs: `origin_inspector`,`domain_inspector`,`image_optimizer`, and `websockets`.
-pub async fn enable_product(configuration: &mut configuration::Configuration, params: EnableProductParams) -> Result<crate::models::EnabledProduct, Error<EnableProductError>> {
+/// Enable a product on a service. Supported product IDs: `brotli_compression`,`domain_inspector`,`fanout`,`image_optimizer`,`origin_inspector`, and `websockets`.
+pub async fn enable_product(configuration: &mut configuration::Configuration, params: EnableProductParams) -> Result<crate::models::EnabledProductResponse, Error<EnableProductError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -164,8 +164,8 @@ pub async fn enable_product(configuration: &mut configuration::Configuration, pa
     }
 }
 
-/// Get enabled product on a service. Supported product IDs: `origin_inspector`,`domain_inspector`,`image_optimizer`, and `websockets`.
-pub async fn get_enabled_product(configuration: &mut configuration::Configuration, params: GetEnabledProductParams) -> Result<crate::models::EnabledProduct, Error<GetEnabledProductError>> {
+/// Get enabled product on a service. Supported product IDs: `brotli_compression`,`domain_inspector`,`fanout`,`image_optimizer`,`origin_inspector`, and `websockets`.
+pub async fn get_enabled_product(configuration: &mut configuration::Configuration, params: GetEnabledProductParams) -> Result<crate::models::EnabledProductResponse, Error<GetEnabledProductError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters

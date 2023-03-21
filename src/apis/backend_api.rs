@@ -40,7 +40,7 @@ pub struct CreateBackendParams {
     pub ipv4: Option<String>,
     /// IPv6 address of the backend. May be used as an alternative to `address` to set the backend location.
     pub ipv6: Option<String>,
-    /// How long to keep a persistent connection to the backend between requests.
+    /// How long in seconds to keep a persistent connection to the backend between requests.
     pub keepalive_time: Option<i32>,
     /// Maximum number of concurrent connections this backend will accept.
     pub max_conn: Option<i32>,
@@ -142,7 +142,7 @@ pub struct UpdateBackendParams {
     pub ipv4: Option<String>,
     /// IPv6 address of the backend. May be used as an alternative to `address` to set the backend location.
     pub ipv6: Option<String>,
-    /// How long to keep a persistent connection to the backend between requests.
+    /// How long in seconds to keep a persistent connection to the backend between requests.
     pub keepalive_time: Option<i32>,
     /// Maximum number of concurrent connections this backend will accept.
     pub max_conn: Option<i32>,

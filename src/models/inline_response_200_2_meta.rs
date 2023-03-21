@@ -5,24 +5,26 @@
  *
  */
 
-/// PopCoordinates : the geographic location of the POP
+/// InlineResponse2002Meta : Meta for the pagination.
 
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct PopCoordinates {
-    #[serde(rename = "latitude")]
-    pub latitude: f32,
-    #[serde(rename = "longitude")]
-    pub longitude: f32,
+pub struct InlineResponse2002Meta {
+    /// Cursor for the next page.
+    #[serde(rename = "next_cursor", skip_serializing_if = "Option::is_none")]
+    pub next_cursor: Option<String>,
+    /// Entries returned.
+    #[serde(rename = "limit", skip_serializing_if = "Option::is_none")]
+    pub limit: Option<i32>,
 }
 
-impl PopCoordinates {
-    /// the geographic location of the POP
-    pub fn new(latitude: f32, longitude: f32) -> PopCoordinates {
-        PopCoordinates {
-            latitude,
-            longitude,
+impl InlineResponse2002Meta {
+    /// Meta for the pagination.
+    pub fn new() -> InlineResponse2002Meta {
+        InlineResponse2002Meta {
+            next_cursor: None,
+            limit: None,
         }
     }
 }

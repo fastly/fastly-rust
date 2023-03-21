@@ -4,17 +4,17 @@ All URIs are relative to *https://api.fastly.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**create_resource**](ResourceApi.md#create_resource) | **POST** /service/{service_id}/version/{version_id}/resource | Create a resource
-[**delete_resource**](ResourceApi.md#delete_resource) | **DELETE** /service/{service_id}/version/{version_id}/resource/{resource_id} | Delete a resource
-[**get_resource**](ResourceApi.md#get_resource) | **GET** /service/{service_id}/version/{version_id}/resource/{resource_id} | Display a resource
-[**list_resources**](ResourceApi.md#list_resources) | **GET** /service/{service_id}/version/{version_id}/resource | List resources
-[**update_resource**](ResourceApi.md#update_resource) | **PUT** /service/{service_id}/version/{version_id}/resource/{resource_id} | Update a resource
+[**create_resource**](ResourceApi.md#create_resource) | **POST** /service/{service_id}/version/{version_id}/resource | Create a resource link
+[**delete_resource**](ResourceApi.md#delete_resource) | **DELETE** /service/{service_id}/version/{version_id}/resource/{id} | Delete a resource link
+[**get_resource**](ResourceApi.md#get_resource) | **GET** /service/{service_id}/version/{version_id}/resource/{id} | Display a resource link
+[**list_resources**](ResourceApi.md#list_resources) | **GET** /service/{service_id}/version/{version_id}/resource | List resource links
+[**update_resource**](ResourceApi.md#update_resource) | **PUT** /service/{service_id}/version/{version_id}/resource/{id} | Update a resource link
 
 
 
 ## create_resource
 
-Create a resource.
+Create a link between a resource and a service version.
 
 ```rust
 let cfg = &Configuration::default();
@@ -31,8 +31,8 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **service_id** | **String** | Alphanumeric string identifying the service. | [required] |
 **version_id** | **i32** | Integer identifying a service version. | [required] |
-**name** | Option\<**String**> | The name of the resource. |  |
-**resource_id** | Option\<**String**> | The ID of the linked resource. |  |
+**resource_id** | Option\<**String**> | The ID of the underlying linked resource. |  |
+**name** | Option\<**String**> | The name of the resource link. |  |
 
 ### Return type
 
@@ -52,7 +52,7 @@ Name | Type | Description  | Required | Notes
 
 ## delete_resource
 
-Delete a resource.
+Delete a link between a resource and a service version.
 
 ```rust
 let cfg = &Configuration::default();
@@ -69,7 +69,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **service_id** | **String** | Alphanumeric string identifying the service. | [required] |
 **version_id** | **i32** | Integer identifying a service version. | [required] |
-**resource_id** | **String** | An alphanumeric string identifying the resource. | [required] |
+**id** | **String** | An alphanumeric string identifying the resource link. | [required] |
 
 ### Return type
 
@@ -89,7 +89,7 @@ Name | Type | Description  | Required | Notes
 
 ## get_resource
 
-Display a resource by its identifier.
+Display a resource link by its identifier.
 
 ```rust
 let cfg = &Configuration::default();
@@ -106,7 +106,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **service_id** | **String** | Alphanumeric string identifying the service. | [required] |
 **version_id** | **i32** | Integer identifying a service version. | [required] |
-**resource_id** | **String** | An alphanumeric string identifying the resource. | [required] |
+**id** | **String** | An alphanumeric string identifying the resource link. | [required] |
 
 ### Return type
 
@@ -126,7 +126,7 @@ Name | Type | Description  | Required | Notes
 
 ## list_resources
 
-List resources.
+List links between resources and services
 
 ```rust
 let cfg = &Configuration::default();
@@ -162,7 +162,7 @@ Name | Type | Description  | Required | Notes
 
 ## update_resource
 
-Update a resource.
+Update a link between a resource and a service version.
 
 ```rust
 let cfg = &Configuration::default();
@@ -179,8 +179,9 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **service_id** | **String** | Alphanumeric string identifying the service. | [required] |
 **version_id** | **i32** | Integer identifying a service version. | [required] |
-**resource_id** | **String** | An alphanumeric string identifying the resource. | [required] |
-**name** | Option\<**String**> | The name of the resource. |  |
+**id** | **String** | An alphanumeric string identifying the resource link. | [required] |
+**resource_id** | Option\<**String**> | The ID of the underlying linked resource. |  |
+**name** | Option\<**String**> | The name of the resource link. |  |
 
 ### Return type
 

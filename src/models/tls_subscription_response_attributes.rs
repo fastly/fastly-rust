@@ -46,6 +46,8 @@ pub enum State {
     Issued,
     #[serde(rename = "renewing")]
     Renewing,
+    #[serde(rename = "failed")]
+    Failed,
 }
 
 impl Default for State {

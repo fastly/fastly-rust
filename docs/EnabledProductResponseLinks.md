@@ -1,10 +1,11 @@
-# ResourceCreateAllOf
+# EnabledProductResponseLinks
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**resource_id** | Option<**String**> | The ID of the linked resource. | 
+**_self** | Option<**String**> | Location of resource | 
+**service** | Option<**String**> | Location of the service resource | 
 
 [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

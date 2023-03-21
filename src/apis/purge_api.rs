@@ -214,8 +214,13 @@ pub async fn purge_single_url(configuration: &mut configuration::Configuration, 
     if let Some(local_var_param_value) = fastly_soft_purge {
         local_var_req_builder = local_var_req_builder.header("fastly-soft-purge", local_var_param_value.to_string());
     }
-    if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
-        local_var_req_builder = local_var_req_builder.basic_auth(local_var_auth_conf.0.to_owned(), local_var_auth_conf.1.to_owned());
+    if let Some(ref local_var_apikey) = local_var_configuration.api_key {
+        let local_var_key = local_var_apikey.key.clone();
+        let local_var_value = match local_var_apikey.prefix {
+            Some(ref local_var_prefix) => format!("{} {}", local_var_prefix, local_var_key),
+            None => local_var_key,
+        };
+        local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
     };
 
     let local_var_req = local_var_req_builder.build()?;

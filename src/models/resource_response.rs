@@ -10,6 +10,12 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct ResourceResponse {
+    /// The ID of the underlying linked resource.
+    #[serde(rename = "resource_id", skip_serializing_if = "Option::is_none")]
+    pub resource_id: Option<String>,
+    /// The name of the resource link.
+    #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
+    pub name: Option<String>,
     /// Date and time in ISO 8601 format.
     #[serde(rename = "created_at", skip_serializing_if = "Option::is_none")]
     pub created_at: Option<String>,
@@ -19,13 +25,7 @@ pub struct ResourceResponse {
     /// Date and time in ISO 8601 format.
     #[serde(rename = "updated_at", skip_serializing_if = "Option::is_none")]
     pub updated_at: Option<String>,
-    /// The name of the resource.
-    #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
-    pub name: Option<String>,
-    /// The ID of the linked resource.
-    #[serde(rename = "resource_id", skip_serializing_if = "Option::is_none")]
-    pub resource_id: Option<String>,
-    /// An alphanumeric string identifying the resource.
+    /// An alphanumeric string identifying the resource link.
     #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
     pub id: Option<String>,
     /// The path to the resource.
@@ -44,11 +44,11 @@ pub struct ResourceResponse {
 impl ResourceResponse {
     pub fn new() -> ResourceResponse {
         ResourceResponse {
+            resource_id: None,
+            name: None,
             created_at: None,
             deleted_at: None,
             updated_at: None,
-            name: None,
-            resource_id: None,
             id: None,
             href: None,
             service_id: None,

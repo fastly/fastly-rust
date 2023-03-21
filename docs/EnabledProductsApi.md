@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 ## disable_product
 
-Disable a product on a service. Supported product IDs: `origin_inspector`,`domain_inspector`,`image_optimizer`, and `websockets`.
+Disable a product on a service. Supported product IDs: `brotli_compression`,`domain_inspector`,`fanout`,`image_optimizer`,`origin_inspector`, and `websockets`.
 
 ```rust
 let cfg = &Configuration::default();
@@ -48,7 +48,7 @@ Name | Type | Description  | Required | Notes
 
 ## enable_product
 
-Enable a product on a service. Supported product IDs: `origin_inspector`,`domain_inspector`,`image_optimizer`, and `websockets`.
+Enable a product on a service. Supported product IDs: `brotli_compression`,`domain_inspector`,`fanout`,`image_optimizer`,`origin_inspector`, and `websockets`.
 
 ```rust
 let cfg = &Configuration::default();
@@ -68,7 +68,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::EnabledProduct**](EnabledProduct.md)
+[**crate::models::EnabledProductResponse**](EnabledProductResponse.md)
 
 ### Authorization
 
@@ -84,7 +84,7 @@ Name | Type | Description  | Required | Notes
 
 ## get_enabled_product
 
-Get enabled product on a service. Supported product IDs: `origin_inspector`,`domain_inspector`,`image_optimizer`, and `websockets`.
+Get enabled product on a service. Supported product IDs: `brotli_compression`,`domain_inspector`,`fanout`,`image_optimizer`,`origin_inspector`, and `websockets`.
 
 ```rust
 let cfg = &Configuration::default();
@@ -104,7 +104,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::EnabledProduct**](EnabledProduct.md)
+[**crate::models::EnabledProductResponse**](EnabledProductResponse.md)
 
 ### Authorization
 

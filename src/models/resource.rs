@@ -10,7 +10,10 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct Resource {
-    /// The name of the resource.
+    /// The ID of the underlying linked resource.
+    #[serde(rename = "resource_id", skip_serializing_if = "Option::is_none")]
+    pub resource_id: Option<String>,
+    /// The name of the resource link.
     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
 }
@@ -18,6 +21,7 @@ pub struct Resource {
 impl Resource {
     pub fn new() -> Resource {
         Resource {
+            resource_id: None,
             name: None,
         }
     }

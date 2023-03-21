@@ -10,7 +10,7 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct ResourceResponseAllOf {
-    /// An alphanumeric string identifying the resource.
+    /// An alphanumeric string identifying the resource link.
     #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
     pub id: Option<String>,
     /// The path to the resource.

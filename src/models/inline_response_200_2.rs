@@ -10,15 +10,17 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct InlineResponse2002 {
-    /// Time-stamp (GMT) when the domain_ownership validation will expire.
-    #[serde(rename = "expires_at", skip_serializing_if = "Option::is_none")]
-    pub expires_at: Option<String>,
+    #[serde(rename = "data", skip_serializing_if = "Option::is_none")]
+    pub data: Option<Vec<crate::models::StoreResponse>>,
+    #[serde(rename = "meta", skip_serializing_if = "Option::is_none")]
+    pub meta: Option<Box<crate::models::InlineResponse2002Meta>>,
 }
 
 impl InlineResponse2002 {
     pub fn new() -> InlineResponse2002 {
         InlineResponse2002 {
-            expires_at: None,
+            data: None,
+            meta: None,
         }
     }
 }

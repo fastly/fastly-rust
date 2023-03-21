@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 **errors** | Option<**i32**> | Number of cache errors. | 
 **restarts** | Option<**i32**> | Number of restarts performed. | 
 **hit_ratio** | Option<**f32**> | Ratio of cache hits to cache misses (between 0 and 1). | 
-**bandwidth** | Option<**i32**> | Total bytes delivered (`resp_header_bytes` + `resp_body_bytes` + `bereq_header_bytes` + `bereq_body_bytes` + `compute_resp_header_bytes` + `compute_resp_body_bytes` + `compute_bereq_header_bytes` + `compute_bereq_body_bytes` + `websocket_resp_header_bytes` + `websocket_resp_body_bytes` + `websocket_bereq_header_bytes` + `websocket_bereq_body_bytes`). | 
+**bandwidth** | Option<**i32**> | Total bytes delivered (`resp_header_bytes` + `resp_body_bytes` + `bereq_header_bytes` + `bereq_body_bytes` + `compute_resp_header_bytes` + `compute_resp_body_bytes` + `compute_bereq_header_bytes` + `compute_bereq_body_bytes` + `websocket_resp_header_bytes` + `websocket_resp_body_bytes` + `websocket_bereq_header_bytes` + `websocket_bereq_body_bytes` + `fanout_resp_header_bytes` + `fanout_resp_body_bytes` + `fanout_bereq_header_bytes` + `fanout_bereq_body_bytes`). | 
 **body_size** | Option<**i32**> | Total body bytes delivered (alias for resp_body_bytes). | 
 **header_size** | Option<**i32**> | Total header bytes delivered (alias for resp_header_bytes). | 
 **req_body_bytes** | Option<**i32**> | Total body bytes received. | 
@@ -200,8 +200,10 @@ Name | Type | Description | Notes
 **websocket_conn_time_ms** | Option<**i32**> | Total duration of passthrough WebSocket connections with end users. | 
 **fanout_recv_publishes** | Option<**i32**> | Total published messages received from the publish API endpoint. | 
 **fanout_send_publishes** | Option<**i32**> | Total published messages sent to end users. | 
-**object_store_read_requests** | Option<**i32**> | The total number of reads received for the object store. | 
-**object_store_write_requests** | Option<**i32**> | The total number of writes received for the object store. | 
+**object_store_class_a_operations** | Option<**i32**> | The total number of class a operations for the object store. | 
+**object_store_class_b_operations** | Option<**i32**> | The total number of class b operations for the object store. | 
+**object_store_read_requests** | Option<**i32**> | Use object_store_class_b_operations. | 
+**object_store_write_requests** | Option<**i32**> | Use object_store_class_a_operations. | 
 **fanout_req_header_bytes** | Option<**i32**> | Total header bytes received from end users over Fanout connections. | 
 **fanout_req_body_bytes** | Option<**i32**> | Total body or message content bytes received from end users over Fanout connections. | 
 **fanout_resp_header_bytes** | Option<**i32**> | Total header bytes sent to end users over Fanout connections. | 

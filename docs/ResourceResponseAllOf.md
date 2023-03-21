@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | Option<**String**> | An alphanumeric string identifying the resource. | 
+**id** | Option<**String**> | An alphanumeric string identifying the resource link. | 
 **href** | Option<**String**> | The path to the resource. | 
 **service_id** | Option<**String**> | Alphanumeric string identifying the service. | 
 **version** | Option<**i32**> | Integer identifying a service version. | 

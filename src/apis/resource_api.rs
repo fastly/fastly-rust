@@ -18,10 +18,10 @@ pub struct CreateResourceParams {
     pub service_id: String,
     /// Integer identifying a service version.
     pub version_id: i32,
-    /// The name of the resource.
-    pub name: Option<String>,
-    /// The ID of the linked resource.
-    pub resource_id: Option<String>
+    /// The ID of the underlying linked resource.
+    pub resource_id: Option<String>,
+    /// The name of the resource link.
+    pub name: Option<String>
 }
 
 /// struct for passing parameters to the method [`delete_resource`]
@@ -31,8 +31,8 @@ pub struct DeleteResourceParams {
     pub service_id: String,
     /// Integer identifying a service version.
     pub version_id: i32,
-    /// An alphanumeric string identifying the resource.
-    pub resource_id: String
+    /// An alphanumeric string identifying the resource link.
+    pub id: String
 }
 
 /// struct for passing parameters to the method [`get_resource`]
@@ -42,8 +42,8 @@ pub struct GetResourceParams {
     pub service_id: String,
     /// Integer identifying a service version.
     pub version_id: i32,
-    /// An alphanumeric string identifying the resource.
-    pub resource_id: String
+    /// An alphanumeric string identifying the resource link.
+    pub id: String
 }
 
 /// struct for passing parameters to the method [`list_resources`]
@@ -62,9 +62,11 @@ pub struct UpdateResourceParams {
     pub service_id: String,
     /// Integer identifying a service version.
     pub version_id: i32,
-    /// An alphanumeric string identifying the resource.
-    pub resource_id: String,
-    /// The name of the resource.
+    /// An alphanumeric string identifying the resource link.
+    pub id: String,
+    /// The ID of the underlying linked resource.
+    pub resource_id: Option<String>,
+    /// The name of the resource link.
     pub name: Option<String>
 }
 
@@ -105,15 +107,15 @@ pub enum UpdateResourceError {
 }
 
 
-/// Create a resource.
+/// Create a link between a resource and a service version.
 pub async fn create_resource(configuration: &mut configuration::Configuration, params: CreateResourceParams) -> Result<crate::models::ResourceResponse, Error<CreateResourceError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
     let service_id = params.service_id;
     let version_id = params.version_id;
-    let name = params.name;
     let resource_id = params.resource_id;
+    let name = params.name;
 
 
     let local_var_client = &local_var_configuration.client;
@@ -133,11 +135,11 @@ pub async fn create_resource(configuration: &mut configuration::Configuration, p
         local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
     };
     let mut local_var_form_params = std::collections::HashMap::new();
-    if let Some(local_var_param_value) = name {
-        local_var_form_params.insert("name", local_var_param_value.to_string());
-    }
     if let Some(local_var_param_value) = resource_id {
         local_var_form_params.insert("resource_id", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = name {
+        local_var_form_params.insert("name", local_var_param_value.to_string());
     }
     local_var_req_builder = local_var_req_builder.form(&local_var_form_params);
 
@@ -168,19 +170,19 @@ pub async fn create_resource(configuration: &mut configuration::Configuration, p
     }
 }
 
-/// Delete a resource.
+/// Delete a link between a resource and a service version.
 pub async fn delete_resource(configuration: &mut configuration::Configuration, params: DeleteResourceParams) -> Result<crate::models::InlineResponse200, Error<DeleteResourceError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
     let service_id = params.service_id;
     let version_id = params.version_id;
-    let resource_id = params.resource_id;
+    let id = params.id;
 
 
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/service/{service_id}/version/{version_id}/resource/{resource_id}", local_var_configuration.base_path, service_id=crate::apis::urlencode(service_id), version_id=version_id, resource_id=crate::apis::urlencode(resource_id));
+    let local_var_uri_str = format!("{}/service/{service_id}/version/{version_id}/resource/{id}", local_var_configuration.base_path, service_id=crate::apis::urlencode(service_id), version_id=version_id, id=crate::apis::urlencode(id));
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::DELETE, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
@@ -222,19 +224,19 @@ pub async fn delete_resource(configuration: &mut configuration::Configuration, p
     }
 }
 
-/// Display a resource by its identifier.
+/// Display a resource link by its identifier.
 pub async fn get_resource(configuration: &mut configuration::Configuration, params: GetResourceParams) -> Result<crate::models::ResourceResponse, Error<GetResourceError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
     let service_id = params.service_id;
     let version_id = params.version_id;
-    let resource_id = params.resource_id;
+    let id = params.id;
 
 
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/service/{service_id}/version/{version_id}/resource/{resource_id}", local_var_configuration.base_path, service_id=crate::apis::urlencode(service_id), version_id=version_id, resource_id=crate::apis::urlencode(resource_id));
+    let local_var_uri_str = format!("{}/service/{service_id}/version/{version_id}/resource/{id}", local_var_configuration.base_path, service_id=crate::apis::urlencode(service_id), version_id=version_id, id=crate::apis::urlencode(id));
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
@@ -276,7 +278,7 @@ pub async fn get_resource(configuration: &mut configuration::Configuration, para
     }
 }
 
-/// List resources.
+/// List links between resources and services
 pub async fn list_resources(configuration: &mut configuration::Configuration, params: ListResourcesParams) -> Result<Vec<crate::models::ResourceResponse>, Error<ListResourcesError>> {
     let local_var_configuration = configuration;
 
@@ -329,20 +331,21 @@ pub async fn list_resources(configuration: &mut configuration::Configuration, pa
     }
 }
 
-/// Update a resource.
+/// Update a link between a resource and a service version.
 pub async fn update_resource(configuration: &mut configuration::Configuration, params: UpdateResourceParams) -> Result<crate::models::ResourceResponse, Error<UpdateResourceError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
     let service_id = params.service_id;
     let version_id = params.version_id;
+    let id = params.id;
     let resource_id = params.resource_id;
     let name = params.name;
 
 
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/service/{service_id}/version/{version_id}/resource/{resource_id}", local_var_configuration.base_path, service_id=crate::apis::urlencode(service_id), version_id=version_id, resource_id=crate::apis::urlencode(resource_id));
+    let local_var_uri_str = format!("{}/service/{service_id}/version/{version_id}/resource/{id}", local_var_configuration.base_path, service_id=crate::apis::urlencode(service_id), version_id=version_id, id=crate::apis::urlencode(id));
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::PUT, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
@@ -357,6 +360,9 @@ pub async fn update_resource(configuration: &mut configuration::Configuration, p
         local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
     };
     let mut local_var_form_params = std::collections::HashMap::new();
+    if let Some(local_var_param_value) = resource_id {
+        local_var_form_params.insert("resource_id", local_var_param_value.to_string());
+    }
     if let Some(local_var_param_value) = name {
         local_var_form_params.insert("name", local_var_param_value.to_string());
     }
