@@ -28,6 +28,7 @@ create_store(cfg, params)
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
+**location** | Option\<**String**> |  |  |
 **store** | Option\<[**Store**](Store.md)> |  |  |
 
 ### Return type
@@ -64,6 +65,7 @@ delete_store(cfg, params)
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **store_id** | **String** |  | [required] |
+**force** | Option\<**bool**> |  |  |
 
 ### Return type
 
@@ -138,7 +140,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::InlineResponse2002**](InlineResponse2002.md)
+[**crate::models::InlineResponse2003**](InlineResponse2003.md)
 
 ### Authorization
 

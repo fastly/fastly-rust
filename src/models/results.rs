@@ -638,6 +638,24 @@ pub struct Results {
     /// Total duration of Fanout connections with end users.
     #[serde(rename = "fanout_conn_time_ms", skip_serializing_if = "Option::is_none")]
     pub fanout_conn_time_ms: Option<i32>,
+    /// For HTTP/2, the number of connections the limit-streams action was applied to. The limit-streams action caps the allowed number of concurrent streams in a connection.
+    #[serde(rename = "ddos_action_limit_streams_connections", skip_serializing_if = "Option::is_none")]
+    pub ddos_action_limit_streams_connections: Option<i32>,
+    /// For HTTP/2, the number of requests made on a connection for which the limit-streams action was taken. The limit-streams action caps the allowed number of concurrent streams in a connection.
+    #[serde(rename = "ddos_action_limit_streams_requests", skip_serializing_if = "Option::is_none")]
+    pub ddos_action_limit_streams_requests: Option<i32>,
+    /// The number of times the tarpit-accept action was taken. The tarpit-accept action adds a delay when accepting future connections.
+    #[serde(rename = "ddos_action_tarpit_accept", skip_serializing_if = "Option::is_none")]
+    pub ddos_action_tarpit_accept: Option<i32>,
+    /// The number of times the tarpit action was taken. The tarpit action delays writing the response to the client.
+    #[serde(rename = "ddos_action_tarpit", skip_serializing_if = "Option::is_none")]
+    pub ddos_action_tarpit: Option<i32>,
+    /// The number of times the close action was taken. The close action aborts the connection as soon as possible. The close action takes effect either right after accept, right after the client hello, or right after the response was sent.
+    #[serde(rename = "ddos_action_close", skip_serializing_if = "Option::is_none")]
+    pub ddos_action_close: Option<i32>,
+    /// The number of times the blackhole action was taken. The blackhole action quietly closes a TCP connection without sending a reset. The blackhole action quietly closes a TCP connection without notifying its peer (all TCP state is dropped).
+    #[serde(rename = "ddos_action_blackhole", skip_serializing_if = "Option::is_none")]
+    pub ddos_action_blackhole: Option<i32>,
 }
 
 impl Results {
@@ -853,6 +871,12 @@ impl Results {
             fanout_beresp_header_bytes: None,
             fanout_beresp_body_bytes: None,
             fanout_conn_time_ms: None,
+            ddos_action_limit_streams_connections: None,
+            ddos_action_limit_streams_requests: None,
+            ddos_action_tarpit_accept: None,
+            ddos_action_tarpit: None,
+            ddos_action_close: None,
+            ddos_action_blackhole: None,
         }
     }
 }

@@ -1,19 +1,31 @@
 # Changelog
 
+## [v1.3.0](https://github.com/fastly/fastly-rust/releases/tag/release/v1.3.0) (2023-04-03)
+
+**Bug fixes:**
+
+- fix(purge): avoid CGI escape URL parameter
+
+**Enhancements:**
+
+- feat(domain-ownership): list API endpoint
+- feat(object-store): items API endpoints
+- feat(realtime): additional DDoS properties
+
 ## [v1.2.0](https://github.com/fastly/fastly-rust/releases/tag/release/v1.2.0) (2023-03-21)
 
-## Bug fixes
+**Bug fixes:**
 
 - fix(purge): switch authentication type to 'token'
 
-## Enhancements
+**Enhancements:**
 
 - feat(events): implement 'filter_created_at' property
 - feat(mutual-authentication): implement 'include' property
 - feat(object-store): implement new Object Store API endpoints
 - feat(settings): implement Service Settings 'update' endpoint
 
-## Documentation
+**Documentation:**
 
 - docs(backend): keepalive_time
 - docs(pop): region, shield, latitude, longitude

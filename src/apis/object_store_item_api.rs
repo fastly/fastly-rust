@@ -11,99 +11,95 @@ use reqwest;
 use crate::apis::ResponseContent;
 use super::{Error, configuration};
 
-/// struct for passing parameters to the method [`bulk_purge_tag`]
+/// struct for passing parameters to the method [`delete_key_from_store`]
 #[derive(Clone, Debug, Default)]
-pub struct BulkPurgeTagParams {
-    /// Alphanumeric string identifying the service.
-    pub service_id: String,
-    /// If present, this header triggers the purge to be 'soft', which marks the affected object as stale rather than making it inaccessible.  Typically set to \"1\" when used, but the value is not important.
-    pub fastly_soft_purge: Option<i32>,
-    /// Purge multiple surrogate key tags using a request header. Not required if a JSON POST body is specified.
-    pub surrogate_key: Option<String>,
-    pub purge_response: Option<crate::models::PurgeResponse>
+pub struct DeleteKeyFromStoreParams {
+    pub store_id: String,
+    pub key_name: String,
+    pub force: Option<bool>
 }
 
-/// struct for passing parameters to the method [`purge_all`]
+/// struct for passing parameters to the method [`get_keys`]
 #[derive(Clone, Debug, Default)]
-pub struct PurgeAllParams {
-    /// Alphanumeric string identifying the service.
-    pub service_id: String
+pub struct GetKeysParams {
+    pub store_id: String,
+    pub cursor: Option<String>,
+    pub limit: Option<i32>,
+    pub prefix: Option<String>
 }
 
-/// struct for passing parameters to the method [`purge_single_url`]
+/// struct for passing parameters to the method [`get_value_for_key`]
 #[derive(Clone, Debug, Default)]
-pub struct PurgeSingleUrlParams {
-    /// URL of object in cache to be purged.
-    pub cached_url: String,
-    /// If present, this header triggers the purge to be 'soft', which marks the affected object as stale rather than making it inaccessible.  Typically set to \"1\" when used, but the value is not important.
-    pub fastly_soft_purge: Option<i32>
+pub struct GetValueForKeyParams {
+    pub store_id: String,
+    pub key_name: String
 }
 
-/// struct for passing parameters to the method [`purge_tag`]
+/// struct for passing parameters to the method [`set_value_for_key`]
 #[derive(Clone, Debug, Default)]
-pub struct PurgeTagParams {
-    /// Alphanumeric string identifying the service.
-    pub service_id: String,
-    /// Surrogate keys are used to efficiently purge content from cache. Instead of purging your entire site or individual URLs, you can tag related assets (like all images and descriptions associated with a single product) with surrogate keys, and these grouped URLs can be purged in a single request.
-    pub surrogate_key: String,
-    /// If present, this header triggers the purge to be 'soft', which marks the affected object as stale rather than making it inaccessible.  Typically set to \"1\" when used, but the value is not important.
-    pub fastly_soft_purge: Option<i32>
+pub struct SetValueForKeyParams {
+    pub store_id: String,
+    pub key_name: String,
+    pub if_generation_match: Option<i32>,
+    pub time_to_live_sec: Option<i32>,
+    pub metadata: Option<String>,
+    pub add: Option<bool>,
+    pub append: Option<bool>,
+    pub prepend: Option<bool>,
+    pub background_fetch: Option<bool>,
+    pub body: Option<std::path::PathBuf>
 }
 
 
-/// struct for typed errors of method [`bulk_purge_tag`]
+/// struct for typed errors of method [`delete_key_from_store`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum BulkPurgeTagError {
+pub enum DeleteKeyFromStoreError {
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`purge_all`]
+/// struct for typed errors of method [`get_keys`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum PurgeAllError {
+pub enum GetKeysError {
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`purge_single_url`]
+/// struct for typed errors of method [`get_value_for_key`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum PurgeSingleUrlError {
+pub enum GetValueForKeyError {
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`purge_tag`]
+/// struct for typed errors of method [`set_value_for_key`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum PurgeTagError {
+pub enum SetValueForKeyError {
     UnknownValue(serde_json::Value),
 }
 
 
-/// Instant Purge a particular service of items tagged with surrogate keys. Up to 256 surrogate keys can be purged in one batch request. As an alternative to sending the keys in a JSON object in the body of the request, this endpoint also supports listing keys in a <code>Surrogate-Key</code> request header, e.g. <code>Surrogate-Key: key_1 key_2 key_3</code>. 
-pub async fn bulk_purge_tag(configuration: &mut configuration::Configuration, params: BulkPurgeTagParams) -> Result<::std::collections::HashMap<String, String>, Error<BulkPurgeTagError>> {
+/// Delete an item from an object store
+pub async fn delete_key_from_store(configuration: &mut configuration::Configuration, params: DeleteKeyFromStoreParams) -> Result<(), Error<DeleteKeyFromStoreError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
-    let service_id = params.service_id;
-    let fastly_soft_purge = params.fastly_soft_purge;
-    let surrogate_key = params.surrogate_key;
-    let purge_response = params.purge_response;
+    let store_id = params.store_id;
+    let key_name = params.key_name;
+    let force = params.force;
 
 
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/service/{service_id}/purge", local_var_configuration.base_path, service_id=crate::apis::urlencode(service_id));
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
+    let local_var_uri_str = format!("{}/resources/stores/object/{store_id}/keys/{key_name}", local_var_configuration.base_path, store_id=crate::apis::urlencode(store_id), key_name=crate::apis::urlencode(key_name));
+    let mut local_var_req_builder = local_var_client.request(reqwest::Method::DELETE, local_var_uri_str.as_str());
 
+    if let Some(ref local_var_str) = force {
+        local_var_req_builder = local_var_req_builder.query(&[("force", &local_var_str.to_string())]);
+    }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
-    }
-    if let Some(local_var_param_value) = fastly_soft_purge {
-        local_var_req_builder = local_var_req_builder.header("fastly-soft-purge", local_var_param_value.to_string());
-    }
-    if let Some(local_var_param_value) = surrogate_key {
-        local_var_req_builder = local_var_req_builder.header("surrogate-key", local_var_param_value.to_string());
     }
     if let Some(ref local_var_apikey) = local_var_configuration.api_key {
         let local_var_key = local_var_apikey.key.clone();
@@ -113,12 +109,11 @@ pub async fn bulk_purge_tag(configuration: &mut configuration::Configuration, pa
         };
         local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
     };
-    local_var_req_builder = local_var_req_builder.json(&purge_response);
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
-    if "POST" != "GET" && "POST" != "HEAD" {
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
       let headers = local_var_resp.headers();
       local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
           Some(v) => v.to_str().unwrap().parse().unwrap(),
@@ -134,27 +129,39 @@ pub async fn bulk_purge_tag(configuration: &mut configuration::Configuration, pa
     let local_var_content = local_var_resp.text().await?;
 
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
+        Ok(())
     } else {
-        let local_var_entity: Option<BulkPurgeTagError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_entity: Option<DeleteKeyFromStoreError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
-/// Instant Purge everything from a service.  Purge-all requests cannot be done in soft mode and will always immediately invalidate all cached content associated with the service. To do a soft-purge-all, consider applying a constant [surrogate key](https://docs.fastly.com/en/guides/getting-started-with-surrogate-keys) tag (e.g., `\"all\"`) to all objects. 
-pub async fn purge_all(configuration: &mut configuration::Configuration, params: PurgeAllParams) -> Result<crate::models::InlineResponse200, Error<PurgeAllError>> {
+/// List the keys of all items within an object store.
+pub async fn get_keys(configuration: &mut configuration::Configuration, params: GetKeysParams) -> Result<crate::models::InlineResponse2004, Error<GetKeysError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
-    let service_id = params.service_id;
+    let store_id = params.store_id;
+    let cursor = params.cursor;
+    let limit = params.limit;
+    let prefix = params.prefix;
 
 
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/service/{service_id}/purge_all", local_var_configuration.base_path, service_id=crate::apis::urlencode(service_id));
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
+    let local_var_uri_str = format!("{}/resources/stores/object/{store_id}/keys", local_var_configuration.base_path, store_id=crate::apis::urlencode(store_id));
+    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
+    if let Some(ref local_var_str) = cursor {
+        local_var_req_builder = local_var_req_builder.query(&[("cursor", &local_var_str.to_string())]);
+    }
+    if let Some(ref local_var_str) = limit {
+        local_var_req_builder = local_var_req_builder.query(&[("limit", &local_var_str.to_string())]);
+    }
+    if let Some(ref local_var_str) = prefix {
+        local_var_req_builder = local_var_req_builder.query(&[("prefix", &local_var_str.to_string())]);
+    }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
@@ -170,7 +177,7 @@ pub async fn purge_all(configuration: &mut configuration::Configuration, params:
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
-    if "POST" != "GET" && "POST" != "HEAD" {
+    if "GET" != "GET" && "GET" != "HEAD" {
       let headers = local_var_resp.headers();
       local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
           Some(v) => v.to_str().unwrap().parse().unwrap(),
@@ -188,31 +195,28 @@ pub async fn purge_all(configuration: &mut configuration::Configuration, params:
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<PurgeAllError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_entity: Option<GetKeysError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
-/// Instant Purge an individual URL.
-pub async fn purge_single_url(configuration: &mut configuration::Configuration, params: PurgeSingleUrlParams) -> Result<crate::models::PurgeResponse, Error<PurgeSingleUrlError>> {
+/// Get the value associated with a key.
+pub async fn get_value_for_key(configuration: &mut configuration::Configuration, params: GetValueForKeyParams) -> Result<std::path::PathBuf, Error<GetValueForKeyError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
-    let cached_url = params.cached_url;
-    let fastly_soft_purge = params.fastly_soft_purge;
+    let store_id = params.store_id;
+    let key_name = params.key_name;
 
 
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/purge/{cached_url}", local_var_configuration.base_path, cached_url=cached_url);
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
+    let local_var_uri_str = format!("{}/resources/stores/object/{store_id}/keys/{key_name}", local_var_configuration.base_path, store_id=crate::apis::urlencode(store_id), key_name=crate::apis::urlencode(key_name));
+    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
-    }
-    if let Some(local_var_param_value) = fastly_soft_purge {
-        local_var_req_builder = local_var_req_builder.header("fastly-soft-purge", local_var_param_value.to_string());
     }
     if let Some(ref local_var_apikey) = local_var_configuration.api_key {
         let local_var_key = local_var_apikey.key.clone();
@@ -226,7 +230,7 @@ pub async fn purge_single_url(configuration: &mut configuration::Configuration, 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
-    if "POST" != "GET" && "POST" != "HEAD" {
+    if "GET" != "GET" && "GET" != "HEAD" {
       let headers = local_var_resp.headers();
       local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
           Some(v) => v.to_str().unwrap().parse().unwrap(),
@@ -244,32 +248,57 @@ pub async fn purge_single_url(configuration: &mut configuration::Configuration, 
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<PurgeSingleUrlError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_entity: Option<GetValueForKeyError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
-/// Instant Purge a particular service of items tagged with a Surrogate Key. Only one surrogate key can be purged at a time. Multiple keys can be purged using a batch surrogate key purge request.
-pub async fn purge_tag(configuration: &mut configuration::Configuration, params: PurgeTagParams) -> Result<crate::models::PurgeResponse, Error<PurgeTagError>> {
+/// Set a new value for a new or existing key in an object store.
+pub async fn set_value_for_key(configuration: &mut configuration::Configuration, params: SetValueForKeyParams) -> Result<std::path::PathBuf, Error<SetValueForKeyError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
-    let service_id = params.service_id;
-    let surrogate_key = params.surrogate_key;
-    let fastly_soft_purge = params.fastly_soft_purge;
+    let store_id = params.store_id;
+    let key_name = params.key_name;
+    let if_generation_match = params.if_generation_match;
+    let time_to_live_sec = params.time_to_live_sec;
+    let metadata = params.metadata;
+    let add = params.add;
+    let append = params.append;
+    let prepend = params.prepend;
+    let background_fetch = params.background_fetch;
+    let body = params.body;
 
 
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/service/{service_id}/purge/{surrogate_key}", local_var_configuration.base_path, service_id=crate::apis::urlencode(service_id), surrogate_key=crate::apis::urlencode(surrogate_key));
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
+    let local_var_uri_str = format!("{}/resources/stores/object/{store_id}/keys/{key_name}", local_var_configuration.base_path, store_id=crate::apis::urlencode(store_id), key_name=crate::apis::urlencode(key_name));
+    let mut local_var_req_builder = local_var_client.request(reqwest::Method::PUT, local_var_uri_str.as_str());
 
+    if let Some(ref local_var_str) = add {
+        local_var_req_builder = local_var_req_builder.query(&[("add", &local_var_str.to_string())]);
+    }
+    if let Some(ref local_var_str) = append {
+        local_var_req_builder = local_var_req_builder.query(&[("append", &local_var_str.to_string())]);
+    }
+    if let Some(ref local_var_str) = prepend {
+        local_var_req_builder = local_var_req_builder.query(&[("prepend", &local_var_str.to_string())]);
+    }
+    if let Some(ref local_var_str) = background_fetch {
+        local_var_req_builder = local_var_req_builder.query(&[("background_fetch", &local_var_str.to_string())]);
+    }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
-    if let Some(local_var_param_value) = fastly_soft_purge {
-        local_var_req_builder = local_var_req_builder.header("fastly-soft-purge", local_var_param_value.to_string());
+    if let Some(local_var_param_value) = if_generation_match {
+        local_var_req_builder = local_var_req_builder.header("if-generation-match", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = time_to_live_sec {
+        local_var_req_builder = local_var_req_builder.header("time_to_live_sec", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = metadata {
+        local_var_req_builder = local_var_req_builder.header("metadata", local_var_param_value.to_string());
     }
     if let Some(ref local_var_apikey) = local_var_configuration.api_key {
         let local_var_key = local_var_apikey.key.clone();
@@ -279,11 +308,12 @@ pub async fn purge_tag(configuration: &mut configuration::Configuration, params:
         };
         local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
     };
+    local_var_req_builder = local_var_req_builder.json(&body);
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
-    if "POST" != "GET" && "POST" != "HEAD" {
+    if "PUT" != "GET" && "PUT" != "HEAD" {
       let headers = local_var_resp.headers();
       local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
           Some(v) => v.to_str().unwrap().parse().unwrap(),
@@ -301,7 +331,7 @@ pub async fn purge_tag(configuration: &mut configuration::Configuration, params:
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<PurgeTagError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_entity: Option<SetValueForKeyError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }

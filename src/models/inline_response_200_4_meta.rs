@@ -9,16 +9,18 @@
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct InlineResponse2002 {
-    /// Time-stamp (GMT) when the domain_ownership validation will expire.
-    #[serde(rename = "expires_at", skip_serializing_if = "Option::is_none")]
-    pub expires_at: Option<String>,
+pub struct InlineResponse2004Meta {
+    #[serde(rename = "next_cursor", skip_serializing_if = "Option::is_none")]
+    pub next_cursor: Option<String>,
+    #[serde(rename = "limit", skip_serializing_if = "Option::is_none")]
+    pub limit: Option<i32>,
 }
 
-impl InlineResponse2002 {
-    pub fn new() -> InlineResponse2002 {
-        InlineResponse2002 {
-            expires_at: None,
+impl InlineResponse2004Meta {
+    pub fn new() -> InlineResponse2004Meta {
+        InlineResponse2004Meta {
+            next_cursor: None,
+            limit: None,
         }
     }
 }

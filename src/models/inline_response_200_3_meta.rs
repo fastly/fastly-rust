@@ -5,20 +5,26 @@
  *
  */
 
+/// InlineResponse2003Meta : Meta for the pagination.
 
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct InlineResponse2002 {
-    /// Time-stamp (GMT) when the domain_ownership validation will expire.
-    #[serde(rename = "expires_at", skip_serializing_if = "Option::is_none")]
-    pub expires_at: Option<String>,
+pub struct InlineResponse2003Meta {
+    /// Cursor for the next page.
+    #[serde(rename = "next_cursor", skip_serializing_if = "Option::is_none")]
+    pub next_cursor: Option<String>,
+    /// Entries returned.
+    #[serde(rename = "limit", skip_serializing_if = "Option::is_none")]
+    pub limit: Option<i32>,
 }
 
-impl InlineResponse2002 {
-    pub fn new() -> InlineResponse2002 {
-        InlineResponse2002 {
-            expires_at: None,
+impl InlineResponse2003Meta {
+    /// Meta for the pagination.
+    pub fn new() -> InlineResponse2003Meta {
+        InlineResponse2003Meta {
+            next_cursor: None,
+            limit: None,
         }
     }
 }

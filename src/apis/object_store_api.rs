@@ -14,13 +14,15 @@ use super::{Error, configuration};
 /// struct for passing parameters to the method [`create_store`]
 #[derive(Clone, Debug, Default)]
 pub struct CreateStoreParams {
+    pub location: Option<String>,
     pub store: Option<crate::models::Store>
 }
 
 /// struct for passing parameters to the method [`delete_store`]
 #[derive(Clone, Debug, Default)]
 pub struct DeleteStoreParams {
-    pub store_id: String
+    pub store_id: String,
+    pub force: Option<bool>
 }
 
 /// struct for passing parameters to the method [`get_store`]
@@ -71,6 +73,7 @@ pub async fn create_store(configuration: &mut configuration::Configuration, para
     let local_var_configuration = configuration;
 
     // unbox the parameters
+    let location = params.location;
     let store = params.store;
 
 
@@ -79,6 +82,9 @@ pub async fn create_store(configuration: &mut configuration::Configuration, para
     let local_var_uri_str = format!("{}/resources/stores/object", local_var_configuration.base_path);
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
 
+    if let Some(ref local_var_str) = location {
+        local_var_req_builder = local_var_req_builder.query(&[("location", &local_var_str.to_string())]);
+    }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
@@ -125,6 +131,7 @@ pub async fn delete_store(configuration: &mut configuration::Configuration, para
 
     // unbox the parameters
     let store_id = params.store_id;
+    let force = params.force;
 
 
     let local_var_client = &local_var_configuration.client;
@@ -134,6 +141,9 @@ pub async fn delete_store(configuration: &mut configuration::Configuration, para
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+    if let Some(local_var_param_value) = force {
+        local_var_req_builder = local_var_req_builder.header("force", local_var_param_value.to_string());
     }
     if let Some(ref local_var_apikey) = local_var_configuration.api_key {
         let local_var_key = local_var_apikey.key.clone();
@@ -224,7 +234,7 @@ pub async fn get_store(configuration: &mut configuration::Configuration, params:
 }
 
 /// Get all stores for a given customer.
-pub async fn get_stores(configuration: &mut configuration::Configuration, params: GetStoresParams) -> Result<crate::models::InlineResponse2002, Error<GetStoresError>> {
+pub async fn get_stores(configuration: &mut configuration::Configuration, params: GetStoresParams) -> Result<crate::models::InlineResponse2003, Error<GetStoresError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
