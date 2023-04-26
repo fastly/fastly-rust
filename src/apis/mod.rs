@@ -140,7 +140,6 @@ pub mod tls_activations_api;
 pub mod tls_bulk_certificates_api;
 pub mod tls_certificates_api;
 pub mod tls_configurations_api;
-pub mod tls_csrs_api;
 pub mod tls_domains_api;
 pub mod tls_private_keys_api;
 pub mod tls_subscriptions_api;

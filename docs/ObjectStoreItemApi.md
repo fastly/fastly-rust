@@ -108,7 +108,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**std::path::PathBuf**](StdpathPathBuf.md)
+**String**
 
 ### Authorization
 
@@ -148,11 +148,11 @@ Name | Type | Description  | Required | Notes
 **append** | Option\<**bool**> |  |  |
 **prepend** | Option\<**bool**> |  |  |
 **background_fetch** | Option\<**bool**> |  |  |
-**body** | Option\<**std::path::PathBuf**> |  |  |
+**body** | Option\<**String**> |  |  |
 
 ### Return type
 
-[**std::path::PathBuf**](StdpathPathBuf.md)
+**String**
 
 ### Authorization
 

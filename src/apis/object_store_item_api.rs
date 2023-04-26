@@ -47,7 +47,7 @@ pub struct SetValueForKeyParams {
     pub append: Option<bool>,
     pub prepend: Option<bool>,
     pub background_fetch: Option<bool>,
-    pub body: Option<std::path::PathBuf>
+    pub body: Option<String>
 }
 
 
@@ -202,7 +202,7 @@ pub async fn get_keys(configuration: &mut configuration::Configuration, params: 
 }
 
 /// Get the value associated with a key.
-pub async fn get_value_for_key(configuration: &mut configuration::Configuration, params: GetValueForKeyParams) -> Result<std::path::PathBuf, Error<GetValueForKeyError>> {
+pub async fn get_value_for_key(configuration: &mut configuration::Configuration, params: GetValueForKeyParams) -> Result<String, Error<GetValueForKeyError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -255,7 +255,7 @@ pub async fn get_value_for_key(configuration: &mut configuration::Configuration,
 }
 
 /// Set a new value for a new or existing key in an object store.
-pub async fn set_value_for_key(configuration: &mut configuration::Configuration, params: SetValueForKeyParams) -> Result<std::path::PathBuf, Error<SetValueForKeyError>> {
+pub async fn set_value_for_key(configuration: &mut configuration::Configuration, params: SetValueForKeyParams) -> Result<String, Error<SetValueForKeyError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
