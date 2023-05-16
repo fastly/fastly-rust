@@ -29,6 +29,9 @@ pub struct PackageMetadata {
     /// Hash of the Compute@Edge package.
     #[serde(rename = "hashsum", skip_serializing_if = "Option::is_none")]
     pub hashsum: Option<String>,
+    /// Hash of the files within the Compute@Edge package.
+    #[serde(rename = "files_hash", skip_serializing_if = "Option::is_none")]
+    pub files_hash: Option<String>,
 }
 
 impl PackageMetadata {
@@ -41,6 +44,7 @@ impl PackageMetadata {
             language: None,
             size: None,
             hashsum: None,
+            files_hash: None,
         }
     }
 }

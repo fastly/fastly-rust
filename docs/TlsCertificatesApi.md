@@ -134,6 +134,7 @@ list_tls_certs(cfg, params)
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
+**filter_in_use** | Option\<**String**> | Optional. Limit the returned certificates to those currently using Fastly to terminate TLS (that is, certificates associated with an activation). Permitted values: true, false. |  |
 **filter_not_after** | Option\<**String**> | Limit the returned certificates to those that expire prior to the specified date in UTC. Accepts parameters: lte (e.g., filter[not_after][lte]=2020-05-05).  |  |
 **filter_tls_domains_id** | Option\<**String**> | Limit the returned certificates to those that include the specific domain. |  |
 **include** | Option\<**String**> | Include related objects. Optional, comma-separated values. Permitted values: `tls_activations`.  |  |

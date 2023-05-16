@@ -1,19 +1,19 @@
-# ObjectStoreApi
+# KvStoreApi
 
 All URIs are relative to *https://api.fastly.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**create_store**](ObjectStoreApi.md#create_store) | **POST** /resources/stores/object | Create an object store.
-[**delete_store**](ObjectStoreApi.md#delete_store) | **DELETE** /resources/stores/object/{store_id} | Delete an object store.
-[**get_store**](ObjectStoreApi.md#get_store) | **GET** /resources/stores/object/{store_id} | Describe an object store.
-[**get_stores**](ObjectStoreApi.md#get_stores) | **GET** /resources/stores/object | List object stores.
+[**create_store**](KvStoreApi.md#create_store) | **POST** /resources/stores/kv | Create an kv store.
+[**delete_store**](KvStoreApi.md#delete_store) | **DELETE** /resources/stores/kv/{store_id} | Delete an kv store.
+[**get_store**](KvStoreApi.md#get_store) | **GET** /resources/stores/kv/{store_id} | Describe an kv store.
+[**get_stores**](KvStoreApi.md#get_stores) | **GET** /resources/stores/kv | List kv stores.
 
 
 
 ## create_store
 
-Create a new object store.
+Create a new kv store.
 
 ```rust
 let cfg = &Configuration::default();
@@ -49,7 +49,7 @@ Name | Type | Description  | Required | Notes
 
 ## delete_store
 
-An object store must be empty before it can be deleted.  Deleting an object store that still contains keys will result in a `409` (Conflict).
+An kv store must be empty before it can be deleted.  Deleting an kv store that still contains keys will result in a `409` (Conflict).
 
 ```rust
 let cfg = &Configuration::default();
@@ -85,7 +85,7 @@ Name | Type | Description  | Required | Notes
 
 ## get_store
 
-Get an object store by ID.
+Get an kv store by ID.
 
 ```rust
 let cfg = &Configuration::default();

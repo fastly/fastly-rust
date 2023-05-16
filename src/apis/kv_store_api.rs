@@ -11,103 +11,80 @@ use reqwest;
 use crate::apis::ResponseContent;
 use super::{Error, configuration};
 
-/// struct for passing parameters to the method [`create_tls_cert`]
+/// struct for passing parameters to the method [`create_store`]
 #[derive(Clone, Debug, Default)]
-pub struct CreateTlsCertParams {
-    pub tls_certificate: Option<crate::models::TlsCertificate>
+pub struct CreateStoreParams {
+    pub location: Option<String>,
+    pub store: Option<crate::models::Store>
 }
 
-/// struct for passing parameters to the method [`delete_tls_cert`]
+/// struct for passing parameters to the method [`delete_store`]
 #[derive(Clone, Debug, Default)]
-pub struct DeleteTlsCertParams {
-    /// Alphanumeric string identifying a TLS certificate.
-    pub tls_certificate_id: String
+pub struct DeleteStoreParams {
+    pub store_id: String,
+    pub force: Option<bool>
 }
 
-/// struct for passing parameters to the method [`get_tls_cert`]
+/// struct for passing parameters to the method [`get_store`]
 #[derive(Clone, Debug, Default)]
-pub struct GetTlsCertParams {
-    /// Alphanumeric string identifying a TLS certificate.
-    pub tls_certificate_id: String
+pub struct GetStoreParams {
+    pub store_id: String
 }
 
-/// struct for passing parameters to the method [`list_tls_certs`]
+/// struct for passing parameters to the method [`get_stores`]
 #[derive(Clone, Debug, Default)]
-pub struct ListTlsCertsParams {
-    /// Optional. Limit the returned certificates to those currently using Fastly to terminate TLS (that is, certificates associated with an activation). Permitted values: true, false.
-    pub filter_in_use: Option<String>,
-    /// Limit the returned certificates to those that expire prior to the specified date in UTC. Accepts parameters: lte (e.g., filter[not_after][lte]=2020-05-05). 
-    pub filter_not_after: Option<String>,
-    /// Limit the returned certificates to those that include the specific domain.
-    pub filter_tls_domains_id: Option<String>,
-    /// Include related objects. Optional, comma-separated values. Permitted values: `tls_activations`. 
-    pub include: Option<String>,
-    /// Current page.
-    pub page_number: Option<i32>,
-    /// Number of records per page.
-    pub page_size: Option<i32>,
-    /// The order in which to list the results by creation date.
-    pub sort: Option<String>
-}
-
-/// struct for passing parameters to the method [`update_tls_cert`]
-#[derive(Clone, Debug, Default)]
-pub struct UpdateTlsCertParams {
-    /// Alphanumeric string identifying a TLS certificate.
-    pub tls_certificate_id: String,
-    pub tls_certificate: Option<crate::models::TlsCertificate>
+pub struct GetStoresParams {
+    pub cursor: Option<String>,
+    pub limit: Option<i32>
 }
 
 
-/// struct for typed errors of method [`create_tls_cert`]
+/// struct for typed errors of method [`create_store`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum CreateTlsCertError {
+pub enum CreateStoreError {
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`delete_tls_cert`]
+/// struct for typed errors of method [`delete_store`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum DeleteTlsCertError {
+pub enum DeleteStoreError {
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`get_tls_cert`]
+/// struct for typed errors of method [`get_store`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum GetTlsCertError {
+pub enum GetStoreError {
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`list_tls_certs`]
+/// struct for typed errors of method [`get_stores`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum ListTlsCertsError {
-    UnknownValue(serde_json::Value),
-}
-
-/// struct for typed errors of method [`update_tls_cert`]
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum UpdateTlsCertError {
+pub enum GetStoresError {
     UnknownValue(serde_json::Value),
 }
 
 
-/// Create a TLS certificate.
-pub async fn create_tls_cert(configuration: &mut configuration::Configuration, params: CreateTlsCertParams) -> Result<serde_json::Value, Error<CreateTlsCertError>> {
+/// Create a new kv store.
+pub async fn create_store(configuration: &mut configuration::Configuration, params: CreateStoreParams) -> Result<crate::models::StoreResponse, Error<CreateStoreError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
-    let tls_certificate = params.tls_certificate;
+    let location = params.location;
+    let store = params.store;
 
 
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/tls/certificates", local_var_configuration.base_path);
+    let local_var_uri_str = format!("{}/resources/stores/kv", local_var_configuration.base_path);
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
 
+    if let Some(ref local_var_str) = location {
+        local_var_req_builder = local_var_req_builder.query(&[("location", &local_var_str.to_string())]);
+    }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
@@ -119,7 +96,7 @@ pub async fn create_tls_cert(configuration: &mut configuration::Configuration, p
         };
         local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
     };
-    local_var_req_builder = local_var_req_builder.json(&tls_certificate);
+    local_var_req_builder = local_var_req_builder.json(&store);
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
@@ -142,27 +119,31 @@ pub async fn create_tls_cert(configuration: &mut configuration::Configuration, p
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<CreateTlsCertError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_entity: Option<CreateStoreError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
-/// Destroy a TLS certificate. TLS certificates already enabled for a domain cannot be destroyed.
-pub async fn delete_tls_cert(configuration: &mut configuration::Configuration, params: DeleteTlsCertParams) -> Result<(), Error<DeleteTlsCertError>> {
+/// An kv store must be empty before it can be deleted.  Deleting an kv store that still contains keys will result in a `409` (Conflict).
+pub async fn delete_store(configuration: &mut configuration::Configuration, params: DeleteStoreParams) -> Result<(), Error<DeleteStoreError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
-    let tls_certificate_id = params.tls_certificate_id;
+    let store_id = params.store_id;
+    let force = params.force;
 
 
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/tls/certificates/{tls_certificate_id}", local_var_configuration.base_path, tls_certificate_id=crate::apis::urlencode(tls_certificate_id));
+    let local_var_uri_str = format!("{}/resources/stores/kv/{store_id}", local_var_configuration.base_path, store_id=crate::apis::urlencode(store_id));
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::DELETE, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+    if let Some(local_var_param_value) = force {
+        local_var_req_builder = local_var_req_builder.header("force", local_var_param_value.to_string());
     }
     if let Some(ref local_var_apikey) = local_var_configuration.api_key {
         let local_var_key = local_var_apikey.key.clone();
@@ -194,23 +175,23 @@ pub async fn delete_tls_cert(configuration: &mut configuration::Configuration, p
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         Ok(())
     } else {
-        let local_var_entity: Option<DeleteTlsCertError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_entity: Option<DeleteStoreError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
-/// Show a TLS certificate.
-pub async fn get_tls_cert(configuration: &mut configuration::Configuration, params: GetTlsCertParams) -> Result<crate::models::TlsCertificateResponse, Error<GetTlsCertError>> {
+/// Get an kv store by ID.
+pub async fn get_store(configuration: &mut configuration::Configuration, params: GetStoreParams) -> Result<crate::models::StoreResponse, Error<GetStoreError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
-    let tls_certificate_id = params.tls_certificate_id;
+    let store_id = params.store_id;
 
 
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/tls/certificates/{tls_certificate_id}", local_var_configuration.base_path, tls_certificate_id=crate::apis::urlencode(tls_certificate_id));
+    let local_var_uri_str = format!("{}/resources/stores/kv/{store_id}", local_var_configuration.base_path, store_id=crate::apis::urlencode(store_id));
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
@@ -246,51 +227,31 @@ pub async fn get_tls_cert(configuration: &mut configuration::Configuration, para
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<GetTlsCertError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_entity: Option<GetStoreError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
-/// List all TLS certificates.
-pub async fn list_tls_certs(configuration: &mut configuration::Configuration, params: ListTlsCertsParams) -> Result<crate::models::TlsCertificatesResponse, Error<ListTlsCertsError>> {
+/// Get all stores for a given customer.
+pub async fn get_stores(configuration: &mut configuration::Configuration, params: GetStoresParams) -> Result<crate::models::InlineResponse2003, Error<GetStoresError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
-    let filter_in_use = params.filter_in_use;
-    let filter_not_after = params.filter_not_after;
-    let filter_tls_domains_id = params.filter_tls_domains_id;
-    let include = params.include;
-    let page_number = params.page_number;
-    let page_size = params.page_size;
-    let sort = params.sort;
+    let cursor = params.cursor;
+    let limit = params.limit;
 
 
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/tls/certificates", local_var_configuration.base_path);
+    let local_var_uri_str = format!("{}/resources/stores/kv", local_var_configuration.base_path);
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
-    if let Some(ref local_var_str) = filter_in_use {
-        local_var_req_builder = local_var_req_builder.query(&[("filter[in_use]", &local_var_str.to_string())]);
+    if let Some(ref local_var_str) = cursor {
+        local_var_req_builder = local_var_req_builder.query(&[("cursor", &local_var_str.to_string())]);
     }
-    if let Some(ref local_var_str) = filter_not_after {
-        local_var_req_builder = local_var_req_builder.query(&[("filter[not_after]", &local_var_str.to_string())]);
-    }
-    if let Some(ref local_var_str) = filter_tls_domains_id {
-        local_var_req_builder = local_var_req_builder.query(&[("filter[tls_domains.id]", &local_var_str.to_string())]);
-    }
-    if let Some(ref local_var_str) = include {
-        local_var_req_builder = local_var_req_builder.query(&[("include", &local_var_str.to_string())]);
-    }
-    if let Some(ref local_var_str) = page_number {
-        local_var_req_builder = local_var_req_builder.query(&[("page[number]", &local_var_str.to_string())]);
-    }
-    if let Some(ref local_var_str) = page_size {
-        local_var_req_builder = local_var_req_builder.query(&[("page[size]", &local_var_str.to_string())]);
-    }
-    if let Some(ref local_var_str) = sort {
-        local_var_req_builder = local_var_req_builder.query(&[("sort", &local_var_str.to_string())]);
+    if let Some(ref local_var_str) = limit {
+        local_var_req_builder = local_var_req_builder.query(&[("limit", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
@@ -325,61 +286,7 @@ pub async fn list_tls_certs(configuration: &mut configuration::Configuration, pa
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<ListTlsCertsError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
-        Err(Error::ResponseError(local_var_error))
-    }
-}
-
-/// Replace a TLS certificate with a newly reissued TLS certificate, or update a TLS certificate's name. If replacing a TLS certificate, the new TLS certificate must contain all SAN entries as the current TLS certificate. It must either have an exact matching list or contain a superset.
-pub async fn update_tls_cert(configuration: &mut configuration::Configuration, params: UpdateTlsCertParams) -> Result<crate::models::TlsCertificateResponse, Error<UpdateTlsCertError>> {
-    let local_var_configuration = configuration;
-
-    // unbox the parameters
-    let tls_certificate_id = params.tls_certificate_id;
-    let tls_certificate = params.tls_certificate;
-
-
-    let local_var_client = &local_var_configuration.client;
-
-    let local_var_uri_str = format!("{}/tls/certificates/{tls_certificate_id}", local_var_configuration.base_path, tls_certificate_id=crate::apis::urlencode(tls_certificate_id));
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::PATCH, local_var_uri_str.as_str());
-
-    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
-    }
-    if let Some(ref local_var_apikey) = local_var_configuration.api_key {
-        let local_var_key = local_var_apikey.key.clone();
-        let local_var_value = match local_var_apikey.prefix {
-            Some(ref local_var_prefix) => format!("{} {}", local_var_prefix, local_var_key),
-            None => local_var_key,
-        };
-        local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
-    };
-    local_var_req_builder = local_var_req_builder.json(&tls_certificate);
-
-    let local_var_req = local_var_req_builder.build()?;
-    let local_var_resp = local_var_client.execute(local_var_req).await?;
-
-    if "PATCH" != "GET" && "PATCH" != "HEAD" {
-      let headers = local_var_resp.headers();
-      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
-          Some(v) => v.to_str().unwrap().parse().unwrap(),
-          None => configuration::DEFAULT_RATELIMIT,
-      };
-      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
-          Some(v) => v.to_str().unwrap().parse().unwrap(),
-          None => 0,
-      };
-    }
-
-    let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.text().await?;
-
-    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
-    } else {
-        let local_var_entity: Option<UpdateTlsCertError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_entity: Option<GetStoresError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }
