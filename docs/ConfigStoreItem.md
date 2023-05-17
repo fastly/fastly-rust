@@ -1,10 +1,11 @@
-# BulkUpdateDictionaryItemAllOf
+# ConfigStoreItem
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**op** | Option<**String**> |  | 
+**item_key** | Option<**String**> | Item key, maximum 256 characters. | 
+**item_value** | Option<**String**> | Item value, maximum 8000 characters. | 
 
 [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

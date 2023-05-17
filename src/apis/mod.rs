@@ -70,6 +70,8 @@ pub mod billing_api;
 pub mod billing_address_api;
 pub mod cache_settings_api;
 pub mod condition_api;
+pub mod config_store_api;
+pub mod config_store_item_api;
 pub mod contact_api;
 pub mod customer_api;
 pub mod dictionary_api;
