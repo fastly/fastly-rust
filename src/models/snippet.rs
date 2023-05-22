@@ -24,7 +24,7 @@ pub struct Snippet {
     pub content: Option<String>,
     /// Priority determines execution order. Lower numbers execute first.
     #[serde(rename = "priority", skip_serializing_if = "Option::is_none")]
-    pub priority: Option<i32>,
+    pub priority: Option<String>,
 }
 
 impl Snippet {

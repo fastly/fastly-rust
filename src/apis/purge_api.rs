@@ -262,7 +262,7 @@ pub async fn purge_tag(configuration: &mut configuration::Configuration, params:
 
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/service/{service_id}/purge/{surrogate_key}", local_var_configuration.base_path, service_id=crate::apis::urlencode(service_id), surrogate_key=crate::apis::urlencode(surrogate_key));
+    let local_var_uri_str = format!("{}/service/{service_id}/purge/{surrogate_key}", local_var_configuration.base_path, service_id=crate::apis::urlencode(service_id), surrogate_key=surrogate_key);
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {

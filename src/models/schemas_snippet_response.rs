@@ -24,11 +24,7 @@ pub struct SchemasSnippetResponse {
     pub content: Option<String>,
     /// Priority determines execution order. Lower numbers execute first.
     #[serde(rename = "priority", skip_serializing_if = "Option::is_none")]
-    pub priority: Option<i32>,
-    #[serde(rename = "service_id", skip_serializing_if = "Option::is_none")]
-    pub service_id: Option<Box<String>>,
-    #[serde(rename = "version", skip_serializing_if = "Option::is_none")]
-    pub version: Option<Box<i32>>,
+    pub priority: Option<String>,
     /// Date and time in ISO 8601 format.
     #[serde(rename = "created_at", skip_serializing_if = "Option::is_none")]
     pub created_at: Option<String>,
@@ -38,6 +34,11 @@ pub struct SchemasSnippetResponse {
     /// Date and time in ISO 8601 format.
     #[serde(rename = "updated_at", skip_serializing_if = "Option::is_none")]
     pub updated_at: Option<String>,
+    #[serde(rename = "service_id", skip_serializing_if = "Option::is_none")]
+    pub service_id: Option<Box<String>>,
+    /// String representing the number identifying a version of the service.
+    #[serde(rename = "version", skip_serializing_if = "Option::is_none")]
+    pub version: Option<String>,
     #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
     pub id: Option<Box<String>>,
 }
@@ -50,11 +51,11 @@ impl SchemasSnippetResponse {
             _type: None,
             content: None,
             priority: None,
-            service_id: None,
-            version: None,
             created_at: None,
             deleted_at: None,
             updated_at: None,
+            service_id: None,
+            version: None,
             id: None,
         }
     }

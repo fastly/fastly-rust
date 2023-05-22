@@ -36,7 +36,7 @@ Name | Type | Description  | Required | Notes
 **dynamic** | Option\<**i32**> | Sets the snippet version. |  |
 **_type** | Option\<**String**> | The location in generated VCL where the snippet should be placed. |  |
 **content** | Option\<**String**> | The VCL code that specifies exactly what the snippet does. |  |
-**priority** | Option\<**i32**> | Priority determines execution order. Lower numbers execute first. |  |[default to 100]
+**priority** | Option\<**String**> | Priority determines execution order. Lower numbers execute first. |  |[default to 100]
 
 ### Return type
 
@@ -223,7 +223,7 @@ Name | Type | Description  | Required | Notes
 **dynamic** | Option\<**i32**> | Sets the snippet version. |  |
 **_type** | Option\<**String**> | The location in generated VCL where the snippet should be placed. |  |
 **content** | Option\<**String**> | The VCL code that specifies exactly what the snippet does. |  |
-**priority** | Option\<**i32**> | Priority determines execution order. Lower numbers execute first. |  |[default to 100]
+**priority** | Option\<**String**> | Priority determines execution order. Lower numbers execute first. |  |[default to 100]
 
 ### Return type
 

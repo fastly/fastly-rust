@@ -10,6 +10,11 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct AclResponseAllOf {
+    #[serde(rename = "service_id", skip_serializing_if = "Option::is_none")]
+    pub service_id: Option<Box<String>>,
+    /// String representing the number identifying a version of the service.
+    #[serde(rename = "version", skip_serializing_if = "Option::is_none")]
+    pub version: Option<String>,
     #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
     pub id: Option<Box<String>>,
 }
@@ -17,6 +22,8 @@ pub struct AclResponseAllOf {
 impl AclResponseAllOf {
     pub fn new() -> AclResponseAllOf {
         AclResponseAllOf {
+            service_id: None,
+            version: None,
             id: None,
         }
     }

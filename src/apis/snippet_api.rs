@@ -27,7 +27,7 @@ pub struct CreateSnippetParams {
     /// The VCL code that specifies exactly what the snippet does.
     pub content: Option<String>,
     /// Priority determines execution order. Lower numbers execute first.
-    pub priority: Option<i32>
+    pub priority: Option<String>
 }
 
 /// struct for passing parameters to the method [`delete_snippet`]
@@ -86,7 +86,7 @@ pub struct UpdateSnippetDynamicParams {
     /// The VCL code that specifies exactly what the snippet does.
     pub content: Option<String>,
     /// Priority determines execution order. Lower numbers execute first.
-    pub priority: Option<i32>
+    pub priority: Option<String>
 }
 
 

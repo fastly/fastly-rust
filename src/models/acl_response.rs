@@ -24,8 +24,9 @@ pub struct AclResponse {
     pub updated_at: Option<String>,
     #[serde(rename = "service_id", skip_serializing_if = "Option::is_none")]
     pub service_id: Option<Box<String>>,
+    /// String representing the number identifying a version of the service.
     #[serde(rename = "version", skip_serializing_if = "Option::is_none")]
-    pub version: Option<Box<i32>>,
+    pub version: Option<String>,
     #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
     pub id: Option<Box<String>>,
 }
