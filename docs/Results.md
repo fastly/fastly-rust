@@ -154,6 +154,7 @@ Name | Type | Description | Notes
 **segblock_shield_fetches** | Option<**i32**> | Number of `Range` requests to a shield for segments of resources when using segmented caching. | 
 **compute_requests** | Option<**i32**> | The total number of requests that were received for your service by Fastly. | 
 **compute_request_time_ms** | Option<**f32**> | The total, actual amount of time used to process your requests, including active CPU time (in milliseconds). | 
+**compute_request_time_billed_ms** | Option<**f32**> | The total amount of request processing time you will be billed for, measured in 50 millisecond increments. | 
 **compute_ram_used** | Option<**i32**> | The amount of RAM used for your service by Fastly (in bytes). | 
 **compute_execution_time_ms** | Option<**f32**> | The amount of active CPU time used to process your requests (in milliseconds). | 
 **compute_req_header_bytes** | Option<**i32**> | Total header bytes received by Compute@Edge. | 
@@ -200,10 +201,10 @@ Name | Type | Description | Notes
 **websocket_conn_time_ms** | Option<**i32**> | Total duration of passthrough WebSocket connections with end users. | 
 **fanout_recv_publishes** | Option<**i32**> | Total published messages received from the publish API endpoint. | 
 **fanout_send_publishes** | Option<**i32**> | Total published messages sent to end users. | 
-**object_store_class_a_operations** | Option<**i32**> | The total number of class a operations for the object store. | 
-**object_store_class_b_operations** | Option<**i32**> | The total number of class b operations for the object store. | 
-**object_store_read_requests** | Option<**i32**> | Use object_store_class_b_operations. | 
-**object_store_write_requests** | Option<**i32**> | Use object_store_class_a_operations. | 
+**kv_store_class_a_operations** | Option<**i32**> | The total number of class a operations for the KV store. | 
+**kv_store_class_b_operations** | Option<**i32**> | The total number of class b operations for the KV store. | 
+**object_store_class_a_operations** | Option<**i32**> | Use kv_store_class_a_operations. | 
+**object_store_class_b_operations** | Option<**i32**> | Use kv_store_class_b_operations. | 
 **fanout_req_header_bytes** | Option<**i32**> | Total header bytes received from end users over Fanout connections. | 
 **fanout_req_body_bytes** | Option<**i32**> | Total body or message content bytes received from end users over Fanout connections. | 
 **fanout_resp_header_bytes** | Option<**i32**> | Total header bytes sent to end users over Fanout connections. | 

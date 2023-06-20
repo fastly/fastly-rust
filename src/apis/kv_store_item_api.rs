@@ -15,8 +15,7 @@ use super::{Error, configuration};
 #[derive(Clone, Debug, Default)]
 pub struct DeleteKeyFromStoreParams {
     pub store_id: String,
-    pub key_name: String,
-    pub force: Option<bool>
+    pub key_name: String
 }
 
 /// struct for passing parameters to the method [`get_keys`]
@@ -87,7 +86,6 @@ pub async fn delete_key_from_store(configuration: &mut configuration::Configurat
     // unbox the parameters
     let store_id = params.store_id;
     let key_name = params.key_name;
-    let force = params.force;
 
 
     let local_var_client = &local_var_configuration.client;
@@ -95,9 +93,6 @@ pub async fn delete_key_from_store(configuration: &mut configuration::Configurat
     let local_var_uri_str = format!("{}/resources/stores/kv/{store_id}/keys/{key_name}", local_var_configuration.base_path, store_id=crate::apis::urlencode(store_id), key_name=crate::apis::urlencode(key_name));
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::DELETE, local_var_uri_str.as_str());
 
-    if let Some(ref local_var_str) = force {
-        local_var_req_builder = local_var_req_builder.query(&[("force", &local_var_str.to_string())]);
-    }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }

@@ -461,6 +461,9 @@ pub struct Results {
     /// The total, actual amount of time used to process your requests, including active CPU time (in milliseconds).
     #[serde(rename = "compute_request_time_ms", skip_serializing_if = "Option::is_none")]
     pub compute_request_time_ms: Option<f32>,
+    /// The total amount of request processing time you will be billed for, measured in 50 millisecond increments.
+    #[serde(rename = "compute_request_time_billed_ms", skip_serializing_if = "Option::is_none")]
+    pub compute_request_time_billed_ms: Option<f32>,
     /// The amount of RAM used for your service by Fastly (in bytes).
     #[serde(rename = "compute_ram_used", skip_serializing_if = "Option::is_none")]
     pub compute_ram_used: Option<i32>,
@@ -599,18 +602,18 @@ pub struct Results {
     /// Total published messages sent to end users.
     #[serde(rename = "fanout_send_publishes", skip_serializing_if = "Option::is_none")]
     pub fanout_send_publishes: Option<i32>,
-    /// The total number of class a operations for the object store.
+    /// The total number of class a operations for the KV store.
+    #[serde(rename = "kv_store_class_a_operations", skip_serializing_if = "Option::is_none")]
+    pub kv_store_class_a_operations: Option<i32>,
+    /// The total number of class b operations for the KV store.
+    #[serde(rename = "kv_store_class_b_operations", skip_serializing_if = "Option::is_none")]
+    pub kv_store_class_b_operations: Option<i32>,
+    /// Use kv_store_class_a_operations.
     #[serde(rename = "object_store_class_a_operations", skip_serializing_if = "Option::is_none")]
     pub object_store_class_a_operations: Option<i32>,
-    /// The total number of class b operations for the object store.
+    /// Use kv_store_class_b_operations.
     #[serde(rename = "object_store_class_b_operations", skip_serializing_if = "Option::is_none")]
     pub object_store_class_b_operations: Option<i32>,
-    /// Use object_store_class_b_operations.
-    #[serde(rename = "object_store_read_requests", skip_serializing_if = "Option::is_none")]
-    pub object_store_read_requests: Option<i32>,
-    /// Use object_store_class_a_operations.
-    #[serde(rename = "object_store_write_requests", skip_serializing_if = "Option::is_none")]
-    pub object_store_write_requests: Option<i32>,
     /// Total header bytes received from end users over Fanout connections.
     #[serde(rename = "fanout_req_header_bytes", skip_serializing_if = "Option::is_none")]
     pub fanout_req_header_bytes: Option<i32>,
@@ -812,6 +815,7 @@ impl Results {
             segblock_shield_fetches: None,
             compute_requests: None,
             compute_request_time_ms: None,
+            compute_request_time_billed_ms: None,
             compute_ram_used: None,
             compute_execution_time_ms: None,
             compute_req_header_bytes: None,
@@ -858,10 +862,10 @@ impl Results {
             websocket_conn_time_ms: None,
             fanout_recv_publishes: None,
             fanout_send_publishes: None,
+            kv_store_class_a_operations: None,
+            kv_store_class_b_operations: None,
             object_store_class_a_operations: None,
             object_store_class_b_operations: None,
-            object_store_read_requests: None,
-            object_store_write_requests: None,
             fanout_req_header_bytes: None,
             fanout_req_body_bytes: None,
             fanout_resp_header_bytes: None,

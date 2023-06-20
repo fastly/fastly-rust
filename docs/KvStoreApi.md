@@ -65,7 +65,6 @@ delete_store(cfg, params)
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **store_id** | **String** |  | [required] |
-**force** | Option\<**bool**> |  |  |
 
 ### Return type
 

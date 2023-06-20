@@ -30,7 +30,6 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **store_id** | **String** |  | [required] |
 **key_name** | **String** |  | [required] |
-**force** | Option\<**bool**> |  |  |
 
 ### Return type
 

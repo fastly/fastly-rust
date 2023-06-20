@@ -4,12 +4,48 @@ All URIs are relative to *https://api.fastly.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**get_token**](TokensApi.md#get_token) | **GET** /tokens/{token_id} | Get a token
 [**get_token_current**](TokensApi.md#get_token_current) | **GET** /tokens/self | Get the current token
 [**list_tokens_customer**](TokensApi.md#list_tokens_customer) | **GET** /customer/{customer_id}/tokens | List tokens for a customer
 [**list_tokens_user**](TokensApi.md#list_tokens_user) | **GET** /tokens | List tokens for the authenticated user
 [**revoke_token**](TokensApi.md#revoke_token) | **DELETE** /tokens/{token_id} | Revoke a token
 [**revoke_token_current**](TokensApi.md#revoke_token_current) | **DELETE** /tokens/self | Revoke the current token
 
+
+
+## get_token
+
+Get a single token by its id.
+
+```rust
+let cfg = &Configuration::default();
+let params = GetTokenParams {
+    // parameters
+};
+get_token(cfg, params)
+```
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**token_id** | **String** | Alphanumeric string identifying a token. | [required] |
+
+### Return type
+
+[**crate::models::TokenResponse**](TokenResponse.md)
+
+### Authorization
+
+[token](../README.md#token)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 
 ## get_token_current
