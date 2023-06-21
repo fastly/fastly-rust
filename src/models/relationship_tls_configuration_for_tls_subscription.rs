@@ -5,20 +5,20 @@
  *
  */
 
-/// RelationshipTlsConfiguration : The [TLS configuration](/reference/api/tls/custom-certs/configuration/) being used to terminate TLS traffic. Optional.
+/// RelationshipTlsConfigurationForTlsSubscription : The unique identifier for the set of TLS configuration options that apply to the enabled domains on this subscription. Write-only on create.
 
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct RelationshipTlsConfiguration {
+pub struct RelationshipTlsConfigurationForTlsSubscription {
     #[serde(rename = "tls_configuration", skip_serializing_if = "Option::is_none")]
     pub tls_configuration: Option<Box<crate::models::RelationshipTlsConfigurationTlsConfiguration>>,
 }
 
-impl RelationshipTlsConfiguration {
-    /// The [TLS configuration](/reference/api/tls/custom-certs/configuration/) being used to terminate TLS traffic. Optional.
-    pub fn new() -> RelationshipTlsConfiguration {
-        RelationshipTlsConfiguration {
+impl RelationshipTlsConfigurationForTlsSubscription {
+    /// The unique identifier for the set of TLS configuration options that apply to the enabled domains on this subscription. Write-only on create.
+    pub fn new() -> RelationshipTlsConfigurationForTlsSubscription {
+        RelationshipTlsConfigurationForTlsSubscription {
             tls_configuration: None,
         }
     }

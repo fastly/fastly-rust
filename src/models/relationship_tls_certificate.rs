@@ -5,6 +5,7 @@
  *
  */
 
+/// RelationshipTlsCertificate : The [TLS certificate](/reference/api/tls/custom-certs/certificates/) being used to terminate TLS traffic for a domain. Required.
 
 
 
@@ -15,6 +16,7 @@ pub struct RelationshipTlsCertificate {
 }
 
 impl RelationshipTlsCertificate {
+    /// The [TLS certificate](/reference/api/tls/custom-certs/certificates/) being used to terminate TLS traffic for a domain. Required.
     pub fn new() -> RelationshipTlsCertificate {
         RelationshipTlsCertificate {
             tls_certificate: None,

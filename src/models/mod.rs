@@ -568,6 +568,8 @@ pub mod relationship_tls_certificates_tls_certificates;
 pub use self::relationship_tls_certificates_tls_certificates::RelationshipTlsCertificatesTlsCertificates;
 pub mod relationship_tls_configuration;
 pub use self::relationship_tls_configuration::RelationshipTlsConfiguration;
+pub mod relationship_tls_configuration_for_tls_subscription;
+pub use self::relationship_tls_configuration_for_tls_subscription::RelationshipTlsConfigurationForTlsSubscription;
 pub mod relationship_tls_configuration_tls_configuration;
 pub use self::relationship_tls_configuration_tls_configuration::RelationshipTlsConfigurationTlsConfiguration;
 pub mod relationship_tls_configurations;

@@ -12,12 +12,18 @@
 pub struct RelationshipsForTlsActivation {
     #[serde(rename = "tls_certificate", skip_serializing_if = "Option::is_none")]
     pub tls_certificate: Option<Box<crate::models::RelationshipTlsCertificateTlsCertificate>>,
+    #[serde(rename = "tls_configuration", skip_serializing_if = "Option::is_none")]
+    pub tls_configuration: Option<Box<crate::models::RelationshipTlsConfigurationTlsConfiguration>>,
+    #[serde(rename = "tls_domain", skip_serializing_if = "Option::is_none")]
+    pub tls_domain: Option<Box<crate::models::RelationshipTlsDomainTlsDomain>>,
 }
 
 impl RelationshipsForTlsActivation {
     pub fn new() -> RelationshipsForTlsActivation {
         RelationshipsForTlsActivation {
             tls_certificate: None,
+            tls_configuration: None,
+            tls_domain: None,
         }
     }
 }
