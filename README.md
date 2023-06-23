@@ -12,7 +12,7 @@ Rust 2021 Edition
 Add the following to `Cargo.toml` under `[dependencies]`:
 
 ```toml
-fastly-api = "2.2.1"
+fastly-api = "2.3.0"
 ```
 
 ## Usage
@@ -180,6 +180,15 @@ Class | Method | HTTP request | Description
 *HealthcheckApi* | [**get_healthcheck**](docs/HealthcheckApi.md#get_healthcheck) | **GET** /service/{service_id}/version/{version_id}/healthcheck/{healthcheck_name} | Get a health check
 *HealthcheckApi* | [**list_healthchecks**](docs/HealthcheckApi.md#list_healthchecks) | **GET** /service/{service_id}/version/{version_id}/healthcheck | List health checks
 *HealthcheckApi* | [**update_healthcheck**](docs/HealthcheckApi.md#update_healthcheck) | **PUT** /service/{service_id}/version/{version_id}/healthcheck/{healthcheck_name} | Update a health check
+*HistoricalApi* | [**get_hist_stats**](docs/HistoricalApi.md#get_hist_stats) | **GET** /stats | Get historical stats
+*HistoricalApi* | [**get_hist_stats_aggregated**](docs/HistoricalApi.md#get_hist_stats_aggregated) | **GET** /stats/aggregate | Get aggregated historical stats
+*HistoricalApi* | [**get_hist_stats_field**](docs/HistoricalApi.md#get_hist_stats_field) | **GET** /stats/field/{field} | Get historical stats for a single field
+*HistoricalApi* | [**get_hist_stats_service**](docs/HistoricalApi.md#get_hist_stats_service) | **GET** /stats/service/{service_id} | Get historical stats for a single service
+*HistoricalApi* | [**get_hist_stats_service_field**](docs/HistoricalApi.md#get_hist_stats_service_field) | **GET** /stats/service/{service_id}/field/{field} | Get historical stats for a single service/field combination
+*HistoricalApi* | [**get_regions**](docs/HistoricalApi.md#get_regions) | **GET** /stats/regions | Get region codes
+*HistoricalApi* | [**get_usage**](docs/HistoricalApi.md#get_usage) | **GET** /stats/usage | Get usage statistics
+*HistoricalApi* | [**get_usage_month**](docs/HistoricalApi.md#get_usage_month) | **GET** /stats/usage_by_month | Get month-to-date usage statistics
+*HistoricalApi* | [**get_usage_service**](docs/HistoricalApi.md#get_usage_service) | **GET** /stats/usage_by_service | Get usage statistics per service
 *Http3Api* | [**create_http3**](docs/Http3Api.md#create_http3) | **POST** /service/{service_id}/version/{version_id}/http3 | Enable support for HTTP/3
 *Http3Api* | [**delete_http3**](docs/Http3Api.md#delete_http3) | **DELETE** /service/{service_id}/version/{version_id}/http3 | Disable support for HTTP/3
 *Http3Api* | [**get_http3**](docs/Http3Api.md#get_http3) | **GET** /service/{service_id}/version/{version_id}/http3 | Get HTTP/3 status
@@ -537,15 +546,6 @@ The fastly-rust API client currently does not support the following endpoints:
 - [`/service/{service_id}/wafs/{firewall_id}/ruleset`](https://developer.fastly.com/reference/api/legacy-waf/ruleset) (GET, PATCH)
 - [`/service/{service_id}/wafs/{firewall_id}/update_statuses/{update_status_id}`](https://developer.fastly.com/reference/api/legacy-waf/update-status) (GET)
 - [`/service/{service_id}/wafs/{firewall_id}/update_statuses`](https://developer.fastly.com/reference/api/legacy-waf/update-status) (GET)
-- [`/stats/aggregate`](https://developer.fastly.com/reference/api/metrics-stats/historical-stats) (GET)
-- [`/stats/field/{field}`](https://developer.fastly.com/reference/api/metrics-stats/historical-stats) (GET)
-- [`/stats/regions`](https://developer.fastly.com/reference/api/metrics-stats/historical-stats) (GET)
-- [`/stats/service/{service_id}/field/{field}`](https://developer.fastly.com/reference/api/metrics-stats/historical-stats) (GET)
-- [`/stats/service/{service_id}`](https://developer.fastly.com/reference/api/metrics-stats/historical-stats) (GET)
-- [`/stats/usage_by_month`](https://developer.fastly.com/reference/api/metrics-stats/historical-stats) (GET)
-- [`/stats/usage_by_service`](https://developer.fastly.com/reference/api/metrics-stats/historical-stats) (GET)
-- [`/stats/usage`](https://developer.fastly.com/reference/api/metrics-stats/historical-stats) (GET)
-- [`/stats`](https://developer.fastly.com/reference/api/metrics-stats/historical-stats) (GET)
 - [`/sudo`](https://developer.fastly.com/reference/api/utils/sudo) (POST)
 - [`/tls/activations/{tls_activation_id}`](https://developer.fastly.com/reference/api/tls/mutual-tls/activations) (GET, PATCH)
 - [`/tls/activations`](https://developer.fastly.com/reference/api/tls/mutual-tls/activations) (GET)

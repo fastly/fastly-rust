@@ -1,5 +1,11 @@
 # Changelog
 
+## [v2.3.0](https://github.com/fastly/fastly-rust/releases/tag/release/v2.3.0) (2023-06-23)
+
+**Enhancements:**
+
+- feat(historical_stats): implement historical stats.
+
 ## [v2.2.1](https://github.com/fastly/fastly-rust/releases/tag/release/v2.2.1) (2023-06-21)
 
 **Bug fixes:**
