@@ -11,9 +11,9 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct AutomationTokenResponseAllOf {
     #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
-    pub id: Option<Box<String>>,
+    pub id: Option<Box<crate::models::ReadOnlyId>>,
     #[serde(rename = "customer_id", skip_serializing_if = "Option::is_none")]
-    pub customer_id: Option<Box<String>>,
+    pub customer_id: Option<Box<crate::models::ReadOnlyCustomerId>>,
     #[serde(rename = "role", skip_serializing_if = "Option::is_none")]
     pub role: Option<String>,
     /// The IP address of the client that last used the token.

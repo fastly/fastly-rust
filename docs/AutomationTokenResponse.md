@@ -12,8 +12,8 @@ Name | Type | Description | Notes
 **created_at** | Option<**String**> | A UTC time-stamp of when the token was created. | 
 **deleted_at** | Option<**String**> | Date and time in ISO 8601 format. | [readonly]
 **updated_at** | Option<**String**> | Date and time in ISO 8601 format. | [readonly]
-**id** | Option<**String**> |  | [readonly]
-**customer_id** | Option<**String**> |  | [readonly]
+**id** | Option<[**crate::models::ReadOnlyId**](ReadOnlyId.md)> |  | 
+**customer_id** | Option<[**crate::models::ReadOnlyCustomerId**](ReadOnlyCustomerId.md)> |  | 
 **ip** | Option<**String**> | The IP address of the client that last used the token. | 
 **user_agent** | Option<**String**> | The User-Agent header of the client that last used the token. | 
 **sudo_expires_at** | Option<**String**> |  | [readonly]

@@ -34,8 +34,9 @@ pub struct RateLimiter {
     /// The action to take when a rate limiter violation is detected.
     #[serde(rename = "action", skip_serializing_if = "Option::is_none")]
     pub action: Option<Action>,
+    /// Custom response to be sent when the rate limit is exceeded. Required if `action` is `response`.
     #[serde(rename = "response", skip_serializing_if = "Option::is_none")]
-    pub response: Option<Box<crate::models::RateLimiterResponse1>>,
+    pub response: Option<::std::collections::HashMap<String, String>>,
     /// Name of existing response object. Required if `action` is `response_object`. Note that the rate limiter response is only updated to reflect the response object content when saving the rate limiter configuration.
     #[serde(rename = "response_object_name", skip_serializing_if = "Option::is_none")]
     pub response_object_name: Option<String>,

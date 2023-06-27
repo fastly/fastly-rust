@@ -1,12 +1,13 @@
-# HistoricalUsageResults
+# ErrorResponse
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**bandwidth** | Option<**f32**> |  | 
-**requests** | Option<**f32**> |  | 
-**compute_requests** | Option<**f32**> |  | 
+**detail** | Option<**String**> |  | 
+**errors** | Option<[**Vec&lt;serde_json::Value&gt;**](SerdeJsonValue.md)> |  | 
+**status** | Option<**i32**> |  | 
+**title** | Option<**String**> |  | 
 
 [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

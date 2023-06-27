@@ -176,7 +176,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**crate::models::ErrorResponse**](ErrorResponse.md)
 
 ### Authorization
 

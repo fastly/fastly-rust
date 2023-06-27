@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | Option<**String**> |  | [readonly]
-**user_id** | Option<**String**> |  | [readonly]
-**customer_id** | Option<**String**> |  | [readonly]
+**id** | Option<[**crate::models::ReadOnlyId**](ReadOnlyId.md)> |  | 
+**user_id** | Option<[**crate::models::ReadOnlyUserId**](ReadOnlyUserId.md)> |  | 
+**customer_id** | Option<[**crate::models::ReadOnlyCustomerId**](ReadOnlyCustomerId.md)> |  | 
 **sudo_expires_at** | Option<**String**> |  | [readonly]
 **created_at** | Option<**String**> | A UTC time-stamp of when the token was created.  | [readonly]
 **access_token** | Option<**String**> |  | [readonly]

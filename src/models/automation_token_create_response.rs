@@ -35,11 +35,11 @@ pub struct AutomationTokenCreateResponse {
     #[serde(rename = "updated_at", skip_serializing_if = "Option::is_none")]
     pub updated_at: Option<String>,
     #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
-    pub id: Option<Box<String>>,
+    pub id: Option<Box<crate::models::ReadOnlyId>>,
     #[serde(rename = "user_id", skip_serializing_if = "Option::is_none")]
-    pub user_id: Option<Box<String>>,
+    pub user_id: Option<Box<crate::models::ReadOnlyUserId>>,
     #[serde(rename = "customer_id", skip_serializing_if = "Option::is_none")]
-    pub customer_id: Option<Box<String>>,
+    pub customer_id: Option<Box<crate::models::ReadOnlyCustomerId>>,
     #[serde(rename = "sudo_expires_at", skip_serializing_if = "Option::is_none")]
     pub sudo_expires_at: Option<String>,
     #[serde(rename = "access_token", skip_serializing_if = "Option::is_none")]

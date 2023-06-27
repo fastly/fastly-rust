@@ -1,5 +1,16 @@
 # Changelog
 
+## [v2.4.0](https://github.com/fastly/fastly-rust/releases/tag/release/v2.4.0) (2023-06-27)
+
+**Enhancements:**
+
+- feat(rate_limiter): implement POST/PUT endpoints.
+
+**Bug fixes:**
+
+- fix(automation_tokens): generate explicit error response type.
+- remove(historical_stats): remove feature as generated code is invalid.
+
 ## [v2.3.0](https://github.com/fastly/fastly-rust/releases/tag/release/v2.3.0) (2023-06-23)
 
 **Enhancements:**

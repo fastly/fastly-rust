@@ -12,9 +12,9 @@ Name | Type | Description | Notes
 **created_at** | Option<**String**> | A UTC time-stamp of when the token was created.  | [readonly]
 **deleted_at** | Option<**String**> | Date and time in ISO 8601 format. | [readonly]
 **updated_at** | Option<**String**> | Date and time in ISO 8601 format. | [readonly]
-**id** | Option<**String**> |  | [readonly]
-**user_id** | Option<**String**> |  | [readonly]
-**customer_id** | Option<**String**> |  | [readonly]
+**id** | Option<[**crate::models::ReadOnlyId**](ReadOnlyId.md)> |  | 
+**user_id** | Option<[**crate::models::ReadOnlyUserId**](ReadOnlyUserId.md)> |  | 
+**customer_id** | Option<[**crate::models::ReadOnlyCustomerId**](ReadOnlyCustomerId.md)> |  | 
 **sudo_expires_at** | Option<**String**> |  | [readonly]
 **access_token** | Option<**String**> |  | [readonly]
 **last_used_at** | Option<**String**> | A UTC time-stamp of when the token was last used. | [readonly]

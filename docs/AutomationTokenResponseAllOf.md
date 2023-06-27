@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | Option<**String**> |  | [readonly]
-**customer_id** | Option<**String**> |  | [readonly]
+**id** | Option<[**crate::models::ReadOnlyId**](ReadOnlyId.md)> |  | 
+**customer_id** | Option<[**crate::models::ReadOnlyCustomerId**](ReadOnlyCustomerId.md)> |  | 
 **role** | Option<**String**> |  | 
 **ip** | Option<**String**> | The IP address of the client that last used the token. | 
 **user_agent** | Option<**String**> | The User-Agent header of the client that last used the token. | 

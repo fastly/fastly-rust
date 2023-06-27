@@ -34,9 +34,9 @@ pub struct AutomationTokenResponse {
     #[serde(rename = "updated_at", skip_serializing_if = "Option::is_none")]
     pub updated_at: Option<String>,
     #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
-    pub id: Option<Box<String>>,
+    pub id: Option<Box<crate::models::ReadOnlyId>>,
     #[serde(rename = "customer_id", skip_serializing_if = "Option::is_none")]
-    pub customer_id: Option<Box<String>>,
+    pub customer_id: Option<Box<crate::models::ReadOnlyCustomerId>>,
     /// The IP address of the client that last used the token.
     #[serde(rename = "ip", skip_serializing_if = "Option::is_none")]
     pub ip: Option<String>,

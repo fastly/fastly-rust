@@ -58,8 +58,8 @@ pub enum CreateAutomationTokenError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetAutomationTokenIdError {
-    Status401(),
-    Status403(),
+    Status401(crate::models::ErrorResponse),
+    Status403(crate::models::ErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -67,8 +67,8 @@ pub enum GetAutomationTokenIdError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetAutomationTokensIdServicesError {
-    Status401(),
-    Status403(),
+    Status401(crate::models::ErrorResponse),
+    Status403(crate::models::ErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -76,8 +76,8 @@ pub enum GetAutomationTokensIdServicesError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListAutomationTokensError {
-    Status401(),
-    Status403(),
+    Status401(crate::models::ErrorResponse),
+    Status403(crate::models::ErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -85,10 +85,10 @@ pub enum ListAutomationTokensError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum RevokeAutomationTokenIdError {
-    Status400(),
-    Status401(),
-    Status403(),
-    Status404(),
+    Status400(crate::models::ErrorResponse),
+    Status401(crate::models::ErrorResponse),
+    Status403(crate::models::ErrorResponse),
+    Status404(crate::models::ErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -318,7 +318,7 @@ pub async fn list_automation_tokens(configuration: &mut configuration::Configura
 }
 
 /// Revoke an automation token by ID.
-pub async fn revoke_automation_token_id(configuration: &mut configuration::Configuration, params: RevokeAutomationTokenIdParams) -> Result<(), Error<RevokeAutomationTokenIdError>> {
+pub async fn revoke_automation_token_id(configuration: &mut configuration::Configuration, params: RevokeAutomationTokenIdParams) -> Result<crate::models::ErrorResponse, Error<RevokeAutomationTokenIdError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -361,7 +361,7 @@ pub async fn revoke_automation_token_id(configuration: &mut configuration::Confi
     let local_var_content = local_var_resp.text().await?;
 
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        Ok(())
+        serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
         let local_var_entity: Option<RevokeAutomationTokenIdError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };

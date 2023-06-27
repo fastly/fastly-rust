@@ -9,24 +9,12 @@
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct ErrorResponse {
-    #[serde(rename = "detail", skip_serializing_if = "Option::is_none")]
-    pub detail: Option<String>,
-    #[serde(rename = "errors", skip_serializing_if = "Option::is_none")]
-    pub errors: Option<Vec<serde_json::Value>>,
-    #[serde(rename = "status", skip_serializing_if = "Option::is_none")]
-    pub status: Option<i32>,
-    #[serde(rename = "title", skip_serializing_if = "Option::is_none")]
-    pub title: Option<String>,
+pub struct ReadOnlyId {
 }
 
-impl ErrorResponse {
-    pub fn new() -> ErrorResponse {
-        ErrorResponse {
-            detail: None,
-            errors: None,
-            status: None,
-            title: None,
+impl ReadOnlyId {
+    pub fn new() -> ReadOnlyId {
+        ReadOnlyId {
         }
     }
 }
