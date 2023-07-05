@@ -147,6 +147,7 @@ pub mod tls_private_keys_api;
 pub mod tls_subscriptions_api;
 pub mod tokens_api;
 pub mod user_api;
+pub mod vcl_api;
 pub mod vcl_diff_api;
 pub mod version_api;
 pub mod waf_active_rules_api;

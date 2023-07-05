@@ -1,5 +1,15 @@
 # Changelog
 
+## [v2.5.0](https://github.com/fastly/fastly-rust/releases/tag/release/v2.5.0) (2023-07-05)
+
+**Enhancements:**
+
+- feat(vcl): support all vcl endpoints.
+
+**Bug fixes:**
+
+- fix(snippet): dynamic field switched from int to string.
+
 ## [v2.4.0](https://github.com/fastly/fastly-rust/releases/tag/release/v2.4.0) (2023-06-27)
 
 **Enhancements:**

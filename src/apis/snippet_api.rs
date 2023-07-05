@@ -21,7 +21,7 @@ pub struct CreateSnippetParams {
     /// The name for the snippet.
     pub name: Option<String>,
     /// Sets the snippet version.
-    pub dynamic: Option<i32>,
+    pub dynamic: Option<String>,
     /// The location in generated VCL where the snippet should be placed.
     pub _type: Option<String>,
     /// The VCL code that specifies exactly what the snippet does.
@@ -80,7 +80,7 @@ pub struct UpdateSnippetDynamicParams {
     /// The name for the snippet.
     pub name: Option<String>,
     /// Sets the snippet version.
-    pub dynamic: Option<i32>,
+    pub dynamic: Option<String>,
     /// The location in generated VCL where the snippet should be placed.
     pub _type: Option<String>,
     /// The VCL code that specifies exactly what the snippet does.

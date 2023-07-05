@@ -27,7 +27,7 @@ Name | Type | Description | Notes
 **response_objects** | Option<[**Vec&lt;crate::models::ResponseObjectResponse&gt;**](ResponseObjectResponse.md)> | List of response objects for this service. | 
 **settings** | Option<[**crate::models::VersionDetailSettings**](VersionDetailSettings.md)> |  | 
 **snippets** | Option<[**Vec&lt;crate::models::SchemasSnippetResponse&gt;**](SchemasSnippetResponse.md)> | List of VCL snippets for this service. | 
-**vcls** | Option<[**Vec&lt;crate::models::VclResponse&gt;**](VclResponse.md)> | List of VCL files for this service. | 
+**vcls** | Option<[**Vec&lt;crate::models::SchemasVclResponse&gt;**](SchemasVclResponse.md)> | List of VCL files for this service. | 
 **wordpress** | Option<[**Vec&lt;serde_json::Value&gt;**](SerdeJsonValue.md)> | A list of Wordpress rules with this service. | 
 
 [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

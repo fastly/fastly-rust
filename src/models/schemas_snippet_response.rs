@@ -65,14 +65,14 @@ impl SchemasSnippetResponse {
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum Dynamic {
     #[serde(rename = "0")]
-    Dynamic0,
+    Regular,
     #[serde(rename = "1")]
-    Dynamic1,
+    Dynamic,
 }
 
 impl Default for Dynamic {
     fn default() -> Dynamic {
-        Self::Dynamic0
+        Self::Regular
     }
 }
 /// The location in generated VCL where the snippet should be placed.

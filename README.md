@@ -12,7 +12,7 @@ Rust 2021 Edition
 Add the following to `Cargo.toml` under `[dependencies]`:
 
 ```toml
-fastly-api = "2.4.0"
+fastly-api = "2.5.0"
 ```
 
 ## Usage
@@ -446,6 +446,19 @@ Class | Method | HTTP request | Description
 *UserApi* | [**request_password_reset**](docs/UserApi.md#request_password_reset) | **POST** /user/{user_login}/password/request_reset | Request a password reset
 *UserApi* | [**update_user**](docs/UserApi.md#update_user) | **PUT** /user/{user_id} | Update a user
 *UserApi* | [**update_user_password**](docs/UserApi.md#update_user_password) | **POST** /current_user/password | Update the user's password
+*VclApi* | [**create_custom_vcl**](docs/VclApi.md#create_custom_vcl) | **POST** /service/{service_id}/version/{version_id}/vcl | Create a custom VCL file
+*VclApi* | [**delete_custom_vcl**](docs/VclApi.md#delete_custom_vcl) | **DELETE** /service/{service_id}/version/{version_id}/vcl/{vcl_name} | Delete a custom VCL file
+*VclApi* | [**get_custom_vcl**](docs/VclApi.md#get_custom_vcl) | **GET** /service/{service_id}/version/{version_id}/vcl/{vcl_name} | Get a custom VCL file
+*VclApi* | [**get_custom_vcl_boilerplate**](docs/VclApi.md#get_custom_vcl_boilerplate) | **GET** /service/{service_id}/version/{version_id}/boilerplate | Get boilerplate VCL
+*VclApi* | [**get_custom_vcl_generated**](docs/VclApi.md#get_custom_vcl_generated) | **GET** /service/{service_id}/version/{version_id}/generated_vcl | Get the generated VCL for a service
+*VclApi* | [**get_custom_vcl_generated_highlighted**](docs/VclApi.md#get_custom_vcl_generated_highlighted) | **GET** /service/{service_id}/version/{version_id}/generated_vcl/content | Get the generated VCL with syntax highlighting
+*VclApi* | [**get_custom_vcl_highlighted**](docs/VclApi.md#get_custom_vcl_highlighted) | **GET** /service/{service_id}/version/{version_id}/vcl/{vcl_name}/content | Get a custom VCL file with syntax highlighting
+*VclApi* | [**get_custom_vcl_raw**](docs/VclApi.md#get_custom_vcl_raw) | **GET** /service/{service_id}/version/{version_id}/vcl/{vcl_name}/download | Download a custom VCL file
+*VclApi* | [**lint_vcl_default**](docs/VclApi.md#lint_vcl_default) | **POST** /vcl_lint | Lint (validate) VCL using a default set of flags.
+*VclApi* | [**lint_vcl_for_service**](docs/VclApi.md#lint_vcl_for_service) | **POST** /service/{service_id}/lint | Lint (validate) VCL using flags set for the service.
+*VclApi* | [**list_custom_vcl**](docs/VclApi.md#list_custom_vcl) | **GET** /service/{service_id}/version/{version_id}/vcl | List custom VCL files
+*VclApi* | [**set_custom_vcl_main**](docs/VclApi.md#set_custom_vcl_main) | **PUT** /service/{service_id}/version/{version_id}/vcl/{vcl_name}/main | Set a custom VCL file as main
+*VclApi* | [**update_custom_vcl**](docs/VclApi.md#update_custom_vcl) | **PUT** /service/{service_id}/version/{version_id}/vcl/{vcl_name} | Update a custom VCL file
 *VclDiffApi* | [**vcl_diff_service_versions**](docs/VclDiffApi.md#vcl_diff_service_versions) | **GET** /service/{service_id}/vcl/diff/from/{from_version_id}/to/{to_version_id} | Get a comparison of the VCL changes between two service versions
 *VersionApi* | [**activate_service_version**](docs/VersionApi.md#activate_service_version) | **PUT** /service/{service_id}/version/{version_id}/activate | Activate a service version
 *VersionApi* | [**clone_service_version**](docs/VersionApi.md#clone_service_version) | **PUT** /service/{service_id}/version/{version_id}/clone | Clone a service version
@@ -496,6 +509,7 @@ The fastly-rust API client currently does not support the following endpoints:
 - [`/events`](https://developer.fastly.com/reference/api/account/events) (GET)
 - [`/metrics/domains/services/{service_id}`](https://developer.fastly.com/reference/api/metrics-stats/domain-inspector/historical) (GET)
 - [`/metrics/origins/services/{service_id}`](https://developer.fastly.com/reference/api/metrics-stats/origin-inspector/historical) (GET)
+- [`/resources/stores/kv/{store_id}/batch`](https://developer.fastly.com/reference/api/services/resources/kv-store-item) (PUT)
 - [`/resources/stores/secret/client-key`](https://developer.fastly.com/reference/api/services/resources/secret-store) (POST)
 - [`/resources/stores/secret/signing-key`](https://developer.fastly.com/reference/api/services/resources/secret-store) (GET)
 - [`/resources/stores/secret/{store_id}/secrets/{secret_name}`](https://developer.fastly.com/reference/api/services/resources/secret) (DELETE, GET)
@@ -509,13 +523,9 @@ The fastly-rust API client currently does not support the following endpoints:
 - [`/service-groups/{service_group_id}/services`](https://developer.fastly.com/reference/api/account/service-groups) (DELETE, POST)
 - [`/service-groups/{service_group_id}`](https://developer.fastly.com/reference/api/account/service-groups) (PATCH)
 - [`/service-groups`](https://developer.fastly.com/reference/api/account/service-groups) (POST)
-- [`/service/{service_id}/lint`](https://developer.fastly.com/reference/api/vcl-services/vcl) (POST)
 - [`/service/{service_id}/version/{version_id}/apex-redirects`](https://developer.fastly.com/reference/api/vcl-services/apex-redirect) (POST)
-- [`/service/{service_id}/version/{version_id}/boilerplate`](https://developer.fastly.com/reference/api/vcl-services/vcl) (GET)
 - [`/service/{service_id}/version/{version_id}/director/{director_name}`](https://developer.fastly.com/reference/api/load-balancing/directors/director) (PUT)
 - [`/service/{service_id}/version/{version_id}/director`](https://developer.fastly.com/reference/api/load-balancing/directors/director) (POST)
-- [`/service/{service_id}/version/{version_id}/generated_vcl/content`](https://developer.fastly.com/reference/api/vcl-services/vcl) (GET)
-- [`/service/{service_id}/version/{version_id}/generated_vcl`](https://developer.fastly.com/reference/api/vcl-services/vcl) (GET)
 - [`/service/{service_id}/version/{version_id}/logging/kafka/{logging_kafka_name}`](https://developer.fastly.com/reference/api/logging/kafka) (PUT)
 - [`/service/{service_id}/version/{version_id}/logging/kinesis/{logging_kinesis_name}`](https://developer.fastly.com/reference/api/logging/kinesis) (PUT)
 - [`/service/{service_id}/version/{version_id}/package`](https://developer.fastly.com/reference/api/services/package) (PUT)
@@ -523,11 +533,6 @@ The fastly-rust API client currently does not support the following endpoints:
 - [`/service/{service_id}/version/{version_id}/response_object/{response_object_name}`](https://developer.fastly.com/reference/api/vcl-services/response-object) (PUT)
 - [`/service/{service_id}/version/{version_id}/response_object`](https://developer.fastly.com/reference/api/vcl-services/response-object) (POST)
 - [`/service/{service_id}/version/{version_id}/snippet/{snippet_name}`](https://developer.fastly.com/reference/api/vcl-services/snippet) (PUT)
-- [`/service/{service_id}/version/{version_id}/vcl/{vcl_name}/content`](https://developer.fastly.com/reference/api/vcl-services/vcl) (GET)
-- [`/service/{service_id}/version/{version_id}/vcl/{vcl_name}/download`](https://developer.fastly.com/reference/api/vcl-services/vcl) (GET)
-- [`/service/{service_id}/version/{version_id}/vcl/{vcl_name}/main`](https://developer.fastly.com/reference/api/vcl-services/vcl) (PUT)
-- [`/service/{service_id}/version/{version_id}/vcl/{vcl_name}`](https://developer.fastly.com/reference/api/vcl-services/vcl) (DELETE, GET, PUT)
-- [`/service/{service_id}/version/{version_id}/vcl`](https://developer.fastly.com/reference/api/vcl-services/vcl) (GET, POST)
 - [`/service/{service_id}/version/{version_id}/wafs/{firewall_id}`](https://developer.fastly.com/reference/api/legacy-waf/firewall) (GET, PATCH)
 - [`/service/{service_id}/version/{version_id}/wafs`](https://developer.fastly.com/reference/api/legacy-waf/firewall) (GET, POST)
 - [`/service/{service_id}/wafs/{firewall_id}/owasp`](https://developer.fastly.com/reference/api/legacy-waf/owasp) (GET, PATCH, POST)
@@ -567,7 +572,6 @@ The fastly-rust API client currently does not support the following endpoints:
 - [`/v1/origins/{service_id}/ts/h/limit/{max_entries}`](https://developer.fastly.com/reference/api/metrics-stats/origin-inspector/real-time) (GET)
 - [`/v1/origins/{service_id}/ts/h`](https://developer.fastly.com/reference/api/metrics-stats/origin-inspector/real-time) (GET)
 - [`/v1/origins/{service_id}/ts/{start_timestamp}`](https://developer.fastly.com/reference/api/metrics-stats/origin-inspector/real-time) (GET)
-- [`/vcl_lint`](https://developer.fastly.com/reference/api/vcl-services/vcl) (POST)
 - [`/waf/firewalls/{firewall_id}/versions/{version_id}/active-rules`](https://developer.fastly.com/reference/api/waf/rules/active) (DELETE)
 - [`/wafs/configuration_sets/{configuration_set_id}/relationships/wafs`](https://developer.fastly.com/reference/api/legacy-waf/configuration-set) (GET, PATCH)
 - [`/wafs/configuration_sets`](https://developer.fastly.com/reference/api/legacy-waf/configuration-set) (GET)

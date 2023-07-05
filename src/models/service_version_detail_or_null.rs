@@ -79,7 +79,7 @@ pub struct ServiceVersionDetailOrNull {
     pub snippets: Option<Vec<crate::models::SchemasSnippetResponse>>,
     /// List of VCL files for this service.
     #[serde(rename = "vcls", skip_serializing_if = "Option::is_none")]
-    pub vcls: Option<Vec<crate::models::VclResponse>>,
+    pub vcls: Option<Vec<crate::models::SchemasVclResponse>>,
     /// A list of Wordpress rules with this service.
     #[serde(rename = "wordpress", skip_serializing_if = "Option::is_none")]
     pub wordpress: Option<Vec<serde_json::Value>>,
