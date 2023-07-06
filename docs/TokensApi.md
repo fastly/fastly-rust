@@ -4,6 +4,8 @@ All URIs are relative to *https://api.fastly.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**bulk_revoke_tokens**](TokensApi.md#bulk_revoke_tokens) | **DELETE** /tokens | Revoke multiple tokens
+[**create_token**](TokensApi.md#create_token) | **POST** /tokens | Create a token
 [**get_token**](TokensApi.md#get_token) | **GET** /tokens/{token_id} | Get a token
 [**get_token_current**](TokensApi.md#get_token_current) | **GET** /tokens/self | Get the current token
 [**list_tokens_customer**](TokensApi.md#list_tokens_customer) | **GET** /customer/{customer_id}/tokens | List tokens for a customer
@@ -11,6 +13,73 @@ Method | HTTP request | Description
 [**revoke_token**](TokensApi.md#revoke_token) | **DELETE** /tokens/{token_id} | Revoke a token
 [**revoke_token_current**](TokensApi.md#revoke_token_current) | **DELETE** /tokens/self | Revoke the current token
 
+
+
+## bulk_revoke_tokens
+
+Revoke Tokens in bulk format. Users may only revoke their own tokens. Superusers may revoke tokens of others.
+
+```rust
+let cfg = &Configuration::default();
+let params = BulkRevokeTokensParams {
+    // parameters
+};
+bulk_revoke_tokens(cfg, params)
+```
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**request_body** | Option\<[**::std::collections::HashMap&lt;String, serde_json::Value&gt;**](serde_json::Value.md)> |  |  |
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[token](../README.md#token)
+
+### HTTP request headers
+
+- **Content-Type**: application/vnd.api+json; ext=bulk
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+
+## create_token
+
+Create an API token. If two-factor authentication is enabled for your account, review [the instructions](/reference/api/auth-tokens/user/) for including a one-time password in the request. 
+
+```rust
+let cfg = &Configuration::default();
+let params = CreateTokenParams {
+    // parameters
+};
+create_token(cfg, params)
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**crate::models::TokenCreatedResponse**](TokenCreatedResponse.md)
+
+### Authorization
+
+[token](../README.md#token), [username_and_password](../README.md#username_and_password)
+
+### HTTP request headers
+
+- **Content-Type**: application/x-www-form-urlencoded
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 
 ## get_token

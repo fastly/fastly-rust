@@ -11,6 +11,25 @@ use reqwest;
 use crate::apis::ResponseContent;
 use super::{Error, configuration};
 
+/// struct for passing parameters to the method [`create_contacts`]
+#[derive(Clone, Debug, Default)]
+pub struct CreateContactsParams {
+    /// Alphanumeric string identifying the customer.
+    pub customer_id: String,
+    /// The alphanumeric string representing the user for this customer contact.
+    pub user_id: Option<String>,
+    /// The type of contact.
+    pub contact_type: Option<String>,
+    /// The name of this contact, when user_id is not provided.
+    pub name: Option<String>,
+    /// The email of this contact, when a user_id is not provided.
+    pub email: Option<String>,
+    /// The phone number for this contact. Required for primary, technical, and security contact types.
+    pub phone: Option<String>,
+    /// The alphanumeric string representing the customer for this customer contact.
+    pub customer_id2: Option<String>
+}
+
 /// struct for passing parameters to the method [`delete_contact`]
 #[derive(Clone, Debug, Default)]
 pub struct DeleteContactParams {
@@ -28,6 +47,13 @@ pub struct ListContactsParams {
 }
 
 
+/// struct for typed errors of method [`create_contacts`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum CreateContactsError {
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method [`delete_contact`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -42,6 +68,84 @@ pub enum ListContactsError {
     UnknownValue(serde_json::Value),
 }
 
+
+/// Create a contact.
+pub async fn create_contacts(configuration: &mut configuration::Configuration, params: CreateContactsParams) -> Result<crate::models::ContactResponse, Error<CreateContactsError>> {
+    let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let customer_id = params.customer_id;
+    let user_id = params.user_id;
+    let contact_type = params.contact_type;
+    let name = params.name;
+    let email = params.email;
+    let phone = params.phone;
+    let customer_id2 = params.customer_id2;
+
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!("{}/customer/{customer_id}/contacts", local_var_configuration.base_path, customer_id=crate::apis::urlencode(customer_id));
+    let mut local_var_req_builder = local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+    if let Some(ref local_var_apikey) = local_var_configuration.api_key {
+        let local_var_key = local_var_apikey.key.clone();
+        let local_var_value = match local_var_apikey.prefix {
+            Some(ref local_var_prefix) => format!("{} {}", local_var_prefix, local_var_key),
+            None => local_var_key,
+        };
+        local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
+    };
+    let mut local_var_form_params = std::collections::HashMap::new();
+    if let Some(local_var_param_value) = user_id {
+        local_var_form_params.insert("user_id", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = contact_type {
+        local_var_form_params.insert("contact_type", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = name {
+        local_var_form_params.insert("name", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = email {
+        local_var_form_params.insert("email", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = phone {
+        local_var_form_params.insert("phone", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = customer_id2 {
+        local_var_form_params.insert("customer_id", local_var_param_value.to_string());
+    }
+    local_var_req_builder = local_var_req_builder.form(&local_var_form_params);
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        serde_json::from_str(&local_var_content).map_err(Error::from)
+    } else {
+        let local_var_entity: Option<CreateContactsError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        Err(Error::ResponseError(local_var_error))
+    }
+}
 
 /// Delete a contact.
 pub async fn delete_contact(configuration: &mut configuration::Configuration, params: DeleteContactParams) -> Result<crate::models::InlineResponse200, Error<DeleteContactError>> {

@@ -24,6 +24,12 @@ pub struct DeleteServiceAuthorizationParams {
     pub service_authorization_id: String
 }
 
+/// struct for passing parameters to the method [`delete_service_authorization2`]
+#[derive(Clone, Debug, Default)]
+pub struct DeleteServiceAuthorization2Params {
+    pub request_body: Option<::std::collections::HashMap<String, serde_json::Value>>
+}
+
 /// struct for passing parameters to the method [`list_service_authorization`]
 #[derive(Clone, Debug, Default)]
 pub struct ListServiceAuthorizationParams {
@@ -48,6 +54,12 @@ pub struct UpdateServiceAuthorizationParams {
     pub service_authorization: Option<crate::models::ServiceAuthorization>
 }
 
+/// struct for passing parameters to the method [`update_service_authorization2`]
+#[derive(Clone, Debug, Default)]
+pub struct UpdateServiceAuthorization2Params {
+    pub request_body: Option<::std::collections::HashMap<String, serde_json::Value>>
+}
+
 
 /// struct for typed errors of method [`create_service_authorization`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -60,6 +72,13 @@ pub enum CreateServiceAuthorizationError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteServiceAuthorizationError {
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`delete_service_authorization2`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeleteServiceAuthorization2Error {
     UnknownValue(serde_json::Value),
 }
 
@@ -81,6 +100,13 @@ pub enum ShowServiceAuthorizationError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateServiceAuthorizationError {
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`update_service_authorization2`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum UpdateServiceAuthorization2Error {
     UnknownValue(serde_json::Value),
 }
 
@@ -185,6 +211,59 @@ pub async fn delete_service_authorization(configuration: &mut configuration::Con
         Ok(())
     } else {
         let local_var_entity: Option<DeleteServiceAuthorizationError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        Err(Error::ResponseError(local_var_error))
+    }
+}
+
+/// Delete service authorizations.
+pub async fn delete_service_authorization2(configuration: &mut configuration::Configuration, params: DeleteServiceAuthorization2Params) -> Result<crate::models::InlineResponse2007, Error<DeleteServiceAuthorization2Error>> {
+    let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let request_body = params.request_body;
+
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!("{}/service-authorizations", local_var_configuration.base_path);
+    let mut local_var_req_builder = local_var_client.request(reqwest::Method::DELETE, local_var_uri_str.as_str());
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+    if let Some(ref local_var_apikey) = local_var_configuration.api_key {
+        let local_var_key = local_var_apikey.key.clone();
+        let local_var_value = match local_var_apikey.prefix {
+            Some(ref local_var_prefix) => format!("{} {}", local_var_prefix, local_var_key),
+            None => local_var_key,
+        };
+        local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
+    };
+    local_var_req_builder = local_var_req_builder.json(&request_body);
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        serde_json::from_str(&local_var_content).map_err(Error::from)
+    } else {
+        let local_var_entity: Option<DeleteServiceAuthorization2Error> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }
@@ -350,6 +429,59 @@ pub async fn update_service_authorization(configuration: &mut configuration::Con
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
         let local_var_entity: Option<UpdateServiceAuthorizationError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        Err(Error::ResponseError(local_var_error))
+    }
+}
+
+/// Update service authorizations.
+pub async fn update_service_authorization2(configuration: &mut configuration::Configuration, params: UpdateServiceAuthorization2Params) -> Result<crate::models::ServiceAuthorizationsResponse, Error<UpdateServiceAuthorization2Error>> {
+    let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let request_body = params.request_body;
+
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!("{}/service-authorizations", local_var_configuration.base_path);
+    let mut local_var_req_builder = local_var_client.request(reqwest::Method::PATCH, local_var_uri_str.as_str());
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+    if let Some(ref local_var_apikey) = local_var_configuration.api_key {
+        let local_var_key = local_var_apikey.key.clone();
+        let local_var_value = match local_var_apikey.prefix {
+            Some(ref local_var_prefix) => format!("{} {}", local_var_prefix, local_var_key),
+            None => local_var_key,
+        };
+        local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
+    };
+    local_var_req_builder = local_var_req_builder.json(&request_body);
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PATCH" != "GET" && "PATCH" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        serde_json::from_str(&local_var_content).map_err(Error::from)
+    } else {
+        let local_var_entity: Option<UpdateServiceAuthorization2Error> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }

@@ -39,14 +39,14 @@ impl AclEntry {
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum Negated {
     #[serde(rename = "0")]
-    Negated0,
+    NegatedDisable,
     #[serde(rename = "1")]
-    Negated1,
+    NegatedEnable,
 }
 
 impl Default for Negated {
     fn default() -> Negated {
-        Self::Negated0
+        Self::NegatedDisable
     }
 }
 

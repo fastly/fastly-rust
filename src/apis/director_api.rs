@@ -42,6 +42,17 @@ pub struct ListDirectorsParams {
     pub version_id: i32
 }
 
+/// struct for passing parameters to the method [`update_director`]
+#[derive(Clone, Debug, Default)]
+pub struct UpdateDirectorParams {
+    /// Alphanumeric string identifying the service.
+    pub service_id: String,
+    /// Integer identifying a service version.
+    pub version_id: i32,
+    /// Name for the Director.
+    pub director_name: String
+}
+
 
 /// struct for typed errors of method [`delete_director`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -61,6 +72,13 @@ pub enum GetDirectorError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListDirectorsError {
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`update_director`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum UpdateDirectorError {
     UnknownValue(serde_json::Value),
 }
 
@@ -221,6 +239,60 @@ pub async fn list_directors(configuration: &mut configuration::Configuration, pa
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
         let local_var_entity: Option<ListDirectorsError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        Err(Error::ResponseError(local_var_error))
+    }
+}
+
+/// Update the director for a particular service and version.
+pub async fn update_director(configuration: &mut configuration::Configuration, params: UpdateDirectorParams) -> Result<crate::models::DirectorResponse, Error<UpdateDirectorError>> {
+    let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let service_id = params.service_id;
+    let version_id = params.version_id;
+    let director_name = params.director_name;
+
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!("{}/service/{service_id}/version/{version_id}/director/{director_name}", local_var_configuration.base_path, service_id=crate::apis::urlencode(service_id), version_id=version_id, director_name=crate::apis::urlencode(director_name));
+    let mut local_var_req_builder = local_var_client.request(reqwest::Method::PUT, local_var_uri_str.as_str());
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+    if let Some(ref local_var_apikey) = local_var_configuration.api_key {
+        let local_var_key = local_var_apikey.key.clone();
+        let local_var_value = match local_var_apikey.prefix {
+            Some(ref local_var_prefix) => format!("{} {}", local_var_prefix, local_var_key),
+            None => local_var_key,
+        };
+        local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
+    };
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        serde_json::from_str(&local_var_content).map_err(Error::from)
+    } else {
+        let local_var_entity: Option<UpdateDirectorError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }

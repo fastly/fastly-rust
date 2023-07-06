@@ -5,6 +5,7 @@
  *
  */
 
+/// Domain : Domain details
 
 
 
@@ -19,6 +20,7 @@ pub struct Domain {
 }
 
 impl Domain {
+    /// Domain details
     pub fn new() -> Domain {
         Domain {
             comment: None,

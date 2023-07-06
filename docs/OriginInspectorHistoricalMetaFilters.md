@@ -1,10 +1,12 @@
-# PackageUpload
+# OriginInspectorHistoricalMetaFilters
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**package** | Option<[**std::path::PathBuf**](StdpathPathBuf.md)> | The content of the Wasm binary package. | 
+**region** | Option<**String**> |  | 
+**datacenter** | Option<**String**> |  | 
+**host** | Option<**String**> |  | 
 
 [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

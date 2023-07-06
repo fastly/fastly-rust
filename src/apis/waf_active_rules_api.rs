@@ -11,6 +11,16 @@ use reqwest;
 use crate::apis::ResponseContent;
 use super::{Error, configuration};
 
+/// struct for passing parameters to the method [`bulk_delete_waf_active_rules`]
+#[derive(Clone, Debug, Default)]
+pub struct BulkDeleteWafActiveRulesParams {
+    /// Alphanumeric string identifying a WAF Firewall.
+    pub firewall_id: String,
+    /// Integer identifying a service version.
+    pub version_id: i32,
+    pub request_body: Option<::std::collections::HashMap<String, serde_json::Value>>
+}
+
 /// struct for passing parameters to the method [`bulk_update_waf_active_rules`]
 #[derive(Clone, Debug, Default)]
 pub struct BulkUpdateWafActiveRulesParams {
@@ -103,6 +113,13 @@ pub struct UpdateWafActiveRuleParams {
 }
 
 
+/// struct for typed errors of method [`bulk_delete_waf_active_rules`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum BulkDeleteWafActiveRulesError {
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method [`bulk_update_waf_active_rules`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -152,6 +169,61 @@ pub enum UpdateWafActiveRuleError {
     UnknownValue(serde_json::Value),
 }
 
+
+/// Delete many active rules on a particular firewall version using the active rule ID. Limited to 500 rules per request.
+pub async fn bulk_delete_waf_active_rules(configuration: &mut configuration::Configuration, params: BulkDeleteWafActiveRulesParams) -> Result<(), Error<BulkDeleteWafActiveRulesError>> {
+    let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let firewall_id = params.firewall_id;
+    let version_id = params.version_id;
+    let request_body = params.request_body;
+
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!("{}/waf/firewalls/{firewall_id}/versions/{version_id}/active-rules", local_var_configuration.base_path, firewall_id=crate::apis::urlencode(firewall_id), version_id=version_id);
+    let mut local_var_req_builder = local_var_client.request(reqwest::Method::DELETE, local_var_uri_str.as_str());
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+    if let Some(ref local_var_apikey) = local_var_configuration.api_key {
+        let local_var_key = local_var_apikey.key.clone();
+        let local_var_value = match local_var_apikey.prefix {
+            Some(ref local_var_prefix) => format!("{} {}", local_var_prefix, local_var_key),
+            None => local_var_key,
+        };
+        local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
+    };
+    local_var_req_builder = local_var_req_builder.json(&request_body);
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        Ok(())
+    } else {
+        let local_var_entity: Option<BulkDeleteWafActiveRulesError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        Err(Error::ResponseError(local_var_error))
+    }
+}
 
 /// Bulk update all active rules on a [firewall version](https://developer.fastly.com/reference/api/waf/firewall-version/). This endpoint will not add new active rules, only update existing active rules.
 pub async fn bulk_update_waf_active_rules(configuration: &mut configuration::Configuration, params: BulkUpdateWafActiveRulesParams) -> Result<(), Error<BulkUpdateWafActiveRulesError>> {
