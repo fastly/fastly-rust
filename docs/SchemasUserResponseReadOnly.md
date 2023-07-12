@@ -1,4 +1,4 @@
-# UserResponseAllOf
+# SchemasUserResponseReadOnly
 
 ## Properties
 

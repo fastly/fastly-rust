@@ -1,4 +1,4 @@
-# BillingResponseAllOf
+# BillingResponseItemItemsData
 
 ## Properties
 

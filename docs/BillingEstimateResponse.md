@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **status** | Option<[**crate::models::BillingStatus**](BillingStatus.md)> |  | 
 **total** | Option<[**crate::models::BillingTotal**](BillingTotal.md)> |  | 
 **regions** | Option<[**::std::collections::HashMap&lt;String, ::std::collections::HashMap&lt;String, serde_json::Value&gt;&gt;**](Map.md)> | Breakdown of regional data for products that are region based. | 
-**lines** | Option<[**Vec&lt;crate::models::BillingEstimateResponseAllOfLines&gt;**](BillingEstimateResponseAllOfLines.md)> |  | 
+**line_items** | Option<[**Vec&lt;crate::models::BillingEstimateLinesLineItems&gt;**](BillingEstimateLinesLineItems.md)> |  | 
 
 [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

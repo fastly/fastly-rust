@@ -1,11 +1,11 @@
-# BillingResponseLineItemAllOf
+# LineItemData
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **amount** | Option<**f32**> |  | 
-**aria_invoice_id** | Option<**String**> |  | [readonly]
+**aria_invoice_id** | Option<[**crate::models::LineItemDataReadOnlyInvoiceId**](LineItemDataReadOnlyInvoiceId.md)> |  | 
 **client_service_id** | Option<**String**> |  | 
 **credit_coupon_code** | Option<**String**> |  | 
 **description** | Option<**String**> |  | 

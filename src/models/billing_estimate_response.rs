@@ -30,8 +30,8 @@ pub struct BillingEstimateResponse {
     /// Breakdown of regional data for products that are region based.
     #[serde(rename = "regions", skip_serializing_if = "Option::is_none")]
     pub regions: Option<::std::collections::HashMap<String, ::std::collections::HashMap<String, serde_json::Value>>>,
-    #[serde(rename = "lines", skip_serializing_if = "Option::is_none")]
-    pub lines: Option<Vec<crate::models::BillingEstimateResponseAllOfLines>>,
+    #[serde(rename = "line_items", skip_serializing_if = "Option::is_none")]
+    pub line_items: Option<Vec<crate::models::BillingEstimateLinesLineItems>>,
 }
 
 impl BillingEstimateResponse {
@@ -45,7 +45,7 @@ impl BillingEstimateResponse {
             status: None,
             total: None,
             regions: None,
-            lines: None,
+            line_items: None,
         }
     }
 }

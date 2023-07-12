@@ -13,8 +13,9 @@ pub struct BillingStatus {
     /// What the current status of this invoice can be.
     #[serde(rename = "status", skip_serializing_if = "Option::is_none")]
     pub status: Option<Status>,
+    /// Date and time in ISO 8601 format.
     #[serde(rename = "sent_at", skip_serializing_if = "Option::is_none")]
-    pub sent_at: Option<Box<String>>,
+    pub sent_at: Option<String>,
 }
 
 impl BillingStatus {

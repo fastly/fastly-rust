@@ -9,16 +9,7 @@
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct BillingResponseLineItem {
-    /// Date and time in ISO 8601 format.
-    #[serde(rename = "created_at", skip_serializing_if = "Option::is_none")]
-    pub created_at: Option<String>,
-    /// Date and time in ISO 8601 format.
-    #[serde(rename = "deleted_at", skip_serializing_if = "Option::is_none")]
-    pub deleted_at: Option<String>,
-    /// Date and time in ISO 8601 format.
-    #[serde(rename = "updated_at", skip_serializing_if = "Option::is_none")]
-    pub updated_at: Option<String>,
+pub struct LineItemData {
     #[serde(rename = "amount", skip_serializing_if = "Option::is_none")]
     pub amount: Option<f32>,
     #[serde(rename = "aria_invoice_id", skip_serializing_if = "Option::is_none")]
@@ -55,12 +46,9 @@ pub struct BillingResponseLineItem {
     pub usage_type_no: Option<f32>,
 }
 
-impl BillingResponseLineItem {
-    pub fn new() -> BillingResponseLineItem {
-        BillingResponseLineItem {
-            created_at: None,
-            deleted_at: None,
-            updated_at: None,
+impl LineItemData {
+    pub fn new() -> LineItemData {
+        LineItemData {
             amount: None,
             aria_invoice_id: None,
             client_service_id: None,
