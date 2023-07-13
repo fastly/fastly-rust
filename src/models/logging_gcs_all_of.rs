@@ -13,7 +13,6 @@ pub struct LoggingGcsAllOf {
     /// The name of the GCS bucket.
     #[serde(rename = "bucket_name", skip_serializing_if = "Option::is_none")]
     pub bucket_name: Option<String>,
-    /// The path to upload logs to.
     #[serde(rename = "path", skip_serializing_if = "Option::is_none")]
     pub path: Option<Box<String>>,
     /// A PGP public key that Fastly will use to encrypt your log files before writing them to disk.

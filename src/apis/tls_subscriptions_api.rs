@@ -34,10 +34,10 @@ pub struct CreateTlsSubParams {
 pub struct DeleteGlobalsignEmailChallengeParams {
     /// Alphanumeric string identifying a TLS subscription.
     pub tls_subscription_id: String,
-    /// Alphanumeric string identifying a GlobalSign email challenge.
-    pub globalsign_email_challenge_id: String,
     /// Alphanumeric string identifying a TLS subscription.
-    pub tls_authorization_id: String
+    pub tls_authorization_id: String,
+    /// Alphanumeric string identifying a GlobalSign email challenge.
+    pub globalsign_email_challenge_id: String
 }
 
 /// struct for passing parameters to the method [`delete_tls_sub`]
@@ -254,13 +254,13 @@ pub async fn delete_globalsign_email_challenge(configuration: &mut configuration
 
     // unbox the parameters
     let tls_subscription_id = params.tls_subscription_id;
-    let globalsign_email_challenge_id = params.globalsign_email_challenge_id;
     let tls_authorization_id = params.tls_authorization_id;
+    let globalsign_email_challenge_id = params.globalsign_email_challenge_id;
 
 
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/tls/subscriptions/{tls_subscription_id}/authorizations/{tls_authorization_id}/globalsign_email_challenges/{globalsign_email_challenge_id}", local_var_configuration.base_path, tls_subscription_id=crate::apis::urlencode(tls_subscription_id), globalsign_email_challenge_id=crate::apis::urlencode(globalsign_email_challenge_id), tls_authorization_id=crate::apis::urlencode(tls_authorization_id));
+    let local_var_uri_str = format!("{}/tls/subscriptions/{tls_subscription_id}/authorizations/{tls_authorization_id}/globalsign_email_challenges/{globalsign_email_challenge_id}", local_var_configuration.base_path, tls_subscription_id=crate::apis::urlencode(tls_subscription_id), tls_authorization_id=crate::apis::urlencode(tls_authorization_id), globalsign_email_challenge_id=crate::apis::urlencode(globalsign_email_challenge_id));
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::DELETE, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {

@@ -18,7 +18,7 @@ Name | Type | Description | Notes
 **secret_key** | Option<**String**> | Your Google Cloud Platform account secret key. The `private_key` field in your service account authentication JSON. Not required if `account_name` is specified. | 
 **account_name** | Option<**String**> | The name of the Google Cloud Platform service account associated with the target log collection service. Not required if `user` and `secret_key` are provided. | 
 **bucket_name** | Option<**String**> | The name of the GCS bucket. | 
-**path** | Option<**String**> | The path to upload logs to. | 
+**path** | Option<**String**> |  | [default to /]
 **public_key** | Option<**String**> | A PGP public key that Fastly will use to encrypt your log files before writing them to disk. | [default to null]
 **project_id** | Option<**String**> | Your Google Cloud Platform project ID. Required | 
 **created_at** | Option<**String**> | Date and time in ISO 8601 format. | [readonly]

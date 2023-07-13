@@ -105,8 +105,8 @@ delete_globalsign_email_challenge(cfg, params)
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **tls_subscription_id** | **String** | Alphanumeric string identifying a TLS subscription. | [required] |
-**globalsign_email_challenge_id** | **String** | Alphanumeric string identifying a GlobalSign email challenge. | [required] |
 **tls_authorization_id** | **String** | Alphanumeric string identifying a TLS subscription. | [required] |
+**globalsign_email_challenge_id** | **String** | Alphanumeric string identifying a GlobalSign email challenge. | [required] |
 
 ### Return type
 

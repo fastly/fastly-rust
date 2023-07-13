@@ -12,8 +12,9 @@
 pub struct OriginInspectorHistoricalData {
     #[serde(rename = "dimensions", skip_serializing_if = "Option::is_none")]
     pub dimensions: Option<Box<crate::models::OriginInspectorDimensions>>,
+    /// An array of values representing the metric values at each point in time. Note that this dataset is sparse: only the keys with non-zero values will be included in the record. 
     #[serde(rename = "values", skip_serializing_if = "Option::is_none")]
-    pub values: Option<Box<crate::models::Values>>,
+    pub values: Option<Vec<crate::models::OriginInspectorValues>>,
 }
 
 impl OriginInspectorHistoricalData {

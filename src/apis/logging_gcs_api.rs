@@ -46,7 +46,6 @@ pub struct CreateLogGcsParams {
     pub account_name: Option<String>,
     /// The name of the GCS bucket.
     pub bucket_name: Option<String>,
-    /// The path to upload logs to.
     pub path: Option<String>,
     /// A PGP public key that Fastly will use to encrypt your log files before writing them to disk.
     pub public_key: Option<String>,
@@ -122,7 +121,6 @@ pub struct UpdateLogGcsParams {
     pub account_name: Option<String>,
     /// The name of the GCS bucket.
     pub bucket_name: Option<String>,
-    /// The path to upload logs to.
     pub path: Option<String>,
     /// A PGP public key that Fastly will use to encrypt your log files before writing them to disk.
     pub public_key: Option<String>,
