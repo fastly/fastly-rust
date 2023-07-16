@@ -132,8 +132,18 @@ pub async fn put_package(configuration: &mut configuration::Configuration, param
         };
         local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
     };
-    let mut local_var_form = reqwest::multipart::Form::new();
-    // TODO: support file upload for 'package' parameter
+
+    // TODO: Don't use unwrap here, use proper error handling
+    let path = package.unwrap().to_owned();
+
+    let data: Vec<u8> = std::fs::read(&path)?;
+
+    let part: reqwest::multipart::Part = reqwest::multipart::Part::bytes(data)
+        .file_name(path.into_os_string().into_string().unwrap())
+        .mime_str("application/octet-stream")?;
+
+    let local_var_form= reqwest::multipart::Form::new().part("package", part);
+
     local_var_req_builder = local_var_req_builder.multipart(local_var_form);
 
     let local_var_req = local_var_req_builder.build()?;
