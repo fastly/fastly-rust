@@ -25,7 +25,7 @@ pub struct GzipResponse {
     #[serde(rename = "service_id", skip_serializing_if = "Option::is_none")]
     pub service_id: Option<Box<String>>,
     #[serde(rename = "version", skip_serializing_if = "Option::is_none")]
-    pub version: Option<Box<i32>>,
+    pub version: Option<Box<String>>,
     /// Date and time in ISO 8601 format.
     #[serde(rename = "created_at", skip_serializing_if = "Option::is_none")]
     pub created_at: Option<String>,

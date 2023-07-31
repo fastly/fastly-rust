@@ -16,15 +16,15 @@ pub struct LoggingKafkaResponse {
     /// Where in the generated VCL the logging call should be placed. If not set, endpoints with `format_version` of 2 are placed in `vcl_log` and those with `format_version` of 1 are placed in `vcl_deliver`. 
     #[serde(rename = "placement", skip_serializing_if = "Option::is_none")]
     pub placement: Option<Placement>,
-    /// The version of the custom logging format used for the configured endpoint. The logging call gets placed by default in `vcl_log` if `format_version` is set to `2` and in `vcl_deliver` if `format_version` is set to `1`. 
-    #[serde(rename = "format_version", skip_serializing_if = "Option::is_none")]
-    pub format_version: Option<FormatVersion>,
     /// The name of an existing condition in the configured endpoint, or leave blank to always execute.
     #[serde(rename = "response_condition", skip_serializing_if = "Option::is_none")]
     pub response_condition: Option<String>,
     /// A Fastly [log format string](https://docs.fastly.com/en/guides/custom-log-formats).
     #[serde(rename = "format", skip_serializing_if = "Option::is_none")]
     pub format: Option<String>,
+    /// The version of the custom logging format used for the configured endpoint. The logging call gets placed by default in `vcl_log` if `format_version` is set to `2` and in `vcl_deliver` if `format_version` is set to `1`. 
+    #[serde(rename = "format_version", skip_serializing_if = "Option::is_none")]
+    pub format_version: Option<FormatVersion>,
     /// A secure certificate to authenticate a server with. Must be in PEM format.
     #[serde(rename = "tls_ca_cert", skip_serializing_if = "Option::is_none")]
     pub tls_ca_cert: Option<String>,
@@ -37,6 +37,19 @@ pub struct LoggingKafkaResponse {
     /// The hostname to verify the server's certificate. This should be one of the Subject Alternative Name (SAN) fields for the certificate. Common Names (CN) are not supported.
     #[serde(rename = "tls_hostname", skip_serializing_if = "Option::is_none")]
     pub tls_hostname: Option<String>,
+    /// Date and time in ISO 8601 format.
+    #[serde(rename = "created_at", skip_serializing_if = "Option::is_none")]
+    pub created_at: Option<String>,
+    /// Date and time in ISO 8601 format.
+    #[serde(rename = "deleted_at", skip_serializing_if = "Option::is_none")]
+    pub deleted_at: Option<String>,
+    /// Date and time in ISO 8601 format.
+    #[serde(rename = "updated_at", skip_serializing_if = "Option::is_none")]
+    pub updated_at: Option<String>,
+    #[serde(rename = "service_id", skip_serializing_if = "Option::is_none")]
+    pub service_id: Option<Box<String>>,
+    #[serde(rename = "version", skip_serializing_if = "Option::is_none")]
+    pub version: Option<Box<String>>,
     /// The Kafka topic to send logs to. Required.
     #[serde(rename = "topic", skip_serializing_if = "Option::is_none")]
     pub topic: Option<String>,
@@ -66,19 +79,6 @@ pub struct LoggingKafkaResponse {
     pub password: Option<String>,
     #[serde(rename = "use_tls", skip_serializing_if = "Option::is_none")]
     pub use_tls: Option<crate::models::LoggingUseTls>,
-    /// Date and time in ISO 8601 format.
-    #[serde(rename = "created_at", skip_serializing_if = "Option::is_none")]
-    pub created_at: Option<String>,
-    /// Date and time in ISO 8601 format.
-    #[serde(rename = "deleted_at", skip_serializing_if = "Option::is_none")]
-    pub deleted_at: Option<String>,
-    /// Date and time in ISO 8601 format.
-    #[serde(rename = "updated_at", skip_serializing_if = "Option::is_none")]
-    pub updated_at: Option<String>,
-    #[serde(rename = "service_id", skip_serializing_if = "Option::is_none")]
-    pub service_id: Option<Box<String>>,
-    #[serde(rename = "version", skip_serializing_if = "Option::is_none")]
-    pub version: Option<Box<i32>>,
 }
 
 impl LoggingKafkaResponse {
@@ -86,13 +86,18 @@ impl LoggingKafkaResponse {
         LoggingKafkaResponse {
             name: None,
             placement: None,
-            format_version: None,
             response_condition: None,
             format: None,
+            format_version: None,
             tls_ca_cert: None,
             tls_client_cert: None,
             tls_client_key: None,
             tls_hostname: None,
+            created_at: None,
+            deleted_at: None,
+            updated_at: None,
+            service_id: None,
+            version: None,
             topic: None,
             brokers: None,
             compression_codec: None,
@@ -103,11 +108,6 @@ impl LoggingKafkaResponse {
             user: None,
             password: None,
             use_tls: None,
-            created_at: None,
-            deleted_at: None,
-            updated_at: None,
-            service_id: None,
-            version: None,
         }
     }
 }
@@ -132,14 +132,14 @@ impl Default for Placement {
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum FormatVersion {
     #[serde(rename = "1")]
-    FormatVersionV1,
+    V1,
     #[serde(rename = "2")]
-    FormatVersionV2,
+    V2,
 }
 
 impl Default for FormatVersion {
     fn default() -> FormatVersion {
-        Self::FormatVersionV1
+        Self::V1
     }
 }
 /// The codec used for compression of your logs.

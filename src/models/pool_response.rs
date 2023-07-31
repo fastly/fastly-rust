@@ -25,6 +25,19 @@ pub struct PoolResponse {
     /// Whether to use TLS.
     #[serde(rename = "use_tls", skip_serializing_if = "Option::is_none")]
     pub use_tls: Option<UseTls>,
+    /// Date and time in ISO 8601 format.
+    #[serde(rename = "created_at", skip_serializing_if = "Option::is_none")]
+    pub created_at: Option<String>,
+    /// Date and time in ISO 8601 format.
+    #[serde(rename = "deleted_at", skip_serializing_if = "Option::is_none")]
+    pub deleted_at: Option<String>,
+    /// Date and time in ISO 8601 format.
+    #[serde(rename = "updated_at", skip_serializing_if = "Option::is_none")]
+    pub updated_at: Option<String>,
+    #[serde(rename = "service_id", skip_serializing_if = "Option::is_none")]
+    pub service_id: Option<Box<String>>,
+    #[serde(rename = "version", skip_serializing_if = "Option::is_none")]
+    pub version: Option<Box<String>>,
     /// Name for the Pool.
     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
@@ -34,27 +47,12 @@ pub struct PoolResponse {
     /// Condition which, if met, will select this configuration during a request. Optional.
     #[serde(rename = "request_condition", skip_serializing_if = "Option::is_none")]
     pub request_condition: Option<String>,
-    /// Maximum number of connections. Optional.
-    #[serde(rename = "max_conn_default", skip_serializing_if = "Option::is_none")]
-    pub max_conn_default: Option<i32>,
-    /// How long to wait for a timeout in milliseconds. Optional.
-    #[serde(rename = "connect_timeout", skip_serializing_if = "Option::is_none")]
-    pub connect_timeout: Option<i32>,
-    /// How long to wait for the first byte in milliseconds. Optional.
-    #[serde(rename = "first_byte_timeout", skip_serializing_if = "Option::is_none")]
-    pub first_byte_timeout: Option<i32>,
-    /// Percentage of capacity (`0-100`) that needs to be operationally available for a pool to be considered up.
-    #[serde(rename = "quorum", skip_serializing_if = "Option::is_none")]
-    pub quorum: Option<i32>,
     /// List of OpenSSL ciphers (see the [openssl.org manpages](https://www.openssl.org/docs/man1.1.1/man1/ciphers.html) for details). Optional.
     #[serde(rename = "tls_ciphers", skip_serializing_if = "Option::is_none")]
     pub tls_ciphers: Option<String>,
     /// SNI hostname. Optional.
     #[serde(rename = "tls_sni_hostname", skip_serializing_if = "Option::is_none")]
     pub tls_sni_hostname: Option<String>,
-    /// Be strict on checking TLS certs. Optional.
-    #[serde(rename = "tls_check_cert", skip_serializing_if = "Option::is_none")]
-    pub tls_check_cert: Option<i32>,
     /// Minimum allowed TLS version on connections to this server. Optional.
     #[serde(rename = "min_tls_version", skip_serializing_if = "Option::is_none")]
     pub min_tls_version: Option<i32>,
@@ -73,21 +71,26 @@ pub struct PoolResponse {
     /// The hostname to [override the Host header](https://docs.fastly.com/en/guides/specifying-an-override-host). Defaults to `null` meaning no override of the Host header will occur. This setting can also be added to a Server definition. If the field is set on a Server definition it will override the Pool setting.
     #[serde(rename = "override_host", skip_serializing_if = "Option::is_none")]
     pub override_host: Option<String>,
-    /// Date and time in ISO 8601 format.
-    #[serde(rename = "created_at", skip_serializing_if = "Option::is_none")]
-    pub created_at: Option<String>,
-    /// Date and time in ISO 8601 format.
-    #[serde(rename = "deleted_at", skip_serializing_if = "Option::is_none")]
-    pub deleted_at: Option<String>,
-    /// Date and time in ISO 8601 format.
-    #[serde(rename = "updated_at", skip_serializing_if = "Option::is_none")]
-    pub updated_at: Option<String>,
-    #[serde(rename = "service_id", skip_serializing_if = "Option::is_none")]
-    pub service_id: Option<Box<String>>,
-    #[serde(rename = "version", skip_serializing_if = "Option::is_none")]
-    pub version: Option<Box<i32>>,
+    /// Maximum duration in milliseconds that Fastly will wait while receiving no data on a download from a backend. If exceeded, the response received so far will be considered complete and the fetch will end. May be set at runtime using `bereq.between_bytes_timeout`.
+    #[serde(rename = "between_bytes_timeout", skip_serializing_if = "Option::is_none")]
+    pub between_bytes_timeout: Option<String>,
+    /// How long to wait for a timeout in milliseconds.
+    #[serde(rename = "connect_timeout", skip_serializing_if = "Option::is_none")]
+    pub connect_timeout: Option<String>,
+    /// How long to wait for the first byte in milliseconds.
+    #[serde(rename = "first_byte_timeout", skip_serializing_if = "Option::is_none")]
+    pub first_byte_timeout: Option<String>,
+    /// Maximum number of connections.
+    #[serde(rename = "max_conn_default", skip_serializing_if = "Option::is_none")]
+    pub max_conn_default: Option<String>,
+    /// Be strict on checking TLS certs.
+    #[serde(rename = "tls_check_cert", skip_serializing_if = "Option::is_none")]
+    pub tls_check_cert: Option<String>,
     #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
     pub id: Option<Box<String>>,
+    /// Percentage of capacity (`0-100`) that needs to be operationally available for a pool to be considered up.
+    #[serde(rename = "quorum", skip_serializing_if = "Option::is_none")]
+    pub quorum: Option<String>,
 }
 
 impl PoolResponse {
@@ -98,28 +101,29 @@ impl PoolResponse {
             tls_client_key: None,
             tls_cert_hostname: None,
             use_tls: None,
+            created_at: None,
+            deleted_at: None,
+            updated_at: None,
+            service_id: None,
+            version: None,
             name: None,
             shield: None,
             request_condition: None,
-            max_conn_default: None,
-            connect_timeout: None,
-            first_byte_timeout: None,
-            quorum: None,
             tls_ciphers: None,
             tls_sni_hostname: None,
-            tls_check_cert: None,
             min_tls_version: None,
             max_tls_version: None,
             healthcheck: None,
             comment: None,
             _type: None,
             override_host: None,
-            created_at: None,
-            deleted_at: None,
-            updated_at: None,
-            service_id: None,
-            version: None,
+            between_bytes_timeout: None,
+            connect_timeout: None,
+            first_byte_timeout: None,
+            max_conn_default: None,
+            tls_check_cert: None,
             id: None,
+            quorum: None,
         }
     }
 }
@@ -128,14 +132,14 @@ impl PoolResponse {
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum UseTls {
     #[serde(rename = "0")]
-    UseTlsNoTls,
+    NoTls,
     #[serde(rename = "1")]
-    UseTlsUseTls,
+    UseTls,
 }
 
 impl Default for UseTls {
     fn default() -> UseTls {
-        Self::UseTlsNoTls
+        Self::NoTls
     }
 }
 /// What type of load balance group to use.

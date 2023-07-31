@@ -16,15 +16,15 @@ pub struct LoggingLogglyResponse {
     /// Where in the generated VCL the logging call should be placed. If not set, endpoints with `format_version` of 2 are placed in `vcl_log` and those with `format_version` of 1 are placed in `vcl_deliver`. 
     #[serde(rename = "placement", skip_serializing_if = "Option::is_none")]
     pub placement: Option<Placement>,
-    /// The version of the custom logging format used for the configured endpoint. The logging call gets placed by default in `vcl_log` if `format_version` is set to `2` and in `vcl_deliver` if `format_version` is set to `1`. 
-    #[serde(rename = "format_version", skip_serializing_if = "Option::is_none")]
-    pub format_version: Option<FormatVersion>,
     /// The name of an existing condition in the configured endpoint, or leave blank to always execute.
     #[serde(rename = "response_condition", skip_serializing_if = "Option::is_none")]
     pub response_condition: Option<String>,
     /// A Fastly [log format string](https://docs.fastly.com/en/guides/custom-log-formats).
     #[serde(rename = "format", skip_serializing_if = "Option::is_none")]
     pub format: Option<String>,
+    /// The version of the custom logging format used for the configured endpoint. The logging call gets placed by default in `vcl_log` if `format_version` is set to `2` and in `vcl_deliver` if `format_version` is set to `1`. 
+    #[serde(rename = "format_version", skip_serializing_if = "Option::is_none")]
+    pub format_version: Option<FormatVersion>,
     /// The token to use for authentication ([https://www.loggly.com/docs/customer-token-authentication-token/](https://www.loggly.com/docs/customer-token-authentication-token/)).
     #[serde(rename = "token", skip_serializing_if = "Option::is_none")]
     pub token: Option<String>,
@@ -40,7 +40,7 @@ pub struct LoggingLogglyResponse {
     #[serde(rename = "service_id", skip_serializing_if = "Option::is_none")]
     pub service_id: Option<Box<String>>,
     #[serde(rename = "version", skip_serializing_if = "Option::is_none")]
-    pub version: Option<Box<i32>>,
+    pub version: Option<Box<String>>,
 }
 
 impl LoggingLogglyResponse {
@@ -48,9 +48,9 @@ impl LoggingLogglyResponse {
         LoggingLogglyResponse {
             name: None,
             placement: None,
-            format_version: None,
             response_condition: None,
             format: None,
+            format_version: None,
             token: None,
             created_at: None,
             deleted_at: None,
@@ -81,14 +81,14 @@ impl Default for Placement {
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum FormatVersion {
     #[serde(rename = "1")]
-    FormatVersionV1,
+    V1,
     #[serde(rename = "2")]
-    FormatVersionV2,
+    V2,
 }
 
 impl Default for FormatVersion {
     fn default() -> FormatVersion {
-        Self::FormatVersionV1
+        Self::V1
     }
 }
 

@@ -16,9 +16,6 @@ pub struct LoggingCommon {
     /// Where in the generated VCL the logging call should be placed. If not set, endpoints with `format_version` of 2 are placed in `vcl_log` and those with `format_version` of 1 are placed in `vcl_deliver`. 
     #[serde(rename = "placement", skip_serializing_if = "Option::is_none")]
     pub placement: Option<Placement>,
-    /// The version of the custom logging format used for the configured endpoint. The logging call gets placed by default in `vcl_log` if `format_version` is set to `2` and in `vcl_deliver` if `format_version` is set to `1`. 
-    #[serde(rename = "format_version", skip_serializing_if = "Option::is_none")]
-    pub format_version: Option<FormatVersion>,
     /// The name of an existing condition in the configured endpoint, or leave blank to always execute.
     #[serde(rename = "response_condition", skip_serializing_if = "Option::is_none")]
     pub response_condition: Option<String>,
@@ -32,7 +29,6 @@ impl LoggingCommon {
         LoggingCommon {
             name: None,
             placement: None,
-            format_version: None,
             response_condition: None,
             format: None,
         }
@@ -53,20 +49,6 @@ pub enum Placement {
 impl Default for Placement {
     fn default() -> Placement {
         Self::None
-    }
-}
-/// The version of the custom logging format used for the configured endpoint. The logging call gets placed by default in `vcl_log` if `format_version` is set to `2` and in `vcl_deliver` if `format_version` is set to `1`. 
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
-pub enum FormatVersion {
-    #[serde(rename = "1")]
-    FormatVersionV1,
-    #[serde(rename = "2")]
-    FormatVersionV2,
-}
-
-impl Default for FormatVersion {
-    fn default() -> FormatVersion {
-        Self::FormatVersionV1
     }
 }
 

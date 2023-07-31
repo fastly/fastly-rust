@@ -10,46 +10,6 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct RequestSettingsResponse {
-    /// Allows you to terminate request handling and immediately perform an action.
-    #[serde(rename = "action", skip_serializing_if = "Option::is_none")]
-    pub action: Option<Action>,
-    /// Disable collapsed forwarding, so you don't wait for other objects to origin.
-    #[serde(rename = "bypass_busy_wait", skip_serializing_if = "Option::is_none")]
-    pub bypass_busy_wait: Option<i32>,
-    /// Sets the host header.
-    #[serde(rename = "default_host", skip_serializing_if = "Option::is_none")]
-    pub default_host: Option<String>,
-    /// Allows you to force a cache miss for the request. Replaces the item in the cache if the content is cacheable.
-    #[serde(rename = "force_miss", skip_serializing_if = "Option::is_none")]
-    pub force_miss: Option<i32>,
-    /// Forces the request use SSL (redirects a non-SSL to SSL).
-    #[serde(rename = "force_ssl", skip_serializing_if = "Option::is_none")]
-    pub force_ssl: Option<i32>,
-    /// Injects Fastly-Geo-Country, Fastly-Geo-City, and Fastly-Geo-Region into the request headers.
-    #[serde(rename = "geo_headers", skip_serializing_if = "Option::is_none")]
-    pub geo_headers: Option<i32>,
-    /// Comma separated list of varnish request object fields that should be in the hash key.
-    #[serde(rename = "hash_keys", skip_serializing_if = "Option::is_none")]
-    pub hash_keys: Option<String>,
-    /// How old an object is allowed to be to serve stale-if-error or stale-while-revalidate.
-    #[serde(rename = "max_stale_age", skip_serializing_if = "Option::is_none")]
-    pub max_stale_age: Option<i32>,
-    /// Name for the request settings.
-    #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
-    pub name: Option<String>,
-    /// Condition which, if met, will select this configuration during a request. Optional.
-    #[serde(rename = "request_condition", skip_serializing_if = "Option::is_none")]
-    pub request_condition: Option<String>,
-    /// Injects the X-Timer info into the request for viewing origin fetch durations.
-    #[serde(rename = "timer_support", skip_serializing_if = "Option::is_none")]
-    pub timer_support: Option<i32>,
-    /// Short for X-Forwarded-For.
-    #[serde(rename = "xff", skip_serializing_if = "Option::is_none")]
-    pub xff: Option<Xff>,
-    #[serde(rename = "service_id", skip_serializing_if = "Option::is_none")]
-    pub service_id: Option<Box<String>>,
-    #[serde(rename = "version", skip_serializing_if = "Option::is_none")]
-    pub version: Option<Box<i32>>,
     /// Date and time in ISO 8601 format.
     #[serde(rename = "created_at", skip_serializing_if = "Option::is_none")]
     pub created_at: Option<String>,
@@ -59,28 +19,68 @@ pub struct RequestSettingsResponse {
     /// Date and time in ISO 8601 format.
     #[serde(rename = "updated_at", skip_serializing_if = "Option::is_none")]
     pub updated_at: Option<String>,
+    #[serde(rename = "service_id", skip_serializing_if = "Option::is_none")]
+    pub service_id: Option<Box<String>>,
+    #[serde(rename = "version", skip_serializing_if = "Option::is_none")]
+    pub version: Option<Box<String>>,
+    /// Allows you to terminate request handling and immediately perform an action.
+    #[serde(rename = "action", skip_serializing_if = "Option::is_none")]
+    pub action: Option<Action>,
+    /// Sets the host header.
+    #[serde(rename = "default_host", skip_serializing_if = "Option::is_none")]
+    pub default_host: Option<String>,
+    /// Comma separated list of varnish request object fields that should be in the hash key.
+    #[serde(rename = "hash_keys", skip_serializing_if = "Option::is_none")]
+    pub hash_keys: Option<String>,
+    /// Name for the request settings.
+    #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
+    pub name: Option<String>,
+    /// Condition which, if met, will select this configuration during a request. Optional.
+    #[serde(rename = "request_condition", skip_serializing_if = "Option::is_none")]
+    pub request_condition: Option<String>,
+    /// Short for X-Forwarded-For.
+    #[serde(rename = "xff", skip_serializing_if = "Option::is_none")]
+    pub xff: Option<Xff>,
+    /// Disable collapsed forwarding, so you don't wait for other objects to origin.
+    #[serde(rename = "bypass_busy_wait", skip_serializing_if = "Option::is_none")]
+    pub bypass_busy_wait: Option<String>,
+    /// Allows you to force a cache miss for the request. Replaces the item in the cache if the content is cacheable.
+    #[serde(rename = "force_miss", skip_serializing_if = "Option::is_none")]
+    pub force_miss: Option<String>,
+    /// Forces the request use SSL (redirects a non-SSL to SSL).
+    #[serde(rename = "force_ssl", skip_serializing_if = "Option::is_none")]
+    pub force_ssl: Option<String>,
+    /// Injects Fastly-Geo-Country, Fastly-Geo-City, and Fastly-Geo-Region into the request headers.
+    #[serde(rename = "geo_headers", skip_serializing_if = "Option::is_none")]
+    pub geo_headers: Option<String>,
+    /// How old an object is allowed to be to serve stale-if-error or stale-while-revalidate.
+    #[serde(rename = "max_stale_age", skip_serializing_if = "Option::is_none")]
+    pub max_stale_age: Option<String>,
+    /// Injects the X-Timer info into the request for viewing origin fetch durations.
+    #[serde(rename = "timer_support", skip_serializing_if = "Option::is_none")]
+    pub timer_support: Option<String>,
 }
 
 impl RequestSettingsResponse {
     pub fn new() -> RequestSettingsResponse {
         RequestSettingsResponse {
-            action: None,
-            bypass_busy_wait: None,
-            default_host: None,
-            force_miss: None,
-            force_ssl: None,
-            geo_headers: None,
-            hash_keys: None,
-            max_stale_age: None,
-            name: None,
-            request_condition: None,
-            timer_support: None,
-            xff: None,
-            service_id: None,
-            version: None,
             created_at: None,
             deleted_at: None,
             updated_at: None,
+            service_id: None,
+            version: None,
+            action: None,
+            default_host: None,
+            hash_keys: None,
+            name: None,
+            request_condition: None,
+            xff: None,
+            bypass_busy_wait: None,
+            force_miss: None,
+            force_ssl: None,
+            geo_headers: None,
+            max_stale_age: None,
+            timer_support: None,
         }
     }
 }

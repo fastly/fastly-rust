@@ -21,10 +21,10 @@ pub struct CacheSetting {
     pub name: Option<String>,
     /// Maximum time in seconds to continue to use a stale version of the object if future requests to your backend server fail (also known as 'stale if error').
     #[serde(rename = "stale_ttl", skip_serializing_if = "Option::is_none")]
-    pub stale_ttl: Option<i32>,
+    pub stale_ttl: Option<String>,
     /// Maximum time to consider the object fresh in the cache (the cache 'time to live').
     #[serde(rename = "ttl", skip_serializing_if = "Option::is_none")]
-    pub ttl: Option<i32>,
+    pub ttl: Option<String>,
 }
 
 impl CacheSetting {

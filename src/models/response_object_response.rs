@@ -24,7 +24,7 @@ pub struct ResponseObjectResponse {
     pub name: Option<String>,
     /// The HTTP status code.
     #[serde(rename = "status", skip_serializing_if = "Option::is_none")]
-    pub status: Option<i32>,
+    pub status: Option<String>,
     /// The HTTP response.
     #[serde(rename = "response", skip_serializing_if = "Option::is_none")]
     pub response: Option<String>,
@@ -34,7 +34,7 @@ pub struct ResponseObjectResponse {
     #[serde(rename = "service_id", skip_serializing_if = "Option::is_none")]
     pub service_id: Option<Box<String>>,
     #[serde(rename = "version", skip_serializing_if = "Option::is_none")]
-    pub version: Option<Box<i32>>,
+    pub version: Option<Box<String>>,
     /// Date and time in ISO 8601 format.
     #[serde(rename = "created_at", skip_serializing_if = "Option::is_none")]
     pub created_at: Option<String>,

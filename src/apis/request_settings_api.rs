@@ -62,28 +62,28 @@ pub struct UpdateRequestSettingsParams {
     pub request_settings_name: String,
     /// Allows you to terminate request handling and immediately perform an action.
     pub action: Option<String>,
-    /// Disable collapsed forwarding, so you don't wait for other objects to origin.
-    pub bypass_busy_wait: Option<i32>,
     /// Sets the host header.
     pub default_host: Option<String>,
+    /// Comma separated list of varnish request object fields that should be in the hash key.
+    pub hash_keys: Option<String>,
+    /// Name for the request settings.
+    pub name: Option<String>,
+    /// Condition which, if met, will select this configuration during a request. Optional.
+    pub request_condition: Option<String>,
+    /// Short for X-Forwarded-For.
+    pub xff: Option<String>,
+    /// Disable collapsed forwarding, so you don't wait for other objects to origin.
+    pub bypass_busy_wait: Option<i32>,
     /// Allows you to force a cache miss for the request. Replaces the item in the cache if the content is cacheable.
     pub force_miss: Option<i32>,
     /// Forces the request use SSL (redirects a non-SSL to SSL).
     pub force_ssl: Option<i32>,
     /// Injects Fastly-Geo-Country, Fastly-Geo-City, and Fastly-Geo-Region into the request headers.
     pub geo_headers: Option<i32>,
-    /// Comma separated list of varnish request object fields that should be in the hash key.
-    pub hash_keys: Option<String>,
     /// How old an object is allowed to be to serve stale-if-error or stale-while-revalidate.
     pub max_stale_age: Option<i32>,
-    /// Name for the request settings.
-    pub name: Option<String>,
-    /// Condition which, if met, will select this configuration during a request. Optional.
-    pub request_condition: Option<String>,
     /// Injects the X-Timer info into the request for viewing origin fetch durations.
-    pub timer_support: Option<i32>,
-    /// Short for X-Forwarded-For.
-    pub xff: Option<String>
+    pub timer_support: Option<i32>
 }
 
 
@@ -346,17 +346,17 @@ pub async fn update_request_settings(configuration: &mut configuration::Configur
     let version_id = params.version_id;
     let request_settings_name = params.request_settings_name;
     let action = params.action;
-    let bypass_busy_wait = params.bypass_busy_wait;
     let default_host = params.default_host;
+    let hash_keys = params.hash_keys;
+    let name = params.name;
+    let request_condition = params.request_condition;
+    let xff = params.xff;
+    let bypass_busy_wait = params.bypass_busy_wait;
     let force_miss = params.force_miss;
     let force_ssl = params.force_ssl;
     let geo_headers = params.geo_headers;
-    let hash_keys = params.hash_keys;
     let max_stale_age = params.max_stale_age;
-    let name = params.name;
-    let request_condition = params.request_condition;
     let timer_support = params.timer_support;
-    let xff = params.xff;
 
 
     let local_var_client = &local_var_configuration.client;
@@ -379,11 +379,23 @@ pub async fn update_request_settings(configuration: &mut configuration::Configur
     if let Some(local_var_param_value) = action {
         local_var_form_params.insert("action", local_var_param_value.to_string());
     }
-    if let Some(local_var_param_value) = bypass_busy_wait {
-        local_var_form_params.insert("bypass_busy_wait", local_var_param_value.to_string());
-    }
     if let Some(local_var_param_value) = default_host {
         local_var_form_params.insert("default_host", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = hash_keys {
+        local_var_form_params.insert("hash_keys", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = name {
+        local_var_form_params.insert("name", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = request_condition {
+        local_var_form_params.insert("request_condition", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = xff {
+        local_var_form_params.insert("xff", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = bypass_busy_wait {
+        local_var_form_params.insert("bypass_busy_wait", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = force_miss {
         local_var_form_params.insert("force_miss", local_var_param_value.to_string());
@@ -394,23 +406,11 @@ pub async fn update_request_settings(configuration: &mut configuration::Configur
     if let Some(local_var_param_value) = geo_headers {
         local_var_form_params.insert("geo_headers", local_var_param_value.to_string());
     }
-    if let Some(local_var_param_value) = hash_keys {
-        local_var_form_params.insert("hash_keys", local_var_param_value.to_string());
-    }
     if let Some(local_var_param_value) = max_stale_age {
         local_var_form_params.insert("max_stale_age", local_var_param_value.to_string());
     }
-    if let Some(local_var_param_value) = name {
-        local_var_form_params.insert("name", local_var_param_value.to_string());
-    }
-    if let Some(local_var_param_value) = request_condition {
-        local_var_form_params.insert("request_condition", local_var_param_value.to_string());
-    }
     if let Some(local_var_param_value) = timer_support {
         local_var_form_params.insert("timer_support", local_var_param_value.to_string());
-    }
-    if let Some(local_var_param_value) = xff {
-        local_var_form_params.insert("xff", local_var_param_value.to_string());
     }
     local_var_req_builder = local_var_req_builder.form(&local_var_form_params);
 

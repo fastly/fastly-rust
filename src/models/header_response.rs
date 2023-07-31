@@ -19,15 +19,9 @@ pub struct HeaderResponse {
     /// Header to set.
     #[serde(rename = "dst", skip_serializing_if = "Option::is_none")]
     pub dst: Option<String>,
-    /// Don't add the header if it is added already. Only applies to 'set' action.
-    #[serde(rename = "ignore_if_set", skip_serializing_if = "Option::is_none")]
-    pub ignore_if_set: Option<i32>,
     /// A handle to refer to this Header object.
     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
-    /// Priority determines execution order. Lower numbers execute first.
-    #[serde(rename = "priority", skip_serializing_if = "Option::is_none")]
-    pub priority: Option<i32>,
     /// Regular expression to use. Only applies to `regex` and `regex_repeat` actions.
     #[serde(rename = "regex", skip_serializing_if = "Option::is_none")]
     pub regex: Option<String>,
@@ -46,10 +40,16 @@ pub struct HeaderResponse {
     /// Accepts a string value.
     #[serde(rename = "type", skip_serializing_if = "Option::is_none")]
     pub _type: Option<Type>,
+    /// Don't add the header if it is added already. Only applies to 'set' action. Numerical value (\"0\" = false, \"1\" = true)
+    #[serde(rename = "ignore_if_set", skip_serializing_if = "Option::is_none")]
+    pub ignore_if_set: Option<String>,
+    /// Priority determines execution order. Lower numbers execute first.
+    #[serde(rename = "priority", skip_serializing_if = "Option::is_none")]
+    pub priority: Option<String>,
     #[serde(rename = "service_id", skip_serializing_if = "Option::is_none")]
     pub service_id: Option<Box<String>>,
     #[serde(rename = "version", skip_serializing_if = "Option::is_none")]
-    pub version: Option<Box<i32>>,
+    pub version: Option<Box<String>>,
     /// Date and time in ISO 8601 format.
     #[serde(rename = "created_at", skip_serializing_if = "Option::is_none")]
     pub created_at: Option<String>,
@@ -67,15 +67,15 @@ impl HeaderResponse {
             action: None,
             cache_condition: None,
             dst: None,
-            ignore_if_set: None,
             name: None,
-            priority: None,
             regex: None,
             request_condition: None,
             response_condition: None,
             src: None,
             substitution: None,
             _type: None,
+            ignore_if_set: None,
+            priority: None,
             service_id: None,
             version: None,
             created_at: None,

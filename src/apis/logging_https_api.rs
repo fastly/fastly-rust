@@ -22,12 +22,12 @@ pub struct CreateLogHttpsParams {
     pub name: Option<String>,
     /// Where in the generated VCL the logging call should be placed. If not set, endpoints with `format_version` of 2 are placed in `vcl_log` and those with `format_version` of 1 are placed in `vcl_deliver`. 
     pub placement: Option<String>,
-    /// The version of the custom logging format used for the configured endpoint. The logging call gets placed by default in `vcl_log` if `format_version` is set to `2` and in `vcl_deliver` if `format_version` is set to `1`. 
-    pub format_version: Option<i32>,
     /// The name of an existing condition in the configured endpoint, or leave blank to always execute.
     pub response_condition: Option<String>,
     /// A Fastly [log format string](https://docs.fastly.com/en/guides/custom-log-formats).
     pub format: Option<String>,
+    /// The version of the custom logging format used for the configured endpoint. The logging call gets placed by default in `vcl_log` if `format_version` is set to `2` and in `vcl_deliver` if `format_version` is set to `1`. 
+    pub format_version: Option<i32>,
     /// A secure certificate to authenticate a server with. Must be in PEM format.
     pub tls_ca_cert: Option<String>,
     /// The client certificate used to make authenticated requests. Must be in PEM format.
@@ -99,12 +99,12 @@ pub struct UpdateLogHttpsParams {
     pub name: Option<String>,
     /// Where in the generated VCL the logging call should be placed. If not set, endpoints with `format_version` of 2 are placed in `vcl_log` and those with `format_version` of 1 are placed in `vcl_deliver`. 
     pub placement: Option<String>,
-    /// The version of the custom logging format used for the configured endpoint. The logging call gets placed by default in `vcl_log` if `format_version` is set to `2` and in `vcl_deliver` if `format_version` is set to `1`. 
-    pub format_version: Option<i32>,
     /// The name of an existing condition in the configured endpoint, or leave blank to always execute.
     pub response_condition: Option<String>,
     /// A Fastly [log format string](https://docs.fastly.com/en/guides/custom-log-formats).
     pub format: Option<String>,
+    /// The version of the custom logging format used for the configured endpoint. The logging call gets placed by default in `vcl_log` if `format_version` is set to `2` and in `vcl_deliver` if `format_version` is set to `1`. 
+    pub format_version: Option<i32>,
     /// A secure certificate to authenticate a server with. Must be in PEM format.
     pub tls_ca_cert: Option<String>,
     /// The client certificate used to make authenticated requests. Must be in PEM format.
@@ -178,9 +178,9 @@ pub async fn create_log_https(configuration: &mut configuration::Configuration, 
     let version_id = params.version_id;
     let name = params.name;
     let placement = params.placement;
-    let format_version = params.format_version;
     let response_condition = params.response_condition;
     let format = params.format;
+    let format_version = params.format_version;
     let tls_ca_cert = params.tls_ca_cert;
     let tls_client_cert = params.tls_client_cert;
     let tls_client_key = params.tls_client_key;
@@ -219,14 +219,14 @@ pub async fn create_log_https(configuration: &mut configuration::Configuration, 
     if let Some(local_var_param_value) = placement {
         local_var_form_params.insert("placement", local_var_param_value.to_string());
     }
-    if let Some(local_var_param_value) = format_version {
-        local_var_form_params.insert("format_version", local_var_param_value.to_string());
-    }
     if let Some(local_var_param_value) = response_condition {
         local_var_form_params.insert("response_condition", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = format {
         local_var_form_params.insert("format", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = format_version {
+        local_var_form_params.insert("format_version", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = tls_ca_cert {
         local_var_form_params.insert("tls_ca_cert", local_var_param_value.to_string());
@@ -467,9 +467,9 @@ pub async fn update_log_https(configuration: &mut configuration::Configuration, 
     let logging_https_name = params.logging_https_name;
     let name = params.name;
     let placement = params.placement;
-    let format_version = params.format_version;
     let response_condition = params.response_condition;
     let format = params.format;
+    let format_version = params.format_version;
     let tls_ca_cert = params.tls_ca_cert;
     let tls_client_cert = params.tls_client_cert;
     let tls_client_key = params.tls_client_key;
@@ -508,14 +508,14 @@ pub async fn update_log_https(configuration: &mut configuration::Configuration, 
     if let Some(local_var_param_value) = placement {
         local_var_form_params.insert("placement", local_var_param_value.to_string());
     }
-    if let Some(local_var_param_value) = format_version {
-        local_var_form_params.insert("format_version", local_var_param_value.to_string());
-    }
     if let Some(local_var_param_value) = response_condition {
         local_var_form_params.insert("response_condition", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = format {
         local_var_form_params.insert("format", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = format_version {
+        local_var_form_params.insert("format_version", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = tls_ca_cert {
         local_var_form_params.insert("tls_ca_cert", local_var_param_value.to_string());

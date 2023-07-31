@@ -22,22 +22,22 @@ pub struct CreateLogCloudfilesParams {
     pub name: Option<String>,
     /// Where in the generated VCL the logging call should be placed. If not set, endpoints with `format_version` of 2 are placed in `vcl_log` and those with `format_version` of 1 are placed in `vcl_deliver`. 
     pub placement: Option<String>,
-    /// The version of the custom logging format used for the configured endpoint. The logging call gets placed by default in `vcl_log` if `format_version` is set to `2` and in `vcl_deliver` if `format_version` is set to `1`. 
-    pub format_version: Option<i32>,
     /// The name of an existing condition in the configured endpoint, or leave blank to always execute.
     pub response_condition: Option<String>,
     /// A Fastly [log format string](https://docs.fastly.com/en/guides/custom-log-formats).
     pub format: Option<String>,
+    /// The version of the custom logging format used for the configured endpoint. The logging call gets placed by default in `vcl_log` if `format_version` is set to `2` and in `vcl_deliver` if `format_version` is set to `1`. 
+    pub format_version: Option<i32>,
     /// How the message should be formatted.
     pub message_type: Option<String>,
     /// A timestamp format
     pub timestamp_format: Option<String>,
+    /// The codec used for compressing your logs. Valid values are `zstd`, `snappy`, and `gzip`. Specifying both `compression_codec` and `gzip_level` in the same API request will result in an error.
+    pub compression_codec: Option<String>,
     /// How frequently log files are finalized so they can be available for reading (in seconds).
     pub period: Option<i32>,
     /// The level of gzip encoding when sending logs (default `0`, no compression). Specifying both `compression_codec` and `gzip_level` in the same API request will result in an error.
     pub gzip_level: Option<i32>,
-    /// The codec used for compressing your logs. Valid values are `zstd`, `snappy`, and `gzip`. Specifying both `compression_codec` and `gzip_level` in the same API request will result in an error.
-    pub compression_codec: Option<String>,
     /// Your Cloud Files account access key.
     pub access_key: Option<String>,
     /// The name of your Cloud Files container.
@@ -96,22 +96,22 @@ pub struct UpdateLogCloudfilesParams {
     pub name: Option<String>,
     /// Where in the generated VCL the logging call should be placed. If not set, endpoints with `format_version` of 2 are placed in `vcl_log` and those with `format_version` of 1 are placed in `vcl_deliver`. 
     pub placement: Option<String>,
-    /// The version of the custom logging format used for the configured endpoint. The logging call gets placed by default in `vcl_log` if `format_version` is set to `2` and in `vcl_deliver` if `format_version` is set to `1`. 
-    pub format_version: Option<i32>,
     /// The name of an existing condition in the configured endpoint, or leave blank to always execute.
     pub response_condition: Option<String>,
     /// A Fastly [log format string](https://docs.fastly.com/en/guides/custom-log-formats).
     pub format: Option<String>,
+    /// The version of the custom logging format used for the configured endpoint. The logging call gets placed by default in `vcl_log` if `format_version` is set to `2` and in `vcl_deliver` if `format_version` is set to `1`. 
+    pub format_version: Option<i32>,
     /// How the message should be formatted.
     pub message_type: Option<String>,
     /// A timestamp format
     pub timestamp_format: Option<String>,
+    /// The codec used for compressing your logs. Valid values are `zstd`, `snappy`, and `gzip`. Specifying both `compression_codec` and `gzip_level` in the same API request will result in an error.
+    pub compression_codec: Option<String>,
     /// How frequently log files are finalized so they can be available for reading (in seconds).
     pub period: Option<i32>,
     /// The level of gzip encoding when sending logs (default `0`, no compression). Specifying both `compression_codec` and `gzip_level` in the same API request will result in an error.
     pub gzip_level: Option<i32>,
-    /// The codec used for compressing your logs. Valid values are `zstd`, `snappy`, and `gzip`. Specifying both `compression_codec` and `gzip_level` in the same API request will result in an error.
-    pub compression_codec: Option<String>,
     /// Your Cloud Files account access key.
     pub access_key: Option<String>,
     /// The name of your Cloud Files container.
@@ -172,14 +172,14 @@ pub async fn create_log_cloudfiles(configuration: &mut configuration::Configurat
     let version_id = params.version_id;
     let name = params.name;
     let placement = params.placement;
-    let format_version = params.format_version;
     let response_condition = params.response_condition;
     let format = params.format;
+    let format_version = params.format_version;
     let message_type = params.message_type;
     let timestamp_format = params.timestamp_format;
+    let compression_codec = params.compression_codec;
     let period = params.period;
     let gzip_level = params.gzip_level;
-    let compression_codec = params.compression_codec;
     let access_key = params.access_key;
     let bucket_name = params.bucket_name;
     let path = params.path;
@@ -211,14 +211,14 @@ pub async fn create_log_cloudfiles(configuration: &mut configuration::Configurat
     if let Some(local_var_param_value) = placement {
         local_var_form_params.insert("placement", local_var_param_value.to_string());
     }
-    if let Some(local_var_param_value) = format_version {
-        local_var_form_params.insert("format_version", local_var_param_value.to_string());
-    }
     if let Some(local_var_param_value) = response_condition {
         local_var_form_params.insert("response_condition", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = format {
         local_var_form_params.insert("format", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = format_version {
+        local_var_form_params.insert("format_version", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = message_type {
         local_var_form_params.insert("message_type", local_var_param_value.to_string());
@@ -226,14 +226,14 @@ pub async fn create_log_cloudfiles(configuration: &mut configuration::Configurat
     if let Some(local_var_param_value) = timestamp_format {
         local_var_form_params.insert("timestamp_format", local_var_param_value.to_string());
     }
+    if let Some(local_var_param_value) = compression_codec {
+        local_var_form_params.insert("compression_codec", local_var_param_value.to_string());
+    }
     if let Some(local_var_param_value) = period {
         local_var_form_params.insert("period", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = gzip_level {
         local_var_form_params.insert("gzip_level", local_var_param_value.to_string());
-    }
-    if let Some(local_var_param_value) = compression_codec {
-        local_var_form_params.insert("compression_codec", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = access_key {
         local_var_form_params.insert("access_key", local_var_param_value.to_string());
@@ -453,14 +453,14 @@ pub async fn update_log_cloudfiles(configuration: &mut configuration::Configurat
     let logging_cloudfiles_name = params.logging_cloudfiles_name;
     let name = params.name;
     let placement = params.placement;
-    let format_version = params.format_version;
     let response_condition = params.response_condition;
     let format = params.format;
+    let format_version = params.format_version;
     let message_type = params.message_type;
     let timestamp_format = params.timestamp_format;
+    let compression_codec = params.compression_codec;
     let period = params.period;
     let gzip_level = params.gzip_level;
-    let compression_codec = params.compression_codec;
     let access_key = params.access_key;
     let bucket_name = params.bucket_name;
     let path = params.path;
@@ -492,14 +492,14 @@ pub async fn update_log_cloudfiles(configuration: &mut configuration::Configurat
     if let Some(local_var_param_value) = placement {
         local_var_form_params.insert("placement", local_var_param_value.to_string());
     }
-    if let Some(local_var_param_value) = format_version {
-        local_var_form_params.insert("format_version", local_var_param_value.to_string());
-    }
     if let Some(local_var_param_value) = response_condition {
         local_var_form_params.insert("response_condition", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = format {
         local_var_form_params.insert("format", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = format_version {
+        local_var_form_params.insert("format_version", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = message_type {
         local_var_form_params.insert("message_type", local_var_param_value.to_string());
@@ -507,14 +507,14 @@ pub async fn update_log_cloudfiles(configuration: &mut configuration::Configurat
     if let Some(local_var_param_value) = timestamp_format {
         local_var_form_params.insert("timestamp_format", local_var_param_value.to_string());
     }
+    if let Some(local_var_param_value) = compression_codec {
+        local_var_form_params.insert("compression_codec", local_var_param_value.to_string());
+    }
     if let Some(local_var_param_value) = period {
         local_var_form_params.insert("period", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = gzip_level {
         local_var_form_params.insert("gzip_level", local_var_param_value.to_string());
-    }
-    if let Some(local_var_param_value) = compression_codec {
-        local_var_form_params.insert("compression_codec", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = access_key {
         local_var_form_params.insert("access_key", local_var_param_value.to_string());

@@ -21,7 +21,6 @@ pub struct CreateLogKinesisParams {
     /// The name for the real-time logging configuration.
     pub name: Option<String>,
     pub placement: Option<crate::models::LoggingPlacement>,
-    pub format_version: Option<crate::models::LoggingFormatVersion>,
     /// A Fastly [log format string](https://docs.fastly.com/en/guides/custom-log-formats). Must produce valid JSON that Kinesis can ingest.
     pub format: Option<String>,
     /// The Amazon Kinesis stream to send logs to. Required.
@@ -32,7 +31,9 @@ pub struct CreateLogKinesisParams {
     /// The access key associated with the target Amazon Kinesis stream. Not required if `iam_role` is specified.
     pub access_key: Option<String>,
     /// The ARN for an IAM role granting Fastly access to the target Amazon Kinesis stream. Not required if `access_key` and `secret_key` are provided.
-    pub iam_role: Option<String>
+    pub iam_role: Option<String>,
+    /// The version of the custom logging format used for the configured endpoint. The logging call gets placed by default in `vcl_log` if `format_version` is set to `2` and in `vcl_deliver` if `format_version` is set to `1`. 
+    pub format_version: Option<i32>
 }
 
 /// struct for passing parameters to the method [`delete_log_kinesis`]
@@ -123,13 +124,13 @@ pub async fn create_log_kinesis(configuration: &mut configuration::Configuration
     let version_id = params.version_id;
     let name = params.name;
     let placement = params.placement;
-    let format_version = params.format_version;
     let format = params.format;
     let topic = params.topic;
     let region = params.region;
     let secret_key = params.secret_key;
     let access_key = params.access_key;
     let iam_role = params.iam_role;
+    let format_version = params.format_version;
 
 
     let local_var_client = &local_var_configuration.client;
@@ -155,9 +156,6 @@ pub async fn create_log_kinesis(configuration: &mut configuration::Configuration
     if let Some(local_var_param_value) = placement {
         local_var_form_params.insert("placement", local_var_param_value.to_string());
     }
-    if let Some(local_var_param_value) = format_version {
-        local_var_form_params.insert("format_version", local_var_param_value.to_string());
-    }
     if let Some(local_var_param_value) = format {
         local_var_form_params.insert("format", local_var_param_value.to_string());
     }
@@ -175,6 +173,9 @@ pub async fn create_log_kinesis(configuration: &mut configuration::Configuration
     }
     if let Some(local_var_param_value) = iam_role {
         local_var_form_params.insert("iam_role", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = format_version {
+        local_var_form_params.insert("format_version", local_var_param_value.to_string());
     }
     local_var_req_builder = local_var_req_builder.form(&local_var_form_params);
 

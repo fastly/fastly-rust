@@ -10,14 +10,15 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct PoolResponseAllOf {
-    #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
-    pub id: Option<Box<String>>,
+    /// Percentage of capacity (`0-100`) that needs to be operationally available for a pool to be considered up.
+    #[serde(rename = "quorum", skip_serializing_if = "Option::is_none")]
+    pub quorum: Option<String>,
 }
 
 impl PoolResponseAllOf {
     pub fn new() -> PoolResponseAllOf {
         PoolResponseAllOf {
-            id: None,
+            quorum: None,
         }
     }
 }

@@ -24,12 +24,8 @@ pub struct CreateHeaderObjectParams {
     pub cache_condition: Option<String>,
     /// Header to set.
     pub dst: Option<String>,
-    /// Don't add the header if it is added already. Only applies to 'set' action.
-    pub ignore_if_set: Option<i32>,
     /// A handle to refer to this Header object.
     pub name: Option<String>,
-    /// Priority determines execution order. Lower numbers execute first.
-    pub priority: Option<i32>,
     /// Regular expression to use. Only applies to `regex` and `regex_repeat` actions.
     pub regex: Option<String>,
     /// Condition which, if met, will select this configuration during a request. Optional.
@@ -41,7 +37,11 @@ pub struct CreateHeaderObjectParams {
     /// Value to substitute in place of regular expression. Only applies to `regex` and `regex_repeat` actions.
     pub substitution: Option<String>,
     /// Accepts a string value.
-    pub _type: Option<String>
+    pub _type: Option<String>,
+    /// Don't add the header if it is added already. Only applies to 'set' action.
+    pub ignore_if_set: Option<i32>,
+    /// Priority determines execution order. Lower numbers execute first.
+    pub priority: Option<i32>
 }
 
 /// struct for passing parameters to the method [`delete_header_object`]
@@ -90,12 +90,8 @@ pub struct UpdateHeaderObjectParams {
     pub cache_condition: Option<String>,
     /// Header to set.
     pub dst: Option<String>,
-    /// Don't add the header if it is added already. Only applies to 'set' action.
-    pub ignore_if_set: Option<i32>,
     /// A handle to refer to this Header object.
     pub name: Option<String>,
-    /// Priority determines execution order. Lower numbers execute first.
-    pub priority: Option<i32>,
     /// Regular expression to use. Only applies to `regex` and `regex_repeat` actions.
     pub regex: Option<String>,
     /// Condition which, if met, will select this configuration during a request. Optional.
@@ -107,7 +103,11 @@ pub struct UpdateHeaderObjectParams {
     /// Value to substitute in place of regular expression. Only applies to `regex` and `regex_repeat` actions.
     pub substitution: Option<String>,
     /// Accepts a string value.
-    pub _type: Option<String>
+    pub _type: Option<String>,
+    /// Don't add the header if it is added already. Only applies to 'set' action.
+    pub ignore_if_set: Option<i32>,
+    /// Priority determines execution order. Lower numbers execute first.
+    pub priority: Option<i32>
 }
 
 
@@ -157,15 +157,15 @@ pub async fn create_header_object(configuration: &mut configuration::Configurati
     let action = params.action;
     let cache_condition = params.cache_condition;
     let dst = params.dst;
-    let ignore_if_set = params.ignore_if_set;
     let name = params.name;
-    let priority = params.priority;
     let regex = params.regex;
     let request_condition = params.request_condition;
     let response_condition = params.response_condition;
     let src = params.src;
     let substitution = params.substitution;
     let _type = params._type;
+    let ignore_if_set = params.ignore_if_set;
+    let priority = params.priority;
 
 
     let local_var_client = &local_var_configuration.client;
@@ -194,14 +194,8 @@ pub async fn create_header_object(configuration: &mut configuration::Configurati
     if let Some(local_var_param_value) = dst {
         local_var_form_params.insert("dst", local_var_param_value.to_string());
     }
-    if let Some(local_var_param_value) = ignore_if_set {
-        local_var_form_params.insert("ignore_if_set", local_var_param_value.to_string());
-    }
     if let Some(local_var_param_value) = name {
         local_var_form_params.insert("name", local_var_param_value.to_string());
-    }
-    if let Some(local_var_param_value) = priority {
-        local_var_form_params.insert("priority", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = regex {
         local_var_form_params.insert("regex", local_var_param_value.to_string());
@@ -220,6 +214,12 @@ pub async fn create_header_object(configuration: &mut configuration::Configurati
     }
     if let Some(local_var_param_value) = _type {
         local_var_form_params.insert("type", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = ignore_if_set {
+        local_var_form_params.insert("ignore_if_set", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = priority {
+        local_var_form_params.insert("priority", local_var_param_value.to_string());
     }
     local_var_req_builder = local_var_req_builder.form(&local_var_form_params);
 
@@ -422,15 +422,15 @@ pub async fn update_header_object(configuration: &mut configuration::Configurati
     let action = params.action;
     let cache_condition = params.cache_condition;
     let dst = params.dst;
-    let ignore_if_set = params.ignore_if_set;
     let name = params.name;
-    let priority = params.priority;
     let regex = params.regex;
     let request_condition = params.request_condition;
     let response_condition = params.response_condition;
     let src = params.src;
     let substitution = params.substitution;
     let _type = params._type;
+    let ignore_if_set = params.ignore_if_set;
+    let priority = params.priority;
 
 
     let local_var_client = &local_var_configuration.client;
@@ -459,14 +459,8 @@ pub async fn update_header_object(configuration: &mut configuration::Configurati
     if let Some(local_var_param_value) = dst {
         local_var_form_params.insert("dst", local_var_param_value.to_string());
     }
-    if let Some(local_var_param_value) = ignore_if_set {
-        local_var_form_params.insert("ignore_if_set", local_var_param_value.to_string());
-    }
     if let Some(local_var_param_value) = name {
         local_var_form_params.insert("name", local_var_param_value.to_string());
-    }
-    if let Some(local_var_param_value) = priority {
-        local_var_form_params.insert("priority", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = regex {
         local_var_form_params.insert("regex", local_var_param_value.to_string());
@@ -485,6 +479,12 @@ pub async fn update_header_object(configuration: &mut configuration::Configurati
     }
     if let Some(local_var_param_value) = _type {
         local_var_form_params.insert("type", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = ignore_if_set {
+        local_var_form_params.insert("ignore_if_set", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = priority {
+        local_var_form_params.insert("priority", local_var_param_value.to_string());
     }
     local_var_req_builder = local_var_req_builder.form(&local_var_form_params);
 

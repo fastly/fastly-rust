@@ -126,7 +126,7 @@ pub enum UpdateDomainError {
 
 
 /// Checks the status of a specific domain's DNS record for a Service Version. Returns an array in the same format as domain/check_all.
-pub async fn check_domain(configuration: &mut configuration::Configuration, params: CheckDomainParams) -> Result<Vec<crate::models::DomainCheckItem>, Error<CheckDomainError>> {
+pub async fn check_domain(configuration: &mut configuration::Configuration, params: CheckDomainParams) -> Result<Vec<serde_json::Value>, Error<CheckDomainError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters

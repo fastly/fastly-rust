@@ -19,15 +19,9 @@ pub struct Header {
     /// Header to set.
     #[serde(rename = "dst", skip_serializing_if = "Option::is_none")]
     pub dst: Option<String>,
-    /// Don't add the header if it is added already. Only applies to 'set' action.
-    #[serde(rename = "ignore_if_set", skip_serializing_if = "Option::is_none")]
-    pub ignore_if_set: Option<i32>,
     /// A handle to refer to this Header object.
     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
-    /// Priority determines execution order. Lower numbers execute first.
-    #[serde(rename = "priority", skip_serializing_if = "Option::is_none")]
-    pub priority: Option<i32>,
     /// Regular expression to use. Only applies to `regex` and `regex_repeat` actions.
     #[serde(rename = "regex", skip_serializing_if = "Option::is_none")]
     pub regex: Option<String>,
@@ -54,9 +48,7 @@ impl Header {
             action: None,
             cache_condition: None,
             dst: None,
-            ignore_if_set: None,
             name: None,
-            priority: None,
             regex: None,
             request_condition: None,
             response_condition: None,

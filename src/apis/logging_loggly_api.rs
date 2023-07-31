@@ -22,12 +22,12 @@ pub struct CreateLogLogglyParams {
     pub name: Option<String>,
     /// Where in the generated VCL the logging call should be placed. If not set, endpoints with `format_version` of 2 are placed in `vcl_log` and those with `format_version` of 1 are placed in `vcl_deliver`. 
     pub placement: Option<String>,
-    /// The version of the custom logging format used for the configured endpoint. The logging call gets placed by default in `vcl_log` if `format_version` is set to `2` and in `vcl_deliver` if `format_version` is set to `1`. 
-    pub format_version: Option<i32>,
     /// The name of an existing condition in the configured endpoint, or leave blank to always execute.
     pub response_condition: Option<String>,
     /// A Fastly [log format string](https://docs.fastly.com/en/guides/custom-log-formats).
     pub format: Option<String>,
+    /// The version of the custom logging format used for the configured endpoint. The logging call gets placed by default in `vcl_log` if `format_version` is set to `2` and in `vcl_deliver` if `format_version` is set to `1`. 
+    pub format_version: Option<i32>,
     /// The token to use for authentication ([https://www.loggly.com/docs/customer-token-authentication-token/](https://www.loggly.com/docs/customer-token-authentication-token/)).
     pub token: Option<String>
 }
@@ -76,12 +76,12 @@ pub struct UpdateLogLogglyParams {
     pub name: Option<String>,
     /// Where in the generated VCL the logging call should be placed. If not set, endpoints with `format_version` of 2 are placed in `vcl_log` and those with `format_version` of 1 are placed in `vcl_deliver`. 
     pub placement: Option<String>,
-    /// The version of the custom logging format used for the configured endpoint. The logging call gets placed by default in `vcl_log` if `format_version` is set to `2` and in `vcl_deliver` if `format_version` is set to `1`. 
-    pub format_version: Option<i32>,
     /// The name of an existing condition in the configured endpoint, or leave blank to always execute.
     pub response_condition: Option<String>,
     /// A Fastly [log format string](https://docs.fastly.com/en/guides/custom-log-formats).
     pub format: Option<String>,
+    /// The version of the custom logging format used for the configured endpoint. The logging call gets placed by default in `vcl_log` if `format_version` is set to `2` and in `vcl_deliver` if `format_version` is set to `1`. 
+    pub format_version: Option<i32>,
     /// The token to use for authentication ([https://www.loggly.com/docs/customer-token-authentication-token/](https://www.loggly.com/docs/customer-token-authentication-token/)).
     pub token: Option<String>
 }
@@ -132,9 +132,9 @@ pub async fn create_log_loggly(configuration: &mut configuration::Configuration,
     let version_id = params.version_id;
     let name = params.name;
     let placement = params.placement;
-    let format_version = params.format_version;
     let response_condition = params.response_condition;
     let format = params.format;
+    let format_version = params.format_version;
     let token = params.token;
 
 
@@ -161,14 +161,14 @@ pub async fn create_log_loggly(configuration: &mut configuration::Configuration,
     if let Some(local_var_param_value) = placement {
         local_var_form_params.insert("placement", local_var_param_value.to_string());
     }
-    if let Some(local_var_param_value) = format_version {
-        local_var_form_params.insert("format_version", local_var_param_value.to_string());
-    }
     if let Some(local_var_param_value) = response_condition {
         local_var_form_params.insert("response_condition", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = format {
         local_var_form_params.insert("format", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = format_version {
+        local_var_form_params.insert("format_version", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = token {
         local_var_form_params.insert("token", local_var_param_value.to_string());
@@ -373,9 +373,9 @@ pub async fn update_log_loggly(configuration: &mut configuration::Configuration,
     let logging_loggly_name = params.logging_loggly_name;
     let name = params.name;
     let placement = params.placement;
-    let format_version = params.format_version;
     let response_condition = params.response_condition;
     let format = params.format;
+    let format_version = params.format_version;
     let token = params.token;
 
 
@@ -402,14 +402,14 @@ pub async fn update_log_loggly(configuration: &mut configuration::Configuration,
     if let Some(local_var_param_value) = placement {
         local_var_form_params.insert("placement", local_var_param_value.to_string());
     }
-    if let Some(local_var_param_value) = format_version {
-        local_var_form_params.insert("format_version", local_var_param_value.to_string());
-    }
     if let Some(local_var_param_value) = response_condition {
         local_var_form_params.insert("response_condition", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = format {
         local_var_form_params.insert("format", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = format_version {
+        local_var_form_params.insert("format_version", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = token {
         local_var_form_params.insert("token", local_var_param_value.to_string());

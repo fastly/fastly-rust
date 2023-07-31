@@ -15,8 +15,6 @@ pub struct LoggingKinesisResponse {
     pub name: Option<String>,
     #[serde(rename = "placement", skip_serializing_if = "Option::is_none")]
     pub placement: Option<crate::models::LoggingPlacement>,
-    #[serde(rename = "format_version", skip_serializing_if = "Option::is_none")]
-    pub format_version: Option<crate::models::LoggingFormatVersion>,
     /// A Fastly [log format string](https://docs.fastly.com/en/guides/custom-log-formats). Must produce valid JSON that Kinesis can ingest.
     #[serde(rename = "format", skip_serializing_if = "Option::is_none")]
     pub format: Option<String>,
@@ -34,6 +32,9 @@ pub struct LoggingKinesisResponse {
     /// The ARN for an IAM role granting Fastly access to the target Amazon Kinesis stream. Not required if `access_key` and `secret_key` are provided.
     #[serde(rename = "iam_role", skip_serializing_if = "Option::is_none")]
     pub iam_role: Option<String>,
+    /// The version of the custom logging format used for the configured endpoint. The logging call gets placed by default in `vcl_log` if `format_version` is set to `2` and in `vcl_deliver` if `format_version` is set to `1`. 
+    #[serde(rename = "format_version", skip_serializing_if = "Option::is_none")]
+    pub format_version: Option<FormatVersion>,
     /// Date and time in ISO 8601 format.
     #[serde(rename = "created_at", skip_serializing_if = "Option::is_none")]
     pub created_at: Option<String>,
@@ -46,7 +47,7 @@ pub struct LoggingKinesisResponse {
     #[serde(rename = "service_id", skip_serializing_if = "Option::is_none")]
     pub service_id: Option<Box<String>>,
     #[serde(rename = "version", skip_serializing_if = "Option::is_none")]
-    pub version: Option<Box<i32>>,
+    pub version: Option<Box<String>>,
 }
 
 impl LoggingKinesisResponse {
@@ -54,13 +55,13 @@ impl LoggingKinesisResponse {
         LoggingKinesisResponse {
             name: None,
             placement: None,
-            format_version: None,
             format: None,
             topic: None,
             region: None,
             secret_key: None,
             access_key: None,
             iam_role: None,
+            format_version: None,
             created_at: None,
             deleted_at: None,
             updated_at: None,
@@ -70,4 +71,18 @@ impl LoggingKinesisResponse {
     }
 }
 
+/// The version of the custom logging format used for the configured endpoint. The logging call gets placed by default in `vcl_log` if `format_version` is set to `2` and in `vcl_deliver` if `format_version` is set to `1`. 
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum FormatVersion {
+    #[serde(rename = "1")]
+    V1,
+    #[serde(rename = "2")]
+    V2,
+}
+
+impl Default for FormatVersion {
+    fn default() -> FormatVersion {
+        Self::V1
+    }
+}
 

@@ -4,6 +4,7 @@ A Rust client library for interacting with most facets of the [Fastly API](https
 
 > **NOTE:** This API client is auto-generated from Fastly's OpenAPI specification and may not function correctly when used on the Compute@Edge platform. Support for Compute@Edge is on the roadmap but has not yet been prioritised.
 
+
 ## Requirements
 
 Rust 2021 Edition
@@ -13,7 +14,7 @@ Rust 2021 Edition
 Add the following to `Cargo.toml` under `[dependencies]`:
 
 ```toml
-fastly-api = "3.0.2"
+fastly-api = "4.0.0"
 ```
 
 ## Usage

@@ -36,7 +36,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**Vec&lt;crate::models::DomainCheckItem&gt;**](DomainCheckItem.md)
+[**Vec&lt;serde_json::Value&gt;**](SerdeJsonValue.md)
 
 ### Authorization
 

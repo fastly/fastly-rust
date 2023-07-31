@@ -28,26 +28,24 @@ pub struct CreateServerPoolParams {
     pub tls_cert_hostname: Option<String>,
     /// Whether to use TLS.
     pub use_tls: Option<i32>,
+    /// Date and time in ISO 8601 format.
+    pub created_at: Option<String>,
+    /// Date and time in ISO 8601 format.
+    pub deleted_at: Option<String>,
+    /// Date and time in ISO 8601 format.
+    pub updated_at: Option<String>,
+    pub service_id2: Option<String>,
+    pub version: Option<String>,
     /// Name for the Pool.
     pub name: Option<String>,
     /// Selected POP to serve as a shield for the servers. Defaults to `null` meaning no origin shielding if not set. Refer to the [POPs API endpoint](/reference/api/utils/pops/) to get a list of available POPs used for shielding.
     pub shield: Option<String>,
     /// Condition which, if met, will select this configuration during a request. Optional.
     pub request_condition: Option<String>,
-    /// Maximum number of connections. Optional.
-    pub max_conn_default: Option<i32>,
-    /// How long to wait for a timeout in milliseconds. Optional.
-    pub connect_timeout: Option<i32>,
-    /// How long to wait for the first byte in milliseconds. Optional.
-    pub first_byte_timeout: Option<i32>,
-    /// Percentage of capacity (`0-100`) that needs to be operationally available for a pool to be considered up.
-    pub quorum: Option<i32>,
     /// List of OpenSSL ciphers (see the [openssl.org manpages](https://www.openssl.org/docs/man1.1.1/man1/ciphers.html) for details). Optional.
     pub tls_ciphers: Option<String>,
     /// SNI hostname. Optional.
     pub tls_sni_hostname: Option<String>,
-    /// Be strict on checking TLS certs. Optional.
-    pub tls_check_cert: Option<i32>,
     /// Minimum allowed TLS version on connections to this server. Optional.
     pub min_tls_version: Option<i32>,
     /// Maximum allowed TLS version on connections to this server. Optional.
@@ -59,7 +57,19 @@ pub struct CreateServerPoolParams {
     /// What type of load balance group to use.
     pub _type: Option<String>,
     /// The hostname to [override the Host header](https://docs.fastly.com/en/guides/specifying-an-override-host). Defaults to `null` meaning no override of the Host header will occur. This setting can also be added to a Server definition. If the field is set on a Server definition it will override the Pool setting.
-    pub override_host: Option<String>
+    pub override_host: Option<String>,
+    /// Maximum duration in milliseconds that Fastly will wait while receiving no data on a download from a backend. If exceeded, the response received so far will be considered complete and the fetch will end. May be set at runtime using `bereq.between_bytes_timeout`.
+    pub between_bytes_timeout: Option<i32>,
+    /// How long to wait for a timeout in milliseconds. Optional.
+    pub connect_timeout: Option<i32>,
+    /// How long to wait for the first byte in milliseconds. Optional.
+    pub first_byte_timeout: Option<i32>,
+    /// Maximum number of connections. Optional.
+    pub max_conn_default: Option<i32>,
+    /// Percentage of capacity (`0-100`) that needs to be operationally available for a pool to be considered up.
+    pub quorum: Option<i32>,
+    /// Be strict on checking TLS certs. Optional.
+    pub tls_check_cert: Option<i32>
 }
 
 /// struct for passing parameters to the method [`delete_server_pool`]
@@ -112,26 +122,24 @@ pub struct UpdateServerPoolParams {
     pub tls_cert_hostname: Option<String>,
     /// Whether to use TLS.
     pub use_tls: Option<i32>,
+    /// Date and time in ISO 8601 format.
+    pub created_at: Option<String>,
+    /// Date and time in ISO 8601 format.
+    pub deleted_at: Option<String>,
+    /// Date and time in ISO 8601 format.
+    pub updated_at: Option<String>,
+    pub service_id2: Option<String>,
+    pub version: Option<String>,
     /// Name for the Pool.
     pub name: Option<String>,
     /// Selected POP to serve as a shield for the servers. Defaults to `null` meaning no origin shielding if not set. Refer to the [POPs API endpoint](/reference/api/utils/pops/) to get a list of available POPs used for shielding.
     pub shield: Option<String>,
     /// Condition which, if met, will select this configuration during a request. Optional.
     pub request_condition: Option<String>,
-    /// Maximum number of connections. Optional.
-    pub max_conn_default: Option<i32>,
-    /// How long to wait for a timeout in milliseconds. Optional.
-    pub connect_timeout: Option<i32>,
-    /// How long to wait for the first byte in milliseconds. Optional.
-    pub first_byte_timeout: Option<i32>,
-    /// Percentage of capacity (`0-100`) that needs to be operationally available for a pool to be considered up.
-    pub quorum: Option<i32>,
     /// List of OpenSSL ciphers (see the [openssl.org manpages](https://www.openssl.org/docs/man1.1.1/man1/ciphers.html) for details). Optional.
     pub tls_ciphers: Option<String>,
     /// SNI hostname. Optional.
     pub tls_sni_hostname: Option<String>,
-    /// Be strict on checking TLS certs. Optional.
-    pub tls_check_cert: Option<i32>,
     /// Minimum allowed TLS version on connections to this server. Optional.
     pub min_tls_version: Option<i32>,
     /// Maximum allowed TLS version on connections to this server. Optional.
@@ -143,7 +151,19 @@ pub struct UpdateServerPoolParams {
     /// What type of load balance group to use.
     pub _type: Option<String>,
     /// The hostname to [override the Host header](https://docs.fastly.com/en/guides/specifying-an-override-host). Defaults to `null` meaning no override of the Host header will occur. This setting can also be added to a Server definition. If the field is set on a Server definition it will override the Pool setting.
-    pub override_host: Option<String>
+    pub override_host: Option<String>,
+    /// Maximum duration in milliseconds that Fastly will wait while receiving no data on a download from a backend. If exceeded, the response received so far will be considered complete and the fetch will end. May be set at runtime using `bereq.between_bytes_timeout`.
+    pub between_bytes_timeout: Option<i32>,
+    /// How long to wait for a timeout in milliseconds. Optional.
+    pub connect_timeout: Option<i32>,
+    /// How long to wait for the first byte in milliseconds. Optional.
+    pub first_byte_timeout: Option<i32>,
+    /// Maximum number of connections. Optional.
+    pub max_conn_default: Option<i32>,
+    /// Percentage of capacity (`0-100`) that needs to be operationally available for a pool to be considered up.
+    pub quorum: Option<i32>,
+    /// Be strict on checking TLS certs. Optional.
+    pub tls_check_cert: Option<i32>
 }
 
 
@@ -184,7 +204,7 @@ pub enum UpdateServerPoolError {
 
 
 /// Creates a pool for a particular service and version.
-pub async fn create_server_pool(configuration: &mut configuration::Configuration, params: CreateServerPoolParams) -> Result<crate::models::PoolResponse, Error<CreateServerPoolError>> {
+pub async fn create_server_pool(configuration: &mut configuration::Configuration, params: CreateServerPoolParams) -> Result<crate::models::PoolResponsePost, Error<CreateServerPoolError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -195,22 +215,28 @@ pub async fn create_server_pool(configuration: &mut configuration::Configuration
     let tls_client_key = params.tls_client_key;
     let tls_cert_hostname = params.tls_cert_hostname;
     let use_tls = params.use_tls;
+    let created_at = params.created_at;
+    let deleted_at = params.deleted_at;
+    let updated_at = params.updated_at;
+    let service_id2 = params.service_id2;
+    let version = params.version;
     let name = params.name;
     let shield = params.shield;
     let request_condition = params.request_condition;
-    let max_conn_default = params.max_conn_default;
-    let connect_timeout = params.connect_timeout;
-    let first_byte_timeout = params.first_byte_timeout;
-    let quorum = params.quorum;
     let tls_ciphers = params.tls_ciphers;
     let tls_sni_hostname = params.tls_sni_hostname;
-    let tls_check_cert = params.tls_check_cert;
     let min_tls_version = params.min_tls_version;
     let max_tls_version = params.max_tls_version;
     let healthcheck = params.healthcheck;
     let comment = params.comment;
     let _type = params._type;
     let override_host = params.override_host;
+    let between_bytes_timeout = params.between_bytes_timeout;
+    let connect_timeout = params.connect_timeout;
+    let first_byte_timeout = params.first_byte_timeout;
+    let max_conn_default = params.max_conn_default;
+    let quorum = params.quorum;
+    let tls_check_cert = params.tls_check_cert;
 
 
     let local_var_client = &local_var_configuration.client;
@@ -245,6 +271,21 @@ pub async fn create_server_pool(configuration: &mut configuration::Configuration
     if let Some(local_var_param_value) = use_tls {
         local_var_form_params.insert("use_tls", local_var_param_value.to_string());
     }
+    if let Some(local_var_param_value) = created_at {
+        local_var_form_params.insert("created_at", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = deleted_at {
+        local_var_form_params.insert("deleted_at", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = updated_at {
+        local_var_form_params.insert("updated_at", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = service_id2 {
+        local_var_form_params.insert("service_id", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = version {
+        local_var_form_params.insert("version", local_var_param_value.to_string());
+    }
     if let Some(local_var_param_value) = name {
         local_var_form_params.insert("name", local_var_param_value.to_string());
     }
@@ -254,26 +295,11 @@ pub async fn create_server_pool(configuration: &mut configuration::Configuration
     if let Some(local_var_param_value) = request_condition {
         local_var_form_params.insert("request_condition", local_var_param_value.to_string());
     }
-    if let Some(local_var_param_value) = max_conn_default {
-        local_var_form_params.insert("max_conn_default", local_var_param_value.to_string());
-    }
-    if let Some(local_var_param_value) = connect_timeout {
-        local_var_form_params.insert("connect_timeout", local_var_param_value.to_string());
-    }
-    if let Some(local_var_param_value) = first_byte_timeout {
-        local_var_form_params.insert("first_byte_timeout", local_var_param_value.to_string());
-    }
-    if let Some(local_var_param_value) = quorum {
-        local_var_form_params.insert("quorum", local_var_param_value.to_string());
-    }
     if let Some(local_var_param_value) = tls_ciphers {
         local_var_form_params.insert("tls_ciphers", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = tls_sni_hostname {
         local_var_form_params.insert("tls_sni_hostname", local_var_param_value.to_string());
-    }
-    if let Some(local_var_param_value) = tls_check_cert {
-        local_var_form_params.insert("tls_check_cert", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = min_tls_version {
         local_var_form_params.insert("min_tls_version", local_var_param_value.to_string());
@@ -292,6 +318,24 @@ pub async fn create_server_pool(configuration: &mut configuration::Configuration
     }
     if let Some(local_var_param_value) = override_host {
         local_var_form_params.insert("override_host", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = between_bytes_timeout {
+        local_var_form_params.insert("between_bytes_timeout", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = connect_timeout {
+        local_var_form_params.insert("connect_timeout", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = first_byte_timeout {
+        local_var_form_params.insert("first_byte_timeout", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = max_conn_default {
+        local_var_form_params.insert("max_conn_default", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = quorum {
+        local_var_form_params.insert("quorum", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = tls_check_cert {
+        local_var_form_params.insert("tls_check_cert", local_var_param_value.to_string());
     }
     local_var_req_builder = local_var_req_builder.form(&local_var_form_params);
 
@@ -496,22 +540,28 @@ pub async fn update_server_pool(configuration: &mut configuration::Configuration
     let tls_client_key = params.tls_client_key;
     let tls_cert_hostname = params.tls_cert_hostname;
     let use_tls = params.use_tls;
+    let created_at = params.created_at;
+    let deleted_at = params.deleted_at;
+    let updated_at = params.updated_at;
+    let service_id2 = params.service_id2;
+    let version = params.version;
     let name = params.name;
     let shield = params.shield;
     let request_condition = params.request_condition;
-    let max_conn_default = params.max_conn_default;
-    let connect_timeout = params.connect_timeout;
-    let first_byte_timeout = params.first_byte_timeout;
-    let quorum = params.quorum;
     let tls_ciphers = params.tls_ciphers;
     let tls_sni_hostname = params.tls_sni_hostname;
-    let tls_check_cert = params.tls_check_cert;
     let min_tls_version = params.min_tls_version;
     let max_tls_version = params.max_tls_version;
     let healthcheck = params.healthcheck;
     let comment = params.comment;
     let _type = params._type;
     let override_host = params.override_host;
+    let between_bytes_timeout = params.between_bytes_timeout;
+    let connect_timeout = params.connect_timeout;
+    let first_byte_timeout = params.first_byte_timeout;
+    let max_conn_default = params.max_conn_default;
+    let quorum = params.quorum;
+    let tls_check_cert = params.tls_check_cert;
 
 
     let local_var_client = &local_var_configuration.client;
@@ -546,6 +596,21 @@ pub async fn update_server_pool(configuration: &mut configuration::Configuration
     if let Some(local_var_param_value) = use_tls {
         local_var_form_params.insert("use_tls", local_var_param_value.to_string());
     }
+    if let Some(local_var_param_value) = created_at {
+        local_var_form_params.insert("created_at", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = deleted_at {
+        local_var_form_params.insert("deleted_at", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = updated_at {
+        local_var_form_params.insert("updated_at", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = service_id2 {
+        local_var_form_params.insert("service_id", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = version {
+        local_var_form_params.insert("version", local_var_param_value.to_string());
+    }
     if let Some(local_var_param_value) = name {
         local_var_form_params.insert("name", local_var_param_value.to_string());
     }
@@ -555,26 +620,11 @@ pub async fn update_server_pool(configuration: &mut configuration::Configuration
     if let Some(local_var_param_value) = request_condition {
         local_var_form_params.insert("request_condition", local_var_param_value.to_string());
     }
-    if let Some(local_var_param_value) = max_conn_default {
-        local_var_form_params.insert("max_conn_default", local_var_param_value.to_string());
-    }
-    if let Some(local_var_param_value) = connect_timeout {
-        local_var_form_params.insert("connect_timeout", local_var_param_value.to_string());
-    }
-    if let Some(local_var_param_value) = first_byte_timeout {
-        local_var_form_params.insert("first_byte_timeout", local_var_param_value.to_string());
-    }
-    if let Some(local_var_param_value) = quorum {
-        local_var_form_params.insert("quorum", local_var_param_value.to_string());
-    }
     if let Some(local_var_param_value) = tls_ciphers {
         local_var_form_params.insert("tls_ciphers", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = tls_sni_hostname {
         local_var_form_params.insert("tls_sni_hostname", local_var_param_value.to_string());
-    }
-    if let Some(local_var_param_value) = tls_check_cert {
-        local_var_form_params.insert("tls_check_cert", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = min_tls_version {
         local_var_form_params.insert("min_tls_version", local_var_param_value.to_string());
@@ -593,6 +643,24 @@ pub async fn update_server_pool(configuration: &mut configuration::Configuration
     }
     if let Some(local_var_param_value) = override_host {
         local_var_form_params.insert("override_host", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = between_bytes_timeout {
+        local_var_form_params.insert("between_bytes_timeout", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = connect_timeout {
+        local_var_form_params.insert("connect_timeout", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = first_byte_timeout {
+        local_var_form_params.insert("first_byte_timeout", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = max_conn_default {
+        local_var_form_params.insert("max_conn_default", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = quorum {
+        local_var_form_params.insert("quorum", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = tls_check_cert {
+        local_var_form_params.insert("tls_check_cert", local_var_param_value.to_string());
     }
     local_var_req_builder = local_var_req_builder.form(&local_var_form_params);
 

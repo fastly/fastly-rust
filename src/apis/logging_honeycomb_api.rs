@@ -22,12 +22,12 @@ pub struct CreateLogHoneycombParams {
     pub name: Option<String>,
     /// Where in the generated VCL the logging call should be placed. If not set, endpoints with `format_version` of 2 are placed in `vcl_log` and those with `format_version` of 1 are placed in `vcl_deliver`. 
     pub placement: Option<String>,
-    /// The version of the custom logging format used for the configured endpoint. The logging call gets placed by default in `vcl_log` if `format_version` is set to `2` and in `vcl_deliver` if `format_version` is set to `1`. 
-    pub format_version: Option<i32>,
     /// The name of an existing condition in the configured endpoint, or leave blank to always execute.
     pub response_condition: Option<String>,
     /// A Fastly [log format string](https://docs.fastly.com/en/guides/custom-log-formats). Must produce valid JSON that Honeycomb can ingest.
     pub format: Option<String>,
+    /// The version of the custom logging format used for the configured endpoint. The logging call gets placed by default in `vcl_log` if `format_version` is set to `2` and in `vcl_deliver` if `format_version` is set to `1`. 
+    pub format_version: Option<i32>,
     /// The Honeycomb Dataset you want to log to.
     pub dataset: Option<String>,
     /// The Write Key from the Account page of your Honeycomb account.
@@ -78,12 +78,12 @@ pub struct UpdateLogHoneycombParams {
     pub name: Option<String>,
     /// Where in the generated VCL the logging call should be placed. If not set, endpoints with `format_version` of 2 are placed in `vcl_log` and those with `format_version` of 1 are placed in `vcl_deliver`. 
     pub placement: Option<String>,
-    /// The version of the custom logging format used for the configured endpoint. The logging call gets placed by default in `vcl_log` if `format_version` is set to `2` and in `vcl_deliver` if `format_version` is set to `1`. 
-    pub format_version: Option<i32>,
     /// The name of an existing condition in the configured endpoint, or leave blank to always execute.
     pub response_condition: Option<String>,
     /// A Fastly [log format string](https://docs.fastly.com/en/guides/custom-log-formats). Must produce valid JSON that Honeycomb can ingest.
     pub format: Option<String>,
+    /// The version of the custom logging format used for the configured endpoint. The logging call gets placed by default in `vcl_log` if `format_version` is set to `2` and in `vcl_deliver` if `format_version` is set to `1`. 
+    pub format_version: Option<i32>,
     /// The Honeycomb Dataset you want to log to.
     pub dataset: Option<String>,
     /// The Write Key from the Account page of your Honeycomb account.
@@ -128,7 +128,7 @@ pub enum UpdateLogHoneycombError {
 
 
 /// Create a Honeycomb logging object for a particular service and version.
-pub async fn create_log_honeycomb(configuration: &mut configuration::Configuration, params: CreateLogHoneycombParams) -> Result<crate::models::LoggingHoneycomb, Error<CreateLogHoneycombError>> {
+pub async fn create_log_honeycomb(configuration: &mut configuration::Configuration, params: CreateLogHoneycombParams) -> Result<crate::models::LoggingHoneycombResponse, Error<CreateLogHoneycombError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -136,9 +136,9 @@ pub async fn create_log_honeycomb(configuration: &mut configuration::Configurati
     let version_id = params.version_id;
     let name = params.name;
     let placement = params.placement;
-    let format_version = params.format_version;
     let response_condition = params.response_condition;
     let format = params.format;
+    let format_version = params.format_version;
     let dataset = params.dataset;
     let token = params.token;
 
@@ -166,14 +166,14 @@ pub async fn create_log_honeycomb(configuration: &mut configuration::Configurati
     if let Some(local_var_param_value) = placement {
         local_var_form_params.insert("placement", local_var_param_value.to_string());
     }
-    if let Some(local_var_param_value) = format_version {
-        local_var_form_params.insert("format_version", local_var_param_value.to_string());
-    }
     if let Some(local_var_param_value) = response_condition {
         local_var_form_params.insert("response_condition", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = format {
         local_var_form_params.insert("format", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = format_version {
+        local_var_form_params.insert("format_version", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = dataset {
         local_var_form_params.insert("dataset", local_var_param_value.to_string());
@@ -265,7 +265,7 @@ pub async fn delete_log_honeycomb(configuration: &mut configuration::Configurati
 }
 
 /// Get the details of a Honeycomb logging object for a particular service and version.
-pub async fn get_log_honeycomb(configuration: &mut configuration::Configuration, params: GetLogHoneycombParams) -> Result<crate::models::LoggingHoneycomb, Error<GetLogHoneycombError>> {
+pub async fn get_log_honeycomb(configuration: &mut configuration::Configuration, params: GetLogHoneycombParams) -> Result<crate::models::LoggingHoneycombResponse, Error<GetLogHoneycombError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -381,9 +381,9 @@ pub async fn update_log_honeycomb(configuration: &mut configuration::Configurati
     let logging_honeycomb_name = params.logging_honeycomb_name;
     let name = params.name;
     let placement = params.placement;
-    let format_version = params.format_version;
     let response_condition = params.response_condition;
     let format = params.format;
+    let format_version = params.format_version;
     let dataset = params.dataset;
     let token = params.token;
 
@@ -411,14 +411,14 @@ pub async fn update_log_honeycomb(configuration: &mut configuration::Configurati
     if let Some(local_var_param_value) = placement {
         local_var_form_params.insert("placement", local_var_param_value.to_string());
     }
-    if let Some(local_var_param_value) = format_version {
-        local_var_form_params.insert("format_version", local_var_param_value.to_string());
-    }
     if let Some(local_var_param_value) = response_condition {
         local_var_form_params.insert("response_condition", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = format {
         local_var_form_params.insert("format", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = format_version {
+        local_var_form_params.insert("format_version", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = dataset {
         local_var_form_params.insert("dataset", local_var_param_value.to_string());

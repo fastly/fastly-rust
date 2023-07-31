@@ -25,9 +25,9 @@ pub struct CreateCacheSettingsParams {
     /// Name for the cache settings object.
     pub name: Option<String>,
     /// Maximum time in seconds to continue to use a stale version of the object if future requests to your backend server fail (also known as 'stale if error').
-    pub stale_ttl: Option<i32>,
+    pub stale_ttl: Option<String>,
     /// Maximum time to consider the object fresh in the cache (the cache 'time to live').
-    pub ttl: Option<i32>
+    pub ttl: Option<String>
 }
 
 /// struct for passing parameters to the method [`delete_cache_settings`]
@@ -77,9 +77,9 @@ pub struct UpdateCacheSettingsParams {
     /// Name for the cache settings object.
     pub name: Option<String>,
     /// Maximum time in seconds to continue to use a stale version of the object if future requests to your backend server fail (also known as 'stale if error').
-    pub stale_ttl: Option<i32>,
+    pub stale_ttl: Option<String>,
     /// Maximum time to consider the object fresh in the cache (the cache 'time to live').
-    pub ttl: Option<i32>
+    pub ttl: Option<String>
 }
 
 

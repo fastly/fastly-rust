@@ -16,12 +16,6 @@ pub struct LoggingGenericCommon {
     /// A timestamp format
     #[serde(rename = "timestamp_format", skip_serializing_if = "Option::is_none")]
     pub timestamp_format: Option<String>,
-    /// How frequently log files are finalized so they can be available for reading (in seconds).
-    #[serde(rename = "period", skip_serializing_if = "Option::is_none")]
-    pub period: Option<i32>,
-    /// The level of gzip encoding when sending logs (default `0`, no compression). Specifying both `compression_codec` and `gzip_level` in the same API request will result in an error.
-    #[serde(rename = "gzip_level", skip_serializing_if = "Option::is_none")]
-    pub gzip_level: Option<i32>,
     /// The codec used for compressing your logs. Valid values are `zstd`, `snappy`, and `gzip`. Specifying both `compression_codec` and `gzip_level` in the same API request will result in an error.
     #[serde(rename = "compression_codec", skip_serializing_if = "Option::is_none")]
     pub compression_codec: Option<CompressionCodec>,
@@ -32,8 +26,6 @@ impl LoggingGenericCommon {
         LoggingGenericCommon {
             message_type: None,
             timestamp_format: None,
-            period: None,
-            gzip_level: None,
             compression_codec: None,
         }
     }

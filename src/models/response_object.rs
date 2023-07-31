@@ -24,7 +24,7 @@ pub struct ResponseObject {
     pub name: Option<String>,
     /// The HTTP status code.
     #[serde(rename = "status", skip_serializing_if = "Option::is_none")]
-    pub status: Option<i32>,
+    pub status: Option<String>,
     /// The HTTP response.
     #[serde(rename = "response", skip_serializing_if = "Option::is_none")]
     pub response: Option<String>,
