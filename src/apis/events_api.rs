@@ -33,6 +33,14 @@ pub struct ListEventsParams {
     pub filter_token_id: Option<String>,
     /// Limit the returned events to a specific time frame. Accepts sub-parameters: lt, lte, gt, gte (e.g., filter[created_at][gt]=2022-01-12). 
     pub filter_created_at: Option<String>,
+    /// Return events on and before a date and time in ISO 8601 format. 
+    pub filter_created_at_lte: Option<String>,
+    /// Return events before a date and time in ISO 8601 format. 
+    pub filter_created_at_lt: Option<String>,
+    /// Return events on and after a date and time in ISO 8601 format. 
+    pub filter_created_at_gte: Option<String>,
+    /// Return events after a date and time in ISO 8601 format. 
+    pub filter_created_at_gt: Option<String>,
     /// Current page.
     pub page_number: Option<i32>,
     /// Number of records per page.
@@ -120,6 +128,10 @@ pub async fn list_events(configuration: &mut configuration::Configuration, param
     let filter_user_id = params.filter_user_id;
     let filter_token_id = params.filter_token_id;
     let filter_created_at = params.filter_created_at;
+    let filter_created_at_lte = params.filter_created_at_lte;
+    let filter_created_at_lt = params.filter_created_at_lt;
+    let filter_created_at_gte = params.filter_created_at_gte;
+    let filter_created_at_gt = params.filter_created_at_gt;
     let page_number = params.page_number;
     let page_size = params.page_size;
     let sort = params.sort;
@@ -147,6 +159,18 @@ pub async fn list_events(configuration: &mut configuration::Configuration, param
     }
     if let Some(ref local_var_str) = filter_created_at {
         local_var_req_builder = local_var_req_builder.query(&[("filter[created_at]", &local_var_str.to_string())]);
+    }
+    if let Some(ref local_var_str) = filter_created_at_lte {
+        local_var_req_builder = local_var_req_builder.query(&[("filter[created_at][lte]", &local_var_str.to_string())]);
+    }
+    if let Some(ref local_var_str) = filter_created_at_lt {
+        local_var_req_builder = local_var_req_builder.query(&[("filter[created_at][lt]", &local_var_str.to_string())]);
+    }
+    if let Some(ref local_var_str) = filter_created_at_gte {
+        local_var_req_builder = local_var_req_builder.query(&[("filter[created_at][gte]", &local_var_str.to_string())]);
+    }
+    if let Some(ref local_var_str) = filter_created_at_gt {
+        local_var_req_builder = local_var_req_builder.query(&[("filter[created_at][gt]", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = page_number {
         local_var_req_builder = local_var_req_builder.query(&[("page[number]", &local_var_str.to_string())]);

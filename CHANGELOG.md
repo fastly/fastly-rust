@@ -1,5 +1,11 @@
 # Changelog
 
+## [v4.1.1](https://github.com/fastly/fastly-rust/releases/tag/release/v4.1.1) (2023-09-01)
+
+**Enhancements:**
+
+- feat(events): support extra created_at filters.
+
 ## [v4.1.0](https://github.com/fastly/fastly-rust/releases/tag/release/v4.1.0) (2023-09-01)
 
 **Bug fixes:**
@@ -9,6 +15,7 @@
 **Enhancements:**
 
 - feat(backend): support share_key field.
+- feat(events): support extra created_at filters.
 - feat(logging/newrelic): add OTLP endpoints.
 - feat(tls/subscriptions): support self_managed_http_challenge field.
 

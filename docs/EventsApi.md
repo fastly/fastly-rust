@@ -67,6 +67,10 @@ Name | Type | Description  | Required | Notes
 **filter_user_id** | Option\<**String**> | Limit the results returned to a specific user. |  |
 **filter_token_id** | Option\<**String**> | Limit the returned events to a specific token. |  |
 **filter_created_at** | Option\<**String**> | Limit the returned events to a specific time frame. Accepts sub-parameters: lt, lte, gt, gte (e.g., filter[created_at][gt]=2022-01-12).  |  |
+**filter_created_at_lte** | Option\<**String**> | Return events on and before a date and time in ISO 8601 format.  |  |
+**filter_created_at_lt** | Option\<**String**> | Return events before a date and time in ISO 8601 format.  |  |
+**filter_created_at_gte** | Option\<**String**> | Return events on and after a date and time in ISO 8601 format.  |  |
+**filter_created_at_gt** | Option\<**String**> | Return events after a date and time in ISO 8601 format.  |  |
 **page_number** | Option\<**i32**> | Current page. |  |
 **page_size** | Option\<**i32**> | Number of records per page. |  |[default to 20]
 **sort** | Option\<**String**> | The order in which to list the results by creation date. |  |[default to created_at]
