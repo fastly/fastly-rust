@@ -188,6 +188,8 @@ pub enum LoggerType {
     Logshuttle,
     #[serde(rename = "newrelic")]
     Newrelic,
+    #[serde(rename = "newrelicotlp")]
+    Newrelicotlp,
     #[serde(rename = "openstack")]
     Openstack,
     #[serde(rename = "papertrail")]

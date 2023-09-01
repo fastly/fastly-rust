@@ -123,6 +123,7 @@ pub mod logging_logentries_api;
 pub mod logging_loggly_api;
 pub mod logging_logshuttle_api;
 pub mod logging_newrelic_api;
+pub mod logging_newrelicotlp_api;
 pub mod logging_openstack_api;
 pub mod logging_papertrail_api;
 pub mod logging_pubsub_api;

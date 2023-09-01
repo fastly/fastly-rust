@@ -52,7 +52,7 @@ pub struct DeleteTlsSubParams {
 pub struct GetTlsSubParams {
     /// Alphanumeric string identifying a TLS subscription.
     pub tls_subscription_id: String,
-    /// Include related objects. Optional, comma-separated values. Permitted values: `tls_authorizations` and `tls_authorizations.globalsign_email_challenge`. 
+    /// Include related objects. Optional, comma-separated values. Permitted values: `tls_authorizations`, `tls_authorizations.globalsign_email_challenge`, and `tls_authorizations.self_managed_http_challenge`. 
     pub include: Option<String>
 }
 
@@ -65,7 +65,7 @@ pub struct ListTlsSubsParams {
     pub filter_tls_domains_id: Option<String>,
     /// Limit the returned subscriptions to those that have currently active orders. Permitted values: `true`. 
     pub filter_has_active_order: Option<bool>,
-    /// Include related objects. Optional, comma-separated values. Permitted values: `tls_authorizations` and `tls_authorizations.globalsign_email_challenge`. 
+    /// Include related objects. Optional, comma-separated values. Permitted values: `tls_authorizations`, `tls_authorizations.globalsign_email_challenge`, and `tls_authorizations.self_managed_http_challenge`. 
     pub include: Option<String>,
     /// Current page.
     pub page_number: Option<i32>,

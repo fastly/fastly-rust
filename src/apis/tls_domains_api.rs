@@ -20,7 +20,7 @@ pub struct ListTlsDomainsParams {
     pub filter_tls_certificates_id: Option<String>,
     /// Optional. Limit the returned domains to those for a given TLS subscription.
     pub filter_tls_subscriptions_id: Option<String>,
-    /// Include related objects. Optional, comma-separated values. Permitted values: `tls_activations`, `tls_certificates`, `tls_subscriptions`, `tls_subscriptions.tls_authorizations`, and `tls_authorizations.globalsign_email_challenge`. 
+    /// Include related objects. Optional, comma-separated values. Permitted values: `tls_activations`, `tls_certificates`, `tls_subscriptions`, `tls_subscriptions.tls_authorizations`, `tls_authorizations.globalsign_email_challenge`, and `tls_authorizations.self_managed_http_challenge`. 
     pub include: Option<String>,
     /// Current page.
     pub page_number: Option<i32>,

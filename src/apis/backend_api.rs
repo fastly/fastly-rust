@@ -56,6 +56,8 @@ pub struct CreateBackendParams {
     pub port: Option<i32>,
     /// Name of a Condition, which if satisfied, will select this backend during a request. If set, will override any `auto_loadbalance` setting. By default, the first backend added to a service is selected for all requests.
     pub request_condition: Option<String>,
+    /// Value that when shared across backends will enable those backends to share the same health check.
+    pub share_key: Option<String>,
     /// Identifier of the POP to use as a [shield](https://docs.fastly.com/en/guides/shielding).
     pub shield: Option<String>,
     /// CA certificate attached to origin.
@@ -158,6 +160,8 @@ pub struct UpdateBackendParams {
     pub port: Option<i32>,
     /// Name of a Condition, which if satisfied, will select this backend during a request. If set, will override any `auto_loadbalance` setting. By default, the first backend added to a service is selected for all requests.
     pub request_condition: Option<String>,
+    /// Value that when shared across backends will enable those backends to share the same health check.
+    pub share_key: Option<String>,
     /// Identifier of the POP to use as a [shield](https://docs.fastly.com/en/guides/shielding).
     pub shield: Option<String>,
     /// CA certificate attached to origin.
@@ -245,6 +249,7 @@ pub async fn create_backend(configuration: &mut configuration::Configuration, pa
     let override_host = params.override_host;
     let port = params.port;
     let request_condition = params.request_condition;
+    let share_key = params.share_key;
     let shield = params.shield;
     let ssl_ca_cert = params.ssl_ca_cert;
     let ssl_cert_hostname = params.ssl_cert_hostname;
@@ -331,6 +336,9 @@ pub async fn create_backend(configuration: &mut configuration::Configuration, pa
     }
     if let Some(local_var_param_value) = request_condition {
         local_var_form_params.insert("request_condition", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = share_key {
+        local_var_form_params.insert("share_key", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = shield {
         local_var_form_params.insert("shield", local_var_param_value.to_string());
@@ -582,6 +590,7 @@ pub async fn update_backend(configuration: &mut configuration::Configuration, pa
     let override_host = params.override_host;
     let port = params.port;
     let request_condition = params.request_condition;
+    let share_key = params.share_key;
     let shield = params.shield;
     let ssl_ca_cert = params.ssl_ca_cert;
     let ssl_cert_hostname = params.ssl_cert_hostname;
@@ -668,6 +677,9 @@ pub async fn update_backend(configuration: &mut configuration::Configuration, pa
     }
     if let Some(local_var_param_value) = request_condition {
         local_var_form_params.insert("request_condition", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = share_key {
+        local_var_form_params.insert("share_key", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = shield {
         local_var_form_params.insert("shield", local_var_param_value.to_string());

@@ -177,7 +177,7 @@ get_tls_sub(cfg, params)
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **tls_subscription_id** | **String** | Alphanumeric string identifying a TLS subscription. | [required] |
-**include** | Option\<**String**> | Include related objects. Optional, comma-separated values. Permitted values: `tls_authorizations` and `tls_authorizations.globalsign_email_challenge`.  |  |
+**include** | Option\<**String**> | Include related objects. Optional, comma-separated values. Permitted values: `tls_authorizations`, `tls_authorizations.globalsign_email_challenge`, and `tls_authorizations.self_managed_http_challenge`.  |  |
 
 ### Return type
 
@@ -215,7 +215,7 @@ Name | Type | Description  | Required | Notes
 **filter_state** | Option\<**String**> | Limit the returned subscriptions by state. Valid values are `pending`, `processing`, `issued`, `renewing`, and `failed`. Accepts parameters: `not` (e.g., `filter[state][not]=renewing`).  |  |
 **filter_tls_domains_id** | Option\<**String**> | Limit the returned subscriptions to those that include the specific domain. |  |
 **filter_has_active_order** | Option\<**bool**> | Limit the returned subscriptions to those that have currently active orders. Permitted values: `true`.  |  |
-**include** | Option\<**String**> | Include related objects. Optional, comma-separated values. Permitted values: `tls_authorizations` and `tls_authorizations.globalsign_email_challenge`.  |  |
+**include** | Option\<**String**> | Include related objects. Optional, comma-separated values. Permitted values: `tls_authorizations`, `tls_authorizations.globalsign_email_challenge`, and `tls_authorizations.self_managed_http_challenge`.  |  |
 **page_number** | Option\<**i32**> | Current page. |  |
 **page_size** | Option\<**i32**> | Number of records per page. |  |[default to 20]
 **sort** | Option\<**String**> | The order in which to list the results by creation date. |  |[default to created_at]

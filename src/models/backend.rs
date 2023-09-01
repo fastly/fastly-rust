@@ -67,6 +67,9 @@ pub struct Backend {
     /// Name of a Condition, which if satisfied, will select this backend during a request. If set, will override any `auto_loadbalance` setting. By default, the first backend added to a service is selected for all requests.
     #[serde(rename = "request_condition", skip_serializing_if = "Option::is_none")]
     pub request_condition: Option<String>,
+    /// Value that when shared across backends will enable those backends to share the same health check.
+    #[serde(rename = "share_key", skip_serializing_if = "Option::is_none")]
+    pub share_key: Option<String>,
     /// Identifier of the POP to use as a [shield](https://docs.fastly.com/en/guides/shielding).
     #[serde(rename = "shield", skip_serializing_if = "Option::is_none")]
     pub shield: Option<String>,
@@ -124,6 +127,7 @@ impl Backend {
             override_host: None,
             port: None,
             request_condition: None,
+            share_key: None,
             shield: None,
             ssl_ca_cert: None,
             ssl_cert_hostname: None,
