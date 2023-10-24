@@ -34,14 +34,14 @@ Name | Type | Description  | Required | Notes
 **service_id** | **String** | Alphanumeric string identifying the service. | [required] |
 **version_id** | **i32** | Integer identifying a service version. | [required] |
 **name** | Option\<**String**> | The name for the snippet. |  |
-**dynamic** | Option\<**String**> | Sets the snippet version. |  |
 **_type** | Option\<**String**> | The location in generated VCL where the snippet should be placed. |  |
 **content** | Option\<**String**> | The VCL code that specifies exactly what the snippet does. |  |
 **priority** | Option\<**String**> | Priority determines execution order. Lower numbers execute first. |  |[default to 100]
+**dynamic** | Option\<**String**> | Sets the snippet version. |  |
 
 ### Return type
 
-[**crate::models::SnippetResponse**](SnippetResponse.md)
+[**crate::models::SnippetResponsePost**](SnippetResponsePost.md)
 
 ### Authorization
 
@@ -258,10 +258,10 @@ Name | Type | Description  | Required | Notes
 **service_id** | **String** | Alphanumeric string identifying the service. | [required] |
 **snippet_id** | **String** | Alphanumeric string identifying a VCL Snippet. | [required] |
 **name** | Option\<**String**> | The name for the snippet. |  |
-**dynamic** | Option\<**String**> | Sets the snippet version. |  |
 **_type** | Option\<**String**> | The location in generated VCL where the snippet should be placed. |  |
 **content** | Option\<**String**> | The VCL code that specifies exactly what the snippet does. |  |
 **priority** | Option\<**String**> | Priority determines execution order. Lower numbers execute first. |  |[default to 100]
+**dynamic** | Option\<**String**> | Sets the snippet version. |  |
 
 ### Return type
 

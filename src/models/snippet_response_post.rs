@@ -9,7 +9,7 @@
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct SchemasSnippetResponse {
+pub struct SnippetResponsePost {
     /// The name for the snippet.
     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
@@ -43,9 +43,9 @@ pub struct SchemasSnippetResponse {
     pub id: Option<Box<String>>,
 }
 
-impl SchemasSnippetResponse {
-    pub fn new() -> SchemasSnippetResponse {
-        SchemasSnippetResponse {
+impl SnippetResponsePost {
+    pub fn new() -> SnippetResponsePost {
+        SnippetResponsePost {
             name: None,
             _type: None,
             content: None,

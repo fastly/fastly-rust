@@ -9,7 +9,7 @@
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct SchemasSnippetResponse {
+pub struct SnippetCommon {
     /// The name for the snippet.
     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
@@ -22,41 +22,15 @@ pub struct SchemasSnippetResponse {
     /// Priority determines execution order. Lower numbers execute first.
     #[serde(rename = "priority", skip_serializing_if = "Option::is_none")]
     pub priority: Option<String>,
-    /// Sets the snippet version.
-    #[serde(rename = "dynamic", skip_serializing_if = "Option::is_none")]
-    pub dynamic: Option<Dynamic>,
-    /// Date and time in ISO 8601 format.
-    #[serde(rename = "created_at", skip_serializing_if = "Option::is_none")]
-    pub created_at: Option<String>,
-    /// Date and time in ISO 8601 format.
-    #[serde(rename = "deleted_at", skip_serializing_if = "Option::is_none")]
-    pub deleted_at: Option<String>,
-    /// Date and time in ISO 8601 format.
-    #[serde(rename = "updated_at", skip_serializing_if = "Option::is_none")]
-    pub updated_at: Option<String>,
-    #[serde(rename = "service_id", skip_serializing_if = "Option::is_none")]
-    pub service_id: Option<Box<String>>,
-    /// String representing the number identifying a version of the service.
-    #[serde(rename = "version", skip_serializing_if = "Option::is_none")]
-    pub version: Option<String>,
-    #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
-    pub id: Option<Box<String>>,
 }
 
-impl SchemasSnippetResponse {
-    pub fn new() -> SchemasSnippetResponse {
-        SchemasSnippetResponse {
+impl SnippetCommon {
+    pub fn new() -> SnippetCommon {
+        SnippetCommon {
             name: None,
             _type: None,
             content: None,
             priority: None,
-            dynamic: None,
-            created_at: None,
-            deleted_at: None,
-            updated_at: None,
-            service_id: None,
-            version: None,
-            id: None,
         }
     }
 }
@@ -91,20 +65,6 @@ pub enum Type {
 impl Default for Type {
     fn default() -> Type {
         Self::Init
-    }
-}
-/// Sets the snippet version.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
-pub enum Dynamic {
-    #[serde(rename = "0")]
-    Regular,
-    #[serde(rename = "1")]
-    Dynamic,
-}
-
-impl Default for Dynamic {
-    fn default() -> Dynamic {
-        Self::Regular
     }
 }
 

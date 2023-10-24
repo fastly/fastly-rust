@@ -9,7 +9,7 @@
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct SchemasSnippetResponse {
+pub struct SnippetWithDynamicNumber {
     /// The name for the snippet.
     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
@@ -25,38 +25,16 @@ pub struct SchemasSnippetResponse {
     /// Sets the snippet version.
     #[serde(rename = "dynamic", skip_serializing_if = "Option::is_none")]
     pub dynamic: Option<Dynamic>,
-    /// Date and time in ISO 8601 format.
-    #[serde(rename = "created_at", skip_serializing_if = "Option::is_none")]
-    pub created_at: Option<String>,
-    /// Date and time in ISO 8601 format.
-    #[serde(rename = "deleted_at", skip_serializing_if = "Option::is_none")]
-    pub deleted_at: Option<String>,
-    /// Date and time in ISO 8601 format.
-    #[serde(rename = "updated_at", skip_serializing_if = "Option::is_none")]
-    pub updated_at: Option<String>,
-    #[serde(rename = "service_id", skip_serializing_if = "Option::is_none")]
-    pub service_id: Option<Box<String>>,
-    /// String representing the number identifying a version of the service.
-    #[serde(rename = "version", skip_serializing_if = "Option::is_none")]
-    pub version: Option<String>,
-    #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
-    pub id: Option<Box<String>>,
 }
 
-impl SchemasSnippetResponse {
-    pub fn new() -> SchemasSnippetResponse {
-        SchemasSnippetResponse {
+impl SnippetWithDynamicNumber {
+    pub fn new() -> SnippetWithDynamicNumber {
+        SnippetWithDynamicNumber {
             name: None,
             _type: None,
             content: None,
             priority: None,
             dynamic: None,
-            created_at: None,
-            deleted_at: None,
-            updated_at: None,
-            service_id: None,
-            version: None,
-            id: None,
         }
     }
 }

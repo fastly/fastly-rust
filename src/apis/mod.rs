@@ -176,5 +176,6 @@ pub mod waf_firewalls_api;
 pub mod waf_rule_revisions_api;
 pub mod waf_rules_api;
 pub mod waf_tags_api;
+pub mod whole_platform_ddos_historical_api;
 
 pub mod configuration;

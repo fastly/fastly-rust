@@ -13,7 +13,7 @@ pub struct LoggingLogentriesAdditional {
     /// The port number.
     #[serde(rename = "port", skip_serializing_if = "Option::is_none")]
     pub port: Option<i32>,
-    /// Use token based authentication ([https://logentries.com/doc/input-token/](https://logentries.com/doc/input-token/)).
+    /// Use token based authentication.
     #[serde(rename = "token", skip_serializing_if = "Option::is_none")]
     pub token: Option<String>,
     #[serde(rename = "use_tls", skip_serializing_if = "Option::is_none")]

@@ -20,14 +20,14 @@ pub struct CreateSnippetParams {
     pub version_id: i32,
     /// The name for the snippet.
     pub name: Option<String>,
-    /// Sets the snippet version.
-    pub dynamic: Option<String>,
     /// The location in generated VCL where the snippet should be placed.
     pub _type: Option<String>,
     /// The VCL code that specifies exactly what the snippet does.
     pub content: Option<String>,
     /// Priority determines execution order. Lower numbers execute first.
-    pub priority: Option<String>
+    pub priority: Option<String>,
+    /// Sets the snippet version.
+    pub dynamic: Option<String>
 }
 
 /// struct for passing parameters to the method [`delete_snippet`]
@@ -90,14 +90,14 @@ pub struct UpdateSnippetDynamicParams {
     pub snippet_id: String,
     /// The name for the snippet.
     pub name: Option<String>,
-    /// Sets the snippet version.
-    pub dynamic: Option<String>,
     /// The location in generated VCL where the snippet should be placed.
     pub _type: Option<String>,
     /// The VCL code that specifies exactly what the snippet does.
     pub content: Option<String>,
     /// Priority determines execution order. Lower numbers execute first.
-    pub priority: Option<String>
+    pub priority: Option<String>,
+    /// Sets the snippet version.
+    pub dynamic: Option<String>
 }
 
 
@@ -152,17 +152,17 @@ pub enum UpdateSnippetDynamicError {
 
 
 /// Create a snippet for a particular service and version.
-pub async fn create_snippet(configuration: &mut configuration::Configuration, params: CreateSnippetParams) -> Result<crate::models::SnippetResponse, Error<CreateSnippetError>> {
+pub async fn create_snippet(configuration: &mut configuration::Configuration, params: CreateSnippetParams) -> Result<crate::models::SnippetResponsePost, Error<CreateSnippetError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
     let service_id = params.service_id;
     let version_id = params.version_id;
     let name = params.name;
-    let dynamic = params.dynamic;
     let _type = params._type;
     let content = params.content;
     let priority = params.priority;
+    let dynamic = params.dynamic;
 
 
     let local_var_client = &local_var_configuration.client;
@@ -185,9 +185,6 @@ pub async fn create_snippet(configuration: &mut configuration::Configuration, pa
     if let Some(local_var_param_value) = name {
         local_var_form_params.insert("name", local_var_param_value.to_string());
     }
-    if let Some(local_var_param_value) = dynamic {
-        local_var_form_params.insert("dynamic", local_var_param_value.to_string());
-    }
     if let Some(local_var_param_value) = _type {
         local_var_form_params.insert("type", local_var_param_value.to_string());
     }
@@ -196,6 +193,9 @@ pub async fn create_snippet(configuration: &mut configuration::Configuration, pa
     }
     if let Some(local_var_param_value) = priority {
         local_var_form_params.insert("priority", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = dynamic {
+        local_var_form_params.insert("dynamic", local_var_param_value.to_string());
     }
     local_var_req_builder = local_var_req_builder.form(&local_var_form_params);
 
@@ -502,10 +502,10 @@ pub async fn update_snippet_dynamic(configuration: &mut configuration::Configura
     let service_id = params.service_id;
     let snippet_id = params.snippet_id;
     let name = params.name;
-    let dynamic = params.dynamic;
     let _type = params._type;
     let content = params.content;
     let priority = params.priority;
+    let dynamic = params.dynamic;
 
 
     let local_var_client = &local_var_configuration.client;
@@ -528,9 +528,6 @@ pub async fn update_snippet_dynamic(configuration: &mut configuration::Configura
     if let Some(local_var_param_value) = name {
         local_var_form_params.insert("name", local_var_param_value.to_string());
     }
-    if let Some(local_var_param_value) = dynamic {
-        local_var_form_params.insert("dynamic", local_var_param_value.to_string());
-    }
     if let Some(local_var_param_value) = _type {
         local_var_form_params.insert("type", local_var_param_value.to_string());
     }
@@ -539,6 +536,9 @@ pub async fn update_snippet_dynamic(configuration: &mut configuration::Configura
     }
     if let Some(local_var_param_value) = priority {
         local_var_form_params.insert("priority", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = dynamic {
+        local_var_form_params.insert("dynamic", local_var_param_value.to_string());
     }
     local_var_req_builder = local_var_req_builder.form(&local_var_form_params);
 

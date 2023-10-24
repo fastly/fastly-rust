@@ -220,6 +220,15 @@ Name | Type | Description | Notes
 **ddos_action_tarpit** | Option<**i32**> | The number of times the tarpit action was taken. The tarpit action delays writing the response to the client. | 
 **ddos_action_close** | Option<**i32**> | The number of times the close action was taken. The close action aborts the connection as soon as possible. The close action takes effect either right after accept, right after the client hello, or right after the response was sent. | 
 **ddos_action_blackhole** | Option<**i32**> | The number of times the blackhole action was taken. The blackhole action quietly closes a TCP connection without sending a reset. The blackhole action quietly closes a TCP connection without notifying its peer (all TCP state is dropped). | 
+**bot_challenge_starts** | Option<**i32**> | The number of challenge-start tokens created. | 
+**bot_challenge_complete_tokens_passed** | Option<**i32**> | The number of challenge-complete tokens that passed validation. | 
+**bot_challenge_complete_tokens_failed** | Option<**i32**> | The number of challenge-complete tokens that failed validation. | 
+**bot_challenge_complete_tokens_checked** | Option<**i32**> | The number of challenge-complete tokens checked. | 
+**bot_challenge_complete_tokens_disabled** | Option<**i32**> | The number of challenge-complete tokens not checked because the feature was disabled. | 
+**bot_challenge_complete_tokens_issued** | Option<**i32**> | The number of challenge-complete tokens issued. For example, issuing a challenge-complete token after a series of CAPTCHA challenges ending in success. | 
+**bot_challenges_issued** | Option<**i32**> | The number of challenges issued. For example, the issuance of a CAPTCHA challenge. | 
+**bot_challenges_succeeded** | Option<**i32**> | The number of successful challenge solutions processed. For example, a correct CAPTCHA solution. | 
+**bot_challenges_failed** | Option<**i32**> | The number of failed challenge solutions processed. For example, an incorrect CAPTCHA solution. | 
 
 [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

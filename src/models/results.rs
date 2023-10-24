@@ -659,6 +659,33 @@ pub struct Results {
     /// The number of times the blackhole action was taken. The blackhole action quietly closes a TCP connection without sending a reset. The blackhole action quietly closes a TCP connection without notifying its peer (all TCP state is dropped).
     #[serde(rename = "ddos_action_blackhole", skip_serializing_if = "Option::is_none")]
     pub ddos_action_blackhole: Option<i32>,
+    /// The number of challenge-start tokens created.
+    #[serde(rename = "bot_challenge_starts", skip_serializing_if = "Option::is_none")]
+    pub bot_challenge_starts: Option<i32>,
+    /// The number of challenge-complete tokens that passed validation.
+    #[serde(rename = "bot_challenge_complete_tokens_passed", skip_serializing_if = "Option::is_none")]
+    pub bot_challenge_complete_tokens_passed: Option<i32>,
+    /// The number of challenge-complete tokens that failed validation.
+    #[serde(rename = "bot_challenge_complete_tokens_failed", skip_serializing_if = "Option::is_none")]
+    pub bot_challenge_complete_tokens_failed: Option<i32>,
+    /// The number of challenge-complete tokens checked.
+    #[serde(rename = "bot_challenge_complete_tokens_checked", skip_serializing_if = "Option::is_none")]
+    pub bot_challenge_complete_tokens_checked: Option<i32>,
+    /// The number of challenge-complete tokens not checked because the feature was disabled.
+    #[serde(rename = "bot_challenge_complete_tokens_disabled", skip_serializing_if = "Option::is_none")]
+    pub bot_challenge_complete_tokens_disabled: Option<i32>,
+    /// The number of challenge-complete tokens issued. For example, issuing a challenge-complete token after a series of CAPTCHA challenges ending in success.
+    #[serde(rename = "bot_challenge_complete_tokens_issued", skip_serializing_if = "Option::is_none")]
+    pub bot_challenge_complete_tokens_issued: Option<i32>,
+    /// The number of challenges issued. For example, the issuance of a CAPTCHA challenge.
+    #[serde(rename = "bot_challenges_issued", skip_serializing_if = "Option::is_none")]
+    pub bot_challenges_issued: Option<i32>,
+    /// The number of successful challenge solutions processed. For example, a correct CAPTCHA solution.
+    #[serde(rename = "bot_challenges_succeeded", skip_serializing_if = "Option::is_none")]
+    pub bot_challenges_succeeded: Option<i32>,
+    /// The number of failed challenge solutions processed. For example, an incorrect CAPTCHA solution.
+    #[serde(rename = "bot_challenges_failed", skip_serializing_if = "Option::is_none")]
+    pub bot_challenges_failed: Option<i32>,
 }
 
 impl Results {
@@ -881,6 +908,15 @@ impl Results {
             ddos_action_tarpit: None,
             ddos_action_close: None,
             ddos_action_blackhole: None,
+            bot_challenge_starts: None,
+            bot_challenge_complete_tokens_passed: None,
+            bot_challenge_complete_tokens_failed: None,
+            bot_challenge_complete_tokens_checked: None,
+            bot_challenge_complete_tokens_disabled: None,
+            bot_challenge_complete_tokens_issued: None,
+            bot_challenges_issued: None,
+            bot_challenges_succeeded: None,
+            bot_challenges_failed: None,
         }
     }
 }

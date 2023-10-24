@@ -67,7 +67,7 @@ pub enum GetStoresError {
 }
 
 
-/// Create a new kv store.
+/// Create a new KV store.
 pub async fn create_store(configuration: &mut configuration::Configuration, params: CreateStoreParams) -> Result<crate::models::StoreResponse, Error<CreateStoreError>> {
     let local_var_configuration = configuration;
 
@@ -124,7 +124,7 @@ pub async fn create_store(configuration: &mut configuration::Configuration, para
     }
 }
 
-/// An kv store must be empty before it can be deleted.  Deleting an kv store that still contains keys will result in a `409` (Conflict).
+/// A KV store must be empty before it can be deleted.  Deleting a KV store that still contains keys will result in a `409` (Conflict).
 pub async fn delete_store(configuration: &mut configuration::Configuration, params: DeleteStoreParams) -> Result<(), Error<DeleteStoreError>> {
     let local_var_configuration = configuration;
 
@@ -176,7 +176,7 @@ pub async fn delete_store(configuration: &mut configuration::Configuration, para
     }
 }
 
-/// Get an kv store by ID.
+/// Get a KV store by ID.
 pub async fn get_store(configuration: &mut configuration::Configuration, params: GetStoreParams) -> Result<crate::models::StoreResponse, Error<GetStoreError>> {
     let local_var_configuration = configuration;
 
