@@ -80,44 +80,44 @@ Name | Type | Description | Notes
 **waf_latency_5000_to_10000ms** | Option<**i32**> | Number of responses with latency between 5,000 and 10,000 milliseconds received for origin requests made by the Fastly WAF. | 
 **waf_latency_10000_to_60000ms** | Option<**i32**> | Number of responses with latency between 10,000 and 60,000 milliseconds received for origin requests made by the Fastly WAF. | 
 **waf_latency_60000ms** | Option<**i32**> | Number of responses with latency of 60,000 milliseconds and above received for origin requests made by the Fastly WAF. | 
-**compute_responses** | Option<**i32**> | Number of responses for origin received by Compute@Edge. | 
-**compute_resp_header_bytes** | Option<**i32**> | Number of header bytes for origin received by Compute@Edge. | 
-**compute_resp_body_bytes** | Option<**i32**> | Number of body bytes for origin received by Compute@Edge. | 
-**compute_status_1xx** | Option<**i32**> | Number of 1xx \"Informational\" status codes for origin received by Compute@Edge. | 
-**compute_status_2xx** | Option<**i32**> | Number of 2xx \"Success\" status codes for origin received by Compute@Edge. | 
-**compute_status_3xx** | Option<**i32**> | Number of 3xx \"Redirection\" codes for origin received by Compute@Edge. | 
-**compute_status_4xx** | Option<**i32**> | Number of 4xx \"Client Error\" codes for origin received by Compute@Edge. | 
-**compute_status_5xx** | Option<**i32**> | Number of 5xx \"Server Error\" codes for origin received by Compute@Edge. | 
-**compute_status_200** | Option<**i32**> | Number of responses received with status code 200 (Success) for origin received by Compute@Edge. | 
-**compute_status_204** | Option<**i32**> | Number of responses received with status code 204 (No Content) for origin received by Compute@Edge. | 
-**compute_status_206** | Option<**i32**> | Number of responses received with status code 206 (Partial Content) for origin received by Compute@Edge. | 
-**compute_status_301** | Option<**i32**> | Number of responses received with status code 301 (Moved Permanently) for origin received by Compute@Edge. | 
-**compute_status_302** | Option<**i32**> | Number of responses received with status code 302 (Found) for origin received by Compute@Edge. | 
-**compute_status_304** | Option<**i32**> | Number of responses received with status code 304 (Not Modified) for origin received by Compute@Edge. | 
-**compute_status_400** | Option<**i32**> | Number of responses received with status code 400 (Bad Request) for origin received by Compute@Edge. | 
-**compute_status_401** | Option<**i32**> | Number of responses received with status code 401 (Unauthorized) for origin received by Compute@Edge. | 
-**compute_status_403** | Option<**i32**> | Number of responses received with status code 403 (Forbidden) for origin received by Compute@Edge. | 
-**compute_status_404** | Option<**i32**> | Number of responses received with status code 404 (Not Found) for origin received by Compute@Edge. | 
-**compute_status_416** | Option<**i32**> | Number of responses received with status code 416 (Range Not Satisfiable) for origin received by Compute@Edge. | 
-**compute_status_429** | Option<**i32**> | Number of responses received with status code 429 (Too Many Requests) for origin received by Compute@Edge. | 
-**compute_status_500** | Option<**i32**> | Number of responses received with status code 500 (Internal Server Error) for origin received by Compute@Edge. | 
-**compute_status_501** | Option<**i32**> | Number of responses received with status code 501 (Not Implemented) for origin received by Compute@Edge. | 
-**compute_status_502** | Option<**i32**> | Number of responses received with status code 502 (Bad Gateway) for origin received by Compute@Edge. | 
-**compute_status_503** | Option<**i32**> | Number of responses received with status code 503 (Service Unavailable) for origin received by Compute@Edge. | 
-**compute_status_504** | Option<**i32**> | Number of responses received with status code 504 (Gateway Timeout) for origin received by Compute@Edge. | 
-**compute_status_505** | Option<**i32**> | Number of responses received with status code 505 (HTTP Version Not Supported) for origin received by Compute@Edge. | 
-**compute_latency_0_to_1ms** | Option<**i32**> | Number of responses with latency between 0 and 1 millisecond for origin received by Compute@Edge. | 
-**compute_latency_1_to_5ms** | Option<**i32**> | Number of responses with latency between 1 and 5 milliseconds for origin received by Compute@Edge. | 
-**compute_latency_5_to_10ms** | Option<**i32**> | Number of responses with latency between 5 and 10 milliseconds for origin received by Compute@Edge. | 
-**compute_latency_10_to_50ms** | Option<**i32**> | Number of responses with latency between 10 and 50 milliseconds for origin received by Compute@Edge. | 
-**compute_latency_50_to_100ms** | Option<**i32**> | Number of responses with latency between 50 and 100 milliseconds for origin received by Compute@Edge. | 
-**compute_latency_100_to_250ms** | Option<**i32**> | Number of responses with latency between 100 and 250 milliseconds for origin received by Compute@Edge. | 
-**compute_latency_250_to_500ms** | Option<**i32**> | Number of responses with latency between 250 and 500 milliseconds for origin received by Compute@Edge. | 
-**compute_latency_500_to_1000ms** | Option<**i32**> | Number of responses with latency between 500 and 1,000 milliseconds for origin received by Compute@Edge. | 
-**compute_latency_1000_to_5000ms** | Option<**i32**> | Number of responses with latency between 1,000 and 5,000 milliseconds for origin received by Compute@Edge. | 
-**compute_latency_5000_to_10000ms** | Option<**i32**> | Number of responses with latency between 5,000 and 10,000 milliseconds for origin received by Compute@Edge. | 
-**compute_latency_10000_to_60000ms** | Option<**i32**> | Number of responses with latency between 10,000 and 60,000 milliseconds for origin received by Compute@Edge. | 
-**compute_latency_60000ms** | Option<**i32**> | Number of responses with latency of 60,000 milliseconds and above for origin received by Compute@Edge. | 
+**compute_responses** | Option<**i32**> | Number of responses for origin received by the Compute platform. | 
+**compute_resp_header_bytes** | Option<**i32**> | Number of header bytes for origin received by the Compute platform. | 
+**compute_resp_body_bytes** | Option<**i32**> | Number of body bytes for origin received by the Compute platform. | 
+**compute_status_1xx** | Option<**i32**> | Number of 1xx \"Informational\" status codes for origin received by the Compute platform. | 
+**compute_status_2xx** | Option<**i32**> | Number of 2xx \"Success\" status codes for origin received by the Compute platform. | 
+**compute_status_3xx** | Option<**i32**> | Number of 3xx \"Redirection\" codes for origin received by the Compute platform. | 
+**compute_status_4xx** | Option<**i32**> | Number of 4xx \"Client Error\" codes for origin received by the Compute platform. | 
+**compute_status_5xx** | Option<**i32**> | Number of 5xx \"Server Error\" codes for origin received by the Compute platform. | 
+**compute_status_200** | Option<**i32**> | Number of responses received with status code 200 (Success) for origin received by the Compute platform. | 
+**compute_status_204** | Option<**i32**> | Number of responses received with status code 204 (No Content) for origin received by the Compute platform. | 
+**compute_status_206** | Option<**i32**> | Number of responses received with status code 206 (Partial Content) for origin received by the Compute platform. | 
+**compute_status_301** | Option<**i32**> | Number of responses received with status code 301 (Moved Permanently) for origin received by the Compute platform. | 
+**compute_status_302** | Option<**i32**> | Number of responses received with status code 302 (Found) for origin received by the Compute platform. | 
+**compute_status_304** | Option<**i32**> | Number of responses received with status code 304 (Not Modified) for origin received by the Compute platform. | 
+**compute_status_400** | Option<**i32**> | Number of responses received with status code 400 (Bad Request) for origin received by the Compute platform. | 
+**compute_status_401** | Option<**i32**> | Number of responses received with status code 401 (Unauthorized) for origin received by the Compute platform. | 
+**compute_status_403** | Option<**i32**> | Number of responses received with status code 403 (Forbidden) for origin received by the Compute platform. | 
+**compute_status_404** | Option<**i32**> | Number of responses received with status code 404 (Not Found) for origin received by the Compute platform. | 
+**compute_status_416** | Option<**i32**> | Number of responses received with status code 416 (Range Not Satisfiable) for origin received by the Compute platform. | 
+**compute_status_429** | Option<**i32**> | Number of responses received with status code 429 (Too Many Requests) for origin received by the Compute platform. | 
+**compute_status_500** | Option<**i32**> | Number of responses received with status code 500 (Internal Server Error) for origin received by the Compute platform. | 
+**compute_status_501** | Option<**i32**> | Number of responses received with status code 501 (Not Implemented) for origin received by the Compute platform. | 
+**compute_status_502** | Option<**i32**> | Number of responses received with status code 502 (Bad Gateway) for origin received by the Compute platform. | 
+**compute_status_503** | Option<**i32**> | Number of responses received with status code 503 (Service Unavailable) for origin received by the Compute platform. | 
+**compute_status_504** | Option<**i32**> | Number of responses received with status code 504 (Gateway Timeout) for origin received by the Compute platform. | 
+**compute_status_505** | Option<**i32**> | Number of responses received with status code 505 (HTTP Version Not Supported) for origin received by the Compute platform. | 
+**compute_latency_0_to_1ms** | Option<**i32**> | Number of responses with latency between 0 and 1 millisecond for origin received by the Compute platform. | 
+**compute_latency_1_to_5ms** | Option<**i32**> | Number of responses with latency between 1 and 5 milliseconds for origin received by the Compute platform. | 
+**compute_latency_5_to_10ms** | Option<**i32**> | Number of responses with latency between 5 and 10 milliseconds for origin received by the Compute platform. | 
+**compute_latency_10_to_50ms** | Option<**i32**> | Number of responses with latency between 10 and 50 milliseconds for origin received by the Compute platform. | 
+**compute_latency_50_to_100ms** | Option<**i32**> | Number of responses with latency between 50 and 100 milliseconds for origin received by the Compute platform. | 
+**compute_latency_100_to_250ms** | Option<**i32**> | Number of responses with latency between 100 and 250 milliseconds for origin received by the Compute platform. | 
+**compute_latency_250_to_500ms** | Option<**i32**> | Number of responses with latency between 250 and 500 milliseconds for origin received by the Compute platform. | 
+**compute_latency_500_to_1000ms** | Option<**i32**> | Number of responses with latency between 500 and 1,000 milliseconds for origin received by the Compute platform. | 
+**compute_latency_1000_to_5000ms** | Option<**i32**> | Number of responses with latency between 1,000 and 5,000 milliseconds for origin received by the Compute platform. | 
+**compute_latency_5000_to_10000ms** | Option<**i32**> | Number of responses with latency between 5,000 and 10,000 milliseconds for origin received by the Compute platform. | 
+**compute_latency_10000_to_60000ms** | Option<**i32**> | Number of responses with latency between 10,000 and 60,000 milliseconds for origin received by the Compute platform. | 
+**compute_latency_60000ms** | Option<**i32**> | Number of responses with latency of 60,000 milliseconds and above for origin received by the Compute platform. | 
 **all_responses** | Option<**i32**> | Number of responses received for origin requests made by all sources. | 
 **all_resp_header_bytes** | Option<**i32**> | Number of header bytes received for origin requests made by all sources. | 
 **all_resp_body_bytes** | Option<**i32**> | Number of body bytes received for origin requests made by all sources. | 

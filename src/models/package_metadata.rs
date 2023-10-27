@@ -11,25 +11,25 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct PackageMetadata {
-    /// Name of the Compute@Edge package.
+    /// Name of the Compute package.
     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
-    /// Description of the Compute@Edge package.
+    /// Description of the Compute package.
     #[serde(rename = "description", skip_serializing_if = "Option::is_none")]
     pub description: Option<String>,
     /// A list of package authors' email addresses.
     #[serde(rename = "authors", skip_serializing_if = "Option::is_none")]
     pub authors: Option<Vec<String>>,
-    /// The language of the Compute@Edge package.
+    /// The language of the Compute package.
     #[serde(rename = "language", skip_serializing_if = "Option::is_none")]
     pub language: Option<String>,
-    /// Size of the Compute@Edge package in bytes.
+    /// Size of the Compute package in bytes.
     #[serde(rename = "size", skip_serializing_if = "Option::is_none")]
     pub size: Option<i32>,
-    /// Hash of the Compute@Edge package.
+    /// Hash of the Compute package.
     #[serde(rename = "hashsum", skip_serializing_if = "Option::is_none")]
     pub hashsum: Option<String>,
-    /// Hash of the files within the Compute@Edge package.
+    /// Hash of the files within the Compute package.
     #[serde(rename = "files_hash", skip_serializing_if = "Option::is_none")]
     pub files_hash: Option<String>,
 }

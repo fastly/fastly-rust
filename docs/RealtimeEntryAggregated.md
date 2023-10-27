@@ -129,10 +129,10 @@ Name | Type | Description | Notes
 **hit_resp_body_bytes** | Option<**i32**> | Total body bytes delivered for cache hits. | 
 **miss_resp_body_bytes** | Option<**i32**> | Total body bytes delivered for cache misses. | 
 **pass_resp_body_bytes** | Option<**i32**> | Total body bytes delivered for cache passes. | 
-**compute_req_header_bytes** | Option<**i32**> | Total header bytes received by Compute@Edge. | 
-**compute_req_body_bytes** | Option<**i32**> | Total body bytes received by Compute@Edge. | 
-**compute_resp_header_bytes** | Option<**i32**> | Total header bytes sent from Compute@Edge to end user. | 
-**compute_resp_body_bytes** | Option<**i32**> | Total body bytes sent from Compute@Edge to end user. | 
+**compute_req_header_bytes** | Option<**i32**> | Total header bytes received by the Compute platform. | 
+**compute_req_body_bytes** | Option<**i32**> | Total body bytes received by the Compute platform. | 
+**compute_resp_header_bytes** | Option<**i32**> | Total header bytes sent from Compute to end user. | 
+**compute_resp_body_bytes** | Option<**i32**> | Total body bytes sent from Compute to end user. | 
 **imgvideo** | Option<**i32**> | Number of video responses that came from the Fastly Image Optimizer service. | 
 **imgvideo_frames** | Option<**i32**> | Number of video frames that came from the Fastly Image Optimizer service. A video frame is an individual image within a sequence of video. | 
 **imgvideo_resp_header_bytes** | Option<**i32**> | Total header bytes of video delivered from the Fastly Image Optimizer service. | 
@@ -159,17 +159,17 @@ Name | Type | Description | Notes
 **shield_fetch_resp_body_bytes** | Option<**i32**> | Total response body bytes sent from a shield to the edge. | 
 **segblock_origin_fetches** | Option<**i32**> | Number of `Range` requests to origin for segments of resources when using segmented caching. | 
 **segblock_shield_fetches** | Option<**i32**> | Number of `Range` requests to a shield for segments of resources when using segmented caching. | 
-**compute_resp_status_1xx** | Option<**i32**> | Number of \"Informational\" category status codes delivered by Compute@Edge. | 
-**compute_resp_status_2xx** | Option<**i32**> | Number of \"Success\" category status codes delivered by Compute@Edge. | 
-**compute_resp_status_3xx** | Option<**i32**> | Number of \"Redirection\" category status codes delivered by Compute@Edge. | 
-**compute_resp_status_4xx** | Option<**i32**> | Number of \"Client Error\" category status codes delivered by Compute@Edge. | 
-**compute_resp_status_5xx** | Option<**i32**> | Number of \"Server Error\" category status codes delivered by Compute@Edge. | 
+**compute_resp_status_1xx** | Option<**i32**> | Number of \"Informational\" category status codes delivered by the Compute platform. | 
+**compute_resp_status_2xx** | Option<**i32**> | Number of \"Success\" category status codes delivered by the Compute platform. | 
+**compute_resp_status_3xx** | Option<**i32**> | Number of \"Redirection\" category status codes delivered by the Compute platform. | 
+**compute_resp_status_4xx** | Option<**i32**> | Number of \"Client Error\" category status codes delivered by the Compute platform. | 
+**compute_resp_status_5xx** | Option<**i32**> | Number of \"Server Error\" category status codes delivered by the Compute platform. | 
 **edge_hit_requests** | Option<**i32**> | Number of requests sent by end users to Fastly that resulted in a hit at the edge. | 
 **edge_miss_requests** | Option<**i32**> | Number of requests sent by end users to Fastly that resulted in a miss at the edge. | 
-**compute_bereq_header_bytes** | Option<**i32**> | Total header bytes sent to backends (origins) by Compute@Edge. | 
-**compute_bereq_body_bytes** | Option<**i32**> | Total body bytes sent to backends (origins) by Compute@Edge. | 
-**compute_beresp_header_bytes** | Option<**i32**> | Total header bytes received from backends (origins) by Compute@Edge. | 
-**compute_beresp_body_bytes** | Option<**i32**> | Total body bytes received from backends (origins) by Compute@Edge. | 
+**compute_bereq_header_bytes** | Option<**i32**> | Total header bytes sent to backends (origins) by the Compute platform. | 
+**compute_bereq_body_bytes** | Option<**i32**> | Total body bytes sent to backends (origins) by the Compute platform. | 
+**compute_beresp_header_bytes** | Option<**i32**> | Total header bytes received from backends (origins) by the Compute platform. | 
+**compute_beresp_body_bytes** | Option<**i32**> | Total body bytes received from backends (origins) by the Compute platform. | 
 **origin_cache_fetches** | Option<**i32**> | The total number of completed requests made to backends (origins) that returned cacheable content. | 
 **shield_cache_fetches** | Option<**i32**> | The total number of completed requests made to shields that returned cacheable content. | 
 **compute_bereqs** | Option<**i32**> | Number of backend requests started. | 

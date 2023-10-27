@@ -470,43 +470,43 @@ pub struct Results {
     /// The amount of active CPU time used to process your requests (in milliseconds).
     #[serde(rename = "compute_execution_time_ms", skip_serializing_if = "Option::is_none")]
     pub compute_execution_time_ms: Option<f32>,
-    /// Total header bytes received by Compute@Edge.
+    /// Total header bytes received by the Compute platform.
     #[serde(rename = "compute_req_header_bytes", skip_serializing_if = "Option::is_none")]
     pub compute_req_header_bytes: Option<i32>,
-    /// Total body bytes received by Compute@Edge.
+    /// Total body bytes received by the Compute platform.
     #[serde(rename = "compute_req_body_bytes", skip_serializing_if = "Option::is_none")]
     pub compute_req_body_bytes: Option<i32>,
-    /// Total header bytes sent from Compute@Edge to end user.
+    /// Total header bytes sent from Compute to end user.
     #[serde(rename = "compute_resp_header_bytes", skip_serializing_if = "Option::is_none")]
     pub compute_resp_header_bytes: Option<i32>,
-    /// Total body bytes sent from Compute@Edge to end user.
+    /// Total body bytes sent from Compute to end user.
     #[serde(rename = "compute_resp_body_bytes", skip_serializing_if = "Option::is_none")]
     pub compute_resp_body_bytes: Option<i32>,
-    /// Number of \"Informational\" category status codes delivered by Compute@Edge.
+    /// Number of \"Informational\" category status codes delivered by the Compute platform.
     #[serde(rename = "compute_resp_status_1xx", skip_serializing_if = "Option::is_none")]
     pub compute_resp_status_1xx: Option<i32>,
-    /// Number of \"Success\" category status codes delivered by Compute@Edge.
+    /// Number of \"Success\" category status codes delivered by the Compute platform.
     #[serde(rename = "compute_resp_status_2xx", skip_serializing_if = "Option::is_none")]
     pub compute_resp_status_2xx: Option<i32>,
-    /// Number of \"Redirection\" category status codes delivered by Compute@Edge.
+    /// Number of \"Redirection\" category status codes delivered by the Compute platform.
     #[serde(rename = "compute_resp_status_3xx", skip_serializing_if = "Option::is_none")]
     pub compute_resp_status_3xx: Option<i32>,
-    /// Number of \"Client Error\" category status codes delivered by Compute@Edge.
+    /// Number of \"Client Error\" category status codes delivered by the Compute platform.
     #[serde(rename = "compute_resp_status_4xx", skip_serializing_if = "Option::is_none")]
     pub compute_resp_status_4xx: Option<i32>,
-    /// Number of \"Server Error\" category status codes delivered by Compute@Edge.
+    /// Number of \"Server Error\" category status codes delivered by the Compute platform.
     #[serde(rename = "compute_resp_status_5xx", skip_serializing_if = "Option::is_none")]
     pub compute_resp_status_5xx: Option<i32>,
-    /// Total header bytes sent to backends (origins) by Compute@Edge.
+    /// Total header bytes sent to backends (origins) by the Compute platform.
     #[serde(rename = "compute_bereq_header_bytes", skip_serializing_if = "Option::is_none")]
     pub compute_bereq_header_bytes: Option<i32>,
-    /// Total body bytes sent to backends (origins) by Compute@Edge.
+    /// Total body bytes sent to backends (origins) by the Compute platform.
     #[serde(rename = "compute_bereq_body_bytes", skip_serializing_if = "Option::is_none")]
     pub compute_bereq_body_bytes: Option<i32>,
-    /// Total header bytes received from backends (origins) by Compute@Edge.
+    /// Total header bytes received from backends (origins) by the Compute platform.
     #[serde(rename = "compute_beresp_header_bytes", skip_serializing_if = "Option::is_none")]
     pub compute_beresp_header_bytes: Option<i32>,
-    /// Total body bytes received from backends (origins) by Compute@Edge.
+    /// Total body bytes received from backends (origins) by the Compute platform.
     #[serde(rename = "compute_beresp_body_bytes", skip_serializing_if = "Option::is_none")]
     pub compute_beresp_body_bytes: Option<i32>,
     /// Number of backend requests started.

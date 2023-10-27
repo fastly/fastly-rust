@@ -49,7 +49,7 @@ pub enum PutPackageError {
 }
 
 
-/// List detailed information about the Compute@Edge package for the specified service.
+/// List detailed information about the Compute package for the specified service.
 pub async fn get_package(configuration: &mut configuration::Configuration, params: GetPackageParams) -> Result<crate::models::PackageResponse, Error<GetPackageError>> {
     let local_var_configuration = configuration;
 
@@ -102,7 +102,7 @@ pub async fn get_package(configuration: &mut configuration::Configuration, param
     }
 }
 
-/// Upload a Compute@Edge package associated with the specified service version.
+/// Upload a Compute package associated with the specified service version.
 pub async fn put_package(configuration: &mut configuration::Configuration, params: PutPackageParams) -> Result<crate::models::PackageResponse, Error<PutPackageError>> {
     let local_var_configuration = configuration;
 
