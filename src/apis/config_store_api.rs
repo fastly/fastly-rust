@@ -46,6 +46,13 @@ pub struct ListConfigStoreServicesParams {
     pub config_store_id: String
 }
 
+/// struct for passing parameters to the method [`list_config_stores`]
+#[derive(Clone, Debug, Default)]
+pub struct ListConfigStoresParams {
+    /// Returns a one-element array containing the details for the named config store.
+    pub name: Option<String>
+}
+
 /// struct for passing parameters to the method [`update_config_store`]
 #[derive(Clone, Debug, Default)]
 pub struct UpdateConfigStoreParams {
@@ -372,10 +379,11 @@ pub async fn list_config_store_services(configuration: &mut configuration::Confi
 }
 
 /// List config stores.
-pub async fn list_config_stores(configuration: &mut configuration::Configuration) -> Result<Vec<crate::models::ConfigStoreResponse>, Error<ListConfigStoresError>> {
+pub async fn list_config_stores(configuration: &mut configuration::Configuration, params: ListConfigStoresParams) -> Result<Vec<crate::models::ConfigStoreResponse>, Error<ListConfigStoresError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
+    let name = params.name;
 
 
     let local_var_client = &local_var_configuration.client;
@@ -383,6 +391,9 @@ pub async fn list_config_stores(configuration: &mut configuration::Configuration
     let local_var_uri_str = format!("{}/resources/stores/config", local_var_configuration.base_path);
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
+    if let Some(ref local_var_str) = name {
+        local_var_req_builder = local_var_req_builder.query(&[("name", &local_var_str.to_string())]);
+    }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }

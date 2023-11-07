@@ -203,7 +203,10 @@ list_config_stores(cfg, params)
 
 ### Parameters
 
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**name** | Option\<**String**> | Returns a one-element array containing the details for the named config store. |  |
 
 ### Return type
 
