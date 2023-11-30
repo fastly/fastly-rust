@@ -1,5 +1,11 @@
 # Changelog
 
+## [v4.3.0](https://github.com/fastly/fastly-rust/releases/tag/release/v4.3.0) (2023-11-29)
+
+**Enhancements:**
+
+- feat(stats): expose new `service_id` and `start_time` fields.
+
 ## [v4.2.2](https://github.com/fastly/fastly-rust/releases/tag/release/v4.2.2) (2023-11-07)
 
 **Enhancements:**

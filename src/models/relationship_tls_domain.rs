@@ -5,7 +5,7 @@
  *
  */
 
-/// RelationshipTlsDomain : The [TLS domain](/reference/api/tls/custom-certs/domains/) being enabled for TLS traffic. Required.
+/// RelationshipTlsDomain : The TLS domain being enabled for TLS traffic. Required.
 
 
 
@@ -16,7 +16,7 @@ pub struct RelationshipTlsDomain {
 }
 
 impl RelationshipTlsDomain {
-    /// The [TLS domain](/reference/api/tls/custom-certs/domains/) being enabled for TLS traffic. Required.
+    /// The TLS domain being enabled for TLS traffic. Required.
     pub fn new() -> RelationshipTlsDomain {
         RelationshipTlsDomain {
             tls_domain: None,

@@ -5,7 +5,7 @@
  *
  */
 
-/// RelationshipMutualAuthentication : The [Mutual Authentication](/reference/api/tls/mutual-tls/authentication/) for client-to-server authentication. Optional.
+/// RelationshipMutualAuthentication : The Mutual Authentication for client-to-server authentication. Optional.
 
 
 
@@ -16,7 +16,7 @@ pub struct RelationshipMutualAuthentication {
 }
 
 impl RelationshipMutualAuthentication {
-    /// The [Mutual Authentication](/reference/api/tls/mutual-tls/authentication/) for client-to-server authentication. Optional.
+    /// The Mutual Authentication for client-to-server authentication. Optional.
     pub fn new() -> RelationshipMutualAuthentication {
         RelationshipMutualAuthentication {
             mutual_authentication: None,

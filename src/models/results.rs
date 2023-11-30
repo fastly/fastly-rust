@@ -5,7 +5,7 @@
  *
  */
 
-/// Results : The [results](#results-data-model) of the query, grouped by service (and optionally, region), and aggregated over the appropriate time span.
+/// Results : The results of stats queries, may be grouped by service depending on endpoint, and aggregated over the appropriate time span.
 
 
 
@@ -686,10 +686,15 @@ pub struct Results {
     /// The number of failed challenge solutions processed. For example, an incorrect CAPTCHA solution.
     #[serde(rename = "bot_challenges_failed", skip_serializing_if = "Option::is_none")]
     pub bot_challenges_failed: Option<i32>,
+    #[serde(rename = "service_id", skip_serializing_if = "Option::is_none")]
+    pub service_id: Option<Box<String>>,
+    /// Timestamp for the start of the time period being reported
+    #[serde(rename = "start_time", skip_serializing_if = "Option::is_none")]
+    pub start_time: Option<i32>,
 }
 
 impl Results {
-    /// The [results](#results-data-model) of the query, grouped by service (and optionally, region), and aggregated over the appropriate time span.
+    /// The results of stats queries, may be grouped by service depending on endpoint, and aggregated over the appropriate time span.
     pub fn new() -> Results {
         Results {
             requests: None,
@@ -917,6 +922,8 @@ impl Results {
             bot_challenges_issued: None,
             bot_challenges_succeeded: None,
             bot_challenges_failed: None,
+            service_id: None,
+            start_time: None,
         }
     }
 }
