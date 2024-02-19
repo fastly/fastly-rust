@@ -124,6 +124,8 @@ pub mod contact_response_all_of;
 pub use self::contact_response_all_of::ContactResponseAllOf;
 pub mod content;
 pub use self::content::Content;
+pub mod create_response_object_request;
+pub use self::create_response_object_request::CreateResponseObjectRequest;
 pub mod customer;
 pub use self::customer::Customer;
 pub mod customer_response;

@@ -17,7 +17,8 @@ pub struct CreateResponseObjectParams {
     /// Alphanumeric string identifying the service.
     pub service_id: String,
     /// Integer identifying a service version.
-    pub version_id: i32
+    pub version_id: i32,
+    pub create_response_object_request: Option<crate::models::CreateResponseObjectRequest>
 }
 
 /// struct for passing parameters to the method [`delete_response_object`]
@@ -59,7 +60,8 @@ pub struct UpdateResponseObjectParams {
     /// Integer identifying a service version.
     pub version_id: i32,
     /// Name for the request settings.
-    pub response_object_name: String
+    pub response_object_name: String,
+    pub create_response_object_request: Option<crate::models::CreateResponseObjectRequest>
 }
 
 
@@ -67,6 +69,8 @@ pub struct UpdateResponseObjectParams {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateResponseObjectError {
+    Status400(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -95,6 +99,8 @@ pub enum ListResponseObjectsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateResponseObjectError {
+    Status400(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -106,6 +112,7 @@ pub async fn create_response_object(configuration: &mut configuration::Configura
     // unbox the parameters
     let service_id = params.service_id;
     let version_id = params.version_id;
+    let create_response_object_request = params.create_response_object_request;
 
 
     let local_var_client = &local_var_configuration.client;
@@ -124,6 +131,7 @@ pub async fn create_response_object(configuration: &mut configuration::Configura
         };
         local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
     };
+    local_var_req_builder = local_var_req_builder.json(&create_response_object_request);
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
@@ -321,6 +329,7 @@ pub async fn update_response_object(configuration: &mut configuration::Configura
     let service_id = params.service_id;
     let version_id = params.version_id;
     let response_object_name = params.response_object_name;
+    let create_response_object_request = params.create_response_object_request;
 
 
     let local_var_client = &local_var_configuration.client;
@@ -339,6 +348,7 @@ pub async fn update_response_object(configuration: &mut configuration::Configura
         };
         local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
     };
+    local_var_req_builder = local_var_req_builder.json(&create_response_object_request);
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;

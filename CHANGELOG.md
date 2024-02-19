@@ -1,5 +1,12 @@
 # Changelog
 
+## [v4.3.1](https://github.com/fastly/fastly-rust/releases/tag/release/v4.3.1) (2024-02-19)
+
+**Bug fixes:**
+
+- fix(response_object): strongly type response_object create_update requests
+- fix(tls_configurations): fix `tls_protocols` field to be a string array type
+
 ## [v4.3.0](https://github.com/fastly/fastly-rust/releases/tag/release/v4.3.0) (2023-11-29)
 
 **Enhancements:**

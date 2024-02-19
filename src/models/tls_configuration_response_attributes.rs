@@ -27,7 +27,7 @@ pub struct TlsConfigurationResponseAttributes {
     pub http_protocols: Option<Vec<String>>,
     /// TLS protocols available on your configuration.
     #[serde(rename = "tls_protocols", skip_serializing_if = "Option::is_none")]
-    pub tls_protocols: Option<Vec<f32>>,
+    pub tls_protocols: Option<Vec<String>>,
     /// Signifies whether the configuration is used for Platform TLS or not.
     #[serde(rename = "bulk", skip_serializing_if = "Option::is_none")]
     pub bulk: Option<bool>,

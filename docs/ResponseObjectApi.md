@@ -31,6 +31,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **service_id** | **String** | Alphanumeric string identifying the service. | [required] |
 **version_id** | **i32** | Integer identifying a service version. | [required] |
+**create_response_object_request** | Option\<[**CreateResponseObjectRequest**](CreateResponseObjectRequest.md)> |  |  |
 
 ### Return type
 
@@ -42,7 +43,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: application/x-www-form-urlencoded
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
@@ -178,6 +179,7 @@ Name | Type | Description  | Required | Notes
 **service_id** | **String** | Alphanumeric string identifying the service. | [required] |
 **version_id** | **i32** | Integer identifying a service version. | [required] |
 **response_object_name** | **String** | Name for the request settings. | [required] |
+**create_response_object_request** | Option\<[**CreateResponseObjectRequest**](CreateResponseObjectRequest.md)> |  |  |
 
 ### Return type
 
@@ -189,7 +191,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: application/x-www-form-urlencoded
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
