@@ -12,10 +12,10 @@
 pub struct ServiceListResponseAllOf {
     #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
     pub id: Option<Box<String>>,
-    /// Current [version](/reference/api/services/version/) of the service.
+    /// Current [version](https://www.fastly.com/documentation/reference/api/services/version/) of the service.
     #[serde(rename = "version", skip_serializing_if = "Option::is_none")]
     pub version: Option<i32>,
-    /// A list of [versions](/reference/api/services/version/) associated with the service.
+    /// A list of [versions](https://www.fastly.com/documentation/reference/api/services/version/) associated with the service.
     #[serde(rename = "versions", skip_serializing_if = "Option::is_none")]
     pub versions: Option<Vec<crate::models::SchemasVersionResponse>>,
 }

@@ -28,6 +28,8 @@ impl TlsSubscriptionDataAttributes {
 pub enum CertificateAuthority {
     #[serde(rename = "lets-encrypt")]
     LetsEncrypt,
+    #[serde(rename = "certainly")]
+    Certainly,
     #[serde(rename = "globalsign")]
     Globalsign,
 }

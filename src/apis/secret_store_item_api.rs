@@ -36,7 +36,7 @@ pub struct GetSecretParams {
 #[derive(Clone, Debug, Default)]
 pub struct GetSecretsParams {
     pub store_id: String,
-    /// Cursor value from a previous response to retrieve the next page. To request the first page, this should be empty.
+    /// Cursor value from the `next_cursor` field of a previous response, used to retrieve the next page. To request the first page, this should be empty.
     pub cursor: Option<String>,
     /// Number of results per page. The maximum is 200.
     pub limit: Option<String>

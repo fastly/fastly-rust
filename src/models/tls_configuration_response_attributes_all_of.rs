@@ -10,7 +10,7 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct TlsConfigurationResponseAttributesAllOf {
-    /// Signifies whether or not Fastly will use this configuration as a default when creating a new [TLS Activation](/reference/api/tls/custom-certs/activations/).
+    /// Signifies whether or not Fastly will use this configuration as a default when creating a new [TLS Activation](https://www.fastly.com/documentation/reference/api/tls/custom-certs/activations/).
     #[serde(rename = "default", skip_serializing_if = "Option::is_none")]
     pub default: Option<bool>,
     /// HTTP protocols available on your configuration.

@@ -29,10 +29,10 @@ Name | Type | Description  | Required | Notes
 **start** | Option\<**String**> | A valid ISO-8601-formatted date and time, or UNIX timestamp, indicating the inclusive start of the query time range. If not provided, a default is chosen based on the provided `downsample` value. |  |
 **end** | Option\<**String**> | A valid ISO-8601-formatted date and time, or UNIX timestamp, indicating the exclusive end of the query time range. If not provided, a default is chosen based on the provided `downsample` value. |  |
 **downsample** | Option\<**String**> | Duration of sample windows. |  |[default to hour]
-**metric** | Option\<**String**> | The metric to retrieve. Up to ten comma-separated metrics are accepted. |  |[default to responses]
+**metric** | Option\<**String**> | The metrics to retrieve. Multiple values should be comma-separated. |  |[default to responses]
 **group_by** | Option\<**String**> | Dimensions to return in the query. Multiple dimensions may be separated by commas. For example, `group_by=host` will return one timeseries for every origin host, as a total across all POPs.  |  |
 **limit** | Option\<**String**> | Number of results per page. The maximum is 200. |  |[default to 100]
-**cursor** | Option\<**String**> | Cursor value from a previous response to retrieve the next page. To request the first page, this should be empty. |  |
+**cursor** | Option\<**String**> | Cursor value from the `next_cursor` field of a previous response, used to retrieve the next page. To request the first page, this should be empty. |  |
 **region** | Option\<**String**> | Limit query to one or more specific geographic regions. Values should be comma-separated.  |  |
 **datacenter** | Option\<**String**> | Limit query to one or more specific POPs. Values should be comma-separated. |  |
 **host** | Option\<**String**> | Limit query to one or more specific origin hosts. Values should be comma-separated. |  |

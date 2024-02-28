@@ -139,7 +139,7 @@ get_secrets(cfg, params)
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **store_id** | **String** |  | [required] |
-**cursor** | Option\<**String**> | Cursor value from a previous response to retrieve the next page. To request the first page, this should be empty. |  |
+**cursor** | Option\<**String**> | Cursor value from the `next_cursor` field of a previous response, used to retrieve the next page. To request the first page, this should be empty. |  |
 **limit** | Option\<**String**> | Number of results per page. The maximum is 200. |  |[default to 100]
 
 ### Return type

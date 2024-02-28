@@ -1,13 +1,11 @@
-# ErrorResponse
+# Listinvoices
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**detail** | Option<**String**> |  | 
-**errors** | Option<[**Vec&lt;serde_json::Value&gt;**](SerdeJsonValue.md)> |  | 
-**status** | Option<**i32**> |  | 
-**title** | Option<**String**> |  | 
+**data** | Option<[**Vec&lt;crate::models::Invoice&gt;**](Invoice.md)> |  | 
+**meta** | Option<[**crate::models::Metadata**](Metadata.md)> |  | 
 
 [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

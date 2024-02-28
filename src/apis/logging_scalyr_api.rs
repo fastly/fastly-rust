@@ -30,7 +30,7 @@ pub struct CreateLogScalyrParams {
     pub format_version: Option<i32>,
     /// The region that log data will be sent to.
     pub region: Option<String>,
-    /// The token to use for authentication ([https://www.scalyr.com/keys](https://www.scalyr.com/keys)).
+    /// The token to use for authentication.
     pub token: Option<String>,
     /// The name of the logfile within Scalyr.
     pub project_id: Option<String>
@@ -88,7 +88,7 @@ pub struct UpdateLogScalyrParams {
     pub format_version: Option<i32>,
     /// The region that log data will be sent to.
     pub region: Option<String>,
-    /// The token to use for authentication ([https://www.scalyr.com/keys](https://www.scalyr.com/keys)).
+    /// The token to use for authentication.
     pub token: Option<String>,
     /// The name of the logfile within Scalyr.
     pub project_id: Option<String>

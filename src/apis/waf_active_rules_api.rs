@@ -225,7 +225,7 @@ pub async fn bulk_delete_waf_active_rules(configuration: &mut configuration::Con
     }
 }
 
-/// Bulk update all active rules on a [firewall version](https://developer.fastly.com/reference/api/waf/firewall-version/). This endpoint will not add new active rules, only update existing active rules.
+/// Bulk update all active rules on a [firewall version](https://www.fastly.com/documentation/reference/api/waf/firewall-version/). This endpoint will not add new active rules, only update existing active rules.
 pub async fn bulk_update_waf_active_rules(configuration: &mut configuration::Configuration, params: BulkUpdateWafActiveRulesParams) -> Result<(), Error<BulkUpdateWafActiveRulesError>> {
     let local_var_configuration = configuration;
 

@@ -176,7 +176,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::ErrorResponse**](ErrorResponse.md)
+[**crate::models::AutomationTokenErrorResponse**](AutomationTokenErrorResponse.md)
 
 ### Authorization
 

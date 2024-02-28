@@ -422,7 +422,7 @@ pub async fn get_custom_vcl(configuration: &mut configuration::Configuration, pa
     }
 }
 
-/// Return boilerplate VCL with the service's TTL from the [settings](/reference/api/vcl-services/settings/).
+/// Return boilerplate VCL with the service's TTL from the [settings](https://www.fastly.com/documentation/reference/api/vcl-services/settings/).
 pub async fn get_custom_vcl_boilerplate(configuration: &mut configuration::Configuration, params: GetCustomVclBoilerplateParams) -> Result<String, Error<GetCustomVclBoilerplateError>> {
     let local_var_configuration = configuration;
 

@@ -167,8 +167,9 @@ get_secret_stores(cfg, params)
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**cursor** | Option\<**String**> | Cursor value from a previous response to retrieve the next page. To request the first page, this should be empty. |  |
+**cursor** | Option\<**String**> | Cursor value from the `next_cursor` field of a previous response, used to retrieve the next page. To request the first page, this should be empty. |  |
 **limit** | Option\<**String**> | Number of results per page. The maximum is 200. |  |[default to 100]
+**name** | Option\<**String**> | Returns a one-element array containing the details for the named secret store. |  |
 
 ### Return type
 

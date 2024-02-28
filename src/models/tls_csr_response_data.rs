@@ -17,7 +17,7 @@ pub struct TlsCsrResponseData {
     #[serde(rename = "attributes", skip_serializing_if = "Option::is_none")]
     pub attributes: Option<Box<crate::models::TlsCsrResponseAttributes>>,
     #[serde(rename = "relationships", skip_serializing_if = "Option::is_none")]
-    pub relationships: Option<Box<crate::models::RelationshipsForTlsCsr>>,
+    pub relationships: Option<Box<crate::models::RelationshipTlsPrivateKey>>,
 }
 
 impl TlsCsrResponseData {

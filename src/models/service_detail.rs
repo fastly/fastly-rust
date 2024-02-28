@@ -39,7 +39,7 @@ pub struct ServiceDetail {
     /// Whether the service is paused. Services are paused due to a lack of traffic for an extended period of time. Services are resumed either when a draft version is activated or a locked version is cloned and reactivated.
     #[serde(rename = "paused", skip_serializing_if = "Option::is_none")]
     pub paused: Option<bool>,
-    /// A list of [versions](/reference/api/services/version/) associated with the service.
+    /// A list of [versions](https://www.fastly.com/documentation/reference/api/services/version/) associated with the service.
     #[serde(rename = "versions", skip_serializing_if = "Option::is_none")]
     pub versions: Option<Vec<crate::models::SchemasVersionResponse>>,
     #[serde(rename = "active_version", skip_serializing_if = "Option::is_none")]

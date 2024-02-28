@@ -41,7 +41,7 @@ pub struct PoolResponsePost {
     /// Name for the Pool.
     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
-    /// Selected POP to serve as a shield for the servers. Defaults to `null` meaning no origin shielding if not set. Refer to the [POPs API endpoint](/reference/api/utils/pops/) to get a list of available POPs used for shielding.
+    /// Selected POP to serve as a shield for the servers. Defaults to `null` meaning no origin shielding if not set. Refer to the [POPs API endpoint](https://www.fastly.com/documentation/reference/api/utils/pops/) to get a list of available POPs used for shielding.
     #[serde(rename = "shield", skip_serializing_if = "Option::is_none")]
     pub shield: Option<String>,
     /// Condition which, if met, will select this configuration during a request. Optional.

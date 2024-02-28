@@ -58,8 +58,8 @@ pub enum CreateAutomationTokenError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetAutomationTokenIdError {
-    Status401(crate::models::ErrorResponse),
-    Status403(crate::models::ErrorResponse),
+    Status401(crate::models::AutomationTokenErrorResponse),
+    Status403(crate::models::AutomationTokenErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -67,8 +67,8 @@ pub enum GetAutomationTokenIdError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetAutomationTokensIdServicesError {
-    Status401(crate::models::ErrorResponse),
-    Status403(crate::models::ErrorResponse),
+    Status401(crate::models::AutomationTokenErrorResponse),
+    Status403(crate::models::AutomationTokenErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -76,8 +76,8 @@ pub enum GetAutomationTokensIdServicesError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListAutomationTokensError {
-    Status401(crate::models::ErrorResponse),
-    Status403(crate::models::ErrorResponse),
+    Status401(crate::models::AutomationTokenErrorResponse),
+    Status403(crate::models::AutomationTokenErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -85,10 +85,10 @@ pub enum ListAutomationTokensError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum RevokeAutomationTokenIdError {
-    Status400(crate::models::ErrorResponse),
-    Status401(crate::models::ErrorResponse),
-    Status403(crate::models::ErrorResponse),
-    Status404(crate::models::ErrorResponse),
+    Status400(crate::models::AutomationTokenErrorResponse),
+    Status401(crate::models::AutomationTokenErrorResponse),
+    Status403(crate::models::AutomationTokenErrorResponse),
+    Status404(crate::models::AutomationTokenErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -318,7 +318,7 @@ pub async fn list_automation_tokens(configuration: &mut configuration::Configura
 }
 
 /// Revoke an automation token by ID.
-pub async fn revoke_automation_token_id(configuration: &mut configuration::Configuration, params: RevokeAutomationTokenIdParams) -> Result<crate::models::ErrorResponse, Error<RevokeAutomationTokenIdError>> {
+pub async fn revoke_automation_token_id(configuration: &mut configuration::Configuration, params: RevokeAutomationTokenIdParams) -> Result<crate::models::AutomationTokenErrorResponse, Error<RevokeAutomationTokenIdError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters

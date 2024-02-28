@@ -1,5 +1,23 @@
 # Changelog
 
+## [v4.4.0](https://github.com/fastly/fastly-rust/releases/tag/release/v4.4.0) (2024-02-28)
+
+**Enhancements:**
+
+- feat(billing): add 'get invoice by invoice ID' endpoint.
+- feat(billing): add 'list invoices' endpoint.
+- feat(image_opto): add 'shield' and 'transform' methods and fields.
+- feat(secret_store): add 'name' filter.
+- feat(tls): add 'create CSR' endpoint.
+- feat(tls_subscription): add 'active order' methods and fields.
+
+**Documentation:**
+
+- doc(backend) fix openssl link.
+- doc(director,domain_inspector,pool,realtime) fix POPs link.
+- doc(service) fix service version link.
+- doc(tls) fix activation link.
+
 ## [v4.3.1](https://github.com/fastly/fastly-rust/releases/tag/release/v4.3.1) (2024-02-19)
 
 **Bug fixes:**
@@ -267,7 +285,7 @@ Substantial changes were made to the underlying OpenAPI specification that produ
 
 **Enhancements:**
 
-* New interface from code-generated API client [#43](https://github.com/fastly/fastly-rust/pull/3) 
-  * [Blog post: Better Fastly API clients with OpenAPI Generator](https://dev.to/fastly/better-fastly-api-clients-with-openapi-generator-3lno)
-  * [Documentation](https://github.com/fastly/fastly-rust#documentation-for-api-endpoints)
-  * [Unsupported API endpoints](https://github.com/fastly/fastly-rust#issues)
+- New interface from code-generated API client [#43](https://github.com/fastly/fastly-rust/pull/3)
+  - [Blog post: Better Fastly API clients with OpenAPI Generator](https://dev.to/fastly/better-fastly-api-clients-with-openapi-generator-3lno)
+  - [Documentation](https://github.com/fastly/fastly-rust#documentation-for-api-endpoints)
+  - [Unsupported API endpoints](https://github.com/fastly/fastly-rust#issues)

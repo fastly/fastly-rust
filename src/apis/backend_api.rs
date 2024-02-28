@@ -66,7 +66,7 @@ pub struct CreateBackendParams {
     pub ssl_cert_hostname: Option<String>,
     /// Be strict on checking SSL certs.
     pub ssl_check_cert: Option<bool>,
-    /// List of [OpenSSL ciphers](https://www.openssl.org/docs/manmaster/man1/ciphers.html) to support for connections to this origin. If your backend server is not able to negotiate a connection meeting this constraint, a synthetic `503` error response will be generated.
+    /// List of [OpenSSL ciphers](https://www.openssl.org/docs/man1.1.1/man1/ciphers.html) to support for connections to this origin. If your backend server is not able to negotiate a connection meeting this constraint, a synthetic `503` error response will be generated.
     pub ssl_ciphers: Option<String>,
     /// Client certificate attached to origin.
     pub ssl_client_cert: Option<String>,
@@ -170,7 +170,7 @@ pub struct UpdateBackendParams {
     pub ssl_cert_hostname: Option<String>,
     /// Be strict on checking SSL certs.
     pub ssl_check_cert: Option<bool>,
-    /// List of [OpenSSL ciphers](https://www.openssl.org/docs/manmaster/man1/ciphers.html) to support for connections to this origin. If your backend server is not able to negotiate a connection meeting this constraint, a synthetic `503` error response will be generated.
+    /// List of [OpenSSL ciphers](https://www.openssl.org/docs/man1.1.1/man1/ciphers.html) to support for connections to this origin. If your backend server is not able to negotiate a connection meeting this constraint, a synthetic `503` error response will be generated.
     pub ssl_ciphers: Option<String>,
     /// Client certificate attached to origin.
     pub ssl_client_cert: Option<String>,

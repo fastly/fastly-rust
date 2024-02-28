@@ -42,7 +42,7 @@ Name | Type | Description  | Required | Notes
 **service_id2** | Option\<**String**> |  |  |
 **version** | Option\<**String**> |  |  |
 **name** | Option\<**String**> | Name for the Pool. |  |
-**shield** | Option\<**String**> | Selected POP to serve as a shield for the servers. Defaults to `null` meaning no origin shielding if not set. Refer to the [POPs API endpoint](/reference/api/utils/pops/) to get a list of available POPs used for shielding. |  |[default to null]
+**shield** | Option\<**String**> | Selected POP to serve as a shield for the servers. Defaults to `null` meaning no origin shielding if not set. Refer to the [POPs API endpoint](https://www.fastly.com/documentation/reference/api/utils/pops/) to get a list of available POPs used for shielding. |  |[default to null]
 **request_condition** | Option\<**String**> | Condition which, if met, will select this configuration during a request. Optional. |  |
 **tls_ciphers** | Option\<**String**> | List of OpenSSL ciphers (see the [openssl.org manpages](https://www.openssl.org/docs/man1.1.1/man1/ciphers.html) for details). Optional. |  |
 **tls_sni_hostname** | Option\<**String**> | SNI hostname. Optional. |  |
@@ -216,7 +216,7 @@ Name | Type | Description  | Required | Notes
 **service_id2** | Option\<**String**> |  |  |
 **version** | Option\<**String**> |  |  |
 **name** | Option\<**String**> | Name for the Pool. |  |
-**shield** | Option\<**String**> | Selected POP to serve as a shield for the servers. Defaults to `null` meaning no origin shielding if not set. Refer to the [POPs API endpoint](/reference/api/utils/pops/) to get a list of available POPs used for shielding. |  |[default to null]
+**shield** | Option\<**String**> | Selected POP to serve as a shield for the servers. Defaults to `null` meaning no origin shielding if not set. Refer to the [POPs API endpoint](https://www.fastly.com/documentation/reference/api/utils/pops/) to get a list of available POPs used for shielding. |  |[default to null]
 **request_condition** | Option\<**String**> | Condition which, if met, will select this configuration during a request. Optional. |  |
 **tls_ciphers** | Option\<**String**> | List of OpenSSL ciphers (see the [openssl.org manpages](https://www.openssl.org/docs/man1.1.1/man1/ciphers.html) for details). Optional. |  |
 **tls_sni_hostname** | Option\<**String**> | SNI hostname. Optional. |  |

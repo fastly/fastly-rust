@@ -248,12 +248,18 @@ pub struct Results {
     /// Total header bytes delivered from the Fastly Image Optimizer service, including shield traffic.
     #[serde(rename = "imgopto_resp_header_bytes", skip_serializing_if = "Option::is_none")]
     pub imgopto_resp_header_bytes: Option<i32>,
+    /// Number of responses that came from the Fastly Image Optimizer service via a shield.
+    #[serde(rename = "imgopto_shield", skip_serializing_if = "Option::is_none")]
+    pub imgopto_shield: Option<i32>,
     /// Total body bytes delivered via a shield from the Fastly Image Optimizer service.
     #[serde(rename = "imgopto_shield_resp_body_bytes", skip_serializing_if = "Option::is_none")]
     pub imgopto_shield_resp_body_bytes: Option<i32>,
     /// Total header bytes delivered via a shield from the Fastly Image Optimizer service.
     #[serde(rename = "imgopto_shield_resp_header_bytes", skip_serializing_if = "Option::is_none")]
     pub imgopto_shield_resp_header_bytes: Option<i32>,
+    /// Number of transforms performed by the Fastly Image Optimizer service.
+    #[serde(rename = "imgopto_transforms", skip_serializing_if = "Option::is_none")]
+    pub imgopto_transforms: Option<i32>,
     /// Number of video responses that came from the Fastly Image Optimizer service.
     #[serde(rename = "imgvideo", skip_serializing_if = "Option::is_none")]
     pub imgvideo: Option<i32>,
@@ -776,8 +782,10 @@ impl Results {
             imgopto: None,
             imgopto_resp_body_bytes: None,
             imgopto_resp_header_bytes: None,
+            imgopto_shield: None,
             imgopto_shield_resp_body_bytes: None,
             imgopto_shield_resp_header_bytes: None,
+            imgopto_transforms: None,
             imgvideo: None,
             imgvideo_frames: None,
             imgvideo_resp_header_bytes: None,

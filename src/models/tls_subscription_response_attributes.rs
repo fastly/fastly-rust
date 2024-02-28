@@ -22,6 +22,9 @@ pub struct TlsSubscriptionResponseAttributes {
     /// The current state of your subscription.
     #[serde(rename = "state", skip_serializing_if = "Option::is_none")]
     pub state: Option<State>,
+    /// Subscription has an active order
+    #[serde(rename = "has_active_order", skip_serializing_if = "Option::is_none")]
+    pub has_active_order: Option<bool>,
 }
 
 impl TlsSubscriptionResponseAttributes {
@@ -31,6 +34,7 @@ impl TlsSubscriptionResponseAttributes {
             deleted_at: None,
             updated_at: None,
             state: None,
+            has_active_order: None,
         }
     }
 }

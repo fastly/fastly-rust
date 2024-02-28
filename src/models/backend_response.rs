@@ -82,7 +82,7 @@ pub struct BackendResponse {
     /// Be strict on checking SSL certs.
     #[serde(rename = "ssl_check_cert", skip_serializing_if = "Option::is_none")]
     pub ssl_check_cert: Option<bool>,
-    /// List of [OpenSSL ciphers](https://www.openssl.org/docs/manmaster/man1/ciphers.html) to support for connections to this origin. If your backend server is not able to negotiate a connection meeting this constraint, a synthetic `503` error response will be generated.
+    /// List of [OpenSSL ciphers](https://www.openssl.org/docs/man1.1.1/man1/ciphers.html) to support for connections to this origin. If your backend server is not able to negotiate a connection meeting this constraint, a synthetic `503` error response will be generated.
     #[serde(rename = "ssl_ciphers", skip_serializing_if = "Option::is_none")]
     pub ssl_ciphers: Option<String>,
     /// Client certificate attached to origin.

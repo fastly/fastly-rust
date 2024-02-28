@@ -19,7 +19,7 @@ pub struct TlsConfigurationResponseAttributes {
     /// Date and time in ISO 8601 format.
     #[serde(rename = "updated_at", skip_serializing_if = "Option::is_none")]
     pub updated_at: Option<String>,
-    /// Signifies whether or not Fastly will use this configuration as a default when creating a new [TLS Activation](/reference/api/tls/custom-certs/activations/).
+    /// Signifies whether or not Fastly will use this configuration as a default when creating a new [TLS Activation](https://www.fastly.com/documentation/reference/api/tls/custom-certs/activations/).
     #[serde(rename = "default", skip_serializing_if = "Option::is_none")]
     pub default: Option<bool>,
     /// HTTP protocols available on your configuration.

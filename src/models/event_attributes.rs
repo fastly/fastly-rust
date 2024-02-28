@@ -72,6 +72,14 @@ pub enum EventType {
     AddressDelete,
     #[serde(rename = "address.update")]
     AddressUpdate,
+    #[serde(rename = "alerts.definition.create")]
+    AlertsDefinitionCreate,
+    #[serde(rename = "alerts.definition.delete")]
+    AlertsDefinitionDelete,
+    #[serde(rename = "alerts.definition.test")]
+    AlertsDefinitionTest,
+    #[serde(rename = "alerts.definition.update")]
+    AlertsDefinitionUpdate,
     #[serde(rename = "backend.create")]
     BackendCreate,
     #[serde(rename = "backend.delete")]

@@ -10,7 +10,7 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct Pop {
-    /// the three-letter code for the [POP](https://developer.fastly.com/learning/concepts/pop/)
+    /// the three-letter code for the [POP](https://www.fastly.com/documentation/learning/concepts/pop/)
     #[serde(rename = "code")]
     pub code: String,
     /// the name of the POP
@@ -28,7 +28,7 @@ pub struct Pop {
     pub billing_region: BillingRegion,
     #[serde(rename = "coordinates", skip_serializing_if = "Option::is_none")]
     pub coordinates: Option<Box<crate::models::PopCoordinates>>,
-    /// the name of the [shield code](https://developer.fastly.com/learning/concepts/shielding/#choosing-a-shield-location) if this POP is suitable for shielding
+    /// the name of the [shield code](https://www.fastly.com/documentation/learning/concepts/shielding/#choosing-a-shield-location) if this POP is suitable for shielding
     #[serde(rename = "shield", skip_serializing_if = "Option::is_none")]
     pub shield: Option<String>,
 }

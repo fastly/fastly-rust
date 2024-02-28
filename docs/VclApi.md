@@ -136,7 +136,7 @@ Name | Type | Description  | Required | Notes
 
 ## get_custom_vcl_boilerplate
 
-Return boilerplate VCL with the service's TTL from the [settings](/reference/api/vcl-services/settings/).
+Return boilerplate VCL with the service's TTL from the [settings](https://www.fastly.com/documentation/reference/api/vcl-services/settings/).
 
 ```rust
 let cfg = &Configuration::default();

@@ -28,7 +28,7 @@ pub struct LoggingScalyrResponse {
     /// The region that log data will be sent to.
     #[serde(rename = "region", skip_serializing_if = "Option::is_none")]
     pub region: Option<Region>,
-    /// The token to use for authentication ([https://www.scalyr.com/keys](https://www.scalyr.com/keys)).
+    /// The token to use for authentication.
     #[serde(rename = "token", skip_serializing_if = "Option::is_none")]
     pub token: Option<String>,
     /// The name of the logfile within Scalyr.

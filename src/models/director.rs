@@ -25,7 +25,7 @@ pub struct Director {
     /// The percentage of capacity that needs to be up for a director to be considered up. `0` to `100`.
     #[serde(rename = "quorum", skip_serializing_if = "Option::is_none")]
     pub quorum: Option<i32>,
-    /// Selected POP to serve as a shield for the backends. Defaults to `null` meaning no origin shielding if not set. Refer to the [POPs API endpoint](/reference/api/utils/pops/) to get a list of available POPs used for shielding.
+    /// Selected POP to serve as a shield for the backends. Defaults to `null` meaning no origin shielding if not set. Refer to the [POPs API endpoint](https://www.fastly.com/documentation/reference/api/utils/pops/) to get a list of available POPs used for shielding.
     #[serde(rename = "shield", skip_serializing_if = "Option::is_none")]
     pub shield: Option<String>,
     /// What type of load balance group to use.

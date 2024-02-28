@@ -165,7 +165,7 @@ pub async fn bulk_revoke_tokens(configuration: &mut configuration::Configuration
     }
 }
 
-/// Create an API token. If two-factor authentication is enabled for your account, review [the instructions](/reference/api/auth-tokens/user/) for including a one-time password in the request. 
+/// Create an API token. If two-factor authentication is enabled for your account, review [the instructions](https://www.fastly.com/documentation/reference/api/auth-tokens/user/) for including a one-time password in the request. 
 pub async fn create_token(configuration: &mut configuration::Configuration) -> Result<crate::models::TokenCreatedResponse, Error<CreateTokenError>> {
     let local_var_configuration = configuration;
 

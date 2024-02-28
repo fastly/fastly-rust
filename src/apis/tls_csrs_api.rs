@@ -22,8 +22,6 @@ pub struct CreateCsrParams {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateCsrError {
-    Status400(crate::models::ErrorResponse),
-    Status404(crate::models::ErrorResponse),
     UnknownValue(serde_json::Value),
 }
 

@@ -10,7 +10,7 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct TlsCsrDataAttributes {
-    /// Subject Altername Names - An array of one or more fully qualified domain names or public IP addresses to be secured by this certificate. Required.
+    /// Subject Alternate Names - An array of one or more fully qualified domain names or public IP addresses to be secured by this certificate. Required.
     #[serde(rename = "sans")]
     pub sans: Vec<String>,
     /// Common Name (CN) - The fully qualified domain name (FQDN) to be secured by this certificate. The common name should be one of the entries in the SANs parameter.
@@ -40,6 +40,9 @@ pub struct TlsCsrDataAttributes {
     /// Email Address (EMAIL) - The organizational contact for this.
     #[serde(rename = "email", skip_serializing_if = "Option::is_none")]
     pub email: Option<String>,
+    /// CSR Key Type.
+    #[serde(rename = "key_type", skip_serializing_if = "Option::is_none")]
+    pub key_type: Option<KeyType>,
 }
 
 impl TlsCsrDataAttributes {
@@ -55,8 +58,23 @@ impl TlsCsrDataAttributes {
             organization: None,
             organizational_unit: None,
             email: None,
+            key_type: None,
         }
     }
 }
 
+/// CSR Key Type.
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum KeyType {
+    #[serde(rename = "RSA2048")]
+    RSA2048,
+    #[serde(rename = "ECDSA256")]
+    ECDSA256,
+}
+
+impl Default for KeyType {
+    fn default() -> KeyType {
+        Self::RSA2048
+    }
+}
 

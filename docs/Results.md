@@ -83,8 +83,10 @@ Name | Type | Description | Notes
 **imgopto** | Option<**i32**> | Number of responses that came from the Fastly Image Optimizer service. If the service receives 10 requests for an image, this stat will be 10 regardless of how many times the image was transformed. | 
 **imgopto_resp_body_bytes** | Option<**i32**> | Total body bytes delivered from the Fastly Image Optimizer service, including shield traffic. | 
 **imgopto_resp_header_bytes** | Option<**i32**> | Total header bytes delivered from the Fastly Image Optimizer service, including shield traffic. | 
+**imgopto_shield** | Option<**i32**> | Number of responses that came from the Fastly Image Optimizer service via a shield. | 
 **imgopto_shield_resp_body_bytes** | Option<**i32**> | Total body bytes delivered via a shield from the Fastly Image Optimizer service. | 
 **imgopto_shield_resp_header_bytes** | Option<**i32**> | Total header bytes delivered via a shield from the Fastly Image Optimizer service. | 
+**imgopto_transforms** | Option<**i32**> | Number of transforms performed by the Fastly Image Optimizer service. | 
 **imgvideo** | Option<**i32**> | Number of video responses that came from the Fastly Image Optimizer service. | 
 **imgvideo_frames** | Option<**i32**> | Number of video frames that came from the Fastly Image Optimizer service. A video frame is an individual image within a sequence of video. | 
 **imgvideo_resp_header_bytes** | Option<**i32**> | Total header bytes of video delivered from the Fastly Image Optimizer service. | 

@@ -32,10 +32,12 @@ pub struct GetSecretStoreParams {
 /// struct for passing parameters to the method [`get_secret_stores`]
 #[derive(Clone, Debug, Default)]
 pub struct GetSecretStoresParams {
-    /// Cursor value from a previous response to retrieve the next page. To request the first page, this should be empty.
+    /// Cursor value from the `next_cursor` field of a previous response, used to retrieve the next page. To request the first page, this should be empty.
     pub cursor: Option<String>,
     /// Number of results per page. The maximum is 200.
-    pub limit: Option<String>
+    pub limit: Option<String>,
+    /// Returns a one-element array containing the details for the named secret store.
+    pub name: Option<String>
 }
 
 
@@ -297,6 +299,7 @@ pub async fn get_secret_stores(configuration: &mut configuration::Configuration,
     // unbox the parameters
     let cursor = params.cursor;
     let limit = params.limit;
+    let name = params.name;
 
 
     let local_var_client = &local_var_configuration.client;
@@ -309,6 +312,9 @@ pub async fn get_secret_stores(configuration: &mut configuration::Configuration,
     }
     if let Some(ref local_var_str) = limit {
         local_var_req_builder = local_var_req_builder.query(&[("limit", &local_var_str.to_string())]);
+    }
+    if let Some(ref local_var_str) = name {
+        local_var_req_builder = local_var_req_builder.query(&[("name", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());

@@ -28,7 +28,7 @@ Name | Type | Description | Notes
 **ssl_ca_cert** | Option<**String**> | CA certificate attached to origin. | 
 **ssl_cert_hostname** | Option<**String**> | Overrides `ssl_hostname`, but only for cert verification. Does not affect SNI at all. | 
 **ssl_check_cert** | Option<**bool**> | Be strict on checking SSL certs. | [default to true]
-**ssl_ciphers** | Option<**String**> | List of [OpenSSL ciphers](https://www.openssl.org/docs/manmaster/man1/ciphers.html) to support for connections to this origin. If your backend server is not able to negotiate a connection meeting this constraint, a synthetic `503` error response will be generated. | 
+**ssl_ciphers** | Option<**String**> | List of [OpenSSL ciphers](https://www.openssl.org/docs/man1.1.1/man1/ciphers.html) to support for connections to this origin. If your backend server is not able to negotiate a connection meeting this constraint, a synthetic `503` error response will be generated. | 
 **ssl_client_cert** | Option<**String**> | Client certificate attached to origin. | 
 **ssl_client_key** | Option<**String**> | Client key attached to origin. | 
 **ssl_hostname** | Option<**String**> | Use `ssl_cert_hostname` and `ssl_sni_hostname` to configure certificate validation. | 

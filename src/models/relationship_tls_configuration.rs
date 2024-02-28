@@ -5,7 +5,7 @@
  *
  */
 
-/// RelationshipTlsConfiguration : The [TLS configuration](/reference/api/tls/custom-certs/configuration/) being used to terminate TLS traffic. Optional.
+/// RelationshipTlsConfiguration : The [TLS configuration](https://www.fastly.com/documentation/reference/api/tls/custom-certs/configuration/) being used to terminate TLS traffic. Optional.
 
 
 
@@ -16,7 +16,7 @@ pub struct RelationshipTlsConfiguration {
 }
 
 impl RelationshipTlsConfiguration {
-    /// The [TLS configuration](/reference/api/tls/custom-certs/configuration/) being used to terminate TLS traffic. Optional.
+    /// The [TLS configuration](https://www.fastly.com/documentation/reference/api/tls/custom-certs/configuration/) being used to terminate TLS traffic. Optional.
     pub fn new() -> RelationshipTlsConfiguration {
         RelationshipTlsConfiguration {
             tls_configuration: None,

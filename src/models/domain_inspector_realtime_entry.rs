@@ -16,7 +16,7 @@ pub struct DomainInspectorRealtimeEntry {
     /// Groups [measurements](#measurements-data-model) by backend name and then by IP address.
     #[serde(rename = "aggregated", skip_serializing_if = "Option::is_none")]
     pub aggregated: Option<::std::collections::HashMap<String, crate::models::DomainInspectorMeasurements>>,
-    /// Groups [measurements](#measurements-data-model) by POP, then backend name, and then IP address. See the [POPs API](/reference/api/utils/pops/) for details about POP identifiers.
+    /// Groups [measurements](#measurements-data-model) by POP, then backend name, and then IP address. See the [POPs API](https://www.fastly.com/documentation/reference/api/utils/pops/) for details about POP identifiers.
     #[serde(rename = "datacenter", skip_serializing_if = "Option::is_none")]
     pub datacenter: Option<::std::collections::HashMap<String, ::std::collections::HashMap<String, crate::models::DomainInspectorMeasurements>>>,
 }

@@ -16,7 +16,7 @@ pub struct OriginInspectorRealtimeEntry {
     /// Groups [measurements](#measurements-data-model) by backend name.
     #[serde(rename = "aggregated", skip_serializing_if = "Option::is_none")]
     pub aggregated: Option<::std::collections::HashMap<String, crate::models::OriginInspectorMeasurements>>,
-    /// Groups [measurements](#measurements-data-model) by POP, then backend name. See the [POPs API](/reference/api/utils/pops/) for details about POP identifiers.
+    /// Groups [measurements](#measurements-data-model) by POP, then backend name. See the [POPs API](https://www.fastly.com/documentation/reference/api/utils/pops/) for details about POP identifiers.
     #[serde(rename = "datacenter", skip_serializing_if = "Option::is_none")]
     pub datacenter: Option<::std::collections::HashMap<String, ::std::collections::HashMap<String, crate::models::OriginInspectorMeasurements>>>,
 }
