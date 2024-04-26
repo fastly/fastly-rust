@@ -14,7 +14,7 @@ Rust 2021 Edition
 Add the following to `Cargo.toml` under `[dependencies]`:
 
 ```toml
-fastly-api = "4.4.0"
+fastly-api = "4.5.0"
 ```
 
 ## Usage
@@ -603,6 +603,12 @@ The fastly-rust API client currently does not support the following endpoints:
 - [`/alerts/definitions/{definition_id}`](https://www.fastly.com/documentation/reference/api/observability/alerts/definitions) (DELETE, GET, PUT)
 - [`/alerts/definitions`](https://www.fastly.com/documentation/reference/api/observability/alerts/definitions) (GET, POST)
 - [`/alerts/history`](https://www.fastly.com/documentation/reference/api/observability/alerts/history) (GET)
+- [`/notifications/integration-types`](https://developer.fastly.com/reference/api/observability/notification) (GET)
+- [`/notifications/integrations/{integration_id}/rotateSigningKey`](https://developer.fastly.com/reference/api/observability/notification) (POST)
+- [`/notifications/integrations/{integration_id}/signingKey`](https://developer.fastly.com/reference/api/observability/notification) (GET)
+- [`/notifications/integrations/{integration_id}`](https://developer.fastly.com/reference/api/observability/notification) (DELETE, GET, PATCH)
+- [`/notifications/integrations`](https://developer.fastly.com/reference/api/observability/notification) (GET, POST)
+- [`/notifications/mailinglist-confirmations`](https://developer.fastly.com/reference/api/observability/notification) (POST)
 - [`/resources/stores/kv/{store_id}/batch`](https://www.fastly.com/documentation/reference/api/services/resources/kv-store-item) (PUT)
 - [`/service/{service_id}/version/{version_id}/director`](https://www.fastly.com/documentation/reference/api/load-balancing/directors/director) (POST)
 - [`/stats/aggregate`](https://www.fastly.com/documentation/reference/api/metrics-stats/historical-stats) (GET)

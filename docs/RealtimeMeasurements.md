@@ -18,7 +18,7 @@ Name | Type | Description | Notes
 **errors** | Option<**i32**> | Number of cache errors. | 
 **hits_time** | Option<**f32**> | Total amount of time spent processing cache hits (in seconds). | 
 **miss_time** | Option<**f32**> | Total amount of time spent processing cache misses (in seconds). | 
-**miss_histogram** | Option<[**::std::collections::HashMap&lt;String, serde_json::Value&gt;**](SerdeJsonValue.md)> | A histogram. Each key represents the upper bound of a span of 10 milliseconds and the values represent the number of requests to origin during that 10ms period. Any origin request that takes more than 60 seconds to return will be in the 60000 bucket. | 
+**miss_histogram** | Option<[**::std::collections::HashMap&lt;String, serde_json::Value&gt;**](SerdeJsonValue.md)> | A histogram. The value in each bucket is the number of requests to the origin whose responses arrived during the time period represented by the bucket. The key of each bucket represents the upper bound (in response time) of that bucket. The buckets vary in width and cover the time periods 0-10ms (in 1ms increments), 10-250ms (in 10ms increments), 250-1,000ms (in 50ms increments), 1,000-3,000ms (in 100ms increments), 3,000-10,000ms (in 500 ms increments), 10,000-20,000ms (in 1,000ms increments), 20,000-60,000ms (in 5,000ms increments), and 60,000ms through infinity (in a single bucket). | 
 **compute_requests** | Option<**i32**> | The total number of requests that were received for your service by Fastly. | 
 **compute_execution_time_ms** | Option<**f32**> | The amount of active CPU time used to process your requests (in milliseconds). | 
 **compute_ram_used** | Option<**i32**> | The amount of RAM used for your service by Fastly (in bytes). | 
@@ -231,6 +231,27 @@ Name | Type | Description | Notes
 **bot_challenges_succeeded** | Option<**i32**> | The number of successful challenge solutions processed. For example, a correct CAPTCHA solution. | 
 **bot_challenges_failed** | Option<**i32**> | The number of failed challenge solutions processed. For example, an incorrect CAPTCHA solution. | 
 **bot_challenge_complete_tokens_issued** | Option<**i32**> | The number of challenge-complete tokens issued. For example, issuing a challenge-complete token after a series of CAPTCHA challenges ending in success. | 
+**ddos_action_downgrade** | Option<**i32**> | The number of times the downgrade action was taken. The downgrade action restricts the client to http1. | 
+**ddos_action_downgraded_connections** | Option<**i32**> | The number of connections the downgrade action was applied to. The downgrade action restricts the connection to http1. | 
+**vcl_on_compute_hit_requests** | Option<**i32**> | Number of cache hits for a VCL service running on Compute. | 
+**vcl_on_compute_miss_requests** | Option<**i32**> | Number of cache misses for a VCL service running on Compute. | 
+**vcl_on_compute_pass_requests** | Option<**i32**> | Number of requests that passed through the CDN without being cached for a VCL service running on Compute. | 
+**vcl_on_compute_error_requests** | Option<**i32**> | Number of cache errors for a VCL service running on Compute. | 
+**vcl_on_compute_synth_requests** | Option<**i32**> | Number of requests that returned a synthetic response (i.e., response objects created with the `synthetic` VCL statement) for a VCL service running on Compute. | 
+**vcl_on_compute_edge_hit_requests** | Option<**i32**> | Number of requests sent by end users to Fastly that resulted in a hit at the edge for a VCL service running on Compute. | 
+**vcl_on_compute_edge_miss_requests** | Option<**i32**> | Number of requests sent by end users to Fastly that resulted in a miss at the edge for a VCL service running on Compute. | 
+**all_hit_requests** | Option<**i32**> | Number of cache hits for a VCL service. | 
+**all_miss_requests** | Option<**i32**> | Number of cache misses for a VCL service. | 
+**all_pass_requests** | Option<**i32**> | Number of requests that passed through the CDN without being cached for a VCL service. | 
+**all_error_requests** | Option<**i32**> | Number of cache errors for a VCL service. | 
+**all_synth_requests** | Option<**i32**> | Number of requests that returned a synthetic response (i.e., response objects created with the `synthetic` VCL statement) for a VCL service. | 
+**all_edge_hit_requests** | Option<**i32**> | Number of requests sent by end users to Fastly that resulted in a hit at the edge for a VCL service. | 
+**all_edge_miss_requests** | Option<**i32**> | Number of requests sent by end users to Fastly that resulted in a miss at the edge for a VCL service. | 
+**all_status_1xx** | Option<**i32**> | Number of \"Informational\" category status codes delivered for all sources. | 
+**all_status_2xx** | Option<**i32**> | Number of \"Success\" status codes delivered for all sources. | 
+**all_status_3xx** | Option<**i32**> | Number of \"Redirection\" codes delivered for all sources. | 
+**all_status_4xx** | Option<**i32**> | Number of \"Client Error\" codes delivered for all sources. | 
+**all_status_5xx** | Option<**i32**> | Number of \"Server Error\" codes delivered for all sources. | 
 
 [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

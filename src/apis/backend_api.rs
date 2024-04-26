@@ -76,6 +76,14 @@ pub struct CreateBackendParams {
     pub ssl_hostname: Option<String>,
     /// Overrides `ssl_hostname`, but only for SNI in the handshake. Does not affect cert validation at all.
     pub ssl_sni_hostname: Option<String>,
+    /// Whether to enable TCP keepalives for backend connections. Varnish defaults to using keepalives if this is unspecified.
+    pub tcp_keepalive_enable: Option<bool>,
+    /// Interval in seconds between subsequent keepalive probes.
+    pub tcp_keepalive_interval: Option<i32>,
+    /// Number of unacknowledged probes to send before considering the connection dead.
+    pub tcp_keepalive_probes: Option<i32>,
+    /// Interval in seconds between the last data packet sent and the first keepalive probe.
+    pub tcp_keepalive_time: Option<i32>,
     /// Whether or not to require TLS for connections to this backend.
     pub use_ssl: Option<bool>,
     /// Weight used to load balance this backend against others. May be any positive integer. If `auto_loadbalance` is true, the chance of this backend being selected is equal to its own weight over the sum of all weights for backends that have `auto_loadbalance` set to true.
@@ -180,6 +188,14 @@ pub struct UpdateBackendParams {
     pub ssl_hostname: Option<String>,
     /// Overrides `ssl_hostname`, but only for SNI in the handshake. Does not affect cert validation at all.
     pub ssl_sni_hostname: Option<String>,
+    /// Whether to enable TCP keepalives for backend connections. Varnish defaults to using keepalives if this is unspecified.
+    pub tcp_keepalive_enable: Option<bool>,
+    /// Interval in seconds between subsequent keepalive probes.
+    pub tcp_keepalive_interval: Option<i32>,
+    /// Number of unacknowledged probes to send before considering the connection dead.
+    pub tcp_keepalive_probes: Option<i32>,
+    /// Interval in seconds between the last data packet sent and the first keepalive probe.
+    pub tcp_keepalive_time: Option<i32>,
     /// Whether or not to require TLS for connections to this backend.
     pub use_ssl: Option<bool>,
     /// Weight used to load balance this backend against others. May be any positive integer. If `auto_loadbalance` is true, the chance of this backend being selected is equal to its own weight over the sum of all weights for backends that have `auto_loadbalance` set to true.
@@ -259,6 +275,10 @@ pub async fn create_backend(configuration: &mut configuration::Configuration, pa
     let ssl_client_key = params.ssl_client_key;
     let ssl_hostname = params.ssl_hostname;
     let ssl_sni_hostname = params.ssl_sni_hostname;
+    let tcp_keepalive_enable = params.tcp_keepalive_enable;
+    let tcp_keepalive_interval = params.tcp_keepalive_interval;
+    let tcp_keepalive_probes = params.tcp_keepalive_probes;
+    let tcp_keepalive_time = params.tcp_keepalive_time;
     let use_ssl = params.use_ssl;
     let weight = params.weight;
 
@@ -366,6 +386,18 @@ pub async fn create_backend(configuration: &mut configuration::Configuration, pa
     }
     if let Some(local_var_param_value) = ssl_sni_hostname {
         local_var_form_params.insert("ssl_sni_hostname", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = tcp_keepalive_enable {
+        local_var_form_params.insert("tcp_keepalive_enable", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = tcp_keepalive_interval {
+        local_var_form_params.insert("tcp_keepalive_interval", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = tcp_keepalive_probes {
+        local_var_form_params.insert("tcp_keepalive_probes", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = tcp_keepalive_time {
+        local_var_form_params.insert("tcp_keepalive_time", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = use_ssl {
         local_var_form_params.insert("use_ssl", local_var_param_value.to_string());
@@ -600,6 +632,10 @@ pub async fn update_backend(configuration: &mut configuration::Configuration, pa
     let ssl_client_key = params.ssl_client_key;
     let ssl_hostname = params.ssl_hostname;
     let ssl_sni_hostname = params.ssl_sni_hostname;
+    let tcp_keepalive_enable = params.tcp_keepalive_enable;
+    let tcp_keepalive_interval = params.tcp_keepalive_interval;
+    let tcp_keepalive_probes = params.tcp_keepalive_probes;
+    let tcp_keepalive_time = params.tcp_keepalive_time;
     let use_ssl = params.use_ssl;
     let weight = params.weight;
 
@@ -707,6 +743,18 @@ pub async fn update_backend(configuration: &mut configuration::Configuration, pa
     }
     if let Some(local_var_param_value) = ssl_sni_hostname {
         local_var_form_params.insert("ssl_sni_hostname", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = tcp_keepalive_enable {
+        local_var_form_params.insert("tcp_keepalive_enable", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = tcp_keepalive_interval {
+        local_var_form_params.insert("tcp_keepalive_interval", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = tcp_keepalive_probes {
+        local_var_form_params.insert("tcp_keepalive_probes", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = tcp_keepalive_time {
+        local_var_form_params.insert("tcp_keepalive_time", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = use_ssl {
         local_var_form_params.insert("use_ssl", local_var_param_value.to_string());

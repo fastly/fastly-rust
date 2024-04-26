@@ -11,7 +11,7 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct RelationshipCustomerCustomer {
     #[serde(rename = "data", skip_serializing_if = "Option::is_none")]
-    pub data: Option<Vec<crate::models::RelationshipMemberCustomer>>,
+    pub data: Option<Box<crate::models::RelationshipMemberCustomer>>,
 }
 
 impl RelationshipCustomerCustomer {

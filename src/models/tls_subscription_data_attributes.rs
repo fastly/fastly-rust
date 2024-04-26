@@ -26,17 +26,17 @@ impl TlsSubscriptionDataAttributes {
 /// The entity that issues and certifies the TLS certificates for your subscription.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum CertificateAuthority {
-    #[serde(rename = "lets-encrypt")]
-    LetsEncrypt,
     #[serde(rename = "certainly")]
     Certainly,
+    #[serde(rename = "lets-encrypt")]
+    LetsEncrypt,
     #[serde(rename = "globalsign")]
     Globalsign,
 }
 
 impl Default for CertificateAuthority {
     fn default() -> CertificateAuthority {
-        Self::LetsEncrypt
+        Self::Certainly
     }
 }
 

@@ -231,6 +231,27 @@ Name | Type | Description | Notes
 **bot_challenges_issued** | Option<**i32**> | The number of challenges issued. For example, the issuance of a CAPTCHA challenge. | 
 **bot_challenges_succeeded** | Option<**i32**> | The number of successful challenge solutions processed. For example, a correct CAPTCHA solution. | 
 **bot_challenges_failed** | Option<**i32**> | The number of failed challenge solutions processed. For example, an incorrect CAPTCHA solution. | 
+**ddos_action_downgrade** | Option<**i32**> | The number of times the downgrade action was taken. The downgrade action restricts the client to http1. | 
+**ddos_action_downgraded_connections** | Option<**i32**> | The number of connections the downgrade action was applied to. The downgrade action restricts the connection to http1. | 
+**vcl_on_compute_hit_requests** | Option<**i32**> | Number of cache hits for a VCL service running on Compute. | 
+**vcl_on_compute_miss_requests** | Option<**i32**> | Number of cache misses for a VCL service running on Compute. | 
+**vcl_on_compute_pass_requests** | Option<**i32**> | Number of requests that passed through the CDN without being cached for a VCL service running on Compute. | 
+**vcl_on_compute_error_requests** | Option<**i32**> | Number of cache errors for a VCL service running on Compute. | 
+**vcl_on_compute_synth_requests** | Option<**i32**> | Number of requests that returned a synthetic response (i.e., response objects created with the `synthetic` VCL statement) for a VCL service running on Compute. | 
+**vcl_on_compute_edge_hit_requests** | Option<**i32**> | Number of requests sent by end users to Fastly that resulted in a hit at the edge for a VCL service running on Compute. | 
+**vcl_on_compute_edge_miss_requests** | Option<**i32**> | Number of requests sent by end users to Fastly that resulted in a miss at the edge for a VCL service running on Compute. | 
+**all_hit_requests** | Option<**i32**> | Number of cache hits for a VCL service. | 
+**all_miss_requests** | Option<**i32**> | Number of cache misses for a VCL service. | 
+**all_pass_requests** | Option<**i32**> | Number of requests that passed through the CDN without being cached for a VCL service. | 
+**all_error_requests** | Option<**i32**> | Number of cache errors for a VCL service. | 
+**all_synth_requests** | Option<**i32**> | Number of requests that returned a synthetic response (i.e., response objects created with the `synthetic` VCL statement) for a VCL service. | 
+**all_edge_hit_requests** | Option<**i32**> | Number of requests sent by end users to Fastly that resulted in a hit at the edge for a VCL service. | 
+**all_edge_miss_requests** | Option<**i32**> | Number of requests sent by end users to Fastly that resulted in a miss at the edge for a VCL service. | 
+**all_status_1xx** | Option<**i32**> | Number of \"Informational\" category status codes delivered for all sources. | 
+**all_status_2xx** | Option<**i32**> | Number of \"Success\" status codes delivered for all sources. | 
+**all_status_3xx** | Option<**i32**> | Number of \"Redirection\" codes delivered for all sources. | 
+**all_status_4xx** | Option<**i32**> | Number of \"Client Error\" codes delivered for all sources. | 
+**all_status_5xx** | Option<**i32**> | Number of \"Server Error\" codes delivered for all sources. | 
 **service_id** | Option<**String**> |  | [readonly]
 **start_time** | Option<**i32**> | Timestamp for the start of the time period being reported | 
 

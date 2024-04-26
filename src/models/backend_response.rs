@@ -97,6 +97,18 @@ pub struct BackendResponse {
     /// Overrides `ssl_hostname`, but only for SNI in the handshake. Does not affect cert validation at all.
     #[serde(rename = "ssl_sni_hostname", skip_serializing_if = "Option::is_none")]
     pub ssl_sni_hostname: Option<String>,
+    /// Whether to enable TCP keepalives for backend connections. Varnish defaults to using keepalives if this is unspecified.
+    #[serde(rename = "tcp_keepalive_enable", skip_serializing_if = "Option::is_none")]
+    pub tcp_keepalive_enable: Option<bool>,
+    /// Interval in seconds between subsequent keepalive probes.
+    #[serde(rename = "tcp_keepalive_interval", skip_serializing_if = "Option::is_none")]
+    pub tcp_keepalive_interval: Option<i32>,
+    /// Number of unacknowledged probes to send before considering the connection dead.
+    #[serde(rename = "tcp_keepalive_probes", skip_serializing_if = "Option::is_none")]
+    pub tcp_keepalive_probes: Option<i32>,
+    /// Interval in seconds between the last data packet sent and the first keepalive probe.
+    #[serde(rename = "tcp_keepalive_time", skip_serializing_if = "Option::is_none")]
+    pub tcp_keepalive_time: Option<i32>,
     /// Whether or not to require TLS for connections to this backend.
     #[serde(rename = "use_ssl", skip_serializing_if = "Option::is_none")]
     pub use_ssl: Option<bool>,
@@ -153,6 +165,10 @@ impl BackendResponse {
             ssl_client_key: None,
             ssl_hostname: None,
             ssl_sni_hostname: None,
+            tcp_keepalive_enable: None,
+            tcp_keepalive_interval: None,
+            tcp_keepalive_probes: None,
+            tcp_keepalive_time: None,
             use_ssl: None,
             weight: None,
             created_at: None,

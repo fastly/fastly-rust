@@ -692,6 +692,69 @@ pub struct Results {
     /// The number of failed challenge solutions processed. For example, an incorrect CAPTCHA solution.
     #[serde(rename = "bot_challenges_failed", skip_serializing_if = "Option::is_none")]
     pub bot_challenges_failed: Option<i32>,
+    /// The number of times the downgrade action was taken. The downgrade action restricts the client to http1.
+    #[serde(rename = "ddos_action_downgrade", skip_serializing_if = "Option::is_none")]
+    pub ddos_action_downgrade: Option<i32>,
+    /// The number of connections the downgrade action was applied to. The downgrade action restricts the connection to http1.
+    #[serde(rename = "ddos_action_downgraded_connections", skip_serializing_if = "Option::is_none")]
+    pub ddos_action_downgraded_connections: Option<i32>,
+    /// Number of cache hits for a VCL service running on Compute.
+    #[serde(rename = "vcl_on_compute_hit_requests", skip_serializing_if = "Option::is_none")]
+    pub vcl_on_compute_hit_requests: Option<i32>,
+    /// Number of cache misses for a VCL service running on Compute.
+    #[serde(rename = "vcl_on_compute_miss_requests", skip_serializing_if = "Option::is_none")]
+    pub vcl_on_compute_miss_requests: Option<i32>,
+    /// Number of requests that passed through the CDN without being cached for a VCL service running on Compute.
+    #[serde(rename = "vcl_on_compute_pass_requests", skip_serializing_if = "Option::is_none")]
+    pub vcl_on_compute_pass_requests: Option<i32>,
+    /// Number of cache errors for a VCL service running on Compute.
+    #[serde(rename = "vcl_on_compute_error_requests", skip_serializing_if = "Option::is_none")]
+    pub vcl_on_compute_error_requests: Option<i32>,
+    /// Number of requests that returned a synthetic response (i.e., response objects created with the `synthetic` VCL statement) for a VCL service running on Compute.
+    #[serde(rename = "vcl_on_compute_synth_requests", skip_serializing_if = "Option::is_none")]
+    pub vcl_on_compute_synth_requests: Option<i32>,
+    /// Number of requests sent by end users to Fastly that resulted in a hit at the edge for a VCL service running on Compute.
+    #[serde(rename = "vcl_on_compute_edge_hit_requests", skip_serializing_if = "Option::is_none")]
+    pub vcl_on_compute_edge_hit_requests: Option<i32>,
+    /// Number of requests sent by end users to Fastly that resulted in a miss at the edge for a VCL service running on Compute.
+    #[serde(rename = "vcl_on_compute_edge_miss_requests", skip_serializing_if = "Option::is_none")]
+    pub vcl_on_compute_edge_miss_requests: Option<i32>,
+    /// Number of cache hits for a VCL service.
+    #[serde(rename = "all_hit_requests", skip_serializing_if = "Option::is_none")]
+    pub all_hit_requests: Option<i32>,
+    /// Number of cache misses for a VCL service.
+    #[serde(rename = "all_miss_requests", skip_serializing_if = "Option::is_none")]
+    pub all_miss_requests: Option<i32>,
+    /// Number of requests that passed through the CDN without being cached for a VCL service.
+    #[serde(rename = "all_pass_requests", skip_serializing_if = "Option::is_none")]
+    pub all_pass_requests: Option<i32>,
+    /// Number of cache errors for a VCL service.
+    #[serde(rename = "all_error_requests", skip_serializing_if = "Option::is_none")]
+    pub all_error_requests: Option<i32>,
+    /// Number of requests that returned a synthetic response (i.e., response objects created with the `synthetic` VCL statement) for a VCL service.
+    #[serde(rename = "all_synth_requests", skip_serializing_if = "Option::is_none")]
+    pub all_synth_requests: Option<i32>,
+    /// Number of requests sent by end users to Fastly that resulted in a hit at the edge for a VCL service.
+    #[serde(rename = "all_edge_hit_requests", skip_serializing_if = "Option::is_none")]
+    pub all_edge_hit_requests: Option<i32>,
+    /// Number of requests sent by end users to Fastly that resulted in a miss at the edge for a VCL service.
+    #[serde(rename = "all_edge_miss_requests", skip_serializing_if = "Option::is_none")]
+    pub all_edge_miss_requests: Option<i32>,
+    /// Number of \"Informational\" category status codes delivered for all sources.
+    #[serde(rename = "all_status_1xx", skip_serializing_if = "Option::is_none")]
+    pub all_status_1xx: Option<i32>,
+    /// Number of \"Success\" status codes delivered for all sources.
+    #[serde(rename = "all_status_2xx", skip_serializing_if = "Option::is_none")]
+    pub all_status_2xx: Option<i32>,
+    /// Number of \"Redirection\" codes delivered for all sources.
+    #[serde(rename = "all_status_3xx", skip_serializing_if = "Option::is_none")]
+    pub all_status_3xx: Option<i32>,
+    /// Number of \"Client Error\" codes delivered for all sources.
+    #[serde(rename = "all_status_4xx", skip_serializing_if = "Option::is_none")]
+    pub all_status_4xx: Option<i32>,
+    /// Number of \"Server Error\" codes delivered for all sources.
+    #[serde(rename = "all_status_5xx", skip_serializing_if = "Option::is_none")]
+    pub all_status_5xx: Option<i32>,
     #[serde(rename = "service_id", skip_serializing_if = "Option::is_none")]
     pub service_id: Option<Box<String>>,
     /// Timestamp for the start of the time period being reported
@@ -930,6 +993,27 @@ impl Results {
             bot_challenges_issued: None,
             bot_challenges_succeeded: None,
             bot_challenges_failed: None,
+            ddos_action_downgrade: None,
+            ddos_action_downgraded_connections: None,
+            vcl_on_compute_hit_requests: None,
+            vcl_on_compute_miss_requests: None,
+            vcl_on_compute_pass_requests: None,
+            vcl_on_compute_error_requests: None,
+            vcl_on_compute_synth_requests: None,
+            vcl_on_compute_edge_hit_requests: None,
+            vcl_on_compute_edge_miss_requests: None,
+            all_hit_requests: None,
+            all_miss_requests: None,
+            all_pass_requests: None,
+            all_error_requests: None,
+            all_synth_requests: None,
+            all_edge_hit_requests: None,
+            all_edge_miss_requests: None,
+            all_status_1xx: None,
+            all_status_2xx: None,
+            all_status_3xx: None,
+            all_status_4xx: None,
+            all_status_5xx: None,
             service_id: None,
             start_time: None,
         }
