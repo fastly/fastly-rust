@@ -1,9 +1,10 @@
 # IamServiceGroupsApi
 
-All URIs are relative to *https://api.fastly.com*
+> [!NOTE]
+> All URIs are relative to `https://api.fastly.com`
 
 Method | HTTP request | Description
-------------- | ------------- | -------------
+------ | ------------ | -----------
 [**add_service_group_services**](IamServiceGroupsApi.md#add_service_group_services) | **POST** /service-groups/{service_group_id}/services | Add services in a service group
 [**create_a_service_group**](IamServiceGroupsApi.md#create_a_service_group) | **POST** /service-groups | Create a service group
 [**delete_a_service_group**](IamServiceGroupsApi.md#delete_a_service_group) | **DELETE** /service-groups/{service_group_id} | Delete a service group

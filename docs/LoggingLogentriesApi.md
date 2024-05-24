@@ -1,9 +1,10 @@
 # LoggingLogentriesApi
 
-All URIs are relative to *https://api.fastly.com*
+> [!NOTE]
+> All URIs are relative to `https://api.fastly.com`
 
 Method | HTTP request | Description
-------------- | ------------- | -------------
+------ | ------------ | -----------
 [**create_log_logentries**](LoggingLogentriesApi.md#create_log_logentries) | **POST** /service/{service_id}/version/{version_id}/logging/logentries | Create a Logentries log endpoint
 [**delete_log_logentries**](LoggingLogentriesApi.md#delete_log_logentries) | **DELETE** /service/{service_id}/version/{version_id}/logging/logentries/{logging_logentries_name} | Delete a Logentries log endpoint
 [**get_log_logentries**](LoggingLogentriesApi.md#get_log_logentries) | **GET** /service/{service_id}/version/{version_id}/logging/logentries/{logging_logentries_name} | Get a Logentries log endpoint

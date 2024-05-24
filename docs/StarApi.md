@@ -1,9 +1,10 @@
 # StarApi
 
-All URIs are relative to *https://api.fastly.com*
+> [!NOTE]
+> All URIs are relative to `https://api.fastly.com`
 
 Method | HTTP request | Description
-------------- | ------------- | -------------
+------ | ------------ | -----------
 [**create_service_star**](StarApi.md#create_service_star) | **POST** /stars | Create a star
 [**delete_service_star**](StarApi.md#delete_service_star) | **DELETE** /stars/{star_id} | Delete a star
 [**get_service_star**](StarApi.md#get_service_star) | **GET** /stars/{star_id} | Get a star

@@ -1,9 +1,10 @@
 # RequestSettingsApi
 
-All URIs are relative to *https://api.fastly.com*
+> [!NOTE]
+> All URIs are relative to `https://api.fastly.com`
 
 Method | HTTP request | Description
-------------- | ------------- | -------------
+------ | ------------ | -----------
 [**create_request_settings**](RequestSettingsApi.md#create_request_settings) | **POST** /service/{service_id}/version/{version_id}/request_settings | Create a Request Settings object
 [**delete_request_settings**](RequestSettingsApi.md#delete_request_settings) | **DELETE** /service/{service_id}/version/{version_id}/request_settings/{request_settings_name} | Delete a Request Settings object
 [**get_request_settings**](RequestSettingsApi.md#get_request_settings) | **GET** /service/{service_id}/version/{version_id}/request_settings/{request_settings_name} | Get a Request Settings object

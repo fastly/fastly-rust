@@ -1,9 +1,10 @@
 # WafActiveRulesApi
 
-All URIs are relative to *https://api.fastly.com*
+> [!NOTE]
+> All URIs are relative to `https://api.fastly.com`
 
 Method | HTTP request | Description
-------------- | ------------- | -------------
+------ | ------------ | -----------
 [**bulk_delete_waf_active_rules**](WafActiveRulesApi.md#bulk_delete_waf_active_rules) | **DELETE** /waf/firewalls/{firewall_id}/versions/{version_id}/active-rules | Delete multiple active rules from a WAF
 [**bulk_update_waf_active_rules**](WafActiveRulesApi.md#bulk_update_waf_active_rules) | **PATCH** /waf/firewalls/{firewall_id}/versions/{version_id}/active-rules/bulk | Update multiple active rules
 [**create_waf_active_rule**](WafActiveRulesApi.md#create_waf_active_rule) | **POST** /waf/firewalls/{firewall_id}/versions/{version_id}/active-rules | Add a rule to a WAF as an active rule

@@ -1,9 +1,10 @@
 # ConfigStoreApi
 
-All URIs are relative to *https://api.fastly.com*
+> [!NOTE]
+> All URIs are relative to `https://api.fastly.com`
 
 Method | HTTP request | Description
-------------- | ------------- | -------------
+------ | ------------ | -----------
 [**create_config_store**](ConfigStoreApi.md#create_config_store) | **POST** /resources/stores/config | Create a config store
 [**delete_config_store**](ConfigStoreApi.md#delete_config_store) | **DELETE** /resources/stores/config/{config_store_id} | Delete a config store
 [**get_config_store**](ConfigStoreApi.md#get_config_store) | **GET** /resources/stores/config/{config_store_id} | Describe a config store

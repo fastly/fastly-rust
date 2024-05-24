@@ -1,9 +1,10 @@
 # ApexRedirectApi
 
-All URIs are relative to *https://api.fastly.com*
+> [!NOTE]
+> All URIs are relative to `https://api.fastly.com`
 
 Method | HTTP request | Description
-------------- | ------------- | -------------
+------ | ------------ | -----------
 [**create_apex_redirect**](ApexRedirectApi.md#create_apex_redirect) | **POST** /service/{service_id}/version/{version_id}/apex-redirects | Create an apex redirect
 [**delete_apex_redirect**](ApexRedirectApi.md#delete_apex_redirect) | **DELETE** /apex-redirects/{apex_redirect_id} | Delete an apex redirect
 [**get_apex_redirect**](ApexRedirectApi.md#get_apex_redirect) | **GET** /apex-redirects/{apex_redirect_id} | Get an apex redirect

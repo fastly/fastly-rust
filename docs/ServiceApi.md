@@ -1,9 +1,10 @@
 # ServiceApi
 
-All URIs are relative to *https://api.fastly.com*
+> [!NOTE]
+> All URIs are relative to `https://api.fastly.com`
 
 Method | HTTP request | Description
-------------- | ------------- | -------------
+------ | ------------ | -----------
 [**create_service**](ServiceApi.md#create_service) | **POST** /service | Create a service
 [**delete_service**](ServiceApi.md#delete_service) | **DELETE** /service/{service_id} | Delete a service
 [**get_service**](ServiceApi.md#get_service) | **GET** /service/{service_id} | Get a service

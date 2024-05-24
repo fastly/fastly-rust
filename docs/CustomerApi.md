@@ -1,9 +1,10 @@
 # CustomerApi
 
-All URIs are relative to *https://api.fastly.com*
+> [!NOTE]
+> All URIs are relative to `https://api.fastly.com`
 
 Method | HTTP request | Description
-------------- | ------------- | -------------
+------ | ------------ | -----------
 [**delete_customer**](CustomerApi.md#delete_customer) | **DELETE** /customer/{customer_id} | Delete a customer
 [**get_customer**](CustomerApi.md#get_customer) | **GET** /customer/{customer_id} | Get a customer
 [**get_logged_in_customer**](CustomerApi.md#get_logged_in_customer) | **GET** /current_customer | Get the logged in customer

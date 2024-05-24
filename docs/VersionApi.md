@@ -1,9 +1,10 @@
 # VersionApi
 
-All URIs are relative to *https://api.fastly.com*
+> [!NOTE]
+> All URIs are relative to `https://api.fastly.com`
 
 Method | HTTP request | Description
-------------- | ------------- | -------------
+------ | ------------ | -----------
 [**activate_service_version**](VersionApi.md#activate_service_version) | **PUT** /service/{service_id}/version/{version_id}/activate | Activate a service version
 [**clone_service_version**](VersionApi.md#clone_service_version) | **PUT** /service/{service_id}/version/{version_id}/clone | Clone a service version
 [**create_service_version**](VersionApi.md#create_service_version) | **POST** /service/{service_id}/version | Create a service version

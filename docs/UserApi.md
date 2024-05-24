@@ -1,9 +1,10 @@
 # UserApi
 
-All URIs are relative to *https://api.fastly.com*
+> [!NOTE]
+> All URIs are relative to `https://api.fastly.com`
 
 Method | HTTP request | Description
-------------- | ------------- | -------------
+------ | ------------ | -----------
 [**create_user**](UserApi.md#create_user) | **POST** /user | Create a user
 [**delete_user**](UserApi.md#delete_user) | **DELETE** /user/{user_id} | Delete a user
 [**get_current_user**](UserApi.md#get_current_user) | **GET** /current_user | Get the current user

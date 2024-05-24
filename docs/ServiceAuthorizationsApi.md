@@ -1,9 +1,10 @@
 # ServiceAuthorizationsApi
 
-All URIs are relative to *https://api.fastly.com*
+> [!NOTE]
+> All URIs are relative to `https://api.fastly.com`
 
 Method | HTTP request | Description
-------------- | ------------- | -------------
+------ | ------------ | -----------
 [**create_service_authorization**](ServiceAuthorizationsApi.md#create_service_authorization) | **POST** /service-authorizations | Create service authorization
 [**delete_service_authorization**](ServiceAuthorizationsApi.md#delete_service_authorization) | **DELETE** /service-authorizations/{service_authorization_id} | Delete service authorization
 [**delete_service_authorization2**](ServiceAuthorizationsApi.md#delete_service_authorization2) | **DELETE** /service-authorizations | Delete service authorizations

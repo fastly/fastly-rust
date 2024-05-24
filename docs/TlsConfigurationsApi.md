@@ -1,9 +1,10 @@
 # TlsConfigurationsApi
 
-All URIs are relative to *https://api.fastly.com*
+> [!NOTE]
+> All URIs are relative to `https://api.fastly.com`
 
 Method | HTTP request | Description
-------------- | ------------- | -------------
+------ | ------------ | -----------
 [**get_tls_config**](TlsConfigurationsApi.md#get_tls_config) | **GET** /tls/configurations/{tls_configuration_id} | Get a TLS configuration
 [**list_tls_configs**](TlsConfigurationsApi.md#list_tls_configs) | **GET** /tls/configurations | List TLS configurations
 [**update_tls_config**](TlsConfigurationsApi.md#update_tls_config) | **PATCH** /tls/configurations/{tls_configuration_id} | Update a TLS configuration

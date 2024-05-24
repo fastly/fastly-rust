@@ -1,9 +1,10 @@
 # WafFirewallsApi
 
-All URIs are relative to *https://api.fastly.com*
+> [!NOTE]
+> All URIs are relative to `https://api.fastly.com`
 
 Method | HTTP request | Description
-------------- | ------------- | -------------
+------ | ------------ | -----------
 [**create_waf_firewall**](WafFirewallsApi.md#create_waf_firewall) | **POST** /waf/firewalls | Create a firewall
 [**delete_waf_firewall**](WafFirewallsApi.md#delete_waf_firewall) | **DELETE** /waf/firewalls/{firewall_id} | Delete a firewall
 [**get_waf_firewall**](WafFirewallsApi.md#get_waf_firewall) | **GET** /waf/firewalls/{firewall_id} | Get a firewall

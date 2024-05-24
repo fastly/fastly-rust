@@ -1,9 +1,10 @@
 # TokensApi
 
-All URIs are relative to *https://api.fastly.com*
+> [!NOTE]
+> All URIs are relative to `https://api.fastly.com`
 
 Method | HTTP request | Description
-------------- | ------------- | -------------
+------ | ------------ | -----------
 [**bulk_revoke_tokens**](TokensApi.md#bulk_revoke_tokens) | **DELETE** /tokens | Revoke multiple tokens
 [**create_token**](TokensApi.md#create_token) | **POST** /tokens | Create a token
 [**get_token**](TokensApi.md#get_token) | **GET** /tokens/{token_id} | Get a token

@@ -96,6 +96,7 @@ pub mod iam_permissions_api;
 pub mod iam_roles_api;
 pub mod iam_service_groups_api;
 pub mod iam_user_groups_api;
+pub mod image_optimizer_default_settings_api;
 pub mod invitations_api;
 pub mod kv_store_api;
 pub mod kv_store_item_api;

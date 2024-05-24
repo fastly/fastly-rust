@@ -1,9 +1,10 @@
 # DirectorApi
 
-All URIs are relative to *https://api.fastly.com*
+> [!NOTE]
+> All URIs are relative to `https://api.fastly.com`
 
 Method | HTTP request | Description
-------------- | ------------- | -------------
+------ | ------------ | -----------
 [**delete_director**](DirectorApi.md#delete_director) | **DELETE** /service/{service_id}/version/{version_id}/director/{director_name} | Delete a director
 [**get_director**](DirectorApi.md#get_director) | **GET** /service/{service_id}/version/{version_id}/director/{director_name} | Get a director
 [**list_directors**](DirectorApi.md#list_directors) | **GET** /service/{service_id}/version/{version_id}/director | List directors

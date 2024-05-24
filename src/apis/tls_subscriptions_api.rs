@@ -1,7 +1,7 @@
 /*
  * Fastly API
  *
- * Via the Fastly API you can perform any of the operations that are possible within the management console,  including creating services, domains, and backends, configuring rules or uploading your own application code, as well as account operations such as user administration and billing reports. The API is organized into collections of endpoints that allow manipulation of objects related to Fastly services and accounts. For the most accurate and up-to-date API reference content, visit our [Developer Hub](https://developer.fastly.com/reference/api/) 
+ * Via the Fastly API you can perform any of the operations that are possible within the management console,  including creating services, domains, and backends, configuring rules or uploading your own application code, as well as account operations such as user administration and billing reports. The API is organized into collections of endpoints that allow manipulation of objects related to Fastly services and accounts. For the most accurate and up-to-date API reference content, visit our [Developer Hub](https://www.fastly.com/documentation/reference/api/) 
  *
  */
 
@@ -52,7 +52,7 @@ pub struct DeleteTlsSubParams {
 pub struct GetTlsSubParams {
     /// Alphanumeric string identifying a TLS subscription.
     pub tls_subscription_id: String,
-    /// Include related objects. Optional, comma-separated values. Permitted values: `tls_authorizations`, `tls_authorizations.globalsign_email_challenge`, and `tls_authorizations.self_managed_http_challenge`. 
+    /// Include related objects. Optional, comma-separated values. Permitted values: `tls_authorizations`, `tls_authorizations.globalsign_email_challenge`, `tls_authorizations.self_managed_http_challenge`, and `tls_certificates`. 
     pub include: Option<String>
 }
 
@@ -65,7 +65,9 @@ pub struct ListTlsSubsParams {
     pub filter_tls_domains_id: Option<String>,
     /// Limit the returned subscriptions to those that have currently active orders. Permitted values: `true`. 
     pub filter_has_active_order: Option<bool>,
-    /// Include related objects. Optional, comma-separated values. Permitted values: `tls_authorizations`, `tls_authorizations.globalsign_email_challenge`, and `tls_authorizations.self_managed_http_challenge`. 
+    /// Limit the returned subscriptions to a specific certification authority. Values may include `certainly`, `lets-encrypt`, or `globalsign`. 
+    pub filter_certificate_authority: Option<String>,
+    /// Include related objects. Optional, comma-separated values. Permitted values: `tls_authorizations`, `tls_authorizations.globalsign_email_challenge`, `tls_authorizations.self_managed_http_challenge`, and `tls_certificates`. 
     pub include: Option<String>,
     /// Current page.
     pub page_number: Option<i32>,
@@ -418,6 +420,7 @@ pub async fn list_tls_subs(configuration: &mut configuration::Configuration, par
     let filter_state = params.filter_state;
     let filter_tls_domains_id = params.filter_tls_domains_id;
     let filter_has_active_order = params.filter_has_active_order;
+    let filter_certificate_authority = params.filter_certificate_authority;
     let include = params.include;
     let page_number = params.page_number;
     let page_size = params.page_size;
@@ -437,6 +440,9 @@ pub async fn list_tls_subs(configuration: &mut configuration::Configuration, par
     }
     if let Some(ref local_var_str) = filter_has_active_order {
         local_var_req_builder = local_var_req_builder.query(&[("filter[has_active_order]", &local_var_str.to_string())]);
+    }
+    if let Some(ref local_var_str) = filter_certificate_authority {
+        local_var_req_builder = local_var_req_builder.query(&[("filter[certificate_authority]", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = include {
         local_var_req_builder = local_var_req_builder.query(&[("include", &local_var_str.to_string())]);
