@@ -31,6 +31,9 @@ pub struct Invoicelineitems {
     /// The broader classification of the product (e.g., `Compute` or `Full-Site Delivery`).
     #[serde(rename = "ProductGroup", skip_serializing_if = "Option::is_none")]
     pub product_group: Option<String>,
+    /// The broader classification of the product (e.g., `Network Services` or `Security`).
+    #[serde(rename = "ProductLine", skip_serializing_if = "Option::is_none")]
+    pub product_line: Option<String>,
     /// The geographical area applicable for regionally based products.
     #[serde(rename = "Region", skip_serializing_if = "Option::is_none")]
     pub region: Option<String>,
@@ -49,6 +52,7 @@ impl Invoicelineitems {
             units: None,
             product_name: None,
             product_group: None,
+            product_line: None,
             region: None,
             usage_type: None,
         }

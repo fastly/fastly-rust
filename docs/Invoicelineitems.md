@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **units** | Option<**f32**> | Total number of units of usage. | 
 **product_name** | Option<**String**> | The name of the product. | 
 **product_group** | Option<**String**> | The broader classification of the product (e.g., `Compute` or `Full-Site Delivery`). | 
+**product_line** | Option<**String**> | The broader classification of the product (e.g., `Network Services` or `Security`). | 
 **region** | Option<**String**> | The geographical area applicable for regionally based products. | 
 **usage_type** | Option<**String**> | The unit of measure (e.g., `requests` or `bandwidth`). | 
 

@@ -43,6 +43,9 @@ pub struct LoggingS3Additional {
     /// Set this to `AES256` or `aws:kms` to enable S3 Server Side Encryption.
     #[serde(rename = "server_side_encryption", skip_serializing_if = "Option::is_none")]
     pub server_side_encryption: Option<String>,
+    /// The maximum number of bytes for each uploaded file. A value of 0 can be used to indicate there is no limit on the size of uploaded files, otherwise the minimum value is 1048576 bytes (1 MiB.)
+    #[serde(rename = "file_max_bytes", skip_serializing_if = "Option::is_none")]
+    pub file_max_bytes: Option<i32>,
 }
 
 impl LoggingS3Additional {
@@ -59,6 +62,7 @@ impl LoggingS3Additional {
             secret_key: None,
             server_side_encryption_kms_key_id: None,
             server_side_encryption: None,
+            file_max_bytes: None,
         }
     }
 }

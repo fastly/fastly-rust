@@ -15,7 +15,7 @@ Rust 2021 Edition
 Add the following to `Cargo.toml` under `[dependencies]`:
 
 ```toml
-fastly-api = "4.6.0"
+fastly-api = "4.7.0"
 ```
 
 ## Usage
@@ -634,6 +634,8 @@ The fastly-rust API client currently does not support the following endpoints:
 - [`/stats`](https://www.fastly.com/documentation/reference/api/metrics-stats/historical-stats) (GET)
 - [`/tls/activations/{tls_activation_id}`](https://www.fastly.com/documentation/reference/api/tls/mutual-tls/activations) (GET, PATCH)
 - [`/tls/activations`](https://www.fastly.com/documentation/reference/api/tls/mutual-tls/activations) (GET)
+- [`/tls/preview/domains/{tls_preview_domain_id}`](https://www.fastly.com/documentation/reference/api/) (GET, PATCH)
+- [`/tls/preview/domains`](https://www.fastly.com/documentation/reference/api/) (GET, POST)
 - [`/v1/channel/{service_id}/ts/h/limit/{max_entries}`](https://www.fastly.com/documentation/reference/api/metrics-stats/origin-insights) (GET)
 - [`/v1/channel/{service_id}/ts/h`](https://www.fastly.com/documentation/reference/api/metrics-stats/origin-insights) (GET)
 - [`/v1/channel/{service_id}/ts/{start_timestamp}`](https://www.fastly.com/documentation/reference/api/metrics-stats/origin-insights) (GET)

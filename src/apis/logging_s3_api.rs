@@ -59,7 +59,9 @@ pub struct CreateLogAwsS3Params {
     /// Optional server-side KMS Key Id. Must be set if `server_side_encryption` is set to `aws:kms` or `AES256`.
     pub server_side_encryption_kms_key_id: Option<String>,
     /// Set this to `AES256` or `aws:kms` to enable S3 Server Side Encryption.
-    pub server_side_encryption: Option<String>
+    pub server_side_encryption: Option<String>,
+    /// The maximum number of bytes for each uploaded file. A value of 0 can be used to indicate there is no limit on the size of uploaded files, otherwise the minimum value is 1048576 bytes (1 MiB.)
+    pub file_max_bytes: Option<i32>
 }
 
 /// struct for passing parameters to the method [`delete_log_aws_s3`]
@@ -143,7 +145,9 @@ pub struct UpdateLogAwsS3Params {
     /// Optional server-side KMS Key Id. Must be set if `server_side_encryption` is set to `aws:kms` or `AES256`.
     pub server_side_encryption_kms_key_id: Option<String>,
     /// Set this to `AES256` or `aws:kms` to enable S3 Server Side Encryption.
-    pub server_side_encryption: Option<String>
+    pub server_side_encryption: Option<String>,
+    /// The maximum number of bytes for each uploaded file. A value of 0 can be used to indicate there is no limit on the size of uploaded files, otherwise the minimum value is 1048576 bytes (1 MiB.)
+    pub file_max_bytes: Option<i32>
 }
 
 
@@ -211,6 +215,7 @@ pub async fn create_log_aws_s3(configuration: &mut configuration::Configuration,
     let secret_key = params.secret_key;
     let server_side_encryption_kms_key_id = params.server_side_encryption_kms_key_id;
     let server_side_encryption = params.server_side_encryption;
+    let file_max_bytes = params.file_max_bytes;
 
 
     let local_var_client = &local_var_configuration.client;
@@ -292,6 +297,9 @@ pub async fn create_log_aws_s3(configuration: &mut configuration::Configuration,
     }
     if let Some(local_var_param_value) = server_side_encryption {
         local_var_form_params.insert("server_side_encryption", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = file_max_bytes {
+        local_var_form_params.insert("file_max_bytes", local_var_param_value.to_string());
     }
     local_var_req_builder = local_var_req_builder.form(&local_var_form_params);
 
@@ -512,6 +520,7 @@ pub async fn update_log_aws_s3(configuration: &mut configuration::Configuration,
     let secret_key = params.secret_key;
     let server_side_encryption_kms_key_id = params.server_side_encryption_kms_key_id;
     let server_side_encryption = params.server_side_encryption;
+    let file_max_bytes = params.file_max_bytes;
 
 
     let local_var_client = &local_var_configuration.client;
@@ -593,6 +602,9 @@ pub async fn update_log_aws_s3(configuration: &mut configuration::Configuration,
     }
     if let Some(local_var_param_value) = server_side_encryption {
         local_var_form_params.insert("server_side_encryption", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = file_max_bytes {
+        local_var_form_params.insert("file_max_bytes", local_var_param_value.to_string());
     }
     local_var_req_builder = local_var_req_builder.form(&local_var_form_params);
 
