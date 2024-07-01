@@ -17,7 +17,7 @@ Name | Type | Description | Notes
 **request_max_bytes** | Option<**i32**> | The maximum number of bytes sent in one request. Defaults `0` for unbounded. | [default to 0]
 **url** | Option<**String**> | The URL to post logs to. | 
 **token** | Option<**String**> | A Splunk token for use in posting logs over HTTP to your collector. | 
-**use_tls** | Option<[**crate::models::LoggingUseTls**](LoggingUseTls.md)> |  | 
+**use_tls** | Option<[**crate::models::LoggingUseTlsString**](LoggingUseTlsString.md)> |  | 
 **created_at** | Option<**String**> | Date and time in ISO 8601 format. | [readonly]
 **deleted_at** | Option<**String**> | Date and time in ISO 8601 format. | [readonly]
 **updated_at** | Option<**String**> | Date and time in ISO 8601 format. | [readonly]

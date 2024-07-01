@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 ## content_check
 
-Retrieve headers and MD5 hash of the content for a particular URL from each Fastly edge server. This API is limited to 200 requests per hour.
+Retrieve headers and MD5 hash of the content for a particular URL from each Fastly edge server. This API is limited to 200 requests per hour. If the content takes too long to download, the hash will be set to `error-timeout-$pop`. If the response is too large, it will be set to `warning-too-large-$pop`.
 
 ```rust
 let cfg = &Configuration::default();

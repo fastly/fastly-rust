@@ -47,7 +47,7 @@ pub struct CreateLogSyslogParams {
     pub ipv4: Option<String>,
     /// Whether to prepend each message with a specific token.
     pub token: Option<String>,
-    pub use_tls: Option<crate::models::LoggingUseTls>
+    pub use_tls: Option<crate::models::LoggingUseTlsString>
 }
 
 /// struct for passing parameters to the method [`delete_log_syslog`]
@@ -119,7 +119,7 @@ pub struct UpdateLogSyslogParams {
     pub ipv4: Option<String>,
     /// Whether to prepend each message with a specific token.
     pub token: Option<String>,
-    pub use_tls: Option<crate::models::LoggingUseTls>
+    pub use_tls: Option<crate::models::LoggingUseTlsString>
 }
 
 

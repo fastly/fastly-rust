@@ -36,8 +36,16 @@ impl LoggingDatadogAdditional {
 pub enum Region {
     #[serde(rename = "US")]
     US,
-    #[serde(rename = "EU")]
-    EU,
+    #[serde(rename = "US3")]
+    US3,
+    #[serde(rename = "US5")]
+    US5,
+    #[serde(rename = "EU (legacy, same as EU1)")]
+    EULegacySameAsEU1,
+    #[serde(rename = "EU1")]
+    EU1,
+    #[serde(rename = "AP1")]
+    AP1,
 }
 
 impl Default for Region {

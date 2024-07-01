@@ -27,7 +27,7 @@ Name | Type | Description | Notes
 **auth_method** | Option<**String**> | SASL authentication method. | 
 **user** | Option<**String**> | SASL user. | 
 **password** | Option<**String**> | SASL password. | 
-**use_tls** | Option<[**crate::models::LoggingUseTls**](LoggingUseTls.md)> |  | 
+**use_tls** | Option<[**crate::models::LoggingUseTlsString**](LoggingUseTlsString.md)> |  | 
 
 [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

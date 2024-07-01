@@ -39,7 +39,7 @@ Name | Type | Description  | Required | Notes
 **format_version** | Option\<**i32**> | The version of the custom logging format used for the configured endpoint. The logging call gets placed by default in `vcl_log` if `format_version` is set to `2` and in `vcl_deliver` if `format_version` is set to `1`.  |  |[default to FormatVersion_v2]
 **port** | Option\<**i32**> | The port number. |  |[default to 20000]
 **token** | Option\<**String**> | Use token based authentication. |  |
-**use_tls** | Option\<[**crate::models::LoggingUseTls**](logging_use_tls.md)> |  |  |
+**use_tls** | Option\<[**crate::models::LoggingUseTlsString**](logging_use_tls_string.md)> |  |  |
 **region** | Option\<**String**> | The region to which to stream logs. |  |
 
 ### Return type
@@ -195,7 +195,7 @@ Name | Type | Description  | Required | Notes
 **format_version** | Option\<**i32**> | The version of the custom logging format used for the configured endpoint. The logging call gets placed by default in `vcl_log` if `format_version` is set to `2` and in `vcl_deliver` if `format_version` is set to `1`.  |  |[default to FormatVersion_v2]
 **port** | Option\<**i32**> | The port number. |  |[default to 20000]
 **token** | Option\<**String**> | Use token based authentication. |  |
-**use_tls** | Option\<[**crate::models::LoggingUseTls**](logging_use_tls.md)> |  |  |
+**use_tls** | Option\<[**crate::models::LoggingUseTlsString**](logging_use_tls_string.md)> |  |  |
 **region** | Option\<**String**> | The region to which to stream logs. |  |
 
 ### Return type

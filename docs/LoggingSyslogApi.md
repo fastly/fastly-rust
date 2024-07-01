@@ -47,7 +47,7 @@ Name | Type | Description  | Required | Notes
 **hostname** | Option\<**String**> | The hostname used for the syslog endpoint. |  |
 **ipv4** | Option\<**String**> | The IPv4 address used for the syslog endpoint. |  |
 **token** | Option\<**String**> | Whether to prepend each message with a specific token. |  |[default to null]
-**use_tls** | Option\<[**crate::models::LoggingUseTls**](logging_use_tls.md)> |  |  |
+**use_tls** | Option\<[**crate::models::LoggingUseTlsString**](logging_use_tls_string.md)> |  |  |
 
 ### Return type
 
@@ -210,7 +210,7 @@ Name | Type | Description  | Required | Notes
 **hostname** | Option\<**String**> | The hostname used for the syslog endpoint. |  |
 **ipv4** | Option\<**String**> | The IPv4 address used for the syslog endpoint. |  |
 **token** | Option\<**String**> | Whether to prepend each message with a specific token. |  |[default to null]
-**use_tls** | Option\<[**crate::models::LoggingUseTls**](logging_use_tls.md)> |  |  |
+**use_tls** | Option\<[**crate::models::LoggingUseTlsString**](logging_use_tls_string.md)> |  |  |
 
 ### Return type
 

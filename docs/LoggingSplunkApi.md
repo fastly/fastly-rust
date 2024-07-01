@@ -45,7 +45,7 @@ Name | Type | Description  | Required | Notes
 **request_max_bytes** | Option\<**i32**> | The maximum number of bytes sent in one request. Defaults `0` for unbounded. |  |[default to 0]
 **url** | Option\<**String**> | The URL to post logs to. |  |
 **token** | Option\<**String**> | A Splunk token for use in posting logs over HTTP to your collector. |  |
-**use_tls** | Option\<[**crate::models::LoggingUseTls**](logging_use_tls.md)> |  |  |
+**use_tls** | Option\<[**crate::models::LoggingUseTlsString**](logging_use_tls_string.md)> |  |  |
 
 ### Return type
 
@@ -206,7 +206,7 @@ Name | Type | Description  | Required | Notes
 **request_max_bytes** | Option\<**i32**> | The maximum number of bytes sent in one request. Defaults `0` for unbounded. |  |[default to 0]
 **url** | Option\<**String**> | The URL to post logs to. |  |
 **token** | Option\<**String**> | A Splunk token for use in posting logs over HTTP to your collector. |  |
-**use_tls** | Option\<[**crate::models::LoggingUseTls**](logging_use_tls.md)> |  |  |
+**use_tls** | Option\<[**crate::models::LoggingUseTlsString**](logging_use_tls_string.md)> |  |  |
 
 ### Return type
 

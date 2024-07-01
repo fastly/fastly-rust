@@ -17,7 +17,7 @@ pub struct LoggingLogentriesAdditional {
     #[serde(rename = "token", skip_serializing_if = "Option::is_none")]
     pub token: Option<String>,
     #[serde(rename = "use_tls", skip_serializing_if = "Option::is_none")]
-    pub use_tls: Option<crate::models::LoggingUseTls>,
+    pub use_tls: Option<crate::models::LoggingUseTlsString>,
     /// The region to which to stream logs.
     #[serde(rename = "region", skip_serializing_if = "Option::is_none")]
     pub region: Option<Region>,

@@ -32,7 +32,7 @@ pub struct CreateLogLogentriesParams {
     pub port: Option<i32>,
     /// Use token based authentication.
     pub token: Option<String>,
-    pub use_tls: Option<crate::models::LoggingUseTls>,
+    pub use_tls: Option<crate::models::LoggingUseTlsString>,
     /// The region to which to stream logs.
     pub region: Option<String>
 }
@@ -91,7 +91,7 @@ pub struct UpdateLogLogentriesParams {
     pub port: Option<i32>,
     /// Use token based authentication.
     pub token: Option<String>,
-    pub use_tls: Option<crate::models::LoggingUseTls>,
+    pub use_tls: Option<crate::models::LoggingUseTlsString>,
     /// The region to which to stream logs.
     pub region: Option<String>
 }

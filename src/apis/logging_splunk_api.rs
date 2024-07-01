@@ -44,7 +44,7 @@ pub struct CreateLogSplunkParams {
     pub url: Option<String>,
     /// A Splunk token for use in posting logs over HTTP to your collector.
     pub token: Option<String>,
-    pub use_tls: Option<crate::models::LoggingUseTls>
+    pub use_tls: Option<crate::models::LoggingUseTlsString>
 }
 
 /// struct for passing parameters to the method [`delete_log_splunk`]
@@ -113,7 +113,7 @@ pub struct UpdateLogSplunkParams {
     pub url: Option<String>,
     /// A Splunk token for use in posting logs over HTTP to your collector.
     pub token: Option<String>,
-    pub use_tls: Option<crate::models::LoggingUseTls>
+    pub use_tls: Option<crate::models::LoggingUseTlsString>
 }
 
 

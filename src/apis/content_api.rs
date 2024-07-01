@@ -27,7 +27,7 @@ pub enum ContentCheckError {
 }
 
 
-/// Retrieve headers and MD5 hash of the content for a particular URL from each Fastly edge server. This API is limited to 200 requests per hour.
+/// Retrieve headers and MD5 hash of the content for a particular URL from each Fastly edge server. This API is limited to 200 requests per hour. If the content takes too long to download, the hash will be set to `error-timeout-$pop`. If the response is too large, it will be set to `warning-too-large-$pop`.
 pub async fn content_check(configuration: &mut configuration::Configuration, params: ContentCheckParams) -> Result<Vec<crate::models::Content>, Error<ContentCheckError>> {
     let local_var_configuration = configuration;
 

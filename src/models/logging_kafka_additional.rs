@@ -38,7 +38,7 @@ pub struct LoggingKafkaAdditional {
     #[serde(rename = "password", skip_serializing_if = "Option::is_none")]
     pub password: Option<String>,
     #[serde(rename = "use_tls", skip_serializing_if = "Option::is_none")]
-    pub use_tls: Option<crate::models::LoggingUseTls>,
+    pub use_tls: Option<crate::models::LoggingUseTlsString>,
 }
 
 impl LoggingKafkaAdditional {

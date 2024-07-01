@@ -50,7 +50,7 @@ Name | Type | Description  | Required | Notes
 **auth_method** | Option\<**String**> | SASL authentication method. |  |
 **user** | Option\<**String**> | SASL user. |  |
 **password** | Option\<**String**> | SASL password. |  |
-**use_tls** | Option\<[**crate::models::LoggingUseTls**](logging_use_tls.md)> |  |  |
+**use_tls** | Option\<[**crate::models::LoggingUseTlsString**](logging_use_tls_string.md)> |  |  |
 
 ### Return type
 

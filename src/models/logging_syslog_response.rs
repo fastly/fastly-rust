@@ -55,7 +55,7 @@ pub struct LoggingSyslogResponse {
     #[serde(rename = "token", skip_serializing_if = "Option::is_none")]
     pub token: Option<String>,
     #[serde(rename = "use_tls", skip_serializing_if = "Option::is_none")]
-    pub use_tls: Option<crate::models::LoggingUseTls>,
+    pub use_tls: Option<crate::models::LoggingUseTlsString>,
     /// Date and time in ISO 8601 format.
     #[serde(rename = "created_at", skip_serializing_if = "Option::is_none")]
     pub created_at: Option<String>,
