@@ -755,6 +755,9 @@ pub struct Results {
     /// Number of \"Server Error\" codes delivered for all sources.
     #[serde(rename = "all_status_5xx", skip_serializing_if = "Option::is_none")]
     pub all_status_5xx: Option<i32>,
+    /// Origin Offload measures the ratio of bytes served to end users that were cached by Fastly, over the bytes served to end users, between 0 and 1. ((`edge_resp_body_bytes` + `edge_resp_header_bytes`) - (`origin_fetch_resp_body_bytes` + `origin_fetch_resp_header_bytes`)) / (`edge_resp_body_bytes` + `edge_resp_header_bytes`).
+    #[serde(rename = "origin_offload", skip_serializing_if = "Option::is_none")]
+    pub origin_offload: Option<f32>,
     #[serde(rename = "service_id", skip_serializing_if = "Option::is_none")]
     pub service_id: Option<Box<String>>,
     /// Timestamp for the start of the time period being reported
@@ -1014,6 +1017,7 @@ impl Results {
             all_status_3xx: None,
             all_status_4xx: None,
             all_status_5xx: None,
+            origin_offload: None,
             service_id: None,
             start_time: None,
         }

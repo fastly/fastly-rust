@@ -40,6 +40,17 @@ pub enum GetInvoiceByInvoiceIdError {
     UnknownValue(serde_json::Value),
 }
 
+/// struct for typed errors of method [`get_month_to_date_invoice`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetMonthToDateInvoiceError {
+    Status401(crate::models::Error),
+    Status404(crate::models::Error),
+    Status422(crate::models::Error),
+    Status500(crate::models::Error),
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method [`list_invoices`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -52,7 +63,7 @@ pub enum ListInvoicesError {
 
 
 /// Returns invoice associated with the invoice id.
-pub async fn get_invoice_by_invoice_id(configuration: &mut configuration::Configuration, params: GetInvoiceByInvoiceIdParams) -> Result<crate::models::InvoiceResponse, Error<GetInvoiceByInvoiceIdError>> {
+pub async fn get_invoice_by_invoice_id(configuration: &mut configuration::Configuration, params: GetInvoiceByInvoiceIdParams) -> Result<crate::models::EomInvoiceResponse, Error<GetInvoiceByInvoiceIdError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -103,8 +114,59 @@ pub async fn get_invoice_by_invoice_id(configuration: &mut configuration::Config
     }
 }
 
+/// Returns month-to-date invoice for the current month.
+pub async fn get_month_to_date_invoice(configuration: &mut configuration::Configuration) -> Result<crate::models::MtdInvoiceResponse, Error<GetMonthToDateInvoiceError>> {
+    let local_var_configuration = configuration;
+
+    // unbox the parameters
+
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!("{}/billing/v3/invoices/month-to-date", local_var_configuration.base_path);
+    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+    if let Some(ref local_var_apikey) = local_var_configuration.api_key {
+        let local_var_key = local_var_apikey.key.clone();
+        let local_var_value = match local_var_apikey.prefix {
+            Some(ref local_var_prefix) => format!("{} {}", local_var_prefix, local_var_key),
+            None => local_var_key,
+        };
+        local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
+    };
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        serde_json::from_str(&local_var_content).map_err(Error::from)
+    } else {
+        let local_var_entity: Option<GetMonthToDateInvoiceError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        Err(Error::ResponseError(local_var_error))
+    }
+}
+
 /// Returns the list of invoices, sorted by billing start date (newest to oldest).
-pub async fn list_invoices(configuration: &mut configuration::Configuration, params: ListInvoicesParams) -> Result<crate::models::ListInvoicesResponse, Error<ListInvoicesError>> {
+pub async fn list_invoices(configuration: &mut configuration::Configuration, params: ListInvoicesParams) -> Result<crate::models::ListEomInvoicesResponse, Error<ListInvoicesError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters

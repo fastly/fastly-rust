@@ -10,25 +10,53 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct TlsDnsRecord {
-    /// The IP address or hostname of the DNS record.
-    #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
-    pub id: Option<String>,
-    /// Specifies the regions that will be used to route traffic. Select DNS Records with a `global` region to route traffic to the most performant point of presence (POP) worldwide (global pricing will apply). Select DNS records with a `us-eu` region to exclusively land traffic on North American and European POPs.
+    /// Specifies the regions that will be used to route traffic. Select DNS records with a `global` region to route traffic to the most performant point of presence (POP) worldwide (global pricing will apply). Select DNS records with a `na/eu` region to exclusively land traffic on North American and European POPs.
     #[serde(rename = "region", skip_serializing_if = "Option::is_none")]
-    pub region: Option<String>,
+    pub region: Option<Region>,
     /// The type of the DNS record. `A` specifies an IPv4 address to be used for an A record to be used for apex domains (e.g., `example.com`). `AAAA` specifies an IPv6 address for use in an A record for apex domains. `CNAME` specifies the hostname to be used for a CNAME record for subdomains or wildcard domains (e.g., `www.example.com` or `*.example.com`).
     #[serde(rename = "record_type", skip_serializing_if = "Option::is_none")]
-    pub record_type: Option<String>,
+    pub record_type: Option<RecordType>,
 }
 
 impl TlsDnsRecord {
     pub fn new() -> TlsDnsRecord {
         TlsDnsRecord {
-            id: None,
             region: None,
             record_type: None,
         }
     }
 }
 
+/// Specifies the regions that will be used to route traffic. Select DNS records with a `global` region to route traffic to the most performant point of presence (POP) worldwide (global pricing will apply). Select DNS records with a `na/eu` region to exclusively land traffic on North American and European POPs.
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum Region {
+    #[serde(rename = "custom")]
+    Custom,
+    #[serde(rename = "global")]
+    Global,
+    #[serde(rename = "na/eu")]
+    NaEu,
+}
+
+impl Default for Region {
+    fn default() -> Region {
+        Self::Custom
+    }
+}
+/// The type of the DNS record. `A` specifies an IPv4 address to be used for an A record to be used for apex domains (e.g., `example.com`). `AAAA` specifies an IPv6 address for use in an A record for apex domains. `CNAME` specifies the hostname to be used for a CNAME record for subdomains or wildcard domains (e.g., `www.example.com` or `*.example.com`).
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum RecordType {
+    #[serde(rename = "CNAME")]
+    CNAME,
+    #[serde(rename = "A")]
+    A,
+    #[serde(rename = "AAAA")]
+    AAAA,
+}
+
+impl Default for RecordType {
+    fn default() -> RecordType {
+        Self::CNAME
+    }
+}
 

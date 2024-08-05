@@ -1,4 +1,4 @@
-# ListInvoicesResponse
+# ListEomInvoicesResponse
 
 ## Properties
 

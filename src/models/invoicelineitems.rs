@@ -26,19 +26,19 @@ pub struct Invoicelineitems {
     #[serde(rename = "units", skip_serializing_if = "Option::is_none")]
     pub units: Option<f32>,
     /// The name of the product.
-    #[serde(rename = "ProductName", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "product_name", skip_serializing_if = "Option::is_none")]
     pub product_name: Option<String>,
     /// The broader classification of the product (e.g., `Compute` or `Full-Site Delivery`).
-    #[serde(rename = "ProductGroup", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "product_group", skip_serializing_if = "Option::is_none")]
     pub product_group: Option<String>,
     /// The broader classification of the product (e.g., `Network Services` or `Security`).
-    #[serde(rename = "ProductLine", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "product_line", skip_serializing_if = "Option::is_none")]
     pub product_line: Option<String>,
     /// The geographical area applicable for regionally based products.
-    #[serde(rename = "Region", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "region", skip_serializing_if = "Option::is_none")]
     pub region: Option<String>,
     /// The unit of measure (e.g., `requests` or `bandwidth`).
-    #[serde(rename = "UsageType", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "usage_type", skip_serializing_if = "Option::is_none")]
     pub usage_type: Option<String>,
 }
 

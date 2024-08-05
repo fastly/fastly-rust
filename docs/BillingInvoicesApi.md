@@ -6,6 +6,7 @@
 Method | HTTP request | Description
 ------ | ------------ | -----------
 [**get_invoice_by_invoice_id**](BillingInvoicesApi.md#get_invoice_by_invoice_id) | **GET** /billing/v3/invoices/{invoice_id} | Get invoice by ID.
+[**get_month_to_date_invoice**](BillingInvoicesApi.md#get_month_to_date_invoice) | **GET** /billing/v3/invoices/month-to-date | Get month-to-date invoice.
 [**list_invoices**](BillingInvoicesApi.md#list_invoices) | **GET** /billing/v3/invoices | List of invoices.
 
 
@@ -31,7 +32,39 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::InvoiceResponse**](InvoiceResponse.md)
+[**crate::models::EomInvoiceResponse**](EomInvoiceResponse.md)
+
+### Authorization
+
+[token](../README.md#token)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+
+## get_month_to_date_invoice
+
+Returns month-to-date invoice for the current month.
+
+```rust
+let cfg = &Configuration::default();
+let params = GetMonthToDateInvoiceParams {
+    // parameters
+};
+get_month_to_date_invoice(cfg, params)
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**crate::models::MtdInvoiceResponse**](MtdInvoiceResponse.md)
 
 ### Authorization
 
@@ -69,7 +102,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::ListInvoicesResponse**](ListInvoicesResponse.md)
+[**crate::models::ListEomInvoicesResponse**](ListEomInvoicesResponse.md)
 
 ### Authorization
 
