@@ -13,7 +13,7 @@ pub struct Invoice {
     /// Customer ID associated with the invoice.
     #[serde(rename = "customer_id", skip_serializing_if = "Option::is_none")]
     pub customer_id: Option<String>,
-    /// Alphanumeric string identifying the invoice.
+    /// Numeric string identifying the invoice.
     #[serde(rename = "invoice_id", skip_serializing_if = "Option::is_none")]
     pub invoice_id: Option<String>,
     /// Date and time invoice was posted on, in ISO 8601 format.

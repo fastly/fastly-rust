@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **amount** | Option<**f32**> |  | 
-**aria_invoice_id** | Option<[**crate::models::LineItemDataReadOnlyInvoiceId**](LineItemDataReadOnlyInvoiceId.md)> |  | 
+**aria_invoice_id** | Option<**String**> | An alphanumeric string identifying the invoice. | [readonly]
 **client_service_id** | Option<**String**> |  | 
 **credit_coupon_code** | Option<**String**> |  | 
 **description** | Option<**String**> |  | 

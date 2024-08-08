@@ -16,8 +16,6 @@ pub struct BillingEstimateResponse {
     /// Date and time in ISO 8601 format.
     #[serde(rename = "start_time", skip_serializing_if = "Option::is_none")]
     pub start_time: Option<String>,
-    #[serde(rename = "invoice_id", skip_serializing_if = "Option::is_none")]
-    pub invoice_id: Option<Box<String>>,
     #[serde(rename = "customer_id", skip_serializing_if = "Option::is_none")]
     pub customer_id: Option<Box<String>>,
     /// The current state of our third-party billing vendor. One of `up` or `down`.
@@ -29,7 +27,9 @@ pub struct BillingEstimateResponse {
     pub total: Option<Box<crate::models::BillingTotal>>,
     /// Breakdown of regional data for products that are region based.
     #[serde(rename = "regions", skip_serializing_if = "Option::is_none")]
-    pub regions: Option<::std::collections::HashMap<String, ::std::collections::HashMap<String, serde_json::Value>>>,
+    pub regions: Option<::std::collections::HashMap<String, crate::models::BillingRegions>>,
+    #[serde(rename = "invoice_id", skip_serializing_if = "Option::is_none")]
+    pub invoice_id: Option<String>,
     #[serde(rename = "line_items", skip_serializing_if = "Option::is_none")]
     pub line_items: Option<Vec<crate::models::BillingEstimateLinesLineItems>>,
 }
@@ -39,12 +39,12 @@ impl BillingEstimateResponse {
         BillingEstimateResponse {
             end_time: None,
             start_time: None,
-            invoice_id: None,
             customer_id: None,
             vendor_state: None,
             status: None,
             total: None,
             regions: None,
+            invoice_id: None,
             line_items: None,
         }
     }

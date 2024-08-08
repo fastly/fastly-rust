@@ -25,8 +25,7 @@ pub struct GetInvoiceParams {
 pub struct GetInvoiceByIdParams {
     /// Alphanumeric string identifying the customer.
     pub customer_id: String,
-    /// Alphanumeric string identifying the invoice.
-    pub invoice_id: String
+    pub invoice_id: i32
 }
 
 /// struct for passing parameters to the method [`get_invoice_mtd`]
@@ -127,7 +126,7 @@ pub async fn get_invoice_by_id(configuration: &mut configuration::Configuration,
 
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/billing/v2/account_customers/{customer_id}/invoices/{invoice_id}", local_var_configuration.base_path, customer_id=crate::apis::urlencode(customer_id), invoice_id=crate::apis::urlencode(invoice_id));
+    let local_var_uri_str = format!("{}/billing/v2/account_customers/{customer_id}/invoices/{invoice_id}", local_var_configuration.base_path, customer_id=crate::apis::urlencode(customer_id), invoice_id=invoice_id);
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {

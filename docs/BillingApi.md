@@ -65,7 +65,7 @@ get_invoice_by_id(cfg, params)
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **customer_id** | **String** | Alphanumeric string identifying the customer. | [required] |
-**invoice_id** | **String** | Alphanumeric string identifying the invoice. | [required] |
+**invoice_id** | **i32** |  | [required] |
 
 ### Return type
 

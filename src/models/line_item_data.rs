@@ -12,8 +12,9 @@
 pub struct LineItemData {
     #[serde(rename = "amount", skip_serializing_if = "Option::is_none")]
     pub amount: Option<f32>,
+    /// An alphanumeric string identifying the invoice.
     #[serde(rename = "aria_invoice_id", skip_serializing_if = "Option::is_none")]
-    pub aria_invoice_id: Option<Box<crate::models::LineItemDataReadOnlyInvoiceId>>,
+    pub aria_invoice_id: Option<String>,
     #[serde(rename = "client_service_id", skip_serializing_if = "Option::is_none")]
     pub client_service_id: Option<String>,
     #[serde(rename = "credit_coupon_code", skip_serializing_if = "Option::is_none")]
