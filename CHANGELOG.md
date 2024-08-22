@@ -1,5 +1,12 @@
 # Changelog
 
+## [v4.11.0](https://github.com/fastly/fastly-rust/releases/tag/release/v4.11.0) (2024-08-21)
+
+**Bug fixes:**
+
+- bugfix(py): Add dependencies to pyproject.toml.
+- fix(billing): make rate-per-unit nullable
+
 ## [v4.10.0](https://github.com/fastly/fastly-rust/releases/tag/release/v4.10.0) (2024-08-08)
 
 **Bug fixes:**
