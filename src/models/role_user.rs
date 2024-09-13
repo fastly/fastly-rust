@@ -7,6 +7,8 @@
 
 /// RoleUser : The permissions role assigned to the user. Can be `user`, `billing`, `engineer`, or `superuser`.
 
+use std::fmt;
+
 /// The permissions role assigned to the user. Can be `user`, `billing`, `engineer`, or `superuser`.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum RoleUser {
@@ -21,13 +23,13 @@ pub enum RoleUser {
 
 }
 
-impl ToString for RoleUser {
-    fn to_string(&self) -> String {
+impl fmt::Display for RoleUser {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Self::User => String::from("user"),
-            Self::Billing => String::from("billing"),
-            Self::Engineer => String::from("engineer"),
-            Self::Superuser => String::from("superuser"),
+            Self::User => write!(f, "{}", "user"),
+            Self::Billing => write!(f, "{}", "billing"),
+            Self::Engineer => write!(f, "{}", "engineer"),
+            Self::Superuser => write!(f, "{}", "superuser"),
         }
     }
 }

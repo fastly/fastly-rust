@@ -217,10 +217,10 @@ Name | Type | Description  | Required | Notes
 **filter_tls_domains_id** | Option\<**String**> | Limit the returned subscriptions to those that include the specific domain. |  |
 **filter_has_active_order** | Option\<**bool**> | Limit the returned subscriptions to those that have currently active orders. Permitted values: `true`.  |  |
 **filter_certificate_authority** | Option\<**String**> | Limit the returned subscriptions to a specific certification authority. Values may include `certainly`, `lets-encrypt`, or `globalsign`.  |  |
+**sort** | Option\<**String**> | The order in which to list the results. |  |[default to -created_at]
 **include** | Option\<**String**> | Include related objects. Optional, comma-separated values. Permitted values: `tls_authorizations`, `tls_authorizations.globalsign_email_challenge`, `tls_authorizations.self_managed_http_challenge`, and `tls_certificates`.  |  |
 **page_number** | Option\<**i32**> | Current page. |  |
 **page_size** | Option\<**i32**> | Number of records per page. |  |[default to 20]
-**sort** | Option\<**String**> | The order in which to list the results by creation date. |  |[default to created_at]
 
 ### Return type
 

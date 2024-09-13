@@ -7,6 +7,8 @@
 
 /// TypeContact : Resource type
 
+use std::fmt;
+
 /// Resource type
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum TypeContact {
@@ -15,10 +17,10 @@ pub enum TypeContact {
 
 }
 
-impl ToString for TypeContact {
-    fn to_string(&self) -> String {
+impl fmt::Display for TypeContact {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Self::Contact => String::from("contact"),
+            Self::Contact => write!(f, "{}", "contact"),
         }
     }
 }

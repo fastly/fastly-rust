@@ -21,6 +21,9 @@ pub struct ServiceResponseAllOf {
     /// A list of [versions](https://www.fastly.com/documentation/reference/api/services/version/) associated with the service.
     #[serde(rename = "versions", skip_serializing_if = "Option::is_none")]
     pub versions: Option<Vec<crate::models::SchemasVersionResponse>>,
+    /// A list of environments where the service has been deployed.
+    #[serde(rename = "environments", skip_serializing_if = "Option::is_none")]
+    pub environments: Option<Vec<crate::models::Environment>>,
 }
 
 impl ServiceResponseAllOf {
@@ -30,6 +33,7 @@ impl ServiceResponseAllOf {
             publish_key: None,
             paused: None,
             versions: None,
+            environments: None,
         }
     }
 }

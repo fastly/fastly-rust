@@ -7,6 +7,8 @@
 
 /// TypeWafTag : Resource type.
 
+use std::fmt;
+
 /// Resource type.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum TypeWafTag {
@@ -15,10 +17,10 @@ pub enum TypeWafTag {
 
 }
 
-impl ToString for TypeWafTag {
-    fn to_string(&self) -> String {
+impl fmt::Display for TypeWafTag {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Self::WafTag => String::from("waf_tag"),
+            Self::WafTag => write!(f, "{}", "waf_tag"),
         }
     }
 }

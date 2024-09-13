@@ -7,6 +7,8 @@
 
 /// TypeTlsDnsRecord : Resource type
 
+use std::fmt;
+
 /// Resource type
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum TypeTlsDnsRecord {
@@ -15,10 +17,10 @@ pub enum TypeTlsDnsRecord {
 
 }
 
-impl ToString for TypeTlsDnsRecord {
-    fn to_string(&self) -> String {
+impl fmt::Display for TypeTlsDnsRecord {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Self::DnsRecord => String::from("dns_record"),
+            Self::DnsRecord => write!(f, "{}", "dns_record"),
         }
     }
 }

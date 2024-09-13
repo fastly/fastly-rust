@@ -7,6 +7,8 @@
 
 /// TypeTlsDomain : Resource type
 
+use std::fmt;
+
 /// Resource type
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum TypeTlsDomain {
@@ -15,10 +17,10 @@ pub enum TypeTlsDomain {
 
 }
 
-impl ToString for TypeTlsDomain {
-    fn to_string(&self) -> String {
+impl fmt::Display for TypeTlsDomain {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Self::TlsDomain => String::from("tls_domain"),
+            Self::TlsDomain => write!(f, "{}", "tls_domain"),
         }
     }
 }

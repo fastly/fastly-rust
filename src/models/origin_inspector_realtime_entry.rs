@@ -11,8 +11,9 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct OriginInspectorRealtimeEntry {
+    /// The Unix timestamp at which this record's data was generated.
     #[serde(rename = "recorded", skip_serializing_if = "Option::is_none")]
-    pub recorded: Option<Box<crate::models::OriginInspectorRealtimeEntryRecorded>>,
+    pub recorded: Option<i32>,
     /// Groups [measurements](#measurements-data-model) by backend name.
     #[serde(rename = "aggregated", skip_serializing_if = "Option::is_none")]
     pub aggregated: Option<::std::collections::HashMap<String, crate::models::OriginInspectorMeasurements>>,

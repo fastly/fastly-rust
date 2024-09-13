@@ -11,8 +11,9 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct DomainInspectorRealtimeEntry {
+    /// The Unix timestamp at which this record's data was generated.
     #[serde(rename = "recorded", skip_serializing_if = "Option::is_none")]
-    pub recorded: Option<Box<crate::models::RecordedTimestamp>>,
+    pub recorded: Option<i32>,
     /// Groups [measurements](#measurements-data-model) by backend name and then by IP address.
     #[serde(rename = "aggregated", skip_serializing_if = "Option::is_none")]
     pub aggregated: Option<::std::collections::HashMap<String, crate::models::DomainInspectorMeasurements>>,

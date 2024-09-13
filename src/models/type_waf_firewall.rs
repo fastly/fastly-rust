@@ -7,6 +7,8 @@
 
 /// TypeWafFirewall : Resource type.
 
+use std::fmt;
+
 /// Resource type.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum TypeWafFirewall {
@@ -15,10 +17,10 @@ pub enum TypeWafFirewall {
 
 }
 
-impl ToString for TypeWafFirewall {
-    fn to_string(&self) -> String {
+impl fmt::Display for TypeWafFirewall {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Self::WafFirewall => String::from("waf_firewall"),
+            Self::WafFirewall => write!(f, "{}", "waf_firewall"),
         }
     }
 }

@@ -6,9 +6,11 @@
 Method | HTTP request | Description
 ------ | ------------ | -----------
 [**activate_service_version**](VersionApi.md#activate_service_version) | **PUT** /service/{service_id}/version/{version_id}/activate | Activate a service version
+[**activate_service_version_environment**](VersionApi.md#activate_service_version_environment) | **PUT** /service/{service_id}/version/{version_id}/activate/{environment_name} | Activate a service version on the specified environment
 [**clone_service_version**](VersionApi.md#clone_service_version) | **PUT** /service/{service_id}/version/{version_id}/clone | Clone a service version
 [**create_service_version**](VersionApi.md#create_service_version) | **POST** /service/{service_id}/version | Create a service version
 [**deactivate_service_version**](VersionApi.md#deactivate_service_version) | **PUT** /service/{service_id}/version/{version_id}/deactivate | Deactivate a service version
+[**deactivate_service_version_environment**](VersionApi.md#deactivate_service_version_environment) | **PUT** /service/{service_id}/version/{version_id}/deactivate/{environment_name} | Deactivate a service version on an environment
 [**get_service_version**](VersionApi.md#get_service_version) | **GET** /service/{service_id}/version/{version_id} | Get a version of a service
 [**list_service_versions**](VersionApi.md#list_service_versions) | **GET** /service/{service_id}/version | List versions of a service
 [**lock_service_version**](VersionApi.md#lock_service_version) | **PUT** /service/{service_id}/version/{version_id}/lock | Lock a service version
@@ -36,6 +38,43 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **service_id** | **String** | Alphanumeric string identifying the service. | [required] |
 **version_id** | **i32** | Integer identifying a service version. | [required] |
+
+### Return type
+
+[**crate::models::VersionResponse**](VersionResponse.md)
+
+### Authorization
+
+[token](../README.md#token)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+
+## activate_service_version_environment
+
+Activate a version on a given environment, i.e. \"staging\"
+
+```rust
+let cfg = &Configuration::default();
+let params = ActivateServiceVersionEnvironmentParams {
+    // parameters
+};
+activate_service_version_environment(cfg, params)
+```
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**service_id** | **String** | Alphanumeric string identifying the service. | [required] |
+**version_id** | **i32** | Integer identifying a service version. | [required] |
+**environment_name** | [**crate::models::EnvironmentName**](.md) |  | [required] |
 
 ### Return type
 
@@ -143,6 +182,43 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **service_id** | **String** | Alphanumeric string identifying the service. | [required] |
 **version_id** | **i32** | Integer identifying a service version. | [required] |
+
+### Return type
+
+[**crate::models::VersionResponse**](VersionResponse.md)
+
+### Authorization
+
+[token](../README.md#token)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+
+## deactivate_service_version_environment
+
+Deactivate the current version on a given environment, i.e. \"staging\"
+
+```rust
+let cfg = &Configuration::default();
+let params = DeactivateServiceVersionEnvironmentParams {
+    // parameters
+};
+deactivate_service_version_environment(cfg, params)
+```
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**service_id** | **String** | Alphanumeric string identifying the service. | [required] |
+**version_id** | **i32** | Integer identifying a service version. | [required] |
+**environment_name** | [**crate::models::EnvironmentName**](.md) |  | [required] |
 
 ### Return type
 

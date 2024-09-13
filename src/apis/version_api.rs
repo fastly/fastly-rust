@@ -20,6 +20,16 @@ pub struct ActivateServiceVersionParams {
     pub version_id: i32
 }
 
+/// struct for passing parameters to the method [`activate_service_version_environment`]
+#[derive(Clone, Debug, Default)]
+pub struct ActivateServiceVersionEnvironmentParams {
+    /// Alphanumeric string identifying the service.
+    pub service_id: String,
+    /// Integer identifying a service version.
+    pub version_id: i32,
+    pub environment_name: crate::models::EnvironmentName
+}
+
 /// struct for passing parameters to the method [`clone_service_version`]
 #[derive(Clone, Debug, Default)]
 pub struct CloneServiceVersionParams {
@@ -43,6 +53,16 @@ pub struct DeactivateServiceVersionParams {
     pub service_id: String,
     /// Integer identifying a service version.
     pub version_id: i32
+}
+
+/// struct for passing parameters to the method [`deactivate_service_version_environment`]
+#[derive(Clone, Debug, Default)]
+pub struct DeactivateServiceVersionEnvironmentParams {
+    /// Alphanumeric string identifying the service.
+    pub service_id: String,
+    /// Integer identifying a service version.
+    pub version_id: i32,
+    pub environment_name: crate::models::EnvironmentName
 }
 
 /// struct for passing parameters to the method [`get_service_version`]
@@ -110,6 +130,13 @@ pub enum ActivateServiceVersionError {
     UnknownValue(serde_json::Value),
 }
 
+/// struct for typed errors of method [`activate_service_version_environment`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ActivateServiceVersionEnvironmentError {
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method [`clone_service_version`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -128,6 +155,13 @@ pub enum CreateServiceVersionError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeactivateServiceVersionError {
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`deactivate_service_version_environment`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeactivateServiceVersionEnvironmentError {
     UnknownValue(serde_json::Value),
 }
 
@@ -215,6 +249,60 @@ pub async fn activate_service_version(configuration: &mut configuration::Configu
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
         let local_var_entity: Option<ActivateServiceVersionError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        Err(Error::ResponseError(local_var_error))
+    }
+}
+
+/// Activate a version on a given environment, i.e. \"staging\"
+pub async fn activate_service_version_environment(configuration: &mut configuration::Configuration, params: ActivateServiceVersionEnvironmentParams) -> Result<crate::models::VersionResponse, Error<ActivateServiceVersionEnvironmentError>> {
+    let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let service_id = params.service_id;
+    let version_id = params.version_id;
+    let environment_name = params.environment_name;
+
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!("{}/service/{service_id}/version/{version_id}/activate/{environment_name}", local_var_configuration.base_path, service_id=crate::apis::urlencode(service_id), version_id=version_id, environment_name=environment_name);
+    let mut local_var_req_builder = local_var_client.request(reqwest::Method::PUT, local_var_uri_str.as_str());
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+    if let Some(ref local_var_apikey) = local_var_configuration.api_key {
+        let local_var_key = local_var_apikey.key.clone();
+        let local_var_value = match local_var_apikey.prefix {
+            Some(ref local_var_prefix) => format!("{} {}", local_var_prefix, local_var_key),
+            None => local_var_key,
+        };
+        local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
+    };
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        serde_json::from_str(&local_var_content).map_err(Error::from)
+    } else {
+        let local_var_entity: Option<ActivateServiceVersionEnvironmentError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }
@@ -373,6 +461,60 @@ pub async fn deactivate_service_version(configuration: &mut configuration::Confi
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
         let local_var_entity: Option<DeactivateServiceVersionError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        Err(Error::ResponseError(local_var_error))
+    }
+}
+
+/// Deactivate the current version on a given environment, i.e. \"staging\"
+pub async fn deactivate_service_version_environment(configuration: &mut configuration::Configuration, params: DeactivateServiceVersionEnvironmentParams) -> Result<crate::models::VersionResponse, Error<DeactivateServiceVersionEnvironmentError>> {
+    let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let service_id = params.service_id;
+    let version_id = params.version_id;
+    let environment_name = params.environment_name;
+
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!("{}/service/{service_id}/version/{version_id}/deactivate/{environment_name}", local_var_configuration.base_path, service_id=crate::apis::urlencode(service_id), version_id=version_id, environment_name=environment_name);
+    let mut local_var_req_builder = local_var_client.request(reqwest::Method::PUT, local_var_uri_str.as_str());
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+    if let Some(ref local_var_apikey) = local_var_configuration.api_key {
+        let local_var_key = local_var_apikey.key.clone();
+        let local_var_value = match local_var_apikey.prefix {
+            Some(ref local_var_prefix) => format!("{} {}", local_var_prefix, local_var_key),
+            None => local_var_key,
+        };
+        local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
+    };
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        serde_json::from_str(&local_var_content).map_err(Error::from)
+    } else {
+        let local_var_entity: Option<DeactivateServiceVersionEnvironmentError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }

@@ -24,7 +24,8 @@ pub struct DisableProductParams {
 pub struct EnableProductParams {
     pub product_id: String,
     /// Alphanumeric string identifying the service.
-    pub service_id: String
+    pub service_id: String,
+    pub set_workspace_id: Option<crate::models::SetWorkspaceId>
 }
 
 /// struct for passing parameters to the method [`get_enabled_product`]
@@ -33,6 +34,23 @@ pub struct GetEnabledProductParams {
     pub product_id: String,
     /// Alphanumeric string identifying the service.
     pub service_id: String
+}
+
+/// struct for passing parameters to the method [`get_product_configuration`]
+#[derive(Clone, Debug, Default)]
+pub struct GetProductConfigurationParams {
+    pub product_id: String,
+    /// Alphanumeric string identifying the service.
+    pub service_id: String
+}
+
+/// struct for passing parameters to the method [`set_product_configuration`]
+#[derive(Clone, Debug, Default)]
+pub struct SetProductConfigurationParams {
+    pub product_id: String,
+    /// Alphanumeric string identifying the service.
+    pub service_id: String,
+    pub set_configuration: Option<crate::models::SetConfiguration>
 }
 
 
@@ -57,8 +75,22 @@ pub enum GetEnabledProductError {
     UnknownValue(serde_json::Value),
 }
 
+/// struct for typed errors of method [`get_product_configuration`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetProductConfigurationError {
+    UnknownValue(serde_json::Value),
+}
 
-/// Disable a product on a service. Supported product IDs: `brotli_compression`,`domain_inspector`,`fanout`,`image_optimizer`,`origin_inspector`, and `websockets`.
+/// struct for typed errors of method [`set_product_configuration`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum SetProductConfigurationError {
+    UnknownValue(serde_json::Value),
+}
+
+
+/// Disable a product on a service. Supported product IDs: `brotli_compression`,`domain_inspector`,`fanout`,`image_optimizer`,`origin_inspector`, `websockets`, `bot_management`, and `ngwaf`.
 pub async fn disable_product(configuration: &mut configuration::Configuration, params: DisableProductParams) -> Result<(), Error<DisableProductError>> {
     let local_var_configuration = configuration;
 
@@ -69,7 +101,7 @@ pub async fn disable_product(configuration: &mut configuration::Configuration, p
 
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/enabled-products/{product_id}/services/{service_id}", local_var_configuration.base_path, product_id=crate::apis::urlencode(product_id), service_id=crate::apis::urlencode(service_id));
+    let local_var_uri_str = format!("{}/enabled-products/v1/{product_id}/services/{service_id}", local_var_configuration.base_path, product_id=crate::apis::urlencode(product_id), service_id=crate::apis::urlencode(service_id));
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::DELETE, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
@@ -111,18 +143,19 @@ pub async fn disable_product(configuration: &mut configuration::Configuration, p
     }
 }
 
-/// Enable a product on a service. Supported product IDs: `brotli_compression`,`domain_inspector`,`fanout`,`image_optimizer`,`origin_inspector`, and `websockets`.
+/// Enable a product on a service. Supported product IDs: `brotli_compression`,`domain_inspector`,`fanout`,`image_optimizer`,`origin_inspector`, `websockets`, `bot_management`, and `ngwaf`.
 pub async fn enable_product(configuration: &mut configuration::Configuration, params: EnableProductParams) -> Result<crate::models::EnabledProductResponse, Error<EnableProductError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
     let product_id = params.product_id;
     let service_id = params.service_id;
+    let set_workspace_id = params.set_workspace_id;
 
 
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/enabled-products/{product_id}/services/{service_id}", local_var_configuration.base_path, product_id=crate::apis::urlencode(product_id), service_id=crate::apis::urlencode(service_id));
+    let local_var_uri_str = format!("{}/enabled-products/v1/{product_id}/services/{service_id}", local_var_configuration.base_path, product_id=crate::apis::urlencode(product_id), service_id=crate::apis::urlencode(service_id));
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::PUT, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
@@ -136,6 +169,7 @@ pub async fn enable_product(configuration: &mut configuration::Configuration, pa
         };
         local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
     };
+    local_var_req_builder = local_var_req_builder.json(&set_workspace_id);
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
@@ -164,7 +198,7 @@ pub async fn enable_product(configuration: &mut configuration::Configuration, pa
     }
 }
 
-/// Get enabled product on a service. Supported product IDs: `brotli_compression`,`domain_inspector`,`fanout`,`image_optimizer`,`origin_inspector`, and `websockets`.
+/// Get enabled product on a service. Supported product IDs: `brotli_compression`,`domain_inspector`,`fanout`,`image_optimizer`,`origin_inspector`, `websockets`, `bot_management`, and `ngwaf`.
 pub async fn get_enabled_product(configuration: &mut configuration::Configuration, params: GetEnabledProductParams) -> Result<crate::models::EnabledProductResponse, Error<GetEnabledProductError>> {
     let local_var_configuration = configuration;
 
@@ -175,7 +209,7 @@ pub async fn get_enabled_product(configuration: &mut configuration::Configuratio
 
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/enabled-products/{product_id}/services/{service_id}", local_var_configuration.base_path, product_id=crate::apis::urlencode(product_id), service_id=crate::apis::urlencode(service_id));
+    let local_var_uri_str = format!("{}/enabled-products/v1/{product_id}/services/{service_id}", local_var_configuration.base_path, product_id=crate::apis::urlencode(product_id), service_id=crate::apis::urlencode(service_id));
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
@@ -212,6 +246,114 @@ pub async fn get_enabled_product(configuration: &mut configuration::Configuratio
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
         let local_var_entity: Option<GetEnabledProductError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        Err(Error::ResponseError(local_var_error))
+    }
+}
+
+/// Get configuration for an enabled product on a service. Supported product IDs: `ngwaf`.
+pub async fn get_product_configuration(configuration: &mut configuration::Configuration, params: GetProductConfigurationParams) -> Result<crate::models::ConfiguredProductResponse, Error<GetProductConfigurationError>> {
+    let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let product_id = params.product_id;
+    let service_id = params.service_id;
+
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!("{}/enabled-products/v1/{product_id}/services/{service_id}/configuration", local_var_configuration.base_path, product_id=crate::apis::urlencode(product_id), service_id=crate::apis::urlencode(service_id));
+    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+    if let Some(ref local_var_apikey) = local_var_configuration.api_key {
+        let local_var_key = local_var_apikey.key.clone();
+        let local_var_value = match local_var_apikey.prefix {
+            Some(ref local_var_prefix) => format!("{} {}", local_var_prefix, local_var_key),
+            None => local_var_key,
+        };
+        local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
+    };
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        serde_json::from_str(&local_var_content).map_err(Error::from)
+    } else {
+        let local_var_entity: Option<GetProductConfigurationError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        Err(Error::ResponseError(local_var_error))
+    }
+}
+
+/// Update configuration for an enabled product on a service. Supported product IDs: `ngwaf`.
+pub async fn set_product_configuration(configuration: &mut configuration::Configuration, params: SetProductConfigurationParams) -> Result<crate::models::ConfiguredProductResponse, Error<SetProductConfigurationError>> {
+    let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let product_id = params.product_id;
+    let service_id = params.service_id;
+    let set_configuration = params.set_configuration;
+
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!("{}/enabled-products/v1/{product_id}/services/{service_id}/configuration", local_var_configuration.base_path, product_id=crate::apis::urlencode(product_id), service_id=crate::apis::urlencode(service_id));
+    let mut local_var_req_builder = local_var_client.request(reqwest::Method::PATCH, local_var_uri_str.as_str());
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+    if let Some(ref local_var_apikey) = local_var_configuration.api_key {
+        let local_var_key = local_var_apikey.key.clone();
+        let local_var_value = match local_var_apikey.prefix {
+            Some(ref local_var_prefix) => format!("{} {}", local_var_prefix, local_var_key),
+            None => local_var_key,
+        };
+        local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
+    };
+    local_var_req_builder = local_var_req_builder.json(&set_configuration);
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PATCH" != "GET" && "PATCH" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        serde_json::from_str(&local_var_content).map_err(Error::from)
+    } else {
+        let local_var_entity: Option<SetProductConfigurationError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }

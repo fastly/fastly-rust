@@ -7,6 +7,8 @@
 
 /// TypeEvent : Resource type
 
+use std::fmt;
+
 /// Resource type
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum TypeEvent {
@@ -15,10 +17,10 @@ pub enum TypeEvent {
 
 }
 
-impl ToString for TypeEvent {
-    fn to_string(&self) -> String {
+impl fmt::Display for TypeEvent {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Self::Event => String::from("event"),
+            Self::Event => write!(f, "{}", "event"),
         }
     }
 }

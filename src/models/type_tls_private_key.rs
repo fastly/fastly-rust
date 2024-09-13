@@ -7,6 +7,8 @@
 
 /// TypeTlsPrivateKey : Resource type
 
+use std::fmt;
+
 /// Resource type
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum TypeTlsPrivateKey {
@@ -15,10 +17,10 @@ pub enum TypeTlsPrivateKey {
 
 }
 
-impl ToString for TypeTlsPrivateKey {
-    fn to_string(&self) -> String {
+impl fmt::Display for TypeTlsPrivateKey {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Self::TlsPrivateKey => String::from("tls_private_key"),
+            Self::TlsPrivateKey => write!(f, "{}", "tls_private_key"),
         }
     }
 }

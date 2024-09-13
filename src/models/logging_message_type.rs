@@ -7,6 +7,8 @@
 
 /// LoggingMessageType : How the message should be formatted.
 
+use std::fmt;
+
 /// How the message should be formatted.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum LoggingMessageType {
@@ -21,13 +23,13 @@ pub enum LoggingMessageType {
 
 }
 
-impl ToString for LoggingMessageType {
-    fn to_string(&self) -> String {
+impl fmt::Display for LoggingMessageType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Self::Classic => String::from("classic"),
-            Self::Loggly => String::from("loggly"),
-            Self::Logplex => String::from("logplex"),
-            Self::Blank => String::from("blank"),
+            Self::Classic => write!(f, "{}", "classic"),
+            Self::Loggly => write!(f, "{}", "loggly"),
+            Self::Logplex => write!(f, "{}", "logplex"),
+            Self::Blank => write!(f, "{}", "blank"),
         }
     }
 }

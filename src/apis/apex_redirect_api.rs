@@ -165,7 +165,7 @@ pub async fn create_apex_redirect(configuration: &mut configuration::Configurati
         local_var_form_params.insert("status_code", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = domains {
-        local_var_form_params.insert("domains", local_var_param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string());
+        local_var_form_params.insert("domains[]", local_var_param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string());
     }
     if let Some(local_var_param_value) = feature_revision {
         local_var_form_params.insert("feature_revision", local_var_param_value.to_string());
@@ -408,7 +408,7 @@ pub async fn update_apex_redirect(configuration: &mut configuration::Configurati
         local_var_form_params.insert("status_code", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = domains {
-        local_var_form_params.insert("domains", local_var_param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string());
+        local_var_form_params.insert("domains[]", local_var_param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string());
     }
     if let Some(local_var_param_value) = feature_revision {
         local_var_form_params.insert("feature_revision", local_var_param_value.to_string());

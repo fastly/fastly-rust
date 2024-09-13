@@ -7,6 +7,8 @@
 
 /// AwsRegion : A named set of [AWS resources](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints) that's in the same geographical area.
 
+use std::fmt;
+
 /// A named set of [AWS resources](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints) that's in the same geographical area.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum AwsRegion {
@@ -59,32 +61,32 @@ pub enum AwsRegion {
 
 }
 
-impl ToString for AwsRegion {
-    fn to_string(&self) -> String {
+impl fmt::Display for AwsRegion {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Self::UsEast1 => String::from("us-east-1"),
-            Self::UsEast2 => String::from("us-east-2"),
-            Self::UsWest1 => String::from("us-west-1"),
-            Self::UsWest2 => String::from("us-west-2"),
-            Self::AfSouth1 => String::from("af-south-1"),
-            Self::ApEast1 => String::from("ap-east-1"),
-            Self::ApSouth1 => String::from("ap-south-1"),
-            Self::ApNortheast3 => String::from("ap-northeast-3"),
-            Self::ApNortheast2 => String::from("ap-northeast-2"),
-            Self::ApSoutheast1 => String::from("ap-southeast-1"),
-            Self::ApSoutheast2 => String::from("ap-southeast-2"),
-            Self::ApNortheast1 => String::from("ap-northeast-1"),
-            Self::CaCentral1 => String::from("ca-central-1"),
-            Self::CnNorth1 => String::from("cn-north-1"),
-            Self::CnNorthwest1 => String::from("cn-northwest-1"),
-            Self::EuCentral1 => String::from("eu-central-1"),
-            Self::EuWest1 => String::from("eu-west-1"),
-            Self::EuWest2 => String::from("eu-west-2"),
-            Self::EuSouth1 => String::from("eu-south-1"),
-            Self::EuWest3 => String::from("eu-west-3"),
-            Self::EuNorth1 => String::from("eu-north-1"),
-            Self::MeSouth1 => String::from("me-south-1"),
-            Self::SaEast1 => String::from("sa-east-1"),
+            Self::UsEast1 => write!(f, "{}", "us-east-1"),
+            Self::UsEast2 => write!(f, "{}", "us-east-2"),
+            Self::UsWest1 => write!(f, "{}", "us-west-1"),
+            Self::UsWest2 => write!(f, "{}", "us-west-2"),
+            Self::AfSouth1 => write!(f, "{}", "af-south-1"),
+            Self::ApEast1 => write!(f, "{}", "ap-east-1"),
+            Self::ApSouth1 => write!(f, "{}", "ap-south-1"),
+            Self::ApNortheast3 => write!(f, "{}", "ap-northeast-3"),
+            Self::ApNortheast2 => write!(f, "{}", "ap-northeast-2"),
+            Self::ApSoutheast1 => write!(f, "{}", "ap-southeast-1"),
+            Self::ApSoutheast2 => write!(f, "{}", "ap-southeast-2"),
+            Self::ApNortheast1 => write!(f, "{}", "ap-northeast-1"),
+            Self::CaCentral1 => write!(f, "{}", "ca-central-1"),
+            Self::CnNorth1 => write!(f, "{}", "cn-north-1"),
+            Self::CnNorthwest1 => write!(f, "{}", "cn-northwest-1"),
+            Self::EuCentral1 => write!(f, "{}", "eu-central-1"),
+            Self::EuWest1 => write!(f, "{}", "eu-west-1"),
+            Self::EuWest2 => write!(f, "{}", "eu-west-2"),
+            Self::EuSouth1 => write!(f, "{}", "eu-south-1"),
+            Self::EuWest3 => write!(f, "{}", "eu-west-3"),
+            Self::EuNorth1 => write!(f, "{}", "eu-north-1"),
+            Self::MeSouth1 => write!(f, "{}", "me-south-1"),
+            Self::SaEast1 => write!(f, "{}", "sa-east-1"),
         }
     }
 }

@@ -67,14 +67,14 @@ pub struct ListTlsSubsParams {
     pub filter_has_active_order: Option<bool>,
     /// Limit the returned subscriptions to a specific certification authority. Values may include `certainly`, `lets-encrypt`, or `globalsign`. 
     pub filter_certificate_authority: Option<String>,
+    /// The order in which to list the results.
+    pub sort: Option<String>,
     /// Include related objects. Optional, comma-separated values. Permitted values: `tls_authorizations`, `tls_authorizations.globalsign_email_challenge`, `tls_authorizations.self_managed_http_challenge`, and `tls_certificates`. 
     pub include: Option<String>,
     /// Current page.
     pub page_number: Option<i32>,
     /// Number of records per page.
-    pub page_size: Option<i32>,
-    /// The order in which to list the results by creation date.
-    pub sort: Option<String>
+    pub page_size: Option<i32>
 }
 
 /// struct for passing parameters to the method [`patch_tls_sub`]
@@ -421,10 +421,10 @@ pub async fn list_tls_subs(configuration: &mut configuration::Configuration, par
     let filter_tls_domains_id = params.filter_tls_domains_id;
     let filter_has_active_order = params.filter_has_active_order;
     let filter_certificate_authority = params.filter_certificate_authority;
+    let sort = params.sort;
     let include = params.include;
     let page_number = params.page_number;
     let page_size = params.page_size;
-    let sort = params.sort;
 
 
     let local_var_client = &local_var_configuration.client;
@@ -444,6 +444,9 @@ pub async fn list_tls_subs(configuration: &mut configuration::Configuration, par
     if let Some(ref local_var_str) = filter_certificate_authority {
         local_var_req_builder = local_var_req_builder.query(&[("filter[certificate_authority]", &local_var_str.to_string())]);
     }
+    if let Some(ref local_var_str) = sort {
+        local_var_req_builder = local_var_req_builder.query(&[("sort", &local_var_str.to_string())]);
+    }
     if let Some(ref local_var_str) = include {
         local_var_req_builder = local_var_req_builder.query(&[("include", &local_var_str.to_string())]);
     }
@@ -452,9 +455,6 @@ pub async fn list_tls_subs(configuration: &mut configuration::Configuration, par
     }
     if let Some(ref local_var_str) = page_size {
         local_var_req_builder = local_var_req_builder.query(&[("page[size]", &local_var_str.to_string())]);
-    }
-    if let Some(ref local_var_str) = sort {
-        local_var_req_builder = local_var_req_builder.query(&[("sort", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());

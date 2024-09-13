@@ -7,6 +7,8 @@
 
 /// TypeWafActiveRule : Resource type.
 
+use std::fmt;
+
 /// Resource type.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum TypeWafActiveRule {
@@ -15,10 +17,10 @@ pub enum TypeWafActiveRule {
 
 }
 
-impl ToString for TypeWafActiveRule {
-    fn to_string(&self) -> String {
+impl fmt::Display for TypeWafActiveRule {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Self::WafActiveRule => String::from("waf_active_rule"),
+            Self::WafActiveRule => write!(f, "{}", "waf_active_rule"),
         }
     }
 }

@@ -7,6 +7,8 @@
 
 /// TypeTlsActivation : Resource type.
 
+use std::fmt;
+
 /// Resource type.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum TypeTlsActivation {
@@ -15,10 +17,10 @@ pub enum TypeTlsActivation {
 
 }
 
-impl ToString for TypeTlsActivation {
-    fn to_string(&self) -> String {
+impl fmt::Display for TypeTlsActivation {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Self::TlsActivation => String::from("tls_activation"),
+            Self::TlsActivation => write!(f, "{}", "tls_activation"),
         }
     }
 }

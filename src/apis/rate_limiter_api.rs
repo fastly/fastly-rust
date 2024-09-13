@@ -175,7 +175,7 @@ pub async fn create_rate_limiter(configuration: &mut configuration::Configuratio
         local_var_form_params.insert("uri_dictionary_name", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = http_methods {
-        local_var_form_params.insert("http_methods", local_var_param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string());
+        local_var_form_params.insert("http_methods[]", local_var_param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string());
     }
     if let Some(local_var_param_value) = rps_limit {
         local_var_form_params.insert("rps_limit", local_var_param_value.to_string());
@@ -184,7 +184,7 @@ pub async fn create_rate_limiter(configuration: &mut configuration::Configuratio
         local_var_form_params.insert("window_size", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = client_key {
-        local_var_form_params.insert("client_key", local_var_param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string());
+        local_var_form_params.insert("client_key[]", local_var_param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string());
     }
     if let Some(local_var_param_value) = penalty_box_duration {
         local_var_form_params.insert("penalty_box_duration", local_var_param_value.to_string());
@@ -430,7 +430,7 @@ pub async fn update_rate_limiter(configuration: &mut configuration::Configuratio
         local_var_form_params.insert("uri_dictionary_name", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = http_methods {
-        local_var_form_params.insert("http_methods", local_var_param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string());
+        local_var_form_params.insert("http_methods[]", local_var_param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string());
     }
     if let Some(local_var_param_value) = rps_limit {
         local_var_form_params.insert("rps_limit", local_var_param_value.to_string());
@@ -439,7 +439,7 @@ pub async fn update_rate_limiter(configuration: &mut configuration::Configuratio
         local_var_form_params.insert("window_size", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = client_key {
-        local_var_form_params.insert("client_key", local_var_param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string());
+        local_var_form_params.insert("client_key[]", local_var_param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string());
     }
     if let Some(local_var_param_value) = penalty_box_duration {
         local_var_form_params.insert("penalty_box_duration", local_var_param_value.to_string());

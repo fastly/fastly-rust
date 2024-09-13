@@ -7,6 +7,8 @@
 
 /// TypeServiceAuthorization : Resource type
 
+use std::fmt;
+
 /// Resource type
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum TypeServiceAuthorization {
@@ -15,10 +17,10 @@ pub enum TypeServiceAuthorization {
 
 }
 
-impl ToString for TypeServiceAuthorization {
-    fn to_string(&self) -> String {
+impl fmt::Display for TypeServiceAuthorization {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Self::ServiceAuthorization => String::from("service_authorization"),
+            Self::ServiceAuthorization => write!(f, "{}", "service_authorization"),
         }
     }
 }

@@ -30,9 +30,9 @@ Name | Type | Description  | Required | Notes
 **filter_tls_certificates_id** | Option\<**String**> | Optional. Limit the returned domains to those listed in the given TLS certificate's SAN list. |  |
 **filter_tls_subscriptions_id** | Option\<**String**> | Optional. Limit the returned domains to those for a given TLS subscription. |  |
 **include** | Option\<**String**> | Include related objects. Optional, comma-separated values. Permitted values: `tls_activations`, `tls_certificates`, `tls_subscriptions`, `tls_subscriptions.tls_authorizations`, `tls_authorizations.globalsign_email_challenge`, and `tls_authorizations.self_managed_http_challenge`.  |  |
+**sort** | Option\<**String**> | The order in which to list the results. |  |[default to id]
 **page_number** | Option\<**i32**> | Current page. |  |
 **page_size** | Option\<**i32**> | Number of records per page. |  |[default to 20]
-**sort** | Option\<**String**> | The order in which to list the results by creation date. |  |[default to created_at]
 
 ### Return type
 

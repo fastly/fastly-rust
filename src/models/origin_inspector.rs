@@ -10,8 +10,9 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct OriginInspector {
+    /// Value to use for subsequent requests.
     #[serde(rename = "Timestamp", skip_serializing_if = "Option::is_none")]
-    pub timestamp: Option<Box<crate::models::OriginInspectorSubsequentRequestTimestamp>>,
+    pub timestamp: Option<i32>,
     /// Offset of entry timestamps from the current time due to processing time.
     #[serde(rename = "AggregateDelay", skip_serializing_if = "Option::is_none")]
     pub aggregate_delay: Option<i32>,

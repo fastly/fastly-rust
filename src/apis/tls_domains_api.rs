@@ -22,12 +22,12 @@ pub struct ListTlsDomainsParams {
     pub filter_tls_subscriptions_id: Option<String>,
     /// Include related objects. Optional, comma-separated values. Permitted values: `tls_activations`, `tls_certificates`, `tls_subscriptions`, `tls_subscriptions.tls_authorizations`, `tls_authorizations.globalsign_email_challenge`, and `tls_authorizations.self_managed_http_challenge`. 
     pub include: Option<String>,
+    /// The order in which to list the results.
+    pub sort: Option<String>,
     /// Current page.
     pub page_number: Option<i32>,
     /// Number of records per page.
-    pub page_size: Option<i32>,
-    /// The order in which to list the results by creation date.
-    pub sort: Option<String>
+    pub page_size: Option<i32>
 }
 
 
@@ -48,9 +48,9 @@ pub async fn list_tls_domains(configuration: &mut configuration::Configuration, 
     let filter_tls_certificates_id = params.filter_tls_certificates_id;
     let filter_tls_subscriptions_id = params.filter_tls_subscriptions_id;
     let include = params.include;
+    let sort = params.sort;
     let page_number = params.page_number;
     let page_size = params.page_size;
-    let sort = params.sort;
 
 
     let local_var_client = &local_var_configuration.client;
@@ -70,14 +70,14 @@ pub async fn list_tls_domains(configuration: &mut configuration::Configuration, 
     if let Some(ref local_var_str) = include {
         local_var_req_builder = local_var_req_builder.query(&[("include", &local_var_str.to_string())]);
     }
+    if let Some(ref local_var_str) = sort {
+        local_var_req_builder = local_var_req_builder.query(&[("sort", &local_var_str.to_string())]);
+    }
     if let Some(ref local_var_str) = page_number {
         local_var_req_builder = local_var_req_builder.query(&[("page[number]", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = page_size {
         local_var_req_builder = local_var_req_builder.query(&[("page[size]", &local_var_str.to_string())]);
-    }
-    if let Some(ref local_var_str) = sort {
-        local_var_req_builder = local_var_req_builder.query(&[("sort", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());

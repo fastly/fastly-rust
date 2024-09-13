@@ -7,6 +7,8 @@
 
 /// TypeResource : Resource type
 
+use std::fmt;
+
 /// Resource type
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum TypeResource {
@@ -19,12 +21,12 @@ pub enum TypeResource {
 
 }
 
-impl ToString for TypeResource {
-    fn to_string(&self) -> String {
+impl fmt::Display for TypeResource {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Self::KvStore => String::from("kv-store"),
-            Self::SecretStore => String::from("secret-store"),
-            Self::Config => String::from("config"),
+            Self::KvStore => write!(f, "{}", "kv-store"),
+            Self::SecretStore => write!(f, "{}", "secret-store"),
+            Self::Config => write!(f, "{}", "config"),
         }
     }
 }

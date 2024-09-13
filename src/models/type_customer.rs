@@ -7,6 +7,8 @@
 
 /// TypeCustomer : Resource type
 
+use std::fmt;
+
 /// Resource type
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum TypeCustomer {
@@ -15,10 +17,10 @@ pub enum TypeCustomer {
 
 }
 
-impl ToString for TypeCustomer {
-    fn to_string(&self) -> String {
+impl fmt::Display for TypeCustomer {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Self::Customer => String::from("customer"),
+            Self::Customer => write!(f, "{}", "customer"),
         }
     }
 }

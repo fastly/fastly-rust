@@ -42,6 +42,9 @@ pub struct VersionResponse {
     pub updated_at: Option<String>,
     #[serde(rename = "service_id", skip_serializing_if = "Option::is_none")]
     pub service_id: Option<Box<String>>,
+    /// A list of environments where the service has been deployed.
+    #[serde(rename = "environments", skip_serializing_if = "Option::is_none")]
+    pub environments: Option<Vec<crate::models::Environment>>,
 }
 
 impl VersionResponse {
@@ -58,6 +61,7 @@ impl VersionResponse {
             deleted_at: None,
             updated_at: None,
             service_id: None,
+            environments: None,
         }
     }
 }

@@ -175,9 +175,9 @@ Name | Type | Description  | Required | Notes
 **filter_not_after** | Option\<**String**> | Limit the returned certificates to those that expire prior to the specified date in UTC. Accepts parameters: lte (e.g., filter[not_after][lte]=2020-05-05).  |  |
 **filter_tls_domains_id** | Option\<**String**> | Limit the returned certificates to those that include the specific domain. |  |
 **include** | Option\<**String**> | Include related objects. Optional, comma-separated values. Permitted values: `tls_activations`.  |  |
+**sort** | Option\<**String**> | The order in which to list the results. |  |[default to -created_at]
 **page_number** | Option\<**i32**> | Current page. |  |
 **page_size** | Option\<**i32**> | Number of records per page. |  |[default to 20]
-**sort** | Option\<**String**> | The order in which to list the results by creation date. |  |[default to created_at]
 
 ### Return type
 

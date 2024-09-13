@@ -49,7 +49,7 @@ impl Default for Configuration {
 
         Configuration {
             base_path: "https://api.fastly.com".to_owned(),
-            user_agent: Some("fastly-rust/4.11.0/rust".to_owned()),
+            user_agent: Some("fastly-rust/4.12.0/rust".to_owned()),
             client: reqwest::Client::new(),
             basic_auth: None,
             oauth_access_token: None,

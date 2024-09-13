@@ -7,6 +7,8 @@
 
 /// TypeWafExclusion : Resource type.
 
+use std::fmt;
+
 /// Resource type.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum TypeWafExclusion {
@@ -15,10 +17,10 @@ pub enum TypeWafExclusion {
 
 }
 
-impl ToString for TypeWafExclusion {
-    fn to_string(&self) -> String {
+impl fmt::Display for TypeWafExclusion {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Self::WafExclusion => String::from("waf_exclusion"),
+            Self::WafExclusion => write!(f, "{}", "waf_exclusion"),
         }
     }
 }

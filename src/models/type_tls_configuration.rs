@@ -7,6 +7,8 @@
 
 /// TypeTlsConfiguration : Resource type
 
+use std::fmt;
+
 /// Resource type
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum TypeTlsConfiguration {
@@ -15,10 +17,10 @@ pub enum TypeTlsConfiguration {
 
 }
 
-impl ToString for TypeTlsConfiguration {
-    fn to_string(&self) -> String {
+impl fmt::Display for TypeTlsConfiguration {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Self::TlsConfiguration => String::from("tls_configuration"),
+            Self::TlsConfiguration => write!(f, "{}", "tls_configuration"),
         }
     }
 }

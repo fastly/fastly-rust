@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **deleted_at** | Option<**String**> | Date and time in ISO 8601 format. | [readonly]
 **updated_at** | Option<**String**> | Date and time in ISO 8601 format. | [readonly]
 **service_id** | Option<**String**> |  | [readonly]
+**environments** | Option<[**Vec&lt;crate::models::Environment&gt;**](Environment.md)> | A list of environments where the service has been deployed. | 
 **backends** | Option<[**Vec&lt;crate::models::BackendResponse&gt;**](BackendResponse.md)> | List of backends associated to this service. | 
 **cache_settings** | Option<[**Vec&lt;crate::models::CacheSettingResponse&gt;**](CacheSettingResponse.md)> | List of cache settings associated to this service. | 
 **conditions** | Option<[**Vec&lt;crate::models::ConditionResponse&gt;**](ConditionResponse.md)> | List of conditions associated to this service. | 

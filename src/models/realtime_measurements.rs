@@ -758,6 +758,9 @@ pub struct RealtimeMeasurements {
     /// Origin Offload measures the ratio of bytes served to end users that were cached by Fastly, over the bytes served to end users, between 0 and 1. ((`edge_resp_body_bytes` + `edge_resp_header_bytes`) - (`origin_fetch_resp_body_bytes` + `origin_fetch_resp_header_bytes`)) / (`edge_resp_body_bytes` + `edge_resp_header_bytes`).
     #[serde(rename = "origin_offload", skip_serializing_if = "Option::is_none")]
     pub origin_offload: Option<f32>,
+    /// Number of requests where Fastly responded with 400 due to the request being a GET or HEAD request containing a body.
+    #[serde(rename = "request_denied_get_head_body", skip_serializing_if = "Option::is_none")]
+    pub request_denied_get_head_body: Option<i32>,
 }
 
 impl RealtimeMeasurements {
@@ -1013,6 +1016,7 @@ impl RealtimeMeasurements {
             all_status_4xx: None,
             all_status_5xx: None,
             origin_offload: None,
+            request_denied_get_head_body: None,
         }
     }
 }

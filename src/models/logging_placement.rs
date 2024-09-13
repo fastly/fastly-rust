@@ -7,6 +7,8 @@
 
 /// LoggingPlacement : Where in the generated VCL the logging call should be placed. If not set, endpoints with `format_version` of 2 are placed in `vcl_log` and those with `format_version` of 1 are placed in `vcl_deliver`. 
 
+use std::fmt;
+
 /// Where in the generated VCL the logging call should be placed. If not set, endpoints with `format_version` of 2 are placed in `vcl_log` and those with `format_version` of 1 are placed in `vcl_deliver`. 
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum LoggingPlacement {
@@ -19,12 +21,12 @@ pub enum LoggingPlacement {
 
 }
 
-impl ToString for LoggingPlacement {
-    fn to_string(&self) -> String {
+impl fmt::Display for LoggingPlacement {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Self::None => String::from("none"),
-            Self::WafDebug => String::from("waf_debug"),
-            Self::Null => String::from("null"),
+            Self::None => write!(f, "{}", "none"),
+            Self::WafDebug => write!(f, "{}", "waf_debug"),
+            Self::Null => write!(f, "{}", "null"),
         }
     }
 }

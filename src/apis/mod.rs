@@ -63,6 +63,7 @@ pub fn urlencode<T: AsRef<str>>(s: T) -> String {
 
 pub mod acl_api;
 pub mod acl_entry_api;
+pub mod acls_in_compute_api;
 pub mod apex_redirect_api;
 pub mod automation_tokens_api;
 pub mod backend_api;
@@ -77,6 +78,7 @@ pub mod config_store_item_api;
 pub mod contact_api;
 pub mod content_api;
 pub mod customer_api;
+pub mod customer_addresses_api;
 pub mod dictionary_api;
 pub mod dictionary_info_api;
 pub mod dictionary_item_api;

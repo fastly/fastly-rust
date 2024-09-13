@@ -7,6 +7,8 @@
 
 /// TypeTlsCertificate : Resource type
 
+use std::fmt;
+
 /// Resource type
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum TypeTlsCertificate {
@@ -15,10 +17,10 @@ pub enum TypeTlsCertificate {
 
 }
 
-impl ToString for TypeTlsCertificate {
-    fn to_string(&self) -> String {
+impl fmt::Display for TypeTlsCertificate {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Self::TlsCertificate => String::from("tls_certificate"),
+            Self::TlsCertificate => write!(f, "{}", "tls_certificate"),
         }
     }
 }

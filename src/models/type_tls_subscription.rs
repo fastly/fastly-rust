@@ -7,6 +7,8 @@
 
 /// TypeTlsSubscription : Resource type
 
+use std::fmt;
+
 /// Resource type
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum TypeTlsSubscription {
@@ -15,10 +17,10 @@ pub enum TypeTlsSubscription {
 
 }
 
-impl ToString for TypeTlsSubscription {
-    fn to_string(&self) -> String {
+impl fmt::Display for TypeTlsSubscription {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Self::TlsSubscription => String::from("tls_subscription"),
+            Self::TlsSubscription => write!(f, "{}", "tls_subscription"),
         }
     }
 }

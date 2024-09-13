@@ -7,6 +7,8 @@
 
 /// Permission : The permission the user has in relation to the service.
 
+use std::fmt;
+
 /// The permission the user has in relation to the service.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum Permission {
@@ -21,13 +23,13 @@ pub enum Permission {
 
 }
 
-impl ToString for Permission {
-    fn to_string(&self) -> String {
+impl fmt::Display for Permission {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Self::Full => String::from("full"),
-            Self::ReadOnly => String::from("read_only"),
-            Self::PurgeSelect => String::from("purge_select"),
-            Self::PurgeAll => String::from("purge_all"),
+            Self::Full => write!(f, "{}", "full"),
+            Self::ReadOnly => write!(f, "{}", "read_only"),
+            Self::PurgeSelect => write!(f, "{}", "purge_select"),
+            Self::PurgeAll => write!(f, "{}", "purge_all"),
         }
     }
 }

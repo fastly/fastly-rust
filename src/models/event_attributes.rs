@@ -180,6 +180,32 @@ pub enum EventType {
     RuleStatusUpdate,
     #[serde(rename = "rule_status.upsert")]
     RuleStatusUpsert,
+    #[serde(rename = "security.workspace.create")]
+    SecurityWorkspaceCreate,
+    #[serde(rename = "security.workspace.update")]
+    SecurityWorkspaceUpdate,
+    #[serde(rename = "security.workspace.delete")]
+    SecurityWorkspaceDelete,
+    #[serde(rename = "security.redaction.create")]
+    SecurityRedactionCreate,
+    #[serde(rename = "security.redaction.update")]
+    SecurityRedactionUpdate,
+    #[serde(rename = "security.redaction.delete")]
+    SecurityRedactionDelete,
+    #[serde(rename = "security.rule.create")]
+    SecurityRuleCreate,
+    #[serde(rename = "security.rule.update")]
+    SecurityRuleUpdate,
+    #[serde(rename = "security.rule.delete")]
+    SecurityRuleDelete,
+    #[serde(rename = "security.virtual_patch.create")]
+    SecurityVirtualPatchCreate,
+    #[serde(rename = "security.virtual_patch.update")]
+    SecurityVirtualPatchUpdate,
+    #[serde(rename = "security.virtual_patch.delete")]
+    SecurityVirtualPatchDelete,
+    #[serde(rename = "security.event.update")]
+    SecurityEventUpdate,
     #[serde(rename = "server.create")]
     ServerCreate,
     #[serde(rename = "server.delete")]

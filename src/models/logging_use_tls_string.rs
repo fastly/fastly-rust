@@ -7,6 +7,8 @@
 
 /// LoggingUseTlsString : Whether to use TLS.
 
+use std::fmt;
+
 /// Whether to use TLS.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum LoggingUseTlsString {
@@ -17,11 +19,11 @@ pub enum LoggingUseTlsString {
 
 }
 
-impl ToString for LoggingUseTlsString {
-    fn to_string(&self) -> String {
+impl fmt::Display for LoggingUseTlsString {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Self::NoTls => String::from("0"),
-            Self::UseTls => String::from("1"),
+            Self::NoTls => write!(f, "{}", "0"),
+            Self::UseTls => write!(f, "{}", "1"),
         }
     }
 }

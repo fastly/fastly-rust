@@ -7,6 +7,8 @@
 
 /// TypeWafRule : Resource type.
 
+use std::fmt;
+
 /// Resource type.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum TypeWafRule {
@@ -15,10 +17,10 @@ pub enum TypeWafRule {
 
 }
 
-impl ToString for TypeWafRule {
-    fn to_string(&self) -> String {
+impl fmt::Display for TypeWafRule {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Self::WafRule => String::from("waf_rule"),
+            Self::WafRule => write!(f, "{}", "waf_rule"),
         }
     }
 }

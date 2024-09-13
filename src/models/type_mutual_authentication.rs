@@ -7,6 +7,8 @@
 
 /// TypeMutualAuthentication : Resource type
 
+use std::fmt;
+
 /// Resource type
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum TypeMutualAuthentication {
@@ -15,10 +17,10 @@ pub enum TypeMutualAuthentication {
 
 }
 
-impl ToString for TypeMutualAuthentication {
-    fn to_string(&self) -> String {
+impl fmt::Display for TypeMutualAuthentication {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Self::MutualAuthentication => String::from("mutual_authentication"),
+            Self::MutualAuthentication => write!(f, "{}", "mutual_authentication"),
         }
     }
 }

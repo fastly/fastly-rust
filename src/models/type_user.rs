@@ -7,6 +7,8 @@
 
 /// TypeUser : Resource type
 
+use std::fmt;
+
 /// Resource type
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum TypeUser {
@@ -15,10 +17,10 @@ pub enum TypeUser {
 
 }
 
-impl ToString for TypeUser {
-    fn to_string(&self) -> String {
+impl fmt::Display for TypeUser {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Self::User => String::from("user"),
+            Self::User => write!(f, "{}", "user"),
         }
     }
 }

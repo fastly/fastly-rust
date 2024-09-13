@@ -7,6 +7,8 @@
 
 /// TypeBillingAddress : Resource type
 
+use std::fmt;
+
 /// Resource type
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum TypeBillingAddress {
@@ -15,10 +17,10 @@ pub enum TypeBillingAddress {
 
 }
 
-impl ToString for TypeBillingAddress {
-    fn to_string(&self) -> String {
+impl fmt::Display for TypeBillingAddress {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Self::BillingAddress => String::from("billing_address"),
+            Self::BillingAddress => write!(f, "{}", "billing_address"),
         }
     }
 }

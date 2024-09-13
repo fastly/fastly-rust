@@ -7,6 +7,8 @@
 
 /// TypeTlsCsr : CSR Resource Type
 
+use std::fmt;
+
 /// CSR Resource Type
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum TypeTlsCsr {
@@ -15,10 +17,10 @@ pub enum TypeTlsCsr {
 
 }
 
-impl ToString for TypeTlsCsr {
-    fn to_string(&self) -> String {
+impl fmt::Display for TypeTlsCsr {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Self::Csr => String::from("csr"),
+            Self::Csr => write!(f, "{}", "csr"),
         }
     }
 }

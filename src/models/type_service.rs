@@ -7,6 +7,8 @@
 
 /// TypeService : Resource type
 
+use std::fmt;
+
 /// Resource type
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum TypeService {
@@ -15,10 +17,10 @@ pub enum TypeService {
 
 }
 
-impl ToString for TypeService {
-    fn to_string(&self) -> String {
+impl fmt::Display for TypeService {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Self::Service => String::from("service"),
+            Self::Service => write!(f, "{}", "service"),
         }
     }
 }

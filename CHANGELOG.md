@@ -1,5 +1,29 @@
 # Changelog
 
+## [v4.12.0](https://github.com/fastly/fastly-rust/releases/tag/release/v4.12.0) (2024-09-13)
+
+**Bug fixes:**
+
+- bugfix(rust): Ensure that array parameters are encoded properly in x-www-form-urlencoded bodies
+- bugfix(rust): Implement std::fmt::Display instead of std::string::ToString for enum models.
+- fix(contact): Corrected endpoint called by `delete-contact` operation
+- fix(origin-inspector, domain-inspector): Use integer type for Timestamp.
+- fix(billing): Make all fields on billing list item data nullable
+
+**Enhancements:**
+
+- feat(acls-in-compute): Add ACLs in Compute API
+- feat(enabled-products): Updated to use `v1` versioned endpoints.
+- feat(enabled-products): Added `get-product-configuration`, `set-product-configuration` operations.
+- feat(realtime, historical): Added `request_denied_get_head_body` metric.
+- feat(tls): Add definitions for values of sort parameter
+- feat(staging): Add activate/deactivate endpoints for staging
+- feat(customer-addresses): Add Customer Addresses API
+
+**Documentation:**
+
+- doc(enabled-products): Added support for product IDs `bot_management` and `ngwaf`.
+
 ## [v4.11.0](https://github.com/fastly/fastly-rust/releases/tag/release/v4.11.0) (2024-08-21)
 
 **Bug fixes:**

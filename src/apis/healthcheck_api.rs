@@ -200,7 +200,7 @@ pub async fn create_healthcheck(configuration: &mut configuration::Configuration
         local_var_form_params.insert("expected_response", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = headers {
-        local_var_form_params.insert("headers", local_var_param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string());
+        local_var_form_params.insert("headers[]", local_var_param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string());
     }
     if let Some(local_var_param_value) = host {
         local_var_form_params.insert("host", local_var_param_value.to_string());
@@ -469,7 +469,7 @@ pub async fn update_healthcheck(configuration: &mut configuration::Configuration
         local_var_form_params.insert("expected_response", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = headers {
-        local_var_form_params.insert("headers", local_var_param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string());
+        local_var_form_params.insert("headers[]", local_var_param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string());
     }
     if let Some(local_var_param_value) = host {
         local_var_form_params.insert("host", local_var_param_value.to_string());

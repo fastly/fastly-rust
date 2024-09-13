@@ -7,6 +7,8 @@
 
 /// TypeStar : Resource type
 
+use std::fmt;
+
 /// Resource type
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum TypeStar {
@@ -15,10 +17,10 @@ pub enum TypeStar {
 
 }
 
-impl ToString for TypeStar {
-    fn to_string(&self) -> String {
+impl fmt::Display for TypeStar {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Self::Star => String::from("star"),
+            Self::Star => write!(f, "{}", "star"),
         }
     }
 }
