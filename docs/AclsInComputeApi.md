@@ -243,7 +243,7 @@ compute_acl_update_acls(cfg, params)
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **acl_id** | **String** |  | [required] |
-**compute_acl_update_entry** | Option\<[**Vec&lt;crate::models::ComputeAclUpdateEntry&gt;**](compute-acl-update-entry.md)> |  |  |
+**compute_acl_update** | Option\<[**ComputeAclUpdate**](ComputeAclUpdate.md)> |  |  |
 
 ### Return type
 

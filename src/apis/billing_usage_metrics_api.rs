@@ -14,15 +14,10 @@ use super::{Error, configuration};
 /// struct for passing parameters to the method [`get_service_level_usage`]
 #[derive(Clone, Debug, Default)]
 pub struct GetServiceLevelUsageParams {
-    /// Alphanumeric string identifying the customer.
-    pub customer_id: String,
     /// The product identifier for the metrics returned (e.g., `cdn_usage`). This field is not required for CSV requests.
     pub product_id: String,
     /// The usage type name for the metrics returned (e.g., `North America Requests`). This field is not required for CSV requests.
     pub usage_type_name: String,
-    pub time_granularity: String,
-    pub start_date: Option<String>,
-    pub end_date: Option<String>,
     pub start_month: Option<String>,
     pub end_month: Option<String>,
     /// Number of results per page. The maximum is 100.
@@ -31,11 +26,11 @@ pub struct GetServiceLevelUsageParams {
     pub cursor: Option<String>
 }
 
-/// struct for passing parameters to the method [`get_service_level_usage_types`]
+/// struct for passing parameters to the method [`get_usage_metrics`]
 #[derive(Clone, Debug, Default)]
-pub struct GetServiceLevelUsageTypesParams {
-    /// Alphanumeric string identifying the customer.
-    pub customer_id: String
+pub struct GetUsageMetricsParams {
+    pub start_month: Option<String>,
+    pub end_month: Option<String>
 }
 
 
@@ -49,10 +44,10 @@ pub enum GetServiceLevelUsageError {
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`get_service_level_usage_types`]
+/// struct for typed errors of method [`get_usage_metrics`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum GetServiceLevelUsageTypesError {
+pub enum GetUsageMetricsError {
     Status400(crate::models::Error),
     Status401(crate::models::Error),
     Status500(crate::models::Error),
@@ -65,12 +60,8 @@ pub async fn get_service_level_usage(configuration: &mut configuration::Configur
     let local_var_configuration = configuration;
 
     // unbox the parameters
-    let customer_id = params.customer_id;
     let product_id = params.product_id;
     let usage_type_name = params.usage_type_name;
-    let time_granularity = params.time_granularity;
-    let start_date = params.start_date;
-    let end_date = params.end_date;
     let start_month = params.start_month;
     let end_month = params.end_month;
     let limit = params.limit;
@@ -79,18 +70,11 @@ pub async fn get_service_level_usage(configuration: &mut configuration::Configur
 
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/billing/v2/account_customers/{customer_id}/service-usage-metrics", local_var_configuration.base_path, customer_id=crate::apis::urlencode(customer_id));
+    let local_var_uri_str = format!("{}/billing/v3/service-usage-metrics", local_var_configuration.base_path);
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
     local_var_req_builder = local_var_req_builder.query(&[("product_id", &product_id.to_string())]);
     local_var_req_builder = local_var_req_builder.query(&[("usage_type_name", &usage_type_name.to_string())]);
-    local_var_req_builder = local_var_req_builder.query(&[("time_granularity", &time_granularity.to_string())]);
-    if let Some(ref local_var_str) = start_date {
-        local_var_req_builder = local_var_req_builder.query(&[("start_date", &local_var_str.to_string())]);
-    }
-    if let Some(ref local_var_str) = end_date {
-        local_var_req_builder = local_var_req_builder.query(&[("end_date", &local_var_str.to_string())]);
-    }
     if let Some(ref local_var_str) = start_month {
         local_var_req_builder = local_var_req_builder.query(&[("start_month", &local_var_str.to_string())]);
     }
@@ -142,19 +126,26 @@ pub async fn get_service_level_usage(configuration: &mut configuration::Configur
     }
 }
 
-/// Returns product usage types reported by the customer's services.
-pub async fn get_service_level_usage_types(configuration: &mut configuration::Configuration, params: GetServiceLevelUsageTypesParams) -> Result<crate::models::Serviceusagetypes, Error<GetServiceLevelUsageTypesError>> {
+/// Returns monthly usage metrics for customer by product.
+pub async fn get_usage_metrics(configuration: &mut configuration::Configuration, params: GetUsageMetricsParams) -> Result<crate::models::Usagemetric, Error<GetUsageMetricsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
-    let customer_id = params.customer_id;
+    let start_month = params.start_month;
+    let end_month = params.end_month;
 
 
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/billing/v2/account_customers/{customer_id}/service-usage-types", local_var_configuration.base_path, customer_id=crate::apis::urlencode(customer_id));
+    let local_var_uri_str = format!("{}/billing/v3/usage-metrics", local_var_configuration.base_path);
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
+    if let Some(ref local_var_str) = start_month {
+        local_var_req_builder = local_var_req_builder.query(&[("start_month", &local_var_str.to_string())]);
+    }
+    if let Some(ref local_var_str) = end_month {
+        local_var_req_builder = local_var_req_builder.query(&[("end_month", &local_var_str.to_string())]);
+    }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
@@ -188,7 +179,7 @@ pub async fn get_service_level_usage_types(configuration: &mut configuration::Co
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<GetServiceLevelUsageTypesError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_entity: Option<GetUsageMetricsError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }

@@ -16,6 +16,9 @@ pub struct SetConfiguration {
     /// The new traffic ramp. Optional in the `PATCH` request body for `ngwaf`.
     #[serde(rename = "traffic_ramp", skip_serializing_if = "Option::is_none")]
     pub traffic_ramp: Option<String>,
+    /// The new mode to run the product in. One of `block`, `log`, or `off`. Optional in the `PATCH` request body for `ddos_protection`.
+    #[serde(rename = "mode", skip_serializing_if = "Option::is_none")]
+    pub mode: Option<String>,
 }
 
 impl SetConfiguration {
@@ -23,6 +26,7 @@ impl SetConfiguration {
         SetConfiguration {
             workspace_id: None,
             traffic_ramp: None,
+            mode: None,
         }
     }
 }

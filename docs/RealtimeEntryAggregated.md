@@ -233,13 +233,6 @@ Name | Type | Description | Notes
 **bot_challenge_complete_tokens_issued** | Option<**i32**> | The number of challenge-complete tokens issued. For example, issuing a challenge-complete token after a series of CAPTCHA challenges ending in success. | 
 **ddos_action_downgrade** | Option<**i32**> | The number of times the downgrade action was taken. The downgrade action restricts the client to http1. | 
 **ddos_action_downgraded_connections** | Option<**i32**> | The number of connections the downgrade action was applied to. The downgrade action restricts the connection to http1. | 
-**vcl_on_compute_hit_requests** | Option<**i32**> | Number of cache hits for a VCL service running on Compute. | 
-**vcl_on_compute_miss_requests** | Option<**i32**> | Number of cache misses for a VCL service running on Compute. | 
-**vcl_on_compute_pass_requests** | Option<**i32**> | Number of requests that passed through the CDN without being cached for a VCL service running on Compute. | 
-**vcl_on_compute_error_requests** | Option<**i32**> | Number of cache errors for a VCL service running on Compute. | 
-**vcl_on_compute_synth_requests** | Option<**i32**> | Number of requests that returned a synthetic response (i.e., response objects created with the `synthetic` VCL statement) for a VCL service running on Compute. | 
-**vcl_on_compute_edge_hit_requests** | Option<**i32**> | Number of requests sent by end users to Fastly that resulted in a hit at the edge for a VCL service running on Compute. | 
-**vcl_on_compute_edge_miss_requests** | Option<**i32**> | Number of requests sent by end users to Fastly that resulted in a miss at the edge for a VCL service running on Compute. | 
 **all_hit_requests** | Option<**i32**> | Number of cache hits for a VCL service. | 
 **all_miss_requests** | Option<**i32**> | Number of cache misses for a VCL service. | 
 **all_pass_requests** | Option<**i32**> | Number of requests that passed through the CDN without being cached for a VCL service. | 
@@ -254,6 +247,9 @@ Name | Type | Description | Notes
 **all_status_5xx** | Option<**i32**> | Number of \"Server Error\" codes delivered for all sources. | 
 **origin_offload** | Option<**f32**> | Origin Offload measures the ratio of bytes served to end users that were cached by Fastly, over the bytes served to end users, between 0 and 1. ((`edge_resp_body_bytes` + `edge_resp_header_bytes`) - (`origin_fetch_resp_body_bytes` + `origin_fetch_resp_header_bytes`)) / (`edge_resp_body_bytes` + `edge_resp_header_bytes`). | 
 **request_denied_get_head_body** | Option<**i32**> | Number of requests where Fastly responded with 400 due to the request being a GET or HEAD request containing a body. | 
+**service_ddos_requests_detected** | Option<**i32**> | Number of requests classified as a DDoS attack against a customer origin or service. | 
+**service_ddos_requests_mitigated** | Option<**i32**> | Number of requests classified as a DDoS attack against a customer origin or service that were mitigated by the Fastly platform. | 
+**service_ddos_requests_allowed** | Option<**i32**> | Number of requests analyzed for DDoS attacks against a customer origin or service, but with no DDoS detected. | 
 
 [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

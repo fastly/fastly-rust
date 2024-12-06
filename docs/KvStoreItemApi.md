@@ -69,6 +69,7 @@ Name | Type | Description  | Required | Notes
 **cursor** | Option\<**String**> |  |  |
 **limit** | Option\<**i32**> |  |  |[default to 100]
 **prefix** | Option\<**String**> |  |  |
+**consistency** | Option\<**String**> |  |  |
 
 ### Return type
 

@@ -24,7 +24,8 @@ pub struct GetKeysParams {
     pub store_id: String,
     pub cursor: Option<String>,
     pub limit: Option<i32>,
-    pub prefix: Option<String>
+    pub prefix: Option<String>,
+    pub consistency: Option<String>
 }
 
 /// struct for passing parameters to the method [`get_value_for_key`]
@@ -141,6 +142,7 @@ pub async fn get_keys(configuration: &mut configuration::Configuration, params: 
     let cursor = params.cursor;
     let limit = params.limit;
     let prefix = params.prefix;
+    let consistency = params.consistency;
 
 
     let local_var_client = &local_var_configuration.client;
@@ -156,6 +158,9 @@ pub async fn get_keys(configuration: &mut configuration::Configuration, params: 
     }
     if let Some(ref local_var_str) = prefix {
         local_var_req_builder = local_var_req_builder.query(&[("prefix", &local_var_str.to_string())]);
+    }
+    if let Some(ref local_var_str) = consistency {
+        local_var_req_builder = local_var_req_builder.query(&[("consistency", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());

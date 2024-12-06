@@ -698,27 +698,6 @@ pub struct RealtimeMeasurements {
     /// The number of connections the downgrade action was applied to. The downgrade action restricts the connection to http1.
     #[serde(rename = "ddos_action_downgraded_connections", skip_serializing_if = "Option::is_none")]
     pub ddos_action_downgraded_connections: Option<i32>,
-    /// Number of cache hits for a VCL service running on Compute.
-    #[serde(rename = "vcl_on_compute_hit_requests", skip_serializing_if = "Option::is_none")]
-    pub vcl_on_compute_hit_requests: Option<i32>,
-    /// Number of cache misses for a VCL service running on Compute.
-    #[serde(rename = "vcl_on_compute_miss_requests", skip_serializing_if = "Option::is_none")]
-    pub vcl_on_compute_miss_requests: Option<i32>,
-    /// Number of requests that passed through the CDN without being cached for a VCL service running on Compute.
-    #[serde(rename = "vcl_on_compute_pass_requests", skip_serializing_if = "Option::is_none")]
-    pub vcl_on_compute_pass_requests: Option<i32>,
-    /// Number of cache errors for a VCL service running on Compute.
-    #[serde(rename = "vcl_on_compute_error_requests", skip_serializing_if = "Option::is_none")]
-    pub vcl_on_compute_error_requests: Option<i32>,
-    /// Number of requests that returned a synthetic response (i.e., response objects created with the `synthetic` VCL statement) for a VCL service running on Compute.
-    #[serde(rename = "vcl_on_compute_synth_requests", skip_serializing_if = "Option::is_none")]
-    pub vcl_on_compute_synth_requests: Option<i32>,
-    /// Number of requests sent by end users to Fastly that resulted in a hit at the edge for a VCL service running on Compute.
-    #[serde(rename = "vcl_on_compute_edge_hit_requests", skip_serializing_if = "Option::is_none")]
-    pub vcl_on_compute_edge_hit_requests: Option<i32>,
-    /// Number of requests sent by end users to Fastly that resulted in a miss at the edge for a VCL service running on Compute.
-    #[serde(rename = "vcl_on_compute_edge_miss_requests", skip_serializing_if = "Option::is_none")]
-    pub vcl_on_compute_edge_miss_requests: Option<i32>,
     /// Number of cache hits for a VCL service.
     #[serde(rename = "all_hit_requests", skip_serializing_if = "Option::is_none")]
     pub all_hit_requests: Option<i32>,
@@ -761,6 +740,15 @@ pub struct RealtimeMeasurements {
     /// Number of requests where Fastly responded with 400 due to the request being a GET or HEAD request containing a body.
     #[serde(rename = "request_denied_get_head_body", skip_serializing_if = "Option::is_none")]
     pub request_denied_get_head_body: Option<i32>,
+    /// Number of requests classified as a DDoS attack against a customer origin or service.
+    #[serde(rename = "service_ddos_requests_detected", skip_serializing_if = "Option::is_none")]
+    pub service_ddos_requests_detected: Option<i32>,
+    /// Number of requests classified as a DDoS attack against a customer origin or service that were mitigated by the Fastly platform.
+    #[serde(rename = "service_ddos_requests_mitigated", skip_serializing_if = "Option::is_none")]
+    pub service_ddos_requests_mitigated: Option<i32>,
+    /// Number of requests analyzed for DDoS attacks against a customer origin or service, but with no DDoS detected.
+    #[serde(rename = "service_ddos_requests_allowed", skip_serializing_if = "Option::is_none")]
+    pub service_ddos_requests_allowed: Option<i32>,
 }
 
 impl RealtimeMeasurements {
@@ -996,13 +984,6 @@ impl RealtimeMeasurements {
             bot_challenge_complete_tokens_issued: None,
             ddos_action_downgrade: None,
             ddos_action_downgraded_connections: None,
-            vcl_on_compute_hit_requests: None,
-            vcl_on_compute_miss_requests: None,
-            vcl_on_compute_pass_requests: None,
-            vcl_on_compute_error_requests: None,
-            vcl_on_compute_synth_requests: None,
-            vcl_on_compute_edge_hit_requests: None,
-            vcl_on_compute_edge_miss_requests: None,
             all_hit_requests: None,
             all_miss_requests: None,
             all_pass_requests: None,
@@ -1017,6 +998,9 @@ impl RealtimeMeasurements {
             all_status_5xx: None,
             origin_offload: None,
             request_denied_get_head_body: None,
+            service_ddos_requests_detected: None,
+            service_ddos_requests_mitigated: None,
+            service_ddos_requests_allowed: None,
         }
     }
 }

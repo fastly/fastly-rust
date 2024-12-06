@@ -5,7 +5,7 @@
  *
  */
 
-/// ComputeAclUpdateEntry : An example of an ACL update request entry.
+/// ComputeAclUpdateEntry : Defines the structure of an ACL update request entry.
 
 
 
@@ -23,7 +23,7 @@ pub struct ComputeAclUpdateEntry {
 }
 
 impl ComputeAclUpdateEntry {
-    /// An example of an ACL update request entry.
+    /// Defines the structure of an ACL update request entry.
     pub fn new() -> ComputeAclUpdateEntry {
         ComputeAclUpdateEntry {
             op: None,

@@ -48,7 +48,7 @@ pub struct ComputeAclLookupAclsParams {
 #[derive(Clone, Debug, Default)]
 pub struct ComputeAclUpdateAclsParams {
     pub acl_id: String,
-    pub compute_acl_update_entry: Option<Vec<crate::models::ComputeAclUpdateEntry>>
+    pub compute_acl_update: Option<crate::models::ComputeAclUpdate>
 }
 
 
@@ -430,7 +430,7 @@ pub async fn compute_acl_update_acls(configuration: &mut configuration::Configur
 
     // unbox the parameters
     let acl_id = params.acl_id;
-    let compute_acl_update_entry = params.compute_acl_update_entry;
+    let compute_acl_update = params.compute_acl_update;
 
 
     let local_var_client = &local_var_configuration.client;
@@ -449,7 +449,7 @@ pub async fn compute_acl_update_acls(configuration: &mut configuration::Configur
         };
         local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
     };
-    local_var_req_builder = local_var_req_builder.json(&compute_acl_update_entry);
+    local_var_req_builder = local_var_req_builder.json(&compute_acl_update);
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;

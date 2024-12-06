@@ -5,7 +5,7 @@
  *
  */
 
-/// ComputeAclListEntries : An example of an ACL List Response.
+/// ComputeAclListEntries : Defines the structure of what the ACL List endpoint returns.
 
 
 
@@ -18,7 +18,7 @@ pub struct ComputeAclListEntries {
 }
 
 impl ComputeAclListEntries {
-    /// An example of an ACL List Response.
+    /// Defines the structure of what the ACL List endpoint returns.
     pub fn new() -> ComputeAclListEntries {
         ComputeAclListEntries {
             meta: None,

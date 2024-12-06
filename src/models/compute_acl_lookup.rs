@@ -5,7 +5,7 @@
  *
  */
 
-/// ComputeAclLookup : An example of an ACL Lookup response.
+/// ComputeAclLookup : Defines the structure of an ACL Lookup response.
 
 
 
@@ -23,7 +23,7 @@ pub struct ComputeAclLookup {
 }
 
 impl ComputeAclLookup {
-    /// An example of an ACL Lookup response.
+    /// Defines the structure of an ACL Lookup response.
     pub fn new() -> ComputeAclLookup {
         ComputeAclLookup {
             prefix: None,

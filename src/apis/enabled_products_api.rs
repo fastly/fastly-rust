@@ -90,7 +90,7 @@ pub enum SetProductConfigurationError {
 }
 
 
-/// Disable a product on a service. Supported product IDs: `brotli_compression`,`domain_inspector`,`fanout`,`image_optimizer`,`origin_inspector`, `websockets`, `bot_management`, and `ngwaf`.
+/// Disable a product on a service. Supported product IDs: `brotli_compression`,`domain_inspector`,`fanout`,`image_optimizer`,`origin_inspector`, `websockets`, `bot_management`, `ngwaf`, `ddos_protection`, and `log_explorer_insights`.
 pub async fn disable_product(configuration: &mut configuration::Configuration, params: DisableProductParams) -> Result<(), Error<DisableProductError>> {
     let local_var_configuration = configuration;
 
@@ -143,7 +143,7 @@ pub async fn disable_product(configuration: &mut configuration::Configuration, p
     }
 }
 
-/// Enable a product on a service. Supported product IDs: `brotli_compression`,`domain_inspector`,`fanout`,`image_optimizer`,`origin_inspector`, `websockets`, `bot_management`, and `ngwaf`.
+/// Enable a product on a service. Supported product IDs: `brotli_compression`,`domain_inspector`,`fanout`,`image_optimizer`,`origin_inspector`, `websockets`, `bot_management`, `ngwaf`, `ddos_protection`, and `log_explorer_insights`.
 pub async fn enable_product(configuration: &mut configuration::Configuration, params: EnableProductParams) -> Result<crate::models::EnabledProductResponse, Error<EnableProductError>> {
     let local_var_configuration = configuration;
 
@@ -198,7 +198,7 @@ pub async fn enable_product(configuration: &mut configuration::Configuration, pa
     }
 }
 
-/// Get enabled product on a service. Supported product IDs: `brotli_compression`,`domain_inspector`,`fanout`,`image_optimizer`,`origin_inspector`, `websockets`, `bot_management`, and `ngwaf`.
+/// Get enabled product on a service. Supported product IDs: `brotli_compression`,`domain_inspector`,`fanout`,`image_optimizer`,`origin_inspector`, `websockets`, `bot_management`, `ngwaf`, `ddos_protection`, and `log_explorer_insights`.
 pub async fn get_enabled_product(configuration: &mut configuration::Configuration, params: GetEnabledProductParams) -> Result<crate::models::EnabledProductResponse, Error<GetEnabledProductError>> {
     let local_var_configuration = configuration;
 
@@ -251,7 +251,7 @@ pub async fn get_enabled_product(configuration: &mut configuration::Configuratio
     }
 }
 
-/// Get configuration for an enabled product on a service. Supported product IDs: `ngwaf`.
+/// Get configuration for an enabled product on a service. Supported product IDs: `ngwaf` and `ddos_protection`.
 pub async fn get_product_configuration(configuration: &mut configuration::Configuration, params: GetProductConfigurationParams) -> Result<crate::models::ConfiguredProductResponse, Error<GetProductConfigurationError>> {
     let local_var_configuration = configuration;
 
@@ -304,7 +304,7 @@ pub async fn get_product_configuration(configuration: &mut configuration::Config
     }
 }
 
-/// Update configuration for an enabled product on a service. Supported product IDs: `ngwaf`.
+/// Update configuration for an enabled product on a service. Supported product IDs: `ngwaf` and `ddos_protection`.
 pub async fn set_product_configuration(configuration: &mut configuration::Configuration, params: SetProductConfigurationParams) -> Result<crate::models::ConfiguredProductResponse, Error<SetProductConfigurationError>> {
     let local_var_configuration = configuration;
 
