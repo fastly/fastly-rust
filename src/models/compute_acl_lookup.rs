@@ -11,12 +11,9 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct ComputeAclLookup {
-    /// A valid IPv4 or IPv6 address.
+    /// A valid IPv4 or IPv6 address and prefix in CIDR notation.
     #[serde(rename = "prefix", skip_serializing_if = "Option::is_none")]
     pub prefix: Option<String>,
-    /// The length of address in the IP addressing space.
-    #[serde(rename = "length", skip_serializing_if = "Option::is_none")]
-    pub length: Option<i32>,
     /// One of \"ALLOW\" or \"BLOCK\".
     #[serde(rename = "action", skip_serializing_if = "Option::is_none")]
     pub action: Option<String>,
@@ -27,7 +24,6 @@ impl ComputeAclLookup {
     pub fn new() -> ComputeAclLookup {
         ComputeAclLookup {
             prefix: None,
-            length: None,
             action: None,
         }
     }

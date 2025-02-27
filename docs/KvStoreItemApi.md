@@ -5,23 +5,23 @@
 
 Method | HTTP request | Description
 ------ | ------------ | -----------
-[**delete_key_from_store**](KvStoreItemApi.md#delete_key_from_store) | **DELETE** /resources/stores/kv/{store_id}/keys/{key_name} | Delete kv store item.
-[**get_keys**](KvStoreItemApi.md#get_keys) | **GET** /resources/stores/kv/{store_id}/keys | List kv store keys.
-[**get_value_for_key**](KvStoreItemApi.md#get_value_for_key) | **GET** /resources/stores/kv/{store_id}/keys/{key_name} | Get the value of an kv store item
-[**set_value_for_key**](KvStoreItemApi.md#set_value_for_key) | **PUT** /resources/stores/kv/{store_id}/keys/{key_name} | Insert an item into an kv store
+[**kv_store_delete_item**](KvStoreItemApi.md#kv_store_delete_item) | **DELETE** /resources/stores/kv/{store_id}/keys/{key} | Delete an item.
+[**kv_store_get_item**](KvStoreItemApi.md#kv_store_get_item) | **GET** /resources/stores/kv/{store_id}/keys/{key} | Get an item.
+[**kv_store_list_item_keys**](KvStoreItemApi.md#kv_store_list_item_keys) | **GET** /resources/stores/kv/{store_id}/keys | List item keys.
+[**kv_store_upsert_item**](KvStoreItemApi.md#kv_store_upsert_item) | **PUT** /resources/stores/kv/{store_id}/keys/{key} | Insert or update an item.
 
 
 
-## delete_key_from_store
+## kv_store_delete_item
 
-Delete an item from an kv store
+Delete an item.
 
 ```rust
 let cfg = &Configuration::default();
-let params = DeleteKeyFromStoreParams {
+let params = KvStoreDeleteItemParams {
     // parameters
 };
-delete_key_from_store(cfg, params)
+kv_store_delete_item(cfg, params)
 ```
 
 ### Parameters
@@ -30,7 +30,9 @@ delete_key_from_store(cfg, params)
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **store_id** | **String** |  | [required] |
-**key_name** | **String** |  | [required] |
+**key** | **String** |  | [required] |
+**if_generation_match** | Option\<**i32**> |  |  |
+**force** | Option\<**bool**> |  |  |[default to false]
 
 ### Return type
 
@@ -48,16 +50,52 @@ Name | Type | Description  | Required | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 
-## get_keys
+## kv_store_get_item
 
-List the keys of all items within an kv store.
+Get an item, including its value, metadata (if any), and generation marker.
 
 ```rust
 let cfg = &Configuration::default();
-let params = GetKeysParams {
+let params = KvStoreGetItemParams {
     // parameters
 };
-get_keys(cfg, params)
+kv_store_get_item(cfg, params)
+```
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**store_id** | **String** |  | [required] |
+**key** | **String** |  | [required] |
+
+### Return type
+
+[**std::path::PathBuf**](StdpathPathBuf.md)
+
+### Authorization
+
+[token](../README.md#token)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/octet-stream
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+
+## kv_store_list_item_keys
+
+Lists the matching item keys (or all item keys, if no prefix is supplied).
+
+```rust
+let cfg = &Configuration::default();
+let params = KvStoreListItemKeysParams {
+    // parameters
+};
+kv_store_list_item_keys(cfg, params)
 ```
 
 ### Parameters
@@ -69,7 +107,7 @@ Name | Type | Description  | Required | Notes
 **cursor** | Option\<**String**> |  |  |
 **limit** | Option\<**i32**> |  |  |[default to 100]
 **prefix** | Option\<**String**> |  |  |
-**consistency** | Option\<**String**> |  |  |
+**consistency** | Option\<**String**> |  |  |[default to strong]
 
 ### Return type
 
@@ -87,16 +125,16 @@ Name | Type | Description  | Required | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 
-## get_value_for_key
+## kv_store_upsert_item
 
-Get the value associated with a key.
+Inserts or updates an item's value and metadata.
 
 ```rust
 let cfg = &Configuration::default();
-let params = GetValueForKeyParams {
+let params = KvStoreUpsertItemParams {
     // parameters
 };
-get_value_for_key(cfg, params)
+kv_store_upsert_item(cfg, params)
 ```
 
 ### Parameters
@@ -105,55 +143,19 @@ get_value_for_key(cfg, params)
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **store_id** | **String** |  | [required] |
-**key_name** | **String** |  | [required] |
-
-### Return type
-
-**String**
-
-### Authorization
-
-[token](../README.md#token)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/octet-stream
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
-
-
-## set_value_for_key
-
-Set a new value for a new or existing key in an kv store.
-
-```rust
-let cfg = &Configuration::default();
-let params = SetValueForKeyParams {
-    // parameters
-};
-set_value_for_key(cfg, params)
-```
-
-### Parameters
-
-
-Name | Type | Description  | Required | Notes
-------------- | ------------- | ------------- | ------------- | -------------
-**store_id** | **String** |  | [required] |
-**key_name** | **String** |  | [required] |
+**key** | **String** |  | [required] |
 **if_generation_match** | Option\<**i32**> |  |  |
 **time_to_live_sec** | Option\<**i32**> |  |  |
 **metadata** | Option\<**String**> |  |  |
-**add** | Option\<**bool**> |  |  |
-**append** | Option\<**bool**> |  |  |
-**prepend** | Option\<**bool**> |  |  |
-**background_fetch** | Option\<**bool**> |  |  |
-**body** | Option\<**String**> |  |  |
+**add** | Option\<**bool**> |  |  |[default to false]
+**append** | Option\<**bool**> |  |  |[default to false]
+**prepend** | Option\<**bool**> |  |  |[default to false]
+**background_fetch** | Option\<**bool**> |  |  |[default to false]
+**body** | Option\<**std::path::PathBuf**> |  |  |
 
 ### Return type
 
-**String**
+ (empty response body)
 
 ### Authorization
 
@@ -162,7 +164,7 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/octet-stream
-- **Accept**: application/octet-stream
+- **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

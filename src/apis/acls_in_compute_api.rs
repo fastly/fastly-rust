@@ -269,7 +269,7 @@ pub async fn compute_acl_list_acl_entries(configuration: &mut configuration::Con
 }
 
 /// List all ACLs.
-pub async fn compute_acl_list_acls(configuration: &mut configuration::Configuration) -> Result<Vec<crate::models::ComputeAclCreateAclsResponse>, Error<ComputeAclListAclsError>> {
+pub async fn compute_acl_list_acls(configuration: &mut configuration::Configuration) -> Result<crate::models::ComputeAclList, Error<ComputeAclListAclsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters

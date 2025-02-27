@@ -13,7 +13,7 @@ pub struct InlineResponse2004 {
     #[serde(rename = "data", skip_serializing_if = "Option::is_none")]
     pub data: Option<Vec<String>>,
     #[serde(rename = "meta", skip_serializing_if = "Option::is_none")]
-    pub meta: Option<Box<crate::models::InlineResponse2004Meta>>,
+    pub meta: Option<Box<crate::models::PaginationCursorMeta>>,
 }
 
 impl InlineResponse2004 {

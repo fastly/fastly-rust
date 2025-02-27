@@ -11,9 +11,9 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct InlineResponse2003 {
     #[serde(rename = "data", skip_serializing_if = "Option::is_none")]
-    pub data: Option<Vec<crate::models::StoreResponse>>,
+    pub data: Option<Vec<crate::models::KvStoreDetails>>,
     #[serde(rename = "meta", skip_serializing_if = "Option::is_none")]
-    pub meta: Option<Box<crate::models::InlineResponse2003Meta>>,
+    pub meta: Option<Box<crate::models::PaginationCursorMeta>>,
 }
 
 impl InlineResponse2003 {

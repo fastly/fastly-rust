@@ -11,16 +11,25 @@ use reqwest;
 use crate::apis::ResponseContent;
 use super::{Error, configuration};
 
-/// struct for passing parameters to the method [`delete_key_from_store`]
+/// struct for passing parameters to the method [`kv_store_delete_item`]
 #[derive(Clone, Debug, Default)]
-pub struct DeleteKeyFromStoreParams {
+pub struct KvStoreDeleteItemParams {
     pub store_id: String,
-    pub key_name: String
+    pub key: String,
+    pub if_generation_match: Option<i32>,
+    pub force: Option<bool>
 }
 
-/// struct for passing parameters to the method [`get_keys`]
+/// struct for passing parameters to the method [`kv_store_get_item`]
 #[derive(Clone, Debug, Default)]
-pub struct GetKeysParams {
+pub struct KvStoreGetItemParams {
+    pub store_id: String,
+    pub key: String
+}
+
+/// struct for passing parameters to the method [`kv_store_list_item_keys`]
+#[derive(Clone, Debug, Default)]
+pub struct KvStoreListItemKeysParams {
     pub store_id: String,
     pub cursor: Option<String>,
     pub limit: Option<i32>,
@@ -28,18 +37,11 @@ pub struct GetKeysParams {
     pub consistency: Option<String>
 }
 
-/// struct for passing parameters to the method [`get_value_for_key`]
+/// struct for passing parameters to the method [`kv_store_upsert_item`]
 #[derive(Clone, Debug, Default)]
-pub struct GetValueForKeyParams {
+pub struct KvStoreUpsertItemParams {
     pub store_id: String,
-    pub key_name: String
-}
-
-/// struct for passing parameters to the method [`set_value_for_key`]
-#[derive(Clone, Debug, Default)]
-pub struct SetValueForKeyParams {
-    pub store_id: String,
-    pub key_name: String,
+    pub key: String,
     pub if_generation_match: Option<i32>,
     pub time_to_live_sec: Option<i32>,
     pub metadata: Option<String>,
@@ -47,55 +49,70 @@ pub struct SetValueForKeyParams {
     pub append: Option<bool>,
     pub prepend: Option<bool>,
     pub background_fetch: Option<bool>,
-    pub body: Option<String>
+    pub body: Option<std::path::PathBuf>
 }
 
 
-/// struct for typed errors of method [`delete_key_from_store`]
+/// struct for typed errors of method [`kv_store_delete_item`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum DeleteKeyFromStoreError {
+pub enum KvStoreDeleteItemError {
+    Status404(),
+    Status412(),
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`get_keys`]
+/// struct for typed errors of method [`kv_store_get_item`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum GetKeysError {
+pub enum KvStoreGetItemError {
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`get_value_for_key`]
+/// struct for typed errors of method [`kv_store_list_item_keys`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum GetValueForKeyError {
+pub enum KvStoreListItemKeysError {
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`set_value_for_key`]
+/// struct for typed errors of method [`kv_store_upsert_item`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum SetValueForKeyError {
+pub enum KvStoreUpsertItemError {
+    Status400(),
+    Status404(),
+    Status412(),
     UnknownValue(serde_json::Value),
 }
 
 
-/// Delete an item from an kv store
-pub async fn delete_key_from_store(configuration: &mut configuration::Configuration, params: DeleteKeyFromStoreParams) -> Result<(), Error<DeleteKeyFromStoreError>> {
+/// Delete an item.
+pub async fn kv_store_delete_item(configuration: &mut configuration::Configuration, params: KvStoreDeleteItemParams) -> Result<(), Error<KvStoreDeleteItemError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
     let store_id = params.store_id;
-    let key_name = params.key_name;
+    let key = params.key;
+    let if_generation_match = params.if_generation_match;
+    let force = params.force;
 
 
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/resources/stores/kv/{store_id}/keys/{key_name}", local_var_configuration.base_path, store_id=crate::apis::urlencode(store_id), key_name=crate::apis::urlencode(key_name));
+    let local_var_uri_str = format!("{}/resources/stores/kv/{store_id}/keys/{key}", local_var_configuration.base_path, store_id=crate::apis::urlencode(store_id), key=crate::apis::urlencode(key));
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::DELETE, local_var_uri_str.as_str());
 
+    if let Some(ref local_var_str) = force {
+        local_var_req_builder = local_var_req_builder.query(&[("force", &local_var_str.to_string())]);
+    }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+    if let Some(local_var_param_value) = if_generation_match {
+        local_var_req_builder = local_var_req_builder.header("if-generation-match", local_var_param_value.to_string());
     }
     if let Some(ref local_var_apikey) = local_var_configuration.api_key {
         let local_var_key = local_var_apikey.key.clone();
@@ -127,14 +144,67 @@ pub async fn delete_key_from_store(configuration: &mut configuration::Configurat
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         Ok(())
     } else {
-        let local_var_entity: Option<DeleteKeyFromStoreError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_entity: Option<KvStoreDeleteItemError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
-/// List the keys of all items within an kv store.
-pub async fn get_keys(configuration: &mut configuration::Configuration, params: GetKeysParams) -> Result<crate::models::InlineResponse2004, Error<GetKeysError>> {
+/// Get an item, including its value, metadata (if any), and generation marker.
+pub async fn kv_store_get_item(configuration: &mut configuration::Configuration, params: KvStoreGetItemParams) -> Result<std::path::PathBuf, Error<KvStoreGetItemError>> {
+    let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let store_id = params.store_id;
+    let key = params.key;
+
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!("{}/resources/stores/kv/{store_id}/keys/{key}", local_var_configuration.base_path, store_id=crate::apis::urlencode(store_id), key=crate::apis::urlencode(key));
+    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+    if let Some(ref local_var_apikey) = local_var_configuration.api_key {
+        let local_var_key = local_var_apikey.key.clone();
+        let local_var_value = match local_var_apikey.prefix {
+            Some(ref local_var_prefix) => format!("{} {}", local_var_prefix, local_var_key),
+            None => local_var_key,
+        };
+        local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
+    };
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        serde_json::from_str(&local_var_content).map_err(Error::from)
+    } else {
+        let local_var_entity: Option<KvStoreGetItemError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        Err(Error::ResponseError(local_var_error))
+    }
+}
+
+/// Lists the matching item keys (or all item keys, if no prefix is supplied).
+pub async fn kv_store_list_item_keys(configuration: &mut configuration::Configuration, params: KvStoreListItemKeysParams) -> Result<crate::models::InlineResponse2004, Error<KvStoreListItemKeysError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -195,72 +265,19 @@ pub async fn get_keys(configuration: &mut configuration::Configuration, params: 
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<GetKeysError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_entity: Option<KvStoreListItemKeysError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
-/// Get the value associated with a key.
-pub async fn get_value_for_key(configuration: &mut configuration::Configuration, params: GetValueForKeyParams) -> Result<String, Error<GetValueForKeyError>> {
+/// Inserts or updates an item's value and metadata.
+pub async fn kv_store_upsert_item(configuration: &mut configuration::Configuration, params: KvStoreUpsertItemParams) -> Result<(), Error<KvStoreUpsertItemError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
     let store_id = params.store_id;
-    let key_name = params.key_name;
-
-
-    let local_var_client = &local_var_configuration.client;
-
-    let local_var_uri_str = format!("{}/resources/stores/kv/{store_id}/keys/{key_name}", local_var_configuration.base_path, store_id=crate::apis::urlencode(store_id), key_name=crate::apis::urlencode(key_name));
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
-
-    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
-    }
-    if let Some(ref local_var_apikey) = local_var_configuration.api_key {
-        let local_var_key = local_var_apikey.key.clone();
-        let local_var_value = match local_var_apikey.prefix {
-            Some(ref local_var_prefix) => format!("{} {}", local_var_prefix, local_var_key),
-            None => local_var_key,
-        };
-        local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
-    };
-
-    let local_var_req = local_var_req_builder.build()?;
-    let local_var_resp = local_var_client.execute(local_var_req).await?;
-
-    if "GET" != "GET" && "GET" != "HEAD" {
-      let headers = local_var_resp.headers();
-      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
-          Some(v) => v.to_str().unwrap().parse().unwrap(),
-          None => configuration::DEFAULT_RATELIMIT,
-      };
-      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
-          Some(v) => v.to_str().unwrap().parse().unwrap(),
-          None => 0,
-      };
-    }
-
-    let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.text().await?;
-
-    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
-    } else {
-        let local_var_entity: Option<GetValueForKeyError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
-        Err(Error::ResponseError(local_var_error))
-    }
-}
-
-/// Set a new value for a new or existing key in an kv store.
-pub async fn set_value_for_key(configuration: &mut configuration::Configuration, params: SetValueForKeyParams) -> Result<String, Error<SetValueForKeyError>> {
-    let local_var_configuration = configuration;
-
-    // unbox the parameters
-    let store_id = params.store_id;
-    let key_name = params.key_name;
+    let key = params.key;
     let if_generation_match = params.if_generation_match;
     let time_to_live_sec = params.time_to_live_sec;
     let metadata = params.metadata;
@@ -273,7 +290,7 @@ pub async fn set_value_for_key(configuration: &mut configuration::Configuration,
 
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/resources/stores/kv/{store_id}/keys/{key_name}", local_var_configuration.base_path, store_id=crate::apis::urlencode(store_id), key_name=crate::apis::urlencode(key_name));
+    let local_var_uri_str = format!("{}/resources/stores/kv/{store_id}/keys/{key}", local_var_configuration.base_path, store_id=crate::apis::urlencode(store_id), key=crate::apis::urlencode(key));
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::PUT, local_var_uri_str.as_str());
 
     if let Some(ref local_var_str) = add {
@@ -329,9 +346,9 @@ pub async fn set_value_for_key(configuration: &mut configuration::Configuration,
     let local_var_content = local_var_resp.text().await?;
 
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
+        Ok(())
     } else {
-        let local_var_entity: Option<SetValueForKeyError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_entity: Option<KvStoreUpsertItemError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }

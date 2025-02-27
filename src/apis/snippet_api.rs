@@ -38,7 +38,7 @@ pub struct DeleteSnippetParams {
     /// Integer identifying a service version.
     pub version_id: i32,
     /// The name for the snippet.
-    pub snippet_name: String
+    pub name: String
 }
 
 /// struct for passing parameters to the method [`get_snippet`]
@@ -49,7 +49,7 @@ pub struct GetSnippetParams {
     /// Integer identifying a service version.
     pub version_id: i32,
     /// The name for the snippet.
-    pub snippet_name: String
+    pub name: String
 }
 
 /// struct for passing parameters to the method [`get_snippet_dynamic`]
@@ -58,7 +58,7 @@ pub struct GetSnippetDynamicParams {
     /// Alphanumeric string identifying the service.
     pub service_id: String,
     /// Alphanumeric string identifying a VCL Snippet.
-    pub snippet_id: String
+    pub id: String
 }
 
 /// struct for passing parameters to the method [`list_snippets`]
@@ -78,7 +78,7 @@ pub struct UpdateSnippetParams {
     /// Integer identifying a service version.
     pub version_id: i32,
     /// The name for the snippet.
-    pub snippet_name: String
+    pub name: String
 }
 
 /// struct for passing parameters to the method [`update_snippet_dynamic`]
@@ -87,7 +87,7 @@ pub struct UpdateSnippetDynamicParams {
     /// Alphanumeric string identifying the service.
     pub service_id: String,
     /// Alphanumeric string identifying a VCL Snippet.
-    pub snippet_id: String,
+    pub id: String,
     /// The name for the snippet.
     pub name: Option<String>,
     /// The location in generated VCL where the snippet should be placed.
@@ -233,12 +233,12 @@ pub async fn delete_snippet(configuration: &mut configuration::Configuration, pa
     // unbox the parameters
     let service_id = params.service_id;
     let version_id = params.version_id;
-    let snippet_name = params.snippet_name;
+    let name = params.name;
 
 
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/service/{service_id}/version/{version_id}/snippet/{snippet_name}", local_var_configuration.base_path, service_id=crate::apis::urlencode(service_id), version_id=version_id, snippet_name=crate::apis::urlencode(snippet_name));
+    let local_var_uri_str = format!("{}/service/{service_id}/version/{version_id}/snippet/{name}", local_var_configuration.base_path, service_id=crate::apis::urlencode(service_id), version_id=version_id, name=crate::apis::urlencode(name));
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::DELETE, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
@@ -287,12 +287,12 @@ pub async fn get_snippet(configuration: &mut configuration::Configuration, param
     // unbox the parameters
     let service_id = params.service_id;
     let version_id = params.version_id;
-    let snippet_name = params.snippet_name;
+    let name = params.name;
 
 
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/service/{service_id}/version/{version_id}/snippet/{snippet_name}", local_var_configuration.base_path, service_id=crate::apis::urlencode(service_id), version_id=version_id, snippet_name=crate::apis::urlencode(snippet_name));
+    let local_var_uri_str = format!("{}/service/{service_id}/version/{version_id}/snippet/{name}", local_var_configuration.base_path, service_id=crate::apis::urlencode(service_id), version_id=version_id, name=crate::apis::urlencode(name));
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
@@ -340,12 +340,12 @@ pub async fn get_snippet_dynamic(configuration: &mut configuration::Configuratio
 
     // unbox the parameters
     let service_id = params.service_id;
-    let snippet_id = params.snippet_id;
+    let id = params.id;
 
 
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/service/{service_id}/snippet/{snippet_id}", local_var_configuration.base_path, service_id=crate::apis::urlencode(service_id), snippet_id=crate::apis::urlencode(snippet_id));
+    let local_var_uri_str = format!("{}/service/{service_id}/snippet/{id}", local_var_configuration.base_path, service_id=crate::apis::urlencode(service_id), id=crate::apis::urlencode(id));
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
@@ -447,12 +447,12 @@ pub async fn update_snippet(configuration: &mut configuration::Configuration, pa
     // unbox the parameters
     let service_id = params.service_id;
     let version_id = params.version_id;
-    let snippet_name = params.snippet_name;
+    let name = params.name;
 
 
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/service/{service_id}/version/{version_id}/snippet/{snippet_name}", local_var_configuration.base_path, service_id=crate::apis::urlencode(service_id), version_id=version_id, snippet_name=crate::apis::urlencode(snippet_name));
+    let local_var_uri_str = format!("{}/service/{service_id}/version/{version_id}/snippet/{name}", local_var_configuration.base_path, service_id=crate::apis::urlencode(service_id), version_id=version_id, name=crate::apis::urlencode(name));
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::PUT, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
@@ -500,7 +500,7 @@ pub async fn update_snippet_dynamic(configuration: &mut configuration::Configura
 
     // unbox the parameters
     let service_id = params.service_id;
-    let snippet_id = params.snippet_id;
+    let id = params.id;
     let name = params.name;
     let _type = params._type;
     let content = params.content;
@@ -510,7 +510,7 @@ pub async fn update_snippet_dynamic(configuration: &mut configuration::Configura
 
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/service/{service_id}/snippet/{snippet_id}", local_var_configuration.base_path, service_id=crate::apis::urlencode(service_id), snippet_id=crate::apis::urlencode(snippet_id));
+    let local_var_uri_str = format!("{}/service/{service_id}/snippet/{id}", local_var_configuration.base_path, service_id=crate::apis::urlencode(service_id), id=crate::apis::urlencode(id));
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::PUT, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {

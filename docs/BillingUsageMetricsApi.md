@@ -27,8 +27,8 @@ get_service_level_usage(cfg, params)
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**product_id** | **String** | The product identifier for the metrics returned (e.g., `cdn_usage`). This field is not required for CSV requests. | [required] |
-**usage_type_name** | **String** | The usage type name for the metrics returned (e.g., `North America Requests`). This field is not required for CSV requests. | [required] |
+**product_id** | Option\<**String**> | The product identifier for the metrics returned (e.g., `cdn_usage`). |  |
+**usage_type_name** | Option\<**String**> | The usage type name for the metrics returned (e.g., `North America Requests`). |  |
 **start_month** | Option\<**String**> |  |  |
 **end_month** | Option\<**String**> |  |  |
 **limit** | Option\<**String**> | Number of results per page. The maximum is 100. |  |[default to 5]
@@ -67,8 +67,8 @@ get_usage_metrics(cfg, params)
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**start_month** | Option\<**String**> |  |  |
-**end_month** | Option\<**String**> |  |  |
+**start_month** | **String** |  | [required] |
+**end_month** | **String** |  | [required] |
 
 ### Return type
 

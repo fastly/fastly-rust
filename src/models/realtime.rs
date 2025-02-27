@@ -15,7 +15,7 @@ pub struct Realtime {
     pub timestamp: Option<Box<i32>>,
     /// How long the system will wait before aggregating messages for each second. The most recent data returned will have happened at the moment of the request, minus the aggregation delay.
     #[serde(rename = "AggregateDelay", skip_serializing_if = "Option::is_none")]
-    pub aggregate_delay: Option<i32>,
+    pub aggregate_delay: Option<i64>,
     /// A list of [records](#record-data-model), each representing one second of time.
     #[serde(rename = "Data", skip_serializing_if = "Option::is_none")]
     pub data: Option<Vec<crate::models::RealtimeEntry>>,

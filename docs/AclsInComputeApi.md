@@ -140,7 +140,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**Vec&lt;crate::models::ComputeAclCreateAclsResponse&gt;**](ComputeAclCreateAclsResponse.md)
+[**crate::models::ComputeAclList**](ComputeAclList.md)
 
 ### Authorization
 

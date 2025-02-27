@@ -6,12 +6,12 @@
 Method | HTTP request | Description
 ------ | ------------ | -----------
 [**create_snippet**](SnippetApi.md#create_snippet) | **POST** /service/{service_id}/version/{version_id}/snippet | Create a snippet
-[**delete_snippet**](SnippetApi.md#delete_snippet) | **DELETE** /service/{service_id}/version/{version_id}/snippet/{snippet_name} | Delete a snippet
-[**get_snippet**](SnippetApi.md#get_snippet) | **GET** /service/{service_id}/version/{version_id}/snippet/{snippet_name} | Get a versioned snippet
-[**get_snippet_dynamic**](SnippetApi.md#get_snippet_dynamic) | **GET** /service/{service_id}/snippet/{snippet_id} | Get a dynamic snippet
+[**delete_snippet**](SnippetApi.md#delete_snippet) | **DELETE** /service/{service_id}/version/{version_id}/snippet/{name} | Delete a snippet
+[**get_snippet**](SnippetApi.md#get_snippet) | **GET** /service/{service_id}/version/{version_id}/snippet/{name} | Get a versioned snippet
+[**get_snippet_dynamic**](SnippetApi.md#get_snippet_dynamic) | **GET** /service/{service_id}/snippet/{id} | Get a dynamic snippet
 [**list_snippets**](SnippetApi.md#list_snippets) | **GET** /service/{service_id}/version/{version_id}/snippet | List snippets
-[**update_snippet**](SnippetApi.md#update_snippet) | **PUT** /service/{service_id}/version/{version_id}/snippet/{snippet_name} | Update a versioned snippet
-[**update_snippet_dynamic**](SnippetApi.md#update_snippet_dynamic) | **PUT** /service/{service_id}/snippet/{snippet_id} | Update a dynamic snippet
+[**update_snippet**](SnippetApi.md#update_snippet) | **PUT** /service/{service_id}/version/{version_id}/snippet/{name} | Update a versioned snippet
+[**update_snippet_dynamic**](SnippetApi.md#update_snippet_dynamic) | **PUT** /service/{service_id}/snippet/{id} | Update a dynamic snippet
 
 
 
@@ -75,7 +75,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **service_id** | **String** | Alphanumeric string identifying the service. | [required] |
 **version_id** | **i32** | Integer identifying a service version. | [required] |
-**snippet_name** | **String** | The name for the snippet. | [required] |
+**name** | **String** | The name for the snippet. | [required] |
 
 ### Return type
 
@@ -112,7 +112,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **service_id** | **String** | Alphanumeric string identifying the service. | [required] |
 **version_id** | **i32** | Integer identifying a service version. | [required] |
-**snippet_name** | **String** | The name for the snippet. | [required] |
+**name** | **String** | The name for the snippet. | [required] |
 
 ### Return type
 
@@ -148,7 +148,7 @@ get_snippet_dynamic(cfg, params)
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **service_id** | **String** | Alphanumeric string identifying the service. | [required] |
-**snippet_id** | **String** | Alphanumeric string identifying a VCL Snippet. | [required] |
+**id** | **String** | Alphanumeric string identifying a VCL Snippet. | [required] |
 
 ### Return type
 
@@ -221,7 +221,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **service_id** | **String** | Alphanumeric string identifying the service. | [required] |
 **version_id** | **i32** | Integer identifying a service version. | [required] |
-**snippet_name** | **String** | The name for the snippet. | [required] |
+**name** | **String** | The name for the snippet. | [required] |
 
 ### Return type
 
@@ -257,7 +257,7 @@ update_snippet_dynamic(cfg, params)
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **service_id** | **String** | Alphanumeric string identifying the service. | [required] |
-**snippet_id** | **String** | Alphanumeric string identifying a VCL Snippet. | [required] |
+**id** | **String** | Alphanumeric string identifying a VCL Snippet. | [required] |
 **name** | Option\<**String**> | The name for the snippet. |  |
 **_type** | Option\<**String**> | The location in generated VCL where the snippet should be placed. |  |
 **content** | Option\<**String**> | The VCL code that specifies exactly what the snippet does. |  |

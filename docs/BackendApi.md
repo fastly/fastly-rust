@@ -43,7 +43,7 @@ Name | Type | Description  | Required | Notes
 **hostname** | Option\<**String**> | The hostname of the backend. May be used as an alternative to `address` to set the backend location. |  |
 **ipv4** | Option\<**String**> | IPv4 address of the backend. May be used as an alternative to `address` to set the backend location. |  |
 **ipv6** | Option\<**String**> | IPv6 address of the backend. May be used as an alternative to `address` to set the backend location. |  |
-**keepalive_time** | Option\<**i32**> | How long in seconds to keep a persistent connection to the backend between requests. |  |
+**keepalive_time** | Option\<**i32**> | How long in seconds to keep a persistent connection to the backend between requests. By default, Varnish keeps connections open as long as it can. |  |
 **max_conn** | Option\<**i32**> | Maximum number of concurrent connections this backend will accept. |  |
 **max_tls_version** | Option\<**String**> | Maximum allowed TLS version on SSL connections to this backend. If your backend server is not able to negotiate a connection meeting this constraint, a synthetic `503` error response will be generated. |  |
 **min_tls_version** | Option\<**String**> | Minimum allowed TLS version on SSL connections to this backend. If your backend server is not able to negotiate a connection meeting this constraint, a synthetic `503` error response will be generated. |  |
@@ -225,7 +225,7 @@ Name | Type | Description  | Required | Notes
 **hostname** | Option\<**String**> | The hostname of the backend. May be used as an alternative to `address` to set the backend location. |  |
 **ipv4** | Option\<**String**> | IPv4 address of the backend. May be used as an alternative to `address` to set the backend location. |  |
 **ipv6** | Option\<**String**> | IPv6 address of the backend. May be used as an alternative to `address` to set the backend location. |  |
-**keepalive_time** | Option\<**i32**> | How long in seconds to keep a persistent connection to the backend between requests. |  |
+**keepalive_time** | Option\<**i32**> | How long in seconds to keep a persistent connection to the backend between requests. By default, Varnish keeps connections open as long as it can. |  |
 **max_conn** | Option\<**i32**> | Maximum number of concurrent connections this backend will accept. |  |
 **max_tls_version** | Option\<**String**> | Maximum allowed TLS version on SSL connections to this backend. If your backend server is not able to negotiate a connection meeting this constraint, a synthetic `503` error response will be generated. |  |
 **min_tls_version** | Option\<**String**> | Minimum allowed TLS version on SSL connections to this backend. If your backend server is not able to negotiate a connection meeting this constraint, a synthetic `503` error response will be generated. |  |

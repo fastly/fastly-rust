@@ -14,10 +14,10 @@ use super::{Error, configuration};
 /// struct for passing parameters to the method [`get_service_level_usage`]
 #[derive(Clone, Debug, Default)]
 pub struct GetServiceLevelUsageParams {
-    /// The product identifier for the metrics returned (e.g., `cdn_usage`). This field is not required for CSV requests.
-    pub product_id: String,
-    /// The usage type name for the metrics returned (e.g., `North America Requests`). This field is not required for CSV requests.
-    pub usage_type_name: String,
+    /// The product identifier for the metrics returned (e.g., `cdn_usage`).
+    pub product_id: Option<String>,
+    /// The usage type name for the metrics returned (e.g., `North America Requests`).
+    pub usage_type_name: Option<String>,
     pub start_month: Option<String>,
     pub end_month: Option<String>,
     /// Number of results per page. The maximum is 100.
@@ -29,8 +29,8 @@ pub struct GetServiceLevelUsageParams {
 /// struct for passing parameters to the method [`get_usage_metrics`]
 #[derive(Clone, Debug, Default)]
 pub struct GetUsageMetricsParams {
-    pub start_month: Option<String>,
-    pub end_month: Option<String>
+    pub start_month: String,
+    pub end_month: String
 }
 
 
@@ -73,8 +73,12 @@ pub async fn get_service_level_usage(configuration: &mut configuration::Configur
     let local_var_uri_str = format!("{}/billing/v3/service-usage-metrics", local_var_configuration.base_path);
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
-    local_var_req_builder = local_var_req_builder.query(&[("product_id", &product_id.to_string())]);
-    local_var_req_builder = local_var_req_builder.query(&[("usage_type_name", &usage_type_name.to_string())]);
+    if let Some(ref local_var_str) = product_id {
+        local_var_req_builder = local_var_req_builder.query(&[("product_id", &local_var_str.to_string())]);
+    }
+    if let Some(ref local_var_str) = usage_type_name {
+        local_var_req_builder = local_var_req_builder.query(&[("usage_type_name", &local_var_str.to_string())]);
+    }
     if let Some(ref local_var_str) = start_month {
         local_var_req_builder = local_var_req_builder.query(&[("start_month", &local_var_str.to_string())]);
     }
@@ -140,12 +144,8 @@ pub async fn get_usage_metrics(configuration: &mut configuration::Configuration,
     let local_var_uri_str = format!("{}/billing/v3/usage-metrics", local_var_configuration.base_path);
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
-    if let Some(ref local_var_str) = start_month {
-        local_var_req_builder = local_var_req_builder.query(&[("start_month", &local_var_str.to_string())]);
-    }
-    if let Some(ref local_var_str) = end_month {
-        local_var_req_builder = local_var_req_builder.query(&[("end_month", &local_var_str.to_string())]);
-    }
+    local_var_req_builder = local_var_req_builder.query(&[("start_month", &start_month.to_string())]);
+    local_var_req_builder = local_var_req_builder.query(&[("end_month", &end_month.to_string())]);
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }

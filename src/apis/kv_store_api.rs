@@ -11,69 +11,73 @@ use reqwest;
 use crate::apis::ResponseContent;
 use super::{Error, configuration};
 
-/// struct for passing parameters to the method [`create_store`]
+/// struct for passing parameters to the method [`kv_store_create`]
 #[derive(Clone, Debug, Default)]
-pub struct CreateStoreParams {
+pub struct KvStoreCreateParams {
     pub location: Option<String>,
-    pub store: Option<crate::models::Store>
+    pub kv_store_request_create: Option<crate::models::KvStoreRequestCreate>
 }
 
-/// struct for passing parameters to the method [`delete_store`]
+/// struct for passing parameters to the method [`kv_store_delete`]
 #[derive(Clone, Debug, Default)]
-pub struct DeleteStoreParams {
+pub struct KvStoreDeleteParams {
     pub store_id: String
 }
 
-/// struct for passing parameters to the method [`get_store`]
+/// struct for passing parameters to the method [`kv_store_get`]
 #[derive(Clone, Debug, Default)]
-pub struct GetStoreParams {
+pub struct KvStoreGetParams {
     pub store_id: String
 }
 
-/// struct for passing parameters to the method [`get_stores`]
+/// struct for passing parameters to the method [`kv_store_list`]
 #[derive(Clone, Debug, Default)]
-pub struct GetStoresParams {
+pub struct KvStoreListParams {
     pub cursor: Option<String>,
     pub limit: Option<i32>
 }
 
 
-/// struct for typed errors of method [`create_store`]
+/// struct for typed errors of method [`kv_store_create`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum CreateStoreError {
+pub enum KvStoreCreateError {
+    Status400(),
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`delete_store`]
+/// struct for typed errors of method [`kv_store_delete`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum DeleteStoreError {
+pub enum KvStoreDeleteError {
+    Status404(),
+    Status409(),
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`get_store`]
+/// struct for typed errors of method [`kv_store_get`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum GetStoreError {
+pub enum KvStoreGetError {
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`get_stores`]
+/// struct for typed errors of method [`kv_store_list`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum GetStoresError {
+pub enum KvStoreListError {
     UnknownValue(serde_json::Value),
 }
 
 
-/// Create a new KV store.
-pub async fn create_store(configuration: &mut configuration::Configuration, params: CreateStoreParams) -> Result<crate::models::StoreResponse, Error<CreateStoreError>> {
+/// Create a KV store.
+pub async fn kv_store_create(configuration: &mut configuration::Configuration, params: KvStoreCreateParams) -> Result<crate::models::KvStoreDetails, Error<KvStoreCreateError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
     let location = params.location;
-    let store = params.store;
+    let kv_store_request_create = params.kv_store_request_create;
 
 
     let local_var_client = &local_var_configuration.client;
@@ -95,7 +99,7 @@ pub async fn create_store(configuration: &mut configuration::Configuration, para
         };
         local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
     };
-    local_var_req_builder = local_var_req_builder.json(&store);
+    local_var_req_builder = local_var_req_builder.json(&kv_store_request_create);
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
@@ -118,14 +122,14 @@ pub async fn create_store(configuration: &mut configuration::Configuration, para
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<CreateStoreError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_entity: Option<KvStoreCreateError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
-/// A KV store must be empty before it can be deleted.  Deleting a KV store that still contains keys will result in a `409` (Conflict).
-pub async fn delete_store(configuration: &mut configuration::Configuration, params: DeleteStoreParams) -> Result<(), Error<DeleteStoreError>> {
+/// A KV store must be empty before it can be deleted. Attempting to delete a KV store that contains items will result in a response with a `409` status code.
+pub async fn kv_store_delete(configuration: &mut configuration::Configuration, params: KvStoreDeleteParams) -> Result<(), Error<KvStoreDeleteError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -170,14 +174,14 @@ pub async fn delete_store(configuration: &mut configuration::Configuration, para
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         Ok(())
     } else {
-        let local_var_entity: Option<DeleteStoreError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_entity: Option<KvStoreDeleteError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
-/// Get a KV store by ID.
-pub async fn get_store(configuration: &mut configuration::Configuration, params: GetStoreParams) -> Result<crate::models::StoreResponse, Error<GetStoreError>> {
+/// Get details of a KV store.
+pub async fn kv_store_get(configuration: &mut configuration::Configuration, params: KvStoreGetParams) -> Result<crate::models::KvStoreDetails, Error<KvStoreGetError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -222,14 +226,14 @@ pub async fn get_store(configuration: &mut configuration::Configuration, params:
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<GetStoreError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_entity: Option<KvStoreGetError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
-/// Get all stores for a given customer.
-pub async fn get_stores(configuration: &mut configuration::Configuration, params: GetStoresParams) -> Result<crate::models::InlineResponse2003, Error<GetStoresError>> {
+/// List all KV stores.
+pub async fn kv_store_list(configuration: &mut configuration::Configuration, params: KvStoreListParams) -> Result<crate::models::InlineResponse2003, Error<KvStoreListError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -281,7 +285,7 @@ pub async fn get_stores(configuration: &mut configuration::Configuration, params
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<GetStoresError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_entity: Option<KvStoreListError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }

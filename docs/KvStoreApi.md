@@ -5,23 +5,23 @@
 
 Method | HTTP request | Description
 ------ | ------------ | -----------
-[**create_store**](KvStoreApi.md#create_store) | **POST** /resources/stores/kv | Create a KV store.
-[**delete_store**](KvStoreApi.md#delete_store) | **DELETE** /resources/stores/kv/{store_id} | Delete a KV store.
-[**get_store**](KvStoreApi.md#get_store) | **GET** /resources/stores/kv/{store_id} | Describe a KV store.
-[**get_stores**](KvStoreApi.md#get_stores) | **GET** /resources/stores/kv | List KV stores.
+[**kv_store_create**](KvStoreApi.md#kv_store_create) | **POST** /resources/stores/kv | Create a KV store.
+[**kv_store_delete**](KvStoreApi.md#kv_store_delete) | **DELETE** /resources/stores/kv/{store_id} | Delete a KV store.
+[**kv_store_get**](KvStoreApi.md#kv_store_get) | **GET** /resources/stores/kv/{store_id} | Describe a KV store.
+[**kv_store_list**](KvStoreApi.md#kv_store_list) | **GET** /resources/stores/kv | List all KV stores.
 
 
 
-## create_store
+## kv_store_create
 
-Create a new KV store.
+Create a KV store.
 
 ```rust
 let cfg = &Configuration::default();
-let params = CreateStoreParams {
+let params = KvStoreCreateParams {
     // parameters
 };
-create_store(cfg, params)
+kv_store_create(cfg, params)
 ```
 
 ### Parameters
@@ -30,11 +30,11 @@ create_store(cfg, params)
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **location** | Option\<**String**> |  |  |
-**store** | Option\<[**Store**](Store.md)> |  |  |
+**kv_store_request_create** | Option\<[**KvStoreRequestCreate**](KvStoreRequestCreate.md)> |  |  |
 
 ### Return type
 
-[**crate::models::StoreResponse**](StoreResponse.md)
+[**crate::models::KvStoreDetails**](KvStoreDetails.md)
 
 ### Authorization
 
@@ -48,16 +48,16 @@ Name | Type | Description  | Required | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 
-## delete_store
+## kv_store_delete
 
-A KV store must be empty before it can be deleted.  Deleting a KV store that still contains keys will result in a `409` (Conflict).
+A KV store must be empty before it can be deleted. Attempting to delete a KV store that contains items will result in a response with a `409` status code.
 
 ```rust
 let cfg = &Configuration::default();
-let params = DeleteStoreParams {
+let params = KvStoreDeleteParams {
     // parameters
 };
-delete_store(cfg, params)
+kv_store_delete(cfg, params)
 ```
 
 ### Parameters
@@ -83,16 +83,16 @@ Name | Type | Description  | Required | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 
-## get_store
+## kv_store_get
 
-Get a KV store by ID.
+Get details of a KV store.
 
 ```rust
 let cfg = &Configuration::default();
-let params = GetStoreParams {
+let params = KvStoreGetParams {
     // parameters
 };
-get_store(cfg, params)
+kv_store_get(cfg, params)
 ```
 
 ### Parameters
@@ -104,7 +104,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::StoreResponse**](StoreResponse.md)
+[**crate::models::KvStoreDetails**](KvStoreDetails.md)
 
 ### Authorization
 
@@ -118,16 +118,16 @@ Name | Type | Description  | Required | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 
-## get_stores
+## kv_store_list
 
-Get all stores for a given customer.
+List all KV stores.
 
 ```rust
 let cfg = &Configuration::default();
-let params = GetStoresParams {
+let params = KvStoreListParams {
     // parameters
 };
-get_stores(cfg, params)
+kv_store_list(cfg, params)
 ```
 
 ### Parameters
