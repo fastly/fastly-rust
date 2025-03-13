@@ -12,7 +12,7 @@
 pub struct ComputeAclListEntriesMeta {
     /// The maximum number of results shown in this response.
     #[serde(rename = "limit", skip_serializing_if = "Option::is_none")]
-    pub limit: Option<String>,
+    pub limit: Option<i32>,
     /// Used for pagination, supply to the next request to get the next block of results.
     #[serde(rename = "next_cursor", skip_serializing_if = "Option::is_none")]
     pub next_cursor: Option<String>,

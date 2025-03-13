@@ -40,6 +40,12 @@ pub struct Header {
     /// Accepts a string value.
     #[serde(rename = "type", skip_serializing_if = "Option::is_none")]
     pub _type: Option<Type>,
+    /// Don't add the header if it is added already. Only applies to 'set' action. Numerical value (\"0\" = false, \"1\" = true)
+    #[serde(rename = "ignore_if_set", skip_serializing_if = "Option::is_none")]
+    pub ignore_if_set: Option<String>,
+    /// Priority determines execution order. Lower numbers execute first.
+    #[serde(rename = "priority", skip_serializing_if = "Option::is_none")]
+    pub priority: Option<String>,
 }
 
 impl Header {
@@ -55,6 +61,8 @@ impl Header {
             src: None,
             substitution: None,
             _type: None,
+            ignore_if_set: None,
+            priority: None,
         }
     }
 }

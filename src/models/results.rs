@@ -794,6 +794,27 @@ pub struct Results {
     /// Number of cache operations executed by the Compute platform.
     #[serde(rename = "compute_cache_operations_count", skip_serializing_if = "Option::is_none")]
     pub compute_cache_operations_count: Option<i64>,
+    /// Total number of Next-Gen WAF (Edge WAF & Core WAF) requests.
+    #[serde(rename = "ngwaf_requests_total_count", skip_serializing_if = "Option::is_none")]
+    pub ngwaf_requests_total_count: Option<i32>,
+    /// Count of Edge WAF requests with an unknown outcome.
+    #[serde(rename = "ngwaf_requests_unknown_count", skip_serializing_if = "Option::is_none")]
+    pub ngwaf_requests_unknown_count: Option<i32>,
+    /// Count of Edge WAF requests allowed.
+    #[serde(rename = "ngwaf_requests_allowed_count", skip_serializing_if = "Option::is_none")]
+    pub ngwaf_requests_allowed_count: Option<i32>,
+    /// Count of Edge WAF requests logged.
+    #[serde(rename = "ngwaf_requests_logged_count", skip_serializing_if = "Option::is_none")]
+    pub ngwaf_requests_logged_count: Option<i32>,
+    /// Count of Edge WAF requests blocked.
+    #[serde(rename = "ngwaf_requests_blocked_count", skip_serializing_if = "Option::is_none")]
+    pub ngwaf_requests_blocked_count: Option<i32>,
+    /// Count of Edge WAF requests timed outcome.
+    #[serde(rename = "ngwaf_requests_timeout_count", skip_serializing_if = "Option::is_none")]
+    pub ngwaf_requests_timeout_count: Option<i32>,
+    /// Count of Edge WAF requests challenged.
+    #[serde(rename = "ngwaf_requests_challenged_count", skip_serializing_if = "Option::is_none")]
+    pub ngwaf_requests_challenged_count: Option<i32>,
     #[serde(rename = "service_id", skip_serializing_if = "Option::is_none")]
     pub service_id: Option<Box<String>>,
     /// Timestamp for the start of the time period being reported
@@ -1066,6 +1087,13 @@ impl Results {
             request_collapse_usable_count: None,
             request_collapse_unusable_count: None,
             compute_cache_operations_count: None,
+            ngwaf_requests_total_count: None,
+            ngwaf_requests_unknown_count: None,
+            ngwaf_requests_allowed_count: None,
+            ngwaf_requests_logged_count: None,
+            ngwaf_requests_blocked_count: None,
+            ngwaf_requests_timeout_count: None,
+            ngwaf_requests_challenged_count: None,
             service_id: None,
             start_time: None,
         }

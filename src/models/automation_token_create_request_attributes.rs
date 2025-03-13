@@ -20,7 +20,7 @@ pub struct AutomationTokenCreateRequestAttributes {
     pub services: Option<Vec<String>>,
     #[serde(rename = "scope", skip_serializing_if = "Option::is_none")]
     pub scope: Option<Scope>,
-    /// A UTC time-stamp of when the token will expire.
+    /// A UTC timestamp of when the token will expire.
     #[serde(rename = "expires_at", skip_serializing_if = "Option::is_none")]
     pub expires_at: Option<String>,
     /// Indicates whether TLS access is enabled for the token.

@@ -22,7 +22,7 @@ pub struct AutomationToken {
     /// A space-delimited list of authorization scope.
     #[serde(rename = "scope", skip_serializing_if = "Option::is_none")]
     pub scope: Option<Scope>,
-    /// A UTC time-stamp of when the token expires.
+    /// A UTC timestamp of when the token expires.
     #[serde(rename = "expires_at", skip_serializing_if = "Option::is_none")]
     pub expires_at: Option<String>,
 }

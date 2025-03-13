@@ -42,8 +42,8 @@ Name | Type | Description  | Required | Notes
 **src** | Option\<**String**> | Variable to be used as a source for the header content. Does not apply to `delete` action. |  |
 **substitution** | Option\<**String**> | Value to substitute in place of regular expression. Only applies to `regex` and `regex_repeat` actions. |  |
 **_type** | Option\<**String**> | Accepts a string value. |  |
-**ignore_if_set** | Option\<**i32**> | Don't add the header if it is added already. Only applies to 'set' action. |  |
-**priority** | Option\<**i32**> | Priority determines execution order. Lower numbers execute first. |  |[default to 100]
+**ignore_if_set** | Option\<**String**> | Don't add the header if it is added already. Only applies to 'set' action. Numerical value (\\\"0\\\" = false, \\\"1\\\" = true) |  |
+**priority** | Option\<**String**> | Priority determines execution order. Lower numbers execute first. |  |[default to 100]
 
 ### Return type
 
@@ -201,8 +201,8 @@ Name | Type | Description  | Required | Notes
 **src** | Option\<**String**> | Variable to be used as a source for the header content. Does not apply to `delete` action. |  |
 **substitution** | Option\<**String**> | Value to substitute in place of regular expression. Only applies to `regex` and `regex_repeat` actions. |  |
 **_type** | Option\<**String**> | Accepts a string value. |  |
-**ignore_if_set** | Option\<**i32**> | Don't add the header if it is added already. Only applies to 'set' action. |  |
-**priority** | Option\<**i32**> | Priority determines execution order. Lower numbers execute first. |  |[default to 100]
+**ignore_if_set** | Option\<**String**> | Don't add the header if it is added already. Only applies to 'set' action. Numerical value (\\\"0\\\" = false, \\\"1\\\" = true) |  |
+**priority** | Option\<**String**> | Priority determines execution order. Lower numbers execute first. |  |[default to 100]
 
 ### Return type
 

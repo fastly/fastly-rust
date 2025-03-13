@@ -101,6 +101,8 @@ list_tls_bulk_certs(cfg, params)
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **filter_tls_domain_id** | Option\<**String**> | Filter certificates by their matching, fully-qualified domain name. |  |
+**filter_not_before** | Option\<**String**> | Filter the returned certificates by not_before date in UTC.  Accepts parameters: lt, lte, gt, gte (e.g., filter[not_before][gte]=2020-05-05).  |  |
+**filter_not_after** | Option\<**String**> | Filter the returned certificates by expiry date in UTC.  Accepts parameters: lt, lte, gt, gte (e.g., filter[not_after][lte]=2020-05-05).  |  |
 **page_number** | Option\<**i32**> | Current page. |  |
 **page_size** | Option\<**i32**> | Number of records per page. |  |[default to 20]
 **sort** | Option\<**String**> | The order in which to list the results by creation date. |  |[default to created_at]

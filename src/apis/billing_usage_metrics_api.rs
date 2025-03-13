@@ -14,13 +14,15 @@ use super::{Error, configuration};
 /// struct for passing parameters to the method [`get_service_level_usage`]
 #[derive(Clone, Debug, Default)]
 pub struct GetServiceLevelUsageParams {
-    /// The product identifier for the metrics returned (e.g., `cdn_usage`).
+    /// The product identifier for the metrics returned (e.g., `cdn_usage`). This should be used along with `usage_type_name`.
     pub product_id: Option<String>,
-    /// The usage type name for the metrics returned (e.g., `North America Requests`).
+    /// The service identifier for the metrics being requested.
+    pub service: Option<String>,
+    /// The usage type name for the metrics returned (e.g., `North America Requests`). This should be used along with `product_id`.
     pub usage_type_name: Option<String>,
     pub start_month: Option<String>,
     pub end_month: Option<String>,
-    /// Number of results per page. The maximum is 100.
+    /// Number of results per page. The maximum is 10000.
     pub limit: Option<String>,
     /// Cursor value from the `next_cursor` field of a previous response, used to retrieve the next page. To request the first page, this should be empty.
     pub cursor: Option<String>
@@ -61,6 +63,7 @@ pub async fn get_service_level_usage(configuration: &mut configuration::Configur
 
     // unbox the parameters
     let product_id = params.product_id;
+    let service = params.service;
     let usage_type_name = params.usage_type_name;
     let start_month = params.start_month;
     let end_month = params.end_month;
@@ -75,6 +78,9 @@ pub async fn get_service_level_usage(configuration: &mut configuration::Configur
 
     if let Some(ref local_var_str) = product_id {
         local_var_req_builder = local_var_req_builder.query(&[("product_id", &local_var_str.to_string())]);
+    }
+    if let Some(ref local_var_str) = service {
+        local_var_req_builder = local_var_req_builder.query(&[("service", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = usage_type_name {
         local_var_req_builder = local_var_req_builder.query(&[("usage_type_name", &local_var_str.to_string())]);

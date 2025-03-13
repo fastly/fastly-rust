@@ -30,6 +30,10 @@ pub struct GetTlsBulkCertParams {
 pub struct ListTlsBulkCertsParams {
     /// Filter certificates by their matching, fully-qualified domain name.
     pub filter_tls_domain_id: Option<String>,
+    /// Filter the returned certificates by not_before date in UTC.  Accepts parameters: lt, lte, gt, gte (e.g., filter[not_before][gte]=2020-05-05). 
+    pub filter_not_before: Option<String>,
+    /// Filter the returned certificates by expiry date in UTC.  Accepts parameters: lt, lte, gt, gte (e.g., filter[not_after][lte]=2020-05-05). 
+    pub filter_not_after: Option<String>,
     /// Current page.
     pub page_number: Option<i32>,
     /// Number of records per page.
@@ -199,6 +203,8 @@ pub async fn list_tls_bulk_certs(configuration: &mut configuration::Configuratio
 
     // unbox the parameters
     let filter_tls_domain_id = params.filter_tls_domain_id;
+    let filter_not_before = params.filter_not_before;
+    let filter_not_after = params.filter_not_after;
     let page_number = params.page_number;
     let page_size = params.page_size;
     let sort = params.sort;
@@ -211,6 +217,12 @@ pub async fn list_tls_bulk_certs(configuration: &mut configuration::Configuratio
 
     if let Some(ref local_var_str) = filter_tls_domain_id {
         local_var_req_builder = local_var_req_builder.query(&[("filter[tls_domain.id]", &local_var_str.to_string())]);
+    }
+    if let Some(ref local_var_str) = filter_not_before {
+        local_var_req_builder = local_var_req_builder.query(&[("filter[not_before]", &local_var_str.to_string())]);
+    }
+    if let Some(ref local_var_str) = filter_not_after {
+        local_var_req_builder = local_var_req_builder.query(&[("filter[not_after]", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = page_number {
         local_var_req_builder = local_var_req_builder.query(&[("page[number]", &local_var_str.to_string())]);

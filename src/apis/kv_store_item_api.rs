@@ -49,7 +49,7 @@ pub struct KvStoreUpsertItemParams {
     pub append: Option<bool>,
     pub prepend: Option<bool>,
     pub background_fetch: Option<bool>,
-    pub body: Option<std::path::PathBuf>
+    pub body: Option<String>
 }
 
 
@@ -151,7 +151,7 @@ pub async fn kv_store_delete_item(configuration: &mut configuration::Configurati
 }
 
 /// Get an item, including its value, metadata (if any), and generation marker.
-pub async fn kv_store_get_item(configuration: &mut configuration::Configuration, params: KvStoreGetItemParams) -> Result<std::path::PathBuf, Error<KvStoreGetItemError>> {
+pub async fn kv_store_get_item(configuration: &mut configuration::Configuration, params: KvStoreGetItemParams) -> Result<String, Error<KvStoreGetItemError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters

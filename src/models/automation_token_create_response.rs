@@ -22,29 +22,24 @@ pub struct AutomationTokenCreateResponse {
     /// A space-delimited list of authorization scope.
     #[serde(rename = "scope", skip_serializing_if = "Option::is_none")]
     pub scope: Option<Scope>,
-    /// A UTC time-stamp of when the token expires.
+    /// A UTC timestamp of when the token expires.
     #[serde(rename = "expires_at", skip_serializing_if = "Option::is_none")]
     pub expires_at: Option<String>,
-    /// A UTC time-stamp of when the token was created. 
-    #[serde(rename = "created_at", skip_serializing_if = "Option::is_none")]
-    pub created_at: Option<String>,
-    /// Date and time in ISO 8601 format.
-    #[serde(rename = "deleted_at", skip_serializing_if = "Option::is_none")]
-    pub deleted_at: Option<String>,
-    /// Date and time in ISO 8601 format.
-    #[serde(rename = "updated_at", skip_serializing_if = "Option::is_none")]
-    pub updated_at: Option<String>,
     #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
     pub id: Option<Box<crate::models::ReadOnlyId>>,
     #[serde(rename = "user_id", skip_serializing_if = "Option::is_none")]
     pub user_id: Option<Box<crate::models::ReadOnlyUserId>>,
     #[serde(rename = "customer_id", skip_serializing_if = "Option::is_none")]
     pub customer_id: Option<Box<crate::models::ReadOnlyCustomerId>>,
-    #[serde(rename = "sudo_expires_at", skip_serializing_if = "Option::is_none")]
-    pub sudo_expires_at: Option<String>,
+    /// A UTC timestamp of when the token was created. 
+    #[serde(rename = "created_at", skip_serializing_if = "Option::is_none")]
+    pub created_at: Option<String>,
     #[serde(rename = "access_token", skip_serializing_if = "Option::is_none")]
     pub access_token: Option<String>,
-    /// A UTC time-stamp of when the token was last used.
+    /// Indicates whether TLS access is enabled for the token.
+    #[serde(rename = "tls_access", skip_serializing_if = "Option::is_none")]
+    pub tls_access: Option<bool>,
+    /// A UTC timestamp of when the token was last used.
     #[serde(rename = "last_used_at", skip_serializing_if = "Option::is_none")]
     pub last_used_at: Option<String>,
     /// The User-Agent header of the client that last used the token.
@@ -60,14 +55,12 @@ impl AutomationTokenCreateResponse {
             services: None,
             scope: None,
             expires_at: None,
-            created_at: None,
-            deleted_at: None,
-            updated_at: None,
             id: None,
             user_id: None,
             customer_id: None,
-            sudo_expires_at: None,
+            created_at: None,
             access_token: None,
+            tls_access: None,
             last_used_at: None,
             user_agent: None,
         }

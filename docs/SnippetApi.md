@@ -42,7 +42,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::SnippetResponsePost**](SnippetResponsePost.md)
+[**crate::models::SnippetResponse**](SnippetResponse.md)
 
 ### Authorization
 

@@ -68,7 +68,7 @@ pub struct LoggingAzureblobResponse {
     /// A PGP public key that Fastly will use to encrypt your log files before writing them to disk.
     #[serde(rename = "public_key", skip_serializing_if = "Option::is_none")]
     pub public_key: Option<String>,
-    /// The maximum number of bytes for each uploaded file. A value of 0 can be used to indicate there is no limit on the size of uploaded files, otherwise the minimum value is 1048576 bytes (1 MiB.)
+    /// The maximum number of bytes for each uploaded file. A value of 0 can be used to indicate there is no limit on the size of uploaded files, otherwise the minimum value is 1048576 bytes (1 MiB). Note that Microsoft Azure Storage has [block size limits](https://learn.microsoft.com/en-us/rest/api/storageservices/put-block?tabs=microsoft-entra-id#remarks).
     #[serde(rename = "file_max_bytes", skip_serializing_if = "Option::is_none")]
     pub file_max_bytes: Option<i32>,
 }

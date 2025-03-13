@@ -152,7 +152,7 @@ pub enum UpdateSnippetDynamicError {
 
 
 /// Create a snippet for a particular service and version.
-pub async fn create_snippet(configuration: &mut configuration::Configuration, params: CreateSnippetParams) -> Result<crate::models::SnippetResponsePost, Error<CreateSnippetError>> {
+pub async fn create_snippet(configuration: &mut configuration::Configuration, params: CreateSnippetParams) -> Result<crate::models::SnippetResponse, Error<CreateSnippetError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters

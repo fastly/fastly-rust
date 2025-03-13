@@ -48,7 +48,7 @@ pub struct CreateLogAzureParams {
     pub sas_token: Option<String>,
     /// A PGP public key that Fastly will use to encrypt your log files before writing them to disk.
     pub public_key: Option<String>,
-    /// The maximum number of bytes for each uploaded file. A value of 0 can be used to indicate there is no limit on the size of uploaded files, otherwise the minimum value is 1048576 bytes (1 MiB.)
+    /// The maximum number of bytes for each uploaded file. A value of 0 can be used to indicate there is no limit on the size of uploaded files, otherwise the minimum value is 1048576 bytes (1 MiB). Note that Microsoft Azure Storage has [block size limits](https://learn.microsoft.com/en-us/rest/api/storageservices/put-block?tabs=microsoft-entra-id#remarks).
     pub file_max_bytes: Option<i32>
 }
 
@@ -122,7 +122,7 @@ pub struct UpdateLogAzureParams {
     pub sas_token: Option<String>,
     /// A PGP public key that Fastly will use to encrypt your log files before writing them to disk.
     pub public_key: Option<String>,
-    /// The maximum number of bytes for each uploaded file. A value of 0 can be used to indicate there is no limit on the size of uploaded files, otherwise the minimum value is 1048576 bytes (1 MiB.)
+    /// The maximum number of bytes for each uploaded file. A value of 0 can be used to indicate there is no limit on the size of uploaded files, otherwise the minimum value is 1048576 bytes (1 MiB). Note that Microsoft Azure Storage has [block size limits](https://learn.microsoft.com/en-us/rest/api/storageservices/put-block?tabs=microsoft-entra-id#remarks).
     pub file_max_bytes: Option<i32>
 }
 

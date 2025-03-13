@@ -38,10 +38,10 @@ pub struct CreateHeaderObjectParams {
     pub substitution: Option<String>,
     /// Accepts a string value.
     pub _type: Option<String>,
-    /// Don't add the header if it is added already. Only applies to 'set' action.
-    pub ignore_if_set: Option<i32>,
+    /// Don't add the header if it is added already. Only applies to 'set' action. Numerical value (\\\"0\\\" = false, \\\"1\\\" = true)
+    pub ignore_if_set: Option<String>,
     /// Priority determines execution order. Lower numbers execute first.
-    pub priority: Option<i32>
+    pub priority: Option<String>
 }
 
 /// struct for passing parameters to the method [`delete_header_object`]
@@ -104,10 +104,10 @@ pub struct UpdateHeaderObjectParams {
     pub substitution: Option<String>,
     /// Accepts a string value.
     pub _type: Option<String>,
-    /// Don't add the header if it is added already. Only applies to 'set' action.
-    pub ignore_if_set: Option<i32>,
+    /// Don't add the header if it is added already. Only applies to 'set' action. Numerical value (\\\"0\\\" = false, \\\"1\\\" = true)
+    pub ignore_if_set: Option<String>,
     /// Priority determines execution order. Lower numbers execute first.
-    pub priority: Option<i32>
+    pub priority: Option<String>
 }
 
 

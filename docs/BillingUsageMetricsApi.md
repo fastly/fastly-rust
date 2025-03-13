@@ -5,7 +5,7 @@
 
 Method | HTTP request | Description
 ------ | ------------ | -----------
-[**get_service_level_usage**](BillingUsageMetricsApi.md#get_service_level_usage) | **GET** /billing/v3/service-usage-metrics | Retrieve service-level usage metrics for a product.
+[**get_service_level_usage**](BillingUsageMetricsApi.md#get_service_level_usage) | **GET** /billing/v3/service-usage-metrics | Retrieve service-level usage metrics for services with non-zero usage units.
 [**get_usage_metrics**](BillingUsageMetricsApi.md#get_usage_metrics) | **GET** /billing/v3/usage-metrics | Get monthly usage metrics
 
 
@@ -27,11 +27,12 @@ get_service_level_usage(cfg, params)
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**product_id** | Option\<**String**> | The product identifier for the metrics returned (e.g., `cdn_usage`). |  |
-**usage_type_name** | Option\<**String**> | The usage type name for the metrics returned (e.g., `North America Requests`). |  |
+**product_id** | Option\<**String**> | The product identifier for the metrics returned (e.g., `cdn_usage`). This should be used along with `usage_type_name`. |  |
+**service** | Option\<**String**> | The service identifier for the metrics being requested. |  |
+**usage_type_name** | Option\<**String**> | The usage type name for the metrics returned (e.g., `North America Requests`). This should be used along with `product_id`. |  |
 **start_month** | Option\<**String**> |  |  |
 **end_month** | Option\<**String**> |  |  |
-**limit** | Option\<**String**> | Number of results per page. The maximum is 100. |  |[default to 5]
+**limit** | Option\<**String**> | Number of results per page. The maximum is 10000. |  |[default to 1000]
 **cursor** | Option\<**String**> | Cursor value from the `next_cursor` field of a previous response, used to retrieve the next page. To request the first page, this should be empty. |  |
 
 ### Return type
