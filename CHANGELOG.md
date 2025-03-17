@@ -1,5 +1,11 @@
 # Changelog
 
+## [v7.0.1](https://github.com/fastly/fastly-rust/releases/tag/release/v7.0.1) (2025-03-16)
+
+**Bug fixes:**
+
+- bugfix(rust): Removed obsolete class files that were being generated in the library
+
 ## [v7.0.0](https://github.com/fastly/fastly-rust/releases/tag/release/v7.0.0) (2025-03-13)
 
 **Breaking Changes:**
