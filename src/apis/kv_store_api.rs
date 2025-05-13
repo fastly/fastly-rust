@@ -233,7 +233,7 @@ pub async fn kv_store_get(configuration: &mut configuration::Configuration, para
 }
 
 /// List all KV stores.
-pub async fn kv_store_list(configuration: &mut configuration::Configuration, params: KvStoreListParams) -> Result<crate::models::InlineResponse2003, Error<KvStoreListError>> {
+pub async fn kv_store_list(configuration: &mut configuration::Configuration, params: KvStoreListParams) -> Result<crate::models::InlineResponse2005, Error<KvStoreListError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters

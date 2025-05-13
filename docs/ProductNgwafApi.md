@@ -9,6 +9,7 @@ Method | HTTP request | Description
 [**enable_product_ngwaf**](ProductNgwafApi.md#enable_product_ngwaf) | **PUT** /enabled-products/v1/ngwaf/services/{service_id} | Enable product
 [**get_product_ngwaf**](ProductNgwafApi.md#get_product_ngwaf) | **GET** /enabled-products/v1/ngwaf/services/{service_id} | Get product enablement status
 [**get_product_ngwaf_configuration**](ProductNgwafApi.md#get_product_ngwaf_configuration) | **GET** /enabled-products/v1/ngwaf/services/{service_id}/configuration | Get configuration
+[**get_services_product_ngwaf**](ProductNgwafApi.md#get_services_product_ngwaf) | **GET** /enabled-products/v1/ngwaf/services | Get services with product enabled
 [**set_product_ngwaf_configuration**](ProductNgwafApi.md#set_product_ngwaf_configuration) | **PATCH** /enabled-products/v1/ngwaf/services/{service_id}/configuration | Update configuration
 
 
@@ -141,6 +142,38 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**crate::models::NgwafResponseConfigure**](NgwafResponseConfigure.md)
+
+### Authorization
+
+[token](../README.md#token)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+
+## get_services_product_ngwaf
+
+Get all the services which have the Next-Gen WAF product enabled.
+
+```rust
+let cfg = &Configuration::default();
+let params = GetServicesProductNgwafParams {
+    // parameters
+};
+get_services_product_ngwaf(cfg, params)
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**crate::models::NgwafResponseBodyGetAllServices**](NgwafResponseBodyGetAllServices.md)
 
 ### Authorization
 

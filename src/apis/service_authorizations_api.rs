@@ -217,7 +217,7 @@ pub async fn delete_service_authorization(configuration: &mut configuration::Con
 }
 
 /// Delete service authorizations.
-pub async fn delete_service_authorization2(configuration: &mut configuration::Configuration, params: DeleteServiceAuthorization2Params) -> Result<crate::models::InlineResponse2007, Error<DeleteServiceAuthorization2Error>> {
+pub async fn delete_service_authorization2(configuration: &mut configuration::Configuration, params: DeleteServiceAuthorization2Params) -> Result<crate::models::InlineResponse2009, Error<DeleteServiceAuthorization2Error>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters

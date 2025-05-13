@@ -33,7 +33,7 @@ Name | Type | Description  | Required | Notes
 **service_id** | **String** | Alphanumeric string identifying the service. | [required] |
 **version_id** | **i32** | Integer identifying a service version. | [required] |
 **name** | Option\<**String**> | A human readable name for the rate limiting rule. |  |
-**uri_dictionary_name** | Option\<**String**> | The name of an Edge Dictionary containing URIs as keys. If not defined or `null`, all origin URIs will be rate limited. |  |
+**uri_dictionary_name** | Option\<**String**> | The name of a Dictionary containing URIs as keys. If not defined or `null`, all origin URIs will be rate limited. |  |
 **http_methods** | Option\<[**Vec&lt;String&gt;**](String.md)> | Array of HTTP methods to apply rate limiting to. |  |
 **rps_limit** | Option\<**i32**> | Upper limit of requests per second allowed by the rate limiter. |  |
 **window_size** | Option\<**i32**> | Number of seconds during which the RPS limit must be exceeded in order to trigger a violation. |  |
@@ -185,7 +185,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **rate_limiter_id** | **String** | Alphanumeric string identifying the rate limiter. | [required] |
 **name** | Option\<**String**> | A human readable name for the rate limiting rule. |  |
-**uri_dictionary_name** | Option\<**String**> | The name of an Edge Dictionary containing URIs as keys. If not defined or `null`, all origin URIs will be rate limited. |  |
+**uri_dictionary_name** | Option\<**String**> | The name of a Dictionary containing URIs as keys. If not defined or `null`, all origin URIs will be rate limited. |  |
 **http_methods** | Option\<[**Vec&lt;String&gt;**](String.md)> | Array of HTTP methods to apply rate limiting to. |  |
 **rps_limit** | Option\<**i32**> | Upper limit of requests per second allowed by the rate limiter. |  |
 **window_size** | Option\<**i32**> | Number of seconds during which the RPS limit must be exceeded in order to trigger a violation. |  |

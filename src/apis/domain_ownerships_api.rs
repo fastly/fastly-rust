@@ -21,7 +21,7 @@ pub enum ListDomainOwnershipsError {
 
 
 /// List all domain-ownerships.
-pub async fn list_domain_ownerships(configuration: &mut configuration::Configuration) -> Result<crate::models::InlineResponse2002, Error<ListDomainOwnershipsError>> {
+pub async fn list_domain_ownerships(configuration: &mut configuration::Configuration) -> Result<crate::models::InlineResponse2004, Error<ListDomainOwnershipsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters

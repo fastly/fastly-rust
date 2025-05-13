@@ -20,7 +20,7 @@ pub struct CreateResourceParams {
     pub version_id: i32,
     /// The ID of the underlying linked resource.
     pub resource_id: Option<String>,
-    /// The name of the resource link.
+    /// The name of the resource link. Note this is separate from the resource store name and might not match the store name.
     pub name: Option<String>
 }
 
@@ -66,7 +66,7 @@ pub struct UpdateResourceParams {
     pub id: String,
     /// The ID of the underlying linked resource.
     pub resource_id: Option<String>,
-    /// The name of the resource link.
+    /// The name of the resource link. Note this is separate from the resource store name and might not match the store name.
     pub name: Option<String>
 }
 

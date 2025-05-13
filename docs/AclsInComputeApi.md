@@ -227,7 +227,7 @@ Name | Type | Description  | Required | Notes
 
 ## compute_acl_update_acls
 
-Update an ACL.
+Update an ACL entry with a new operation or action, this allows you to modify an existing entry or delete it.
 
 ```rust
 let cfg = &Configuration::default();

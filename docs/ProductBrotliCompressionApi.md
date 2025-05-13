@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**disable_product_brotli_compression**](ProductBrotliCompressionApi.md#disable_product_brotli_compression) | **DELETE** /enabled-products/v1/brotli_compression/services/{service_id} | Disable product
 [**enable_product_brotli_compression**](ProductBrotliCompressionApi.md#enable_product_brotli_compression) | **PUT** /enabled-products/v1/brotli_compression/services/{service_id} | Enable product
 [**get_product_brotli_compression**](ProductBrotliCompressionApi.md#get_product_brotli_compression) | **GET** /enabled-products/v1/brotli_compression/services/{service_id} | Get product enablement status
+[**get_services_product_brotli_compression**](ProductBrotliCompressionApi.md#get_services_product_brotli_compression) | **GET** /enabled-products/v1/brotli_compression/services | Get services with product enabled
 
 
 
@@ -103,6 +104,38 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**crate::models::BrotliCompressionResponseBodyEnable**](BrotliCompressionResponseBodyEnable.md)
+
+### Authorization
+
+[token](../README.md#token)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+
+## get_services_product_brotli_compression
+
+Get all the services which have the Brotli Compression product enabled.
+
+```rust
+let cfg = &Configuration::default();
+let params = GetServicesProductBrotliCompressionParams {
+    // parameters
+};
+get_services_product_brotli_compression(cfg, params)
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**crate::models::BrotliCompressionResponseBodyGetAllServices**](BrotliCompressionResponseBodyGetAllServices.md)
 
 ### Authorization
 

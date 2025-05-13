@@ -20,7 +20,7 @@ pub struct CreateRateLimiterParams {
     pub version_id: i32,
     /// A human readable name for the rate limiting rule.
     pub name: Option<String>,
-    /// The name of an Edge Dictionary containing URIs as keys. If not defined or `null`, all origin URIs will be rate limited.
+    /// The name of a Dictionary containing URIs as keys. If not defined or `null`, all origin URIs will be rate limited.
     pub uri_dictionary_name: Option<String>,
     /// Array of HTTP methods to apply rate limiting to.
     pub http_methods: Option<Vec<String>>,
@@ -72,7 +72,7 @@ pub struct UpdateRateLimiterParams {
     pub rate_limiter_id: String,
     /// A human readable name for the rate limiting rule.
     pub name: Option<String>,
-    /// The name of an Edge Dictionary containing URIs as keys. If not defined or `null`, all origin URIs will be rate limited.
+    /// The name of a Dictionary containing URIs as keys. If not defined or `null`, all origin URIs will be rate limited.
     pub uri_dictionary_name: Option<String>,
     /// Array of HTTP methods to apply rate limiting to.
     pub http_methods: Option<Vec<String>>,

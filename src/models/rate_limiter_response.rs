@@ -13,7 +13,7 @@ pub struct RateLimiterResponse {
     /// A human readable name for the rate limiting rule.
     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
-    /// The name of an Edge Dictionary containing URIs as keys. If not defined or `null`, all origin URIs will be rate limited.
+    /// The name of a Dictionary containing URIs as keys. If not defined or `null`, all origin URIs will be rate limited.
     #[serde(rename = "uri_dictionary_name", skip_serializing_if = "Option::is_none")]
     pub uri_dictionary_name: Option<String>,
     /// Array of HTTP methods to apply rate limiting to.

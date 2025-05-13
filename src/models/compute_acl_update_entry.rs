@@ -11,13 +11,13 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct ComputeAclUpdateEntry {
-    /// One of \"create\" or \"update\", indicating that the rest of this entry is to be added to/updated in the ACL.
+    /// One of \"create\", \"update\", or \"delete\" indicating the operation to perform on the update.
     #[serde(rename = "op", skip_serializing_if = "Option::is_none")]
     pub op: Option<String>,
     /// An IP prefix defined in Classless Inter-Domain Routing (CIDR) format, i.e. a valid IP address (v4 or v6) followed by a forward slash (/) and a prefix length (0-32 or 0-128, depending on address family).
     #[serde(rename = "prefix", skip_serializing_if = "Option::is_none")]
     pub prefix: Option<String>,
-    /// The action taken on the IP address, either \"block\" or \"allow\".
+    /// The action taken on the IP address, one of \"BLOCK\" or \"ALLOW\". If using the \"delete\" operation, no action should be specified.
     #[serde(rename = "action", skip_serializing_if = "Option::is_none")]
     pub action: Option<String>,
 }

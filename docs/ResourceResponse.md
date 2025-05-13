@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **resource_id** | Option<**String**> | The ID of the underlying linked resource. | 
-**name** | Option<**String**> | The name of the resource link. | 
+**name** | Option<**String**> | The name of the resource link. Note this is separate from the resource store name and might not match the store name. | 
 **created_at** | Option<**String**> | Date and time in ISO 8601 format. | [readonly]
 **deleted_at** | Option<**String**> | Date and time in ISO 8601 format. | [readonly]
 **updated_at** | Option<**String**> | Date and time in ISO 8601 format. | [readonly]

@@ -33,7 +33,7 @@ Name | Type | Description  | Required | Notes
 **service_id** | **String** | Alphanumeric string identifying the service. | [required] |
 **version_id** | **i32** | Integer identifying a service version. | [required] |
 **resource_id** | Option\<**String**> | The ID of the underlying linked resource. |  |
-**name** | Option\<**String**> | The name of the resource link. |  |
+**name** | Option\<**String**> | The name of the resource link. Note this is separate from the resource store name and might not match the store name. |  |
 
 ### Return type
 
@@ -182,7 +182,7 @@ Name | Type | Description  | Required | Notes
 **version_id** | **i32** | Integer identifying a service version. | [required] |
 **id** | **String** | An alphanumeric string identifying the resource link. | [required] |
 **resource_id** | Option\<**String**> | The ID of the underlying linked resource. |  |
-**name** | Option\<**String**> | The name of the resource link. |  |
+**name** | Option\<**String**> | The name of the resource link. Note this is separate from the resource store name and might not match the store name. |  |
 
 ### Return type
 

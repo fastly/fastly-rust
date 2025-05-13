@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**disable_product_image_optimizer**](ProductImageOptimizerApi.md#disable_product_image_optimizer) | **DELETE** /enabled-products/v1/image_optimizer/services/{service_id} | Disable product
 [**enable_product_image_optimizer**](ProductImageOptimizerApi.md#enable_product_image_optimizer) | **PUT** /enabled-products/v1/image_optimizer/services/{service_id} | Enable product
 [**get_product_image_optimizer**](ProductImageOptimizerApi.md#get_product_image_optimizer) | **GET** /enabled-products/v1/image_optimizer/services/{service_id} | Get product enablement status
+[**get_services_product_image_optimizer**](ProductImageOptimizerApi.md#get_services_product_image_optimizer) | **GET** /enabled-products/v1/image_optimizer/services | Get services with product enabled
 
 
 
@@ -103,6 +104,38 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**crate::models::ImageOptimizerResponseBodyEnable**](ImageOptimizerResponseBodyEnable.md)
+
+### Authorization
+
+[token](../README.md#token)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+
+## get_services_product_image_optimizer
+
+Get all the services which have the Image Optimizer product enabled.
+
+```rust
+let cfg = &Configuration::default();
+let params = GetServicesProductImageOptimizerParams {
+    // parameters
+};
+get_services_product_image_optimizer(cfg, params)
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**crate::models::ImageOptimizerResponseBodyGetAllServices**](ImageOptimizerResponseBodyGetAllServices.md)
 
 ### Authorization
 

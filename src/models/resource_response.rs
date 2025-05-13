@@ -13,7 +13,7 @@ pub struct ResourceResponse {
     /// The ID of the underlying linked resource.
     #[serde(rename = "resource_id", skip_serializing_if = "Option::is_none")]
     pub resource_id: Option<String>,
-    /// The name of the resource link.
+    /// The name of the resource link. Note this is separate from the resource store name and might not match the store name.
     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
     /// Date and time in ISO 8601 format.

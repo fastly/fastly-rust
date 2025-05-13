@@ -204,7 +204,7 @@ pub async fn kv_store_get_item(configuration: &mut configuration::Configuration,
 }
 
 /// Lists the matching item keys (or all item keys, if no prefix is supplied).
-pub async fn kv_store_list_item_keys(configuration: &mut configuration::Configuration, params: KvStoreListItemKeysParams) -> Result<crate::models::InlineResponse2004, Error<KvStoreListItemKeysError>> {
+pub async fn kv_store_list_item_keys(configuration: &mut configuration::Configuration, params: KvStoreListItemKeysParams) -> Result<crate::models::InlineResponse2006, Error<KvStoreListItemKeysError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters

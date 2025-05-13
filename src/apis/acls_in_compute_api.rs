@@ -424,7 +424,7 @@ pub async fn compute_acl_lookup_acls(configuration: &mut configuration::Configur
     }
 }
 
-/// Update an ACL.
+/// Update an ACL entry with a new operation or action, this allows you to modify an existing entry or delete it.
 pub async fn compute_acl_update_acls(configuration: &mut configuration::Configuration, params: ComputeAclUpdateAclsParams) -> Result<(), Error<ComputeAclUpdateAclsError>> {
     let local_var_configuration = configuration;
 

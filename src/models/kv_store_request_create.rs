@@ -10,7 +10,7 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct KvStoreRequestCreate {
-    /// A human-readable name for the store. Refer to https://www.fastly.com/documentation/guides/concepts/edge-state/data-stores/#limitations-and-constraints for constraints on the KV store name.
+    /// A human-readable name for the store. Refer to https://docs.fastly.com/products/compute-resource-limits#kv-store for limitations on the KV store name.
     #[serde(rename = "name")]
     pub name: String,
 }

@@ -261,7 +261,7 @@ pub async fn get_secret(configuration: &mut configuration::Configuration, params
 }
 
 /// List all secrets within a store.
-pub async fn get_secrets(configuration: &mut configuration::Configuration, params: GetSecretsParams) -> Result<crate::models::InlineResponse2006, Error<GetSecretsError>> {
+pub async fn get_secrets(configuration: &mut configuration::Configuration, params: GetSecretsParams) -> Result<crate::models::InlineResponse2008, Error<GetSecretsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters

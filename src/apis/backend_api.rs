@@ -54,6 +54,8 @@ pub struct CreateBackendParams {
     pub override_host: Option<String>,
     /// Port on which the backend server is listening for connections from Fastly. Setting `port` to 80 or 443 will also set `use_ssl` automatically (to false and true respectively), unless explicitly overridden by setting `use_ssl` in the same request.
     pub port: Option<i32>,
+    /// Prefer IPv6 connections for DNS hostname lookups.
+    pub prefer_ipv6: Option<bool>,
     /// Name of a Condition, which if satisfied, will select this backend during a request. If set, will override any `auto_loadbalance` setting. By default, the first backend added to a service is selected for all requests.
     pub request_condition: Option<String>,
     /// Value that when shared across backends will enable those backends to share the same health check.
@@ -166,6 +168,8 @@ pub struct UpdateBackendParams {
     pub override_host: Option<String>,
     /// Port on which the backend server is listening for connections from Fastly. Setting `port` to 80 or 443 will also set `use_ssl` automatically (to false and true respectively), unless explicitly overridden by setting `use_ssl` in the same request.
     pub port: Option<i32>,
+    /// Prefer IPv6 connections for DNS hostname lookups.
+    pub prefer_ipv6: Option<bool>,
     /// Name of a Condition, which if satisfied, will select this backend during a request. If set, will override any `auto_loadbalance` setting. By default, the first backend added to a service is selected for all requests.
     pub request_condition: Option<String>,
     /// Value that when shared across backends will enable those backends to share the same health check.
@@ -264,6 +268,7 @@ pub async fn create_backend(configuration: &mut configuration::Configuration, pa
     let name = params.name;
     let override_host = params.override_host;
     let port = params.port;
+    let prefer_ipv6 = params.prefer_ipv6;
     let request_condition = params.request_condition;
     let share_key = params.share_key;
     let shield = params.shield;
@@ -353,6 +358,9 @@ pub async fn create_backend(configuration: &mut configuration::Configuration, pa
     }
     if let Some(local_var_param_value) = port {
         local_var_form_params.insert("port", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = prefer_ipv6 {
+        local_var_form_params.insert("prefer_ipv6", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = request_condition {
         local_var_form_params.insert("request_condition", local_var_param_value.to_string());
@@ -621,6 +629,7 @@ pub async fn update_backend(configuration: &mut configuration::Configuration, pa
     let name = params.name;
     let override_host = params.override_host;
     let port = params.port;
+    let prefer_ipv6 = params.prefer_ipv6;
     let request_condition = params.request_condition;
     let share_key = params.share_key;
     let shield = params.shield;
@@ -710,6 +719,9 @@ pub async fn update_backend(configuration: &mut configuration::Configuration, pa
     }
     if let Some(local_var_param_value) = port {
         local_var_form_params.insert("port", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = prefer_ipv6 {
+        local_var_form_params.insert("prefer_ipv6", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = request_condition {
         local_var_form_params.insert("request_condition", local_var_param_value.to_string());
