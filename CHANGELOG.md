@@ -1,5 +1,31 @@
 # Changelog
 
+## [v9.0.0](https://github.com/fastly/fastly-rust/releases/tag/release/v9.0.0) (2025-06-11)
+
+**Breaking Changes:**
+
+- removed(properties): Remove logging placement value `waf_debug`.
+
+
+**Bug fixes:**
+
+- fix(backend): Marked `prefer_ipv6` as nullable.
+
+
+**Enhancements:**
+
+
+
+**Documentation:**
+
+- doc(domain-discovery): Correct documentation of valid values of `scope` query parameter.
+- doc(observability-aggregations-for-logs): Correct documentation of valid values of `log-aggregations-filter` query
+                                            parameter.
+- doc(backend): Tweak language of `prefer_ipv6` description.
+- doc(service): Add documentation for `filter[versions.active]` query parameter when getting detailed information on
+                a specified service.
+
+
 ## [v8.0.0](https://github.com/fastly/fastly-rust/releases/tag/release/v8.0.0) (2025-05-12)
 
 **Breaking Changes:**

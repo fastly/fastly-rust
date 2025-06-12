@@ -109,8 +109,6 @@ impl LoggingGcsResponse {
 pub enum Placement {
     #[serde(rename = "none")]
     None,
-    #[serde(rename = "waf_debug")]
-    WafDebug,
     #[serde(rename = "null")]
     Null,
 }

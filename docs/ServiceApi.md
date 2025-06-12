@@ -143,6 +143,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **service_id** | **String** | Alphanumeric string identifying the service. | [required] |
 **version** | Option\<**i32**> | Number identifying a version of the service. |  |
+**filter_versions_active** | Option\<**bool**> | Limits the versions array to the active versions. Accepts `true` or `false` (defaults to false). |  |
 
 ### Return type
 

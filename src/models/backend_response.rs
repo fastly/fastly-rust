@@ -64,7 +64,7 @@ pub struct BackendResponse {
     /// Port on which the backend server is listening for connections from Fastly. Setting `port` to 80 or 443 will also set `use_ssl` automatically (to false and true respectively), unless explicitly overridden by setting `use_ssl` in the same request.
     #[serde(rename = "port", skip_serializing_if = "Option::is_none")]
     pub port: Option<i32>,
-    /// Prefer IPv6 connections for DNS hostname lookups.
+    /// Prefer IPv6 connections to origins for hostname backends.
     #[serde(rename = "prefer_ipv6", skip_serializing_if = "Option::is_none")]
     pub prefer_ipv6: Option<bool>,
     /// Name of a Condition, which if satisfied, will select this backend during a request. If set, will override any `auto_loadbalance` setting. By default, the first backend added to a service is selected for all requests.

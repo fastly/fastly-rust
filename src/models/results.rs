@@ -800,13 +800,13 @@ pub struct Results {
     /// Count of Edge WAF requests with an unknown outcome.
     #[serde(rename = "ngwaf_requests_unknown_count", skip_serializing_if = "Option::is_none")]
     pub ngwaf_requests_unknown_count: Option<i32>,
-    /// Count of Edge WAF requests allowed.
+    /// Count of Next-Gen WAF (Edge WAF & Core WAF) requests allowed.
     #[serde(rename = "ngwaf_requests_allowed_count", skip_serializing_if = "Option::is_none")]
     pub ngwaf_requests_allowed_count: Option<i32>,
     /// Count of Edge WAF requests logged.
     #[serde(rename = "ngwaf_requests_logged_count", skip_serializing_if = "Option::is_none")]
     pub ngwaf_requests_logged_count: Option<i32>,
-    /// Count of Edge WAF requests blocked.
+    /// Count of Next-Gen WAF (Edge WAF & Core WAF) requests blocked.
     #[serde(rename = "ngwaf_requests_blocked_count", skip_serializing_if = "Option::is_none")]
     pub ngwaf_requests_blocked_count: Option<i32>,
     /// Count of Edge WAF requests timed outcome.

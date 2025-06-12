@@ -50,7 +50,7 @@ Name | Type | Description  | Required | Notes
 **name** | Option\<**String**> | The name of the backend. |  |
 **override_host** | Option\<**String**> | If set, will replace the client-supplied HTTP `Host` header on connections to this backend. Applied after VCL has been processed, so this setting will take precedence over changing `bereq.http.Host` in VCL. |  |
 **port** | Option\<**i32**> | Port on which the backend server is listening for connections from Fastly. Setting `port` to 80 or 443 will also set `use_ssl` automatically (to false and true respectively), unless explicitly overridden by setting `use_ssl` in the same request. |  |
-**prefer_ipv6** | Option\<**bool**> | Prefer IPv6 connections for DNS hostname lookups. |  |
+**prefer_ipv6** | Option\<**bool**> | Prefer IPv6 connections to origins for hostname backends. |  |
 **request_condition** | Option\<**String**> | Name of a Condition, which if satisfied, will select this backend during a request. If set, will override any `auto_loadbalance` setting. By default, the first backend added to a service is selected for all requests. |  |
 **share_key** | Option\<**String**> | Value that when shared across backends will enable those backends to share the same health check. |  |
 **shield** | Option\<**String**> | Identifier of the POP to use as a [shield](https://docs.fastly.com/en/guides/shielding). |  |
@@ -233,7 +233,7 @@ Name | Type | Description  | Required | Notes
 **name** | Option\<**String**> | The name of the backend. |  |
 **override_host** | Option\<**String**> | If set, will replace the client-supplied HTTP `Host` header on connections to this backend. Applied after VCL has been processed, so this setting will take precedence over changing `bereq.http.Host` in VCL. |  |
 **port** | Option\<**i32**> | Port on which the backend server is listening for connections from Fastly. Setting `port` to 80 or 443 will also set `use_ssl` automatically (to false and true respectively), unless explicitly overridden by setting `use_ssl` in the same request. |  |
-**prefer_ipv6** | Option\<**bool**> | Prefer IPv6 connections for DNS hostname lookups. |  |
+**prefer_ipv6** | Option\<**bool**> | Prefer IPv6 connections to origins for hostname backends. |  |
 **request_condition** | Option\<**String**> | Name of a Condition, which if satisfied, will select this backend during a request. If set, will override any `auto_loadbalance` setting. By default, the first backend added to a service is selected for all requests. |  |
 **share_key** | Option\<**String**> | Value that when shared across backends will enable those backends to share the same health check. |  |
 **shield** | Option\<**String**> | Identifier of the POP to use as a [shield](https://docs.fastly.com/en/guides/shielding). |  |

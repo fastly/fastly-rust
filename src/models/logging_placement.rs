@@ -14,8 +14,6 @@ use std::fmt;
 pub enum LoggingPlacement {
     #[serde(rename = "none")]
     None,
-    #[serde(rename = "waf_debug")]
-    WafDebug,
     #[serde(rename = "null")]
     Null,
 
@@ -25,7 +23,6 @@ impl fmt::Display for LoggingPlacement {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
             Self::None => write!(f, "{}", "none"),
-            Self::WafDebug => write!(f, "{}", "waf_debug"),
             Self::Null => write!(f, "{}", "null"),
         }
     }

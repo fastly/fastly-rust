@@ -1,6 +1,6 @@
 [package]
 name = "fastly-api"
-version = "8.0.0"
+version = "9.0.0"
 authors = ["Fastly <oss@fastly.com>"]
 edition = "2021"
 description = "Fastly API client"

@@ -267,9 +267,9 @@ Name | Type | Description | Notes
 **compute_cache_operations_count** | Option<**i64**> | Number of cache operations executed by the Compute platform. | 
 **ngwaf_requests_total_count** | Option<**i32**> | Total number of Next-Gen WAF (Edge WAF & Core WAF) requests. | 
 **ngwaf_requests_unknown_count** | Option<**i32**> | Count of Edge WAF requests with an unknown outcome. | 
-**ngwaf_requests_allowed_count** | Option<**i32**> | Count of Edge WAF requests allowed. | 
+**ngwaf_requests_allowed_count** | Option<**i32**> | Count of Next-Gen WAF (Edge WAF & Core WAF) requests allowed. | 
 **ngwaf_requests_logged_count** | Option<**i32**> | Count of Edge WAF requests logged. | 
-**ngwaf_requests_blocked_count** | Option<**i32**> | Count of Edge WAF requests blocked. | 
+**ngwaf_requests_blocked_count** | Option<**i32**> | Count of Next-Gen WAF (Edge WAF & Core WAF) requests blocked. | 
 **ngwaf_requests_timeout_count** | Option<**i32**> | Count of Edge WAF requests timed outcome. | 
 **ngwaf_requests_challenged_count** | Option<**i32**> | Count of Edge WAF requests challenged. | 
 **service_id** | Option<**String**> |  | [readonly]

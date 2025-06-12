@@ -44,7 +44,9 @@ pub struct GetServiceDetailParams {
     /// Alphanumeric string identifying the service.
     pub service_id: String,
     /// Number identifying a version of the service.
-    pub version: Option<i32>
+    pub version: Option<i32>,
+    /// Limits the versions array to the active versions. Accepts `true` or `false` (defaults to false).
+    pub filter_versions_active: Option<bool>
 }
 
 /// struct for passing parameters to the method [`list_service_domains`]
@@ -325,6 +327,7 @@ pub async fn get_service_detail(configuration: &mut configuration::Configuration
     // unbox the parameters
     let service_id = params.service_id;
     let version = params.version;
+    let filter_versions_active = params.filter_versions_active;
 
 
     let local_var_client = &local_var_configuration.client;
@@ -334,6 +337,9 @@ pub async fn get_service_detail(configuration: &mut configuration::Configuration
 
     if let Some(ref local_var_str) = version {
         local_var_req_builder = local_var_req_builder.query(&[("version", &local_var_str.to_string())]);
+    }
+    if let Some(ref local_var_str) = filter_versions_active {
+        local_var_req_builder = local_var_req_builder.query(&[("filter[versions.active]", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
