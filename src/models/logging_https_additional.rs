@@ -36,7 +36,7 @@ pub struct LoggingHttpsAdditional {
     /// Enforces valid JSON formatting for log entries.
     #[serde(rename = "json_format", skip_serializing_if = "Option::is_none")]
     pub json_format: Option<JsonFormat>,
-    /// A Fastly [log format string](https://docs.fastly.com/en/guides/custom-log-formats).
+    /// A Fastly [log format string](https://www.fastly.com/documentation/guides/integrations/streaming-logs/custom-log-formats/).
     #[serde(rename = "format", skip_serializing_if = "Option::is_none")]
     pub format: Option<String>,
 }

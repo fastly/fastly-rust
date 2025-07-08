@@ -25,7 +25,7 @@ pub struct LoggingElasticsearchAdditional {
     /// Basic Auth password.
     #[serde(rename = "password", skip_serializing_if = "Option::is_none")]
     pub password: Option<String>,
-    /// A Fastly [log format string](https://docs.fastly.com/en/guides/custom-log-formats). Must produce valid JSON that Elasticsearch can ingest.
+    /// A Fastly [log format string](https://www.fastly.com/documentation/guides/integrations/streaming-logs/custom-log-formats/). Must produce valid JSON that Elasticsearch can ingest.
     #[serde(rename = "format", skip_serializing_if = "Option::is_none")]
     pub format: Option<String>,
 }

@@ -16,6 +16,9 @@ pub struct TlsCertificateDataAttributes {
     /// A customizable name for your certificate. Defaults to the certificate's Common Name or first Subject Alternative Names (SAN) entry. Optional.
     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
+    /// Indicates that the supplied certificate was not signed by a trusted CA.
+    #[serde(rename = "allow_untrusted_root", skip_serializing_if = "Option::is_none")]
+    pub allow_untrusted_root: Option<bool>,
 }
 
 impl TlsCertificateDataAttributes {
@@ -23,6 +26,7 @@ impl TlsCertificateDataAttributes {
         TlsCertificateDataAttributes {
             cert_blob: None,
             name: None,
+            allow_untrusted_root: None,
         }
     }
 }

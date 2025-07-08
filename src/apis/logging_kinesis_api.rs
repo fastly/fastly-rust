@@ -21,7 +21,7 @@ pub struct CreateLogKinesisParams {
     /// The name for the real-time logging configuration.
     pub name: Option<String>,
     pub placement: Option<crate::models::LoggingPlacement>,
-    /// A Fastly [log format string](https://docs.fastly.com/en/guides/custom-log-formats).
+    /// A Fastly [log format string](https://www.fastly.com/documentation/guides/integrations/streaming-logs/custom-log-formats/).
     pub format: Option<String>,
     /// The Amazon Kinesis stream to send logs to. Required.
     pub topic: Option<String>,

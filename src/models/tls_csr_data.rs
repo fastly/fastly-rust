@@ -14,8 +14,6 @@ pub struct TlsCsrData {
     pub _type: Option<crate::models::TypeTlsCsr>,
     #[serde(rename = "attributes", skip_serializing_if = "Option::is_none")]
     pub attributes: Option<Box<crate::models::TlsCsrDataAttributes>>,
-    #[serde(rename = "relationships", skip_serializing_if = "Option::is_none")]
-    pub relationships: Option<Box<crate::models::RelationshipTlsPrivateKey>>,
 }
 
 impl TlsCsrData {
@@ -23,7 +21,6 @@ impl TlsCsrData {
         TlsCsrData {
             _type: None,
             attributes: None,
-            relationships: None,
         }
     }
 }

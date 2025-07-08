@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **header_value** | Option<**String**> | Value of the custom header sent with the request. | [default to null]
 **method** | Option<**String**> | HTTP method used for request. | [default to Method_POST]
 **json_format** | Option<**String**> | Enforces valid JSON formatting for log entries. | 
-**format** | Option<**String**> | A Fastly [log format string](https://docs.fastly.com/en/guides/custom-log-formats). | [default to %h %l %u %t "%r" %&gt;s %b]
+**format** | Option<**String**> | A Fastly [log format string](https://www.fastly.com/documentation/guides/integrations/streaming-logs/custom-log-formats/). | [default to %h %l %u %t "%r" %&gt;s %b]
 
 [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

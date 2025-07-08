@@ -43,6 +43,9 @@ pub struct TlsCsrDataAttributes {
     /// CSR Key Type.
     #[serde(rename = "key_type", skip_serializing_if = "Option::is_none")]
     pub key_type: Option<KeyType>,
+    /// Optional. An alphanumeric string identifying the private key you've uploaded for use with your TLS certificate. If left blank, Fastly will create and manage a key for you.
+    #[serde(rename = "relationships.tls_private_key.id", skip_serializing_if = "Option::is_none")]
+    pub relationships_tls_private_key_id: Option<String>,
 }
 
 impl TlsCsrDataAttributes {
@@ -59,6 +62,7 @@ impl TlsCsrDataAttributes {
             organizational_unit: None,
             email: None,
             key_type: None,
+            relationships_tls_private_key_id: None,
         }
     }
 }

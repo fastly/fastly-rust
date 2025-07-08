@@ -9,14 +9,14 @@
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct InvitationResponse {
+pub struct InvitationCreateResponse {
     #[serde(rename = "data", skip_serializing_if = "Option::is_none")]
     pub data: Option<Box<crate::models::InvitationResponseData>>,
 }
 
-impl InvitationResponse {
-    pub fn new() -> InvitationResponse {
-        InvitationResponse {
+impl InvitationCreateResponse {
+    pub fn new() -> InvitationCreateResponse {
+        InvitationCreateResponse {
             data: None,
         }
     }

@@ -10,7 +10,7 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct LoggingNewrelicAdditional {
-    /// A Fastly [log format string](https://docs.fastly.com/en/guides/custom-log-formats). Must produce valid JSON that New Relic Logs can ingest.
+    /// A Fastly [log format string](https://www.fastly.com/documentation/guides/integrations/streaming-logs/custom-log-formats/). Must produce valid JSON that New Relic Logs can ingest.
     #[serde(rename = "format", skip_serializing_if = "Option::is_none")]
     pub format: Option<String>,
     /// The Insert API key from the Account page of your New Relic account. Required.

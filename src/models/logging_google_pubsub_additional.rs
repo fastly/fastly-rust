@@ -13,7 +13,7 @@ pub struct LoggingGooglePubsubAdditional {
     /// The Google Cloud Pub/Sub topic to which logs will be published. Required.
     #[serde(rename = "topic", skip_serializing_if = "Option::is_none")]
     pub topic: Option<String>,
-    /// A Fastly [log format string](https://docs.fastly.com/en/guides/custom-log-formats).
+    /// A Fastly [log format string](https://www.fastly.com/documentation/guides/integrations/streaming-logs/custom-log-formats/).
     #[serde(rename = "format", skip_serializing_if = "Option::is_none")]
     pub format: Option<String>,
     /// Your Google Cloud Platform project ID. Required

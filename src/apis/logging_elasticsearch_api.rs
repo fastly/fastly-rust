@@ -24,8 +24,10 @@ pub struct CreateLogElasticsearchParams {
     pub placement: Option<String>,
     /// The name of an existing condition in the configured endpoint, or leave blank to always execute.
     pub response_condition: Option<String>,
-    /// A Fastly [log format string](https://docs.fastly.com/en/guides/custom-log-formats). Must produce valid JSON that Elasticsearch can ingest.
+    /// A Fastly [log format string](https://www.fastly.com/documentation/guides/integrations/streaming-logs/custom-log-formats/). Must produce valid JSON that Elasticsearch can ingest.
     pub format: Option<String>,
+    /// The geographic region where the logs will be processed before streaming. Valid values are `us`, `eu`, and `none` for global.
+    pub log_processing_region: Option<String>,
     /// The version of the custom logging format used for the configured endpoint. The logging call gets placed by default in `vcl_log` if `format_version` is set to `2` and in `vcl_deliver` if `format_version` is set to `1`. 
     pub format_version: Option<i32>,
     /// A secure certificate to authenticate a server with. Must be in PEM format.
@@ -98,8 +100,10 @@ pub struct UpdateLogElasticsearchParams {
     pub placement: Option<String>,
     /// The name of an existing condition in the configured endpoint, or leave blank to always execute.
     pub response_condition: Option<String>,
-    /// A Fastly [log format string](https://docs.fastly.com/en/guides/custom-log-formats). Must produce valid JSON that Elasticsearch can ingest.
+    /// A Fastly [log format string](https://www.fastly.com/documentation/guides/integrations/streaming-logs/custom-log-formats/). Must produce valid JSON that Elasticsearch can ingest.
     pub format: Option<String>,
+    /// The geographic region where the logs will be processed before streaming. Valid values are `us`, `eu`, and `none` for global.
+    pub log_processing_region: Option<String>,
     /// The version of the custom logging format used for the configured endpoint. The logging call gets placed by default in `vcl_log` if `format_version` is set to `2` and in `vcl_deliver` if `format_version` is set to `1`. 
     pub format_version: Option<i32>,
     /// A secure certificate to authenticate a server with. Must be in PEM format.
@@ -174,6 +178,7 @@ pub async fn create_log_elasticsearch(configuration: &mut configuration::Configu
     let placement = params.placement;
     let response_condition = params.response_condition;
     let format = params.format;
+    let log_processing_region = params.log_processing_region;
     let format_version = params.format_version;
     let tls_ca_cert = params.tls_ca_cert;
     let tls_client_cert = params.tls_client_cert;
@@ -216,6 +221,9 @@ pub async fn create_log_elasticsearch(configuration: &mut configuration::Configu
     }
     if let Some(local_var_param_value) = format {
         local_var_form_params.insert("format", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = log_processing_region {
+        local_var_form_params.insert("log_processing_region", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = format_version {
         local_var_form_params.insert("format_version", local_var_param_value.to_string());
@@ -455,6 +463,7 @@ pub async fn update_log_elasticsearch(configuration: &mut configuration::Configu
     let placement = params.placement;
     let response_condition = params.response_condition;
     let format = params.format;
+    let log_processing_region = params.log_processing_region;
     let format_version = params.format_version;
     let tls_ca_cert = params.tls_ca_cert;
     let tls_client_cert = params.tls_client_cert;
@@ -497,6 +506,9 @@ pub async fn update_log_elasticsearch(configuration: &mut configuration::Configu
     }
     if let Some(local_var_param_value) = format {
         local_var_form_params.insert("format", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = log_processing_region {
+        local_var_form_params.insert("log_processing_region", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = format_version {
         local_var_form_params.insert("format_version", local_var_param_value.to_string());

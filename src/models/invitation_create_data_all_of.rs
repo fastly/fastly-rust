@@ -9,23 +9,14 @@
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct InvitationResponseData {
-    #[serde(rename = "type", skip_serializing_if = "Option::is_none")]
-    pub _type: Option<crate::models::TypeInvitation>,
-    #[serde(rename = "attributes", skip_serializing_if = "Option::is_none")]
-    pub attributes: Option<Box<crate::models::Timestamps>>,
-    #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
-    pub id: Option<Box<String>>,
+pub struct InvitationCreateDataAllOf {
     #[serde(rename = "relationships", skip_serializing_if = "Option::is_none")]
-    pub relationships: Option<Box<crate::models::RelationshipsForInvitation>>,
+    pub relationships: Option<Box<crate::models::RelationshipServiceInvitationsCreate>>,
 }
 
-impl InvitationResponseData {
-    pub fn new() -> InvitationResponseData {
-        InvitationResponseData {
-            _type: None,
-            attributes: None,
-            id: None,
+impl InvitationCreateDataAllOf {
+    pub fn new() -> InvitationCreateDataAllOf {
+        InvitationCreateDataAllOf {
             relationships: None,
         }
     }

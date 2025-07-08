@@ -13,7 +13,7 @@ pub struct LoggingBigqueryAdditional {
     /// The name of the BigQuery logging object. Used as a primary key for API access.
     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
-    /// A Fastly [log format string](https://docs.fastly.com/en/guides/custom-log-formats). Must produce JSON that matches the schema of your BigQuery table.
+    /// A Fastly [log format string](https://www.fastly.com/documentation/guides/integrations/streaming-logs/custom-log-formats/). Must produce JSON that matches the schema of your BigQuery table.
     #[serde(rename = "format", skip_serializing_if = "Option::is_none")]
     pub format: Option<String>,
     /// Your BigQuery dataset.

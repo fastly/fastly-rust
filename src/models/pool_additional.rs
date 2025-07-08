@@ -40,7 +40,7 @@ pub struct PoolAdditional {
     /// What type of load balance group to use.
     #[serde(rename = "type", skip_serializing_if = "Option::is_none")]
     pub _type: Option<Type>,
-    /// The hostname to [override the Host header](https://docs.fastly.com/en/guides/specifying-an-override-host). Defaults to `null` meaning no override of the Host header will occur. This setting can also be added to a Server definition. If the field is set on a Server definition it will override the Pool setting.
+    /// The hostname to [override the Host header](https://www.fastly.com/documentation/guides/full-site-delivery/domains-and-origins/specifying-an-override-host/). Defaults to `null` meaning no override of the Host header will occur. This setting can also be added to a Server definition. If the field is set on a Server definition it will override the Pool setting.
     #[serde(rename = "override_host", skip_serializing_if = "Option::is_none")]
     pub override_host: Option<String>,
 }

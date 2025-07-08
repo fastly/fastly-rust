@@ -19,9 +19,12 @@ pub struct LoggingCommon {
     /// The name of an existing condition in the configured endpoint, or leave blank to always execute.
     #[serde(rename = "response_condition", skip_serializing_if = "Option::is_none")]
     pub response_condition: Option<String>,
-    /// A Fastly [log format string](https://docs.fastly.com/en/guides/custom-log-formats).
+    /// A Fastly [log format string](https://www.fastly.com/documentation/guides/integrations/streaming-logs/custom-log-formats/).
     #[serde(rename = "format", skip_serializing_if = "Option::is_none")]
     pub format: Option<String>,
+    /// The geographic region where the logs will be processed before streaming. Valid values are `us`, `eu`, and `none` for global.
+    #[serde(rename = "log_processing_region", skip_serializing_if = "Option::is_none")]
+    pub log_processing_region: Option<LogProcessingRegion>,
 }
 
 impl LoggingCommon {
@@ -31,6 +34,7 @@ impl LoggingCommon {
             placement: None,
             response_condition: None,
             format: None,
+            log_processing_region: None,
         }
     }
 }
@@ -46,6 +50,22 @@ pub enum Placement {
 
 impl Default for Placement {
     fn default() -> Placement {
+        Self::None
+    }
+}
+/// The geographic region where the logs will be processed before streaming. Valid values are `us`, `eu`, and `none` for global.
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum LogProcessingRegion {
+    #[serde(rename = "none")]
+    None,
+    #[serde(rename = "eu")]
+    Eu,
+    #[serde(rename = "us")]
+    Us,
+}
+
+impl Default for LogProcessingRegion {
+    fn default() -> LogProcessingRegion {
         Self::None
     }
 }

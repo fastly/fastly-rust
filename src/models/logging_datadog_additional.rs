@@ -13,7 +13,7 @@ pub struct LoggingDatadogAdditional {
     /// The region that log data will be sent to.
     #[serde(rename = "region", skip_serializing_if = "Option::is_none")]
     pub region: Option<Region>,
-    /// A Fastly [log format string](https://docs.fastly.com/en/guides/custom-log-formats). Must produce valid JSON that Datadog can ingest. 
+    /// A Fastly [log format string](https://www.fastly.com/documentation/guides/integrations/streaming-logs/custom-log-formats/). Must produce valid JSON that Datadog can ingest. 
     #[serde(rename = "format", skip_serializing_if = "Option::is_none")]
     pub format: Option<String>,
     /// The API key from your Datadog account. Required.

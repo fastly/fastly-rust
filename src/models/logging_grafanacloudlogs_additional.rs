@@ -10,7 +10,7 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct LoggingGrafanacloudlogsAdditional {
-    /// A Fastly [log format string](https://docs.fastly.com/en/guides/custom-log-formats).
+    /// A Fastly [log format string](https://www.fastly.com/documentation/guides/integrations/streaming-logs/custom-log-formats/).
     #[serde(rename = "format", skip_serializing_if = "Option::is_none")]
     pub format: Option<String>,
     /// The Grafana Cloud Logs Dataset you want to log to.

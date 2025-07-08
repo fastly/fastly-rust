@@ -142,7 +142,7 @@ pub async fn bulk_purge_tag(configuration: &mut configuration::Configuration, pa
     }
 }
 
-/// Instant Purge everything from a service.  Purge-all requests cannot be done in soft mode and will always immediately invalidate all cached content associated with the service. To do a soft-purge-all, consider applying a constant [surrogate key](https://docs.fastly.com/en/guides/getting-started-with-surrogate-keys) tag (e.g., `\"all\"`) to all objects. 
+/// Instant Purge everything from a service.  Purge-all requests cannot be done in soft mode and will always immediately invalidate all cached content associated with the service. To do a soft-purge-all, consider applying a constant [surrogate key](https://www.fastly.com/documentation/guides/full-site-delivery/purging/working-with-surrogate-keys/) tag (e.g., `\"all\"`) to all objects. 
 pub async fn purge_all(configuration: &mut configuration::Configuration, params: PurgeAllParams) -> Result<crate::models::InlineResponse200, Error<PurgeAllError>> {
     let local_var_configuration = configuration;
 

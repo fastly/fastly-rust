@@ -57,7 +57,7 @@ pub enum ListInvitationsError {
 
 
 /// Create an invitation.
-pub async fn create_invitation(configuration: &mut configuration::Configuration, params: CreateInvitationParams) -> Result<crate::models::InvitationResponse, Error<CreateInvitationError>> {
+pub async fn create_invitation(configuration: &mut configuration::Configuration, params: CreateInvitationParams) -> Result<crate::models::InvitationCreateResponse, Error<CreateInvitationError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters

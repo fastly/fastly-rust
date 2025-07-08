@@ -32,7 +32,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::InvitationResponse**](InvitationResponse.md)
+[**crate::models::InvitationCreateResponse**](InvitationCreateResponse.md)
 
 ### Authorization
 
