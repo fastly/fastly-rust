@@ -1,5 +1,11 @@
 # Changelog
 
+## [v11.0.0](https://github.com/fastly/fastly-rust/releases/tag/release/v11.0.0) (2025-08-28)
+
+**Enhancements:**
+
+- feat(rust): Update to use reqwest 0.12.
+
 ## [v10.0.0](https://github.com/fastly/fastly-rust/releases/tag/release/v10.0.0) (2025-08-28)
 
 **Breaking Changes:**
