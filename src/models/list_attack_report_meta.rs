@@ -5,22 +5,22 @@
  *
  */
 
+/// ListAttackReportMeta : Metadata about the request.
 
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct LogTimeseriesGetResponse {
-    #[serde(rename = "data", skip_serializing_if = "Option::is_none")]
-    pub data: Option<Vec<crate::models::LogTimeseriesResult>>,
-    #[serde(rename = "meta", skip_serializing_if = "Option::is_none")]
-    pub meta: Option<Box<crate::models::LogTimeseriesGetResponseMeta>>,
+pub struct ListAttackReportMeta {
+    /// The count of attack reports matching the filter.
+    #[serde(rename = "total", skip_serializing_if = "Option::is_none")]
+    pub total: Option<i32>,
 }
 
-impl LogTimeseriesGetResponse {
-    pub fn new() -> LogTimeseriesGetResponse {
-        LogTimeseriesGetResponse {
-            data: None,
-            meta: None,
+impl ListAttackReportMeta {
+    /// Metadata about the request.
+    pub fn new() -> ListAttackReportMeta {
+        ListAttackReportMeta {
+            total: None,
         }
     }
 }

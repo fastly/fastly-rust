@@ -16,8 +16,9 @@ pub struct DdosProtectionRuleAllOf {
     /// A human-readable name for the rule.
     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
+    /// Action types for a rule. Supported action values are default, block, log, off. The default action value follows the current protection mode of the associated service.
     #[serde(rename = "action", skip_serializing_if = "Option::is_none")]
-    pub action: Option<crate::models::DdosProtectionAction>,
+    pub action: Option<String>,
     /// Alphanumeric string identifying the customer.
     #[serde(rename = "customer_id", skip_serializing_if = "Option::is_none")]
     pub customer_id: Option<String>,

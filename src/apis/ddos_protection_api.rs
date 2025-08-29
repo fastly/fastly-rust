@@ -52,6 +52,14 @@ pub struct DdosProtectionRuleGetParams {
     pub rule_id: String
 }
 
+/// struct for passing parameters to the method [`ddos_protection_rule_patch`]
+#[derive(Clone, Debug, Default)]
+pub struct DdosProtectionRulePatchParams {
+    /// Unique ID of the rule.
+    pub rule_id: String,
+    pub ddos_protection_rule_patch: Option<crate::models::DdosProtectionRulePatch>
+}
+
 /// struct for passing parameters to the method [`ddos_protection_traffic_stats_rule_get`]
 #[derive(Clone, Debug, Default)]
 pub struct DdosProtectionTrafficStatsRuleGetParams {
@@ -94,6 +102,17 @@ pub enum DdosProtectionEventRuleListError {
 #[serde(untagged)]
 pub enum DdosProtectionRuleGetError {
     Status401(crate::models::DdosProtectionError),
+    Status404(crate::models::DdosProtectionError),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`ddos_protection_rule_patch`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DdosProtectionRulePatchError {
+    Status400(crate::models::DdosProtectionError),
+    Status401(crate::models::DdosProtectionError),
+    Status403(crate::models::DdosProtectionError),
     Status404(crate::models::DdosProtectionError),
     UnknownValue(serde_json::Value),
 }
@@ -342,6 +361,60 @@ pub async fn ddos_protection_rule_get(configuration: &mut configuration::Configu
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
         let local_var_entity: Option<DdosProtectionRuleGetError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        Err(Error::ResponseError(local_var_error))
+    }
+}
+
+/// Update rule.
+pub async fn ddos_protection_rule_patch(configuration: &mut configuration::Configuration, params: DdosProtectionRulePatchParams) -> Result<crate::models::DdosProtectionRule, Error<DdosProtectionRulePatchError>> {
+    let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let rule_id = params.rule_id;
+    let ddos_protection_rule_patch = params.ddos_protection_rule_patch;
+
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!("{}/ddos-protection/v1/rules/{rule_id}", local_var_configuration.base_path, rule_id=crate::apis::urlencode(rule_id));
+    let mut local_var_req_builder = local_var_client.request(reqwest::Method::PATCH, local_var_uri_str.as_str());
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+    if let Some(ref local_var_apikey) = local_var_configuration.api_key {
+        let local_var_key = local_var_apikey.key.clone();
+        let local_var_value = match local_var_apikey.prefix {
+            Some(ref local_var_prefix) => format!("{} {}", local_var_prefix, local_var_key),
+            None => local_var_key,
+        };
+        local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
+    };
+    local_var_req_builder = local_var_req_builder.json(&ddos_protection_rule_patch);
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PATCH" != "GET" && "PATCH" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        serde_json::from_str(&local_var_content).map_err(Error::from)
+    } else {
+        let local_var_entity: Option<DdosProtectionRulePatchError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }

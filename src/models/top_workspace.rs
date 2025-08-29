@@ -5,24 +5,30 @@
  *
  */
 
+/// TopWorkspace : This object, found within the `top_workspaces` array, contains the workspace information and count for the requested signal.
 
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct DdosProtectionAttributeStats {
-    /// Name of an attribute type used in traffic stats. Currently, supported values are source_ip, country_code, host, asn, source_ip_prefix, user_agent, method_path.
+pub struct TopWorkspace {
+    /// ID of the workspace.
+    #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
+    pub id: Option<String>,
+    /// Name of the workspace.
     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
-    /// Values for traffic attribute.
-    #[serde(rename = "values", skip_serializing_if = "Option::is_none")]
-    pub values: Option<Vec<crate::models::DdosProtectionAttributeValue>>,
+    /// Count of attacks on this workspace for the specific attack type.
+    #[serde(rename = "count", skip_serializing_if = "Option::is_none")]
+    pub count: Option<i32>,
 }
 
-impl DdosProtectionAttributeStats {
-    pub fn new() -> DdosProtectionAttributeStats {
-        DdosProtectionAttributeStats {
+impl TopWorkspace {
+    /// This object, found within the `top_workspaces` array, contains the workspace information and count for the requested signal.
+    pub fn new() -> TopWorkspace {
+        TopWorkspace {
+            id: None,
             name: None,
-            values: None,
+            count: None,
         }
     }
 }

@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **updated_at** | Option<**String**> | Date and time in ISO 8601 format. | [readonly]
 **id** | Option<**String**> | Unique ID of the rule. | 
 **name** | Option<**String**> | A human-readable name for the rule. | 
-**action** | Option<[**crate::models::DdosProtectionAction**](DdosProtectionAction.md)> |  | 
+**action** | Option<**String**> | Action types for a rule. Supported action values are default, block, log, off. The default action value follows the current protection mode of the associated service. | [default to default]
 **customer_id** | Option<**String**> | Alphanumeric string identifying the customer. | 
 **service_id** | Option<**String**> | Alphanumeric string identifying the service. | 
 **source_ip** | Option<**String**> | Source IP address attribute. | 

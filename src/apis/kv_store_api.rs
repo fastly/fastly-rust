@@ -34,7 +34,9 @@ pub struct KvStoreGetParams {
 #[derive(Clone, Debug, Default)]
 pub struct KvStoreListParams {
     pub cursor: Option<String>,
-    pub limit: Option<i32>
+    pub limit: Option<i32>,
+    /// Returns a one-element array containing the details for the named KV store.
+    pub name: Option<String>
 }
 
 
@@ -239,6 +241,7 @@ pub async fn kv_store_list(configuration: &mut configuration::Configuration, par
     // unbox the parameters
     let cursor = params.cursor;
     let limit = params.limit;
+    let name = params.name;
 
 
     let local_var_client = &local_var_configuration.client;
@@ -251,6 +254,9 @@ pub async fn kv_store_list(configuration: &mut configuration::Configuration, par
     }
     if let Some(ref local_var_str) = limit {
         local_var_req_builder = local_var_req_builder.query(&[("limit", &local_var_str.to_string())]);
+    }
+    if let Some(ref local_var_str) = name {
+        local_var_req_builder = local_var_req_builder.query(&[("name", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());

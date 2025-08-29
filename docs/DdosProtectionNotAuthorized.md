@@ -1,10 +1,11 @@
-# LogTimeseriesGetResponseMetaFilters
+# DdosProtectionNotAuthorized
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**filter_fields** | Option<[**Vec&lt;crate::models::LogTimeseriesFilterFieldItem&gt;**](LogTimeseriesFilterFieldItem.md)> |  | 
+**title** | Option<**String**> |  | 
+**status** | Option<**i32**> |  | 
 
 [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

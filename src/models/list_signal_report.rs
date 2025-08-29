@@ -9,18 +9,15 @@
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct LogTimeseriesResult {
-    #[serde(rename = "dimensions", skip_serializing_if = "Option::is_none")]
-    pub dimensions: Option<Box<crate::models::LogTimeseriesResultDimensions>>,
-    #[serde(rename = "values", skip_serializing_if = "Option::is_none")]
-    pub values: Option<::std::collections::HashMap<String, serde_json::Value>>,
+pub struct ListSignalReport {
+    #[serde(rename = "data", skip_serializing_if = "Option::is_none")]
+    pub data: Option<Vec<crate::models::SignalReport>>,
 }
 
-impl LogTimeseriesResult {
-    pub fn new() -> LogTimeseriesResult {
-        LogTimeseriesResult {
-            dimensions: None,
-            values: None,
+impl ListSignalReport {
+    pub fn new() -> ListSignalReport {
+        ListSignalReport {
+            data: None,
         }
     }
 }

@@ -137,6 +137,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **cursor** | Option\<**String**> |  |  |
 **limit** | Option\<**i32**> |  |  |[default to 1000]
+**name** | Option\<**String**> | Returns a one-element array containing the details for the named KV store. |  |
 
 ### Return type
 

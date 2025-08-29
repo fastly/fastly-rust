@@ -9,6 +9,7 @@ Method | HTTP request | Description
 [**ddos_protection_event_list**](DdosProtectionApi.md#ddos_protection_event_list) | **GET** /ddos-protection/v1/events | Get events
 [**ddos_protection_event_rule_list**](DdosProtectionApi.md#ddos_protection_event_rule_list) | **GET** /ddos-protection/v1/events/{event_id}/rules | Get all rules for an event
 [**ddos_protection_rule_get**](DdosProtectionApi.md#ddos_protection_rule_get) | **GET** /ddos-protection/v1/rules/{rule_id} | Get a rule by ID
+[**ddos_protection_rule_patch**](DdosProtectionApi.md#ddos_protection_rule_patch) | **PATCH** /ddos-protection/v1/rules/{rule_id} | Update rule
 [**ddos_protection_traffic_stats_rule_get**](DdosProtectionApi.md#ddos_protection_traffic_stats_rule_get) | **GET** /ddos-protection/v1/events/{event_id}/rules/{rule_id}/traffic-stats | Get traffic stats for a rule
 
 
@@ -155,6 +156,42 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+
+## ddos_protection_rule_patch
+
+Update rule.
+
+```rust
+let cfg = &Configuration::default();
+let params = DdosProtectionRulePatchParams {
+    // parameters
+};
+ddos_protection_rule_patch(cfg, params)
+```
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**rule_id** | **String** | Unique ID of the rule. | [required] |
+**ddos_protection_rule_patch** | Option\<[**DdosProtectionRulePatch**](DdosProtectionRulePatch.md)> |  |  |
+
+### Return type
+
+[**crate::models::DdosProtectionRule**](DdosProtectionRule.md)
+
+### Authorization
+
+[token](../README.md#token)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json, application/problem+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

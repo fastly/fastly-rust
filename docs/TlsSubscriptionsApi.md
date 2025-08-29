@@ -69,7 +69,6 @@ create_tls_sub(cfg, params)
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**force** | Option\<**bool**> | A flag that allows you to edit and delete a subscription with active domains. Valid to use on PATCH and DELETE actions. As a warning, removing an active domain from a subscription or forcing the deletion of a subscription may result in breaking TLS termination to that domain.  |  |
 **tls_subscription** | Option\<[**TlsSubscription**](TlsSubscription.md)> |  |  |
 
 ### Return type

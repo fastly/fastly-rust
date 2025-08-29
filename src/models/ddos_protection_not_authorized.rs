@@ -5,23 +5,36 @@
  *
  */
 
-/// LogTimeseriesGetResponseMetaFilters : Echoes the filters that were supplied in the request.
 
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct LogTimeseriesGetResponseMetaFilters {
-    #[serde(rename = "filter_fields", skip_serializing_if = "Option::is_none")]
-    pub filter_fields: Option<Vec<crate::models::LogTimeseriesFilterFieldItem>>,
+pub struct DdosProtectionNotAuthorized {
+    #[serde(rename = "title", skip_serializing_if = "Option::is_none")]
+    pub title: Option<String>,
+    #[serde(rename = "status", skip_serializing_if = "Option::is_none")]
+    pub status: Option<Status>,
 }
 
-impl LogTimeseriesGetResponseMetaFilters {
-    /// Echoes the filters that were supplied in the request.
-    pub fn new() -> LogTimeseriesGetResponseMetaFilters {
-        LogTimeseriesGetResponseMetaFilters {
-            filter_fields: None,
+impl DdosProtectionNotAuthorized {
+    pub fn new() -> DdosProtectionNotAuthorized {
+        DdosProtectionNotAuthorized {
+            title: None,
+            status: None,
         }
     }
 }
 
+/// 
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum Status {
+    #[serde(rename = "403")]
+    Status403,
+}
+
+impl Default for Status {
+    fn default() -> Status {
+        Self::Status403
+    }
+}
 

@@ -9,20 +9,28 @@
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct DdosProtectionAttributeStats {
-    /// Name of an attribute type used in traffic stats. Currently, supported values are source_ip, country_code, host, asn, source_ip_prefix, user_agent, method_path.
+pub struct SignalReport {
+    /// Name of the attack type.
     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
-    /// Values for traffic attribute.
-    #[serde(rename = "values", skip_serializing_if = "Option::is_none")]
-    pub values: Option<Vec<crate::models::DdosProtectionAttributeValue>>,
+    /// Display name of the attack type.
+    #[serde(rename = "display_name", skip_serializing_if = "Option::is_none")]
+    pub display_name: Option<String>,
+    /// Total count of attacks of this type.
+    #[serde(rename = "count", skip_serializing_if = "Option::is_none")]
+    pub count: Option<i32>,
+    /// Top workspaces affected by this attack type.
+    #[serde(rename = "top_workspaces", skip_serializing_if = "Option::is_none")]
+    pub top_workspaces: Option<Vec<crate::models::TopWorkspace>>,
 }
 
-impl DdosProtectionAttributeStats {
-    pub fn new() -> DdosProtectionAttributeStats {
-        DdosProtectionAttributeStats {
+impl SignalReport {
+    pub fn new() -> SignalReport {
+        SignalReport {
             name: None,
-            values: None,
+            display_name: None,
+            count: None,
+            top_workspaces: None,
         }
     }
 }

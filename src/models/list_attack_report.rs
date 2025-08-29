@@ -9,12 +9,18 @@
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct LogTimeseriesValueField {
+pub struct ListAttackReport {
+    #[serde(rename = "data", skip_serializing_if = "Option::is_none")]
+    pub data: Option<Vec<crate::models::AttackReport>>,
+    #[serde(rename = "meta", skip_serializing_if = "Option::is_none")]
+    pub meta: Option<Box<crate::models::ListAttackReportMeta>>,
 }
 
-impl LogTimeseriesValueField {
-    pub fn new() -> LogTimeseriesValueField {
-        LogTimeseriesValueField {
+impl ListAttackReport {
+    pub fn new() -> ListAttackReport {
+        ListAttackReport {
+            data: None,
+            meta: None,
         }
     }
 }

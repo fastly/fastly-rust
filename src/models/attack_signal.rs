@@ -9,20 +9,24 @@
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct DdosProtectionAttributeStats {
-    /// Name of an attribute type used in traffic stats. Currently, supported values are source_ip, country_code, host, asn, source_ip_prefix, user_agent, method_path.
-    #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
-    pub name: Option<String>,
-    /// Values for traffic attribute.
-    #[serde(rename = "values", skip_serializing_if = "Option::is_none")]
-    pub values: Option<Vec<crate::models::DdosProtectionAttributeValue>>,
+pub struct AttackSignal {
+    /// Name of the attack signal tag
+    #[serde(rename = "tag_name")]
+    pub tag_name: String,
+    /// Count of requests with this attack signal
+    #[serde(rename = "tag_count")]
+    pub tag_count: i32,
+    /// Total number of attacks considered
+    #[serde(rename = "total_count")]
+    pub total_count: i32,
 }
 
-impl DdosProtectionAttributeStats {
-    pub fn new() -> DdosProtectionAttributeStats {
-        DdosProtectionAttributeStats {
-            name: None,
-            values: None,
+impl AttackSignal {
+    pub fn new(tag_name: String, tag_count: i32, total_count: i32) -> AttackSignal {
+        AttackSignal {
+            tag_name,
+            tag_count,
+            total_count,
         }
     }
 }

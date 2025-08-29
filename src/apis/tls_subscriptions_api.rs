@@ -24,8 +24,6 @@ pub struct CreateGlobalsignEmailChallengeParams {
 /// struct for passing parameters to the method [`create_tls_sub`]
 #[derive(Clone, Debug, Default)]
 pub struct CreateTlsSubParams {
-    /// A flag that allows you to edit and delete a subscription with active domains. Valid to use on PATCH and DELETE actions. As a warning, removing an active domain from a subscription or forcing the deletion of a subscription may result in breaking TLS termination to that domain. 
-    pub force: Option<bool>,
     pub tls_subscription: Option<crate::models::TlsSubscription>
 }
 
@@ -198,7 +196,6 @@ pub async fn create_tls_sub(configuration: &mut configuration::Configuration, pa
     let local_var_configuration = configuration;
 
     // unbox the parameters
-    let force = params.force;
     let tls_subscription = params.tls_subscription;
 
 
@@ -207,9 +204,6 @@ pub async fn create_tls_sub(configuration: &mut configuration::Configuration, pa
     let local_var_uri_str = format!("{}/tls/subscriptions", local_var_configuration.base_path);
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
 
-    if let Some(ref local_var_str) = force {
-        local_var_req_builder = local_var_req_builder.query(&[("force", &local_var_str.to_string())]);
-    }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
