@@ -32,7 +32,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **service_id** | **String** | Alphanumeric string identifying the service. | [required] |
 **version_id** | **i32** | Integer identifying a service version. | [required] |
-**check_interval** | Option\<**i32**> | How often to run the health check in milliseconds. |  |
+**check_interval** | Option\<**i32**> | How often to run the health check in milliseconds. Minimum 1 second, maximum 1 hour. |  |
 **comment** | Option\<**String**> | A freeform descriptive note. |  |
 **expected_response** | Option\<**i32**> | The status code expected from the host. |  |
 **headers** | Option\<[**Vec&lt;String&gt;**](String.md)> | Array of custom headers that will be added to the health check probes. |  |
@@ -192,7 +192,7 @@ Name | Type | Description  | Required | Notes
 **service_id** | **String** | Alphanumeric string identifying the service. | [required] |
 **version_id** | **i32** | Integer identifying a service version. | [required] |
 **healthcheck_name** | **String** | The name of the health check. | [required] |
-**check_interval** | Option\<**i32**> | How often to run the health check in milliseconds. |  |
+**check_interval** | Option\<**i32**> | How often to run the health check in milliseconds. Minimum 1 second, maximum 1 hour. |  |
 **comment** | Option\<**String**> | A freeform descriptive note. |  |
 **expected_response** | Option\<**i32**> | The status code expected from the host. |  |
 **headers** | Option\<[**Vec&lt;String&gt;**](String.md)> | Array of custom headers that will be added to the health check probes. |  |

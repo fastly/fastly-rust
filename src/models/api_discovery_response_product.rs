@@ -9,20 +9,15 @@
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct BotManagementResponseServiceService {
-    /// Service identifier
-    #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
-    pub id: Option<String>,
-    /// Name of the object
-    #[serde(rename = "object", skip_serializing_if = "Option::is_none")]
-    pub object: Option<String>,
+pub struct ApiDiscoveryResponseProduct {
+    #[serde(rename = "product", skip_serializing_if = "Option::is_none")]
+    pub product: Option<Box<crate::models::ApiDiscoveryResponseProductProduct>>,
 }
 
-impl BotManagementResponseServiceService {
-    pub fn new() -> BotManagementResponseServiceService {
-        BotManagementResponseServiceService {
-            id: None,
-            object: None,
+impl ApiDiscoveryResponseProduct {
+    pub fn new() -> ApiDiscoveryResponseProduct {
+        ApiDiscoveryResponseProduct {
+            product: None,
         }
     }
 }

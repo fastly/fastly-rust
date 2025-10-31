@@ -5,15 +5,19 @@
  *
  */
 
-/// RoleUser : The permissions role assigned to the user. Can be `user`, `billing`, `engineer`, or `superuser`.
+/// RoleUser : The permissions role assigned to the user. Can be `user`, `tls_viewer`, `tls_admin`, `billing`, `engineer`, or `superuser`.
 
 use std::fmt;
 
-/// The permissions role assigned to the user. Can be `user`, `billing`, `engineer`, or `superuser`.
+/// The permissions role assigned to the user. Can be `user`, `tls_viewer`, `tls_admin`, `billing`, `engineer`, or `superuser`.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum RoleUser {
     #[serde(rename = "user")]
     User,
+    #[serde(rename = "tls_viewer")]
+    TlsViewer,
+    #[serde(rename = "tls_admin")]
+    TlsAdmin,
     #[serde(rename = "billing")]
     Billing,
     #[serde(rename = "engineer")]
@@ -27,6 +31,8 @@ impl fmt::Display for RoleUser {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
             Self::User => write!(f, "{}", "user"),
+            Self::TlsViewer => write!(f, "{}", "tls_viewer"),
+            Self::TlsAdmin => write!(f, "{}", "tls_admin"),
             Self::Billing => write!(f, "{}", "billing"),
             Self::Engineer => write!(f, "{}", "engineer"),
             Self::Superuser => write!(f, "{}", "superuser"),

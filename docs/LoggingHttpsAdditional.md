@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **method** | Option<**String**> | HTTP method used for request. | [default to Method_POST]
 **json_format** | Option<**String**> | Enforces valid JSON formatting for log entries. | 
 **format** | Option<**String**> | A Fastly [log format string](https://www.fastly.com/documentation/guides/integrations/streaming-logs/custom-log-formats/). | [default to %h %l %u %t "%r" %&gt;s %b]
+**period** | Option<**i32**> | How frequently, in seconds, batches of log data are sent to the HTTPS endpoint. A value of `0` sends logs at the same interval as the default, which is `5` seconds. | [default to 5]
 
 [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

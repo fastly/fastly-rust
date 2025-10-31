@@ -18,6 +18,8 @@ pub struct InvitationDataAttributes {
     pub limit_services: Option<bool>,
     #[serde(rename = "role", skip_serializing_if = "Option::is_none")]
     pub role: Option<crate::models::RoleUser>,
+    #[serde(rename = "roles", skip_serializing_if = "Option::is_none")]
+    pub roles: Option<Vec<String>>,
     /// Indicates whether or not the invitation is active.
     #[serde(rename = "status_code", skip_serializing_if = "Option::is_none")]
     pub status_code: Option<StatusCode>,
@@ -29,6 +31,7 @@ impl InvitationDataAttributes {
             email: None,
             limit_services: None,
             role: None,
+            roles: None,
             status_code: None,
         }
     }

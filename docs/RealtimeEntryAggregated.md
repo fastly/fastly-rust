@@ -265,6 +265,7 @@ Name | Type | Description | Notes
 **request_collapse_usable_count** | Option<**i64**> | Number of requests that were collapsed and satisfied by a usable cache object. | 
 **request_collapse_unusable_count** | Option<**i64**> | Number of requests that were collapsed and unable to be satisfied by the resulting cache object. | 
 **compute_cache_operations_count** | Option<**i64**> | Number of cache operations executed by the Compute platform. | 
+**api_discovery_requests_count** | Option<**i32**> | Number of requests processed by the API Discovery engine. | 
 
 [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

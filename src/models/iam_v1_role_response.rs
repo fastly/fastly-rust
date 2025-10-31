@@ -5,40 +5,31 @@
  *
  */
 
+/// IamV1RoleResponse : An IAM role.
 
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct IamRoleAllOf {
-    /// Alphanumeric string identifying the role.
+pub struct IamV1RoleResponse {
     #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
     pub id: Option<String>,
-    /// The type of the object.
-    #[serde(rename = "object", skip_serializing_if = "Option::is_none")]
-    pub object: Option<String>,
-    /// Name of the role.
     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
-    /// Description of the role.
     #[serde(rename = "description", skip_serializing_if = "Option::is_none")]
     pub description: Option<String>,
-    /// This attribute is set to `true` if the role is managed by the customer. It is set to `false` if the role was created by Fastly.
-    #[serde(rename = "custom", skip_serializing_if = "Option::is_none")]
-    pub custom: Option<bool>,
-    /// Number of permissions assigned to the role.
-    #[serde(rename = "permissions_count", skip_serializing_if = "Option::is_none")]
-    pub permissions_count: Option<i32>,
+    /// The set of permissions granted to this role.
+    #[serde(rename = "permissions", skip_serializing_if = "Option::is_none")]
+    pub permissions: Option<Vec<String>>,
 }
 
-impl IamRoleAllOf {
-    pub fn new() -> IamRoleAllOf {
-        IamRoleAllOf {
+impl IamV1RoleResponse {
+    /// An IAM role.
+    pub fn new() -> IamV1RoleResponse {
+        IamV1RoleResponse {
             id: None,
-            object: None,
             name: None,
             description: None,
-            custom: None,
-            permissions_count: None,
+            permissions: None,
         }
     }
 }

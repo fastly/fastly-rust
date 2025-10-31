@@ -26,6 +26,9 @@ pub struct SchemasUserResponse {
     pub require_new_password: Option<bool>,
     #[serde(rename = "role", skip_serializing_if = "Option::is_none")]
     pub role: Option<crate::models::RoleUser>,
+    /// A list of role IDs assigned to the user.
+    #[serde(rename = "roles", skip_serializing_if = "Option::is_none")]
+    pub roles: Option<Vec<String>>,
     /// Indicates if 2FA is enabled on the user.
     #[serde(rename = "two_factor_auth_enabled", skip_serializing_if = "Option::is_none")]
     pub two_factor_auth_enabled: Option<bool>,
@@ -59,6 +62,7 @@ impl SchemasUserResponse {
             locked: None,
             require_new_password: None,
             role: None,
+            roles: None,
             two_factor_auth_enabled: None,
             two_factor_setup_required: None,
             created_at: None,

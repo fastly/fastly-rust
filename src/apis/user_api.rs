@@ -24,6 +24,8 @@ pub struct CreateUserParams {
     /// Indicates if a new password is required at next login.
     pub require_new_password: Option<bool>,
     pub role: Option<crate::models::RoleUser>,
+    /// A list of role IDs assigned to the user.
+    pub roles: Option<Vec<String>>,
     /// Indicates if 2FA is enabled on the user.
     pub two_factor_auth_enabled: Option<bool>,
     /// Indicates if 2FA is required by the user's customer account.
@@ -66,6 +68,8 @@ pub struct UpdateUserParams {
     /// Indicates if a new password is required at next login.
     pub require_new_password: Option<bool>,
     pub role: Option<crate::models::RoleUser>,
+    /// A list of role IDs assigned to the user.
+    pub roles: Option<Vec<String>>,
     /// Indicates if 2FA is enabled on the user.
     pub two_factor_auth_enabled: Option<bool>,
     /// Indicates if 2FA is required by the user's customer account.
@@ -143,6 +147,7 @@ pub async fn create_user(configuration: &mut configuration::Configuration, param
     let locked = params.locked;
     let require_new_password = params.require_new_password;
     let role = params.role;
+    let roles = params.roles;
     let two_factor_auth_enabled = params.two_factor_auth_enabled;
     let two_factor_setup_required = params.two_factor_setup_required;
 
@@ -181,6 +186,9 @@ pub async fn create_user(configuration: &mut configuration::Configuration, param
     }
     if let Some(local_var_param_value) = role {
         local_var_form_params.insert("role", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = roles {
+        local_var_form_params.insert("roles[]", local_var_param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string());
     }
     if let Some(local_var_param_value) = two_factor_auth_enabled {
         local_var_form_params.insert("two_factor_auth_enabled", local_var_param_value.to_string());
@@ -436,6 +444,7 @@ pub async fn update_user(configuration: &mut configuration::Configuration, param
     let locked = params.locked;
     let require_new_password = params.require_new_password;
     let role = params.role;
+    let roles = params.roles;
     let two_factor_auth_enabled = params.two_factor_auth_enabled;
     let two_factor_setup_required = params.two_factor_setup_required;
 
@@ -474,6 +483,9 @@ pub async fn update_user(configuration: &mut configuration::Configuration, param
     }
     if let Some(local_var_param_value) = role {
         local_var_form_params.insert("role", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = roles {
+        local_var_form_params.insert("roles[]", local_var_param_value.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string());
     }
     if let Some(local_var_param_value) = two_factor_auth_enabled {
         local_var_form_params.insert("two_factor_auth_enabled", local_var_param_value.to_string());

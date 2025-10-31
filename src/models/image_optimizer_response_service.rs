@@ -11,7 +11,7 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct ImageOptimizerResponseService {
     #[serde(rename = "service", skip_serializing_if = "Option::is_none")]
-    pub service: Option<Box<crate::models::BotManagementResponseServiceService>>,
+    pub service: Option<Box<crate::models::ApiDiscoveryResponseServiceService>>,
 }
 
 impl ImageOptimizerResponseService {

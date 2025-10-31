@@ -794,6 +794,9 @@ pub struct RealtimeMeasurements {
     /// Number of cache operations executed by the Compute platform.
     #[serde(rename = "compute_cache_operations_count", skip_serializing_if = "Option::is_none")]
     pub compute_cache_operations_count: Option<i64>,
+    /// Number of requests processed by the API Discovery engine.
+    #[serde(rename = "api_discovery_requests_count", skip_serializing_if = "Option::is_none")]
+    pub api_discovery_requests_count: Option<i32>,
 }
 
 impl RealtimeMeasurements {
@@ -1061,6 +1064,7 @@ impl RealtimeMeasurements {
             request_collapse_usable_count: None,
             request_collapse_unusable_count: None,
             compute_cache_operations_count: None,
+            api_discovery_requests_count: None,
         }
     }
 }

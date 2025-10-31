@@ -18,7 +18,7 @@ pub struct CreateHealthcheckParams {
     pub service_id: String,
     /// Integer identifying a service version.
     pub version_id: i32,
-    /// How often to run the health check in milliseconds.
+    /// How often to run the health check in milliseconds. Minimum 1 second, maximum 1 hour.
     pub check_interval: Option<i32>,
     /// A freeform descriptive note.
     pub comment: Option<String>,
@@ -86,7 +86,7 @@ pub struct UpdateHealthcheckParams {
     pub version_id: i32,
     /// The name of the health check.
     pub healthcheck_name: String,
-    /// How often to run the health check in milliseconds.
+    /// How often to run the health check in milliseconds. Minimum 1 second, maximum 1 hour.
     pub check_interval: Option<i32>,
     /// A freeform descriptive note.
     pub comment: Option<String>,

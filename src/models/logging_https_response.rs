@@ -66,6 +66,9 @@ pub struct LoggingHttpsResponse {
     /// Enforces valid JSON formatting for log entries.
     #[serde(rename = "json_format", skip_serializing_if = "Option::is_none")]
     pub json_format: Option<JsonFormat>,
+    /// How frequently, in seconds, batches of log data are sent to the HTTPS endpoint. A value of `0` sends logs at the same interval as the default, which is `5` seconds.
+    #[serde(rename = "period", skip_serializing_if = "Option::is_none")]
+    pub period: Option<i32>,
     /// Date and time in ISO 8601 format.
     #[serde(rename = "created_at", skip_serializing_if = "Option::is_none")]
     pub created_at: Option<String>,
@@ -103,6 +106,7 @@ impl LoggingHttpsResponse {
             header_value: None,
             method: None,
             json_format: None,
+            period: None,
             created_at: None,
             deleted_at: None,
             updated_at: None,

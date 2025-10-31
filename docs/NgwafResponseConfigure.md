@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **product** | Option<[**crate::models::NgwafResponseProductProduct**](NgwafResponseProductProduct.md)> |  | 
-**service** | Option<[**crate::models::BotManagementResponseServiceService**](BotManagementResponseServiceService.md)> |  | 
+**service** | Option<[**crate::models::ApiDiscoveryResponseServiceService**](ApiDiscoveryResponseServiceService.md)> |  | 
 **configuration** | Option<[**crate::models::NgwafResponseConfigurationConfiguration**](NgwafResponseConfigurationConfiguration.md)> |  | 
 **_links** | Option<[**crate::models::NgwafResponseLinksLinks**](NgwafResponseLinksLinks.md)> |  | 
 

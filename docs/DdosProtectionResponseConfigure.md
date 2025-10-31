@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **product** | Option<[**crate::models::DdosProtectionResponseProductProduct**](DdosProtectionResponseProductProduct.md)> |  | 
-**service** | Option<[**crate::models::BotManagementResponseServiceService**](BotManagementResponseServiceService.md)> |  | 
+**service** | Option<[**crate::models::ApiDiscoveryResponseServiceService**](ApiDiscoveryResponseServiceService.md)> |  | 
 **configuration** | Option<[**crate::models::DdosProtectionResponseConfigurationConfiguration**](DdosProtectionResponseConfigurationConfiguration.md)> |  | 
 **_links** | Option<[**crate::models::DdosProtectionResponseLinksLinks**](DdosProtectionResponseLinksLinks.md)> |  | 
 

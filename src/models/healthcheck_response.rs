@@ -10,7 +10,7 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct HealthcheckResponse {
-    /// How often to run the health check in milliseconds.
+    /// How often to run the health check in milliseconds. Minimum 1 second, maximum 1 hour.
     #[serde(rename = "check_interval", skip_serializing_if = "Option::is_none")]
     pub check_interval: Option<i32>,
     /// A freeform descriptive note.

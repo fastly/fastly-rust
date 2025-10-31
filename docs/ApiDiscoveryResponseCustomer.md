@@ -1,11 +1,10 @@
-# BotManagementResponseServiceService
+# ApiDiscoveryResponseCustomer
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | Option<**String**> | Service identifier | 
-**object** | Option<**String**> | Name of the object | 
+**customer** | Option<[**crate::models::ApiDiscoveryResponseCustomerCustomer**](ApiDiscoveryResponseCustomerCustomer.md)> |  | 
 
 [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

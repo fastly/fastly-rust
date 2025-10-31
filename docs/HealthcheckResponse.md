@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**check_interval** | Option<**i32**> | How often to run the health check in milliseconds. | 
+**check_interval** | Option<**i32**> | How often to run the health check in milliseconds. Minimum 1 second, maximum 1 hour. | 
 **comment** | Option<**String**> | A freeform descriptive note. | 
 **expected_response** | Option<**i32**> | The status code expected from the host. | 
 **headers** | Option<**Vec<String>**> | Array of custom headers that will be added to the health check probes. | 

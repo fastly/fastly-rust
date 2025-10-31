@@ -109,6 +109,7 @@ Name | Type | Description  | Required | Notes
 **event_id** | **String** | Unique ID of the event. | [required] |
 **cursor** | Option\<**String**> | Cursor value from the `next_cursor` field of a previous response, used to retrieve the next page. To request the first page, this should be empty. |  |
 **limit** | Option\<**i32**> | Limit how many results are returned. |  |[default to 20]
+**include** | Option\<**String**> | Include relationships. Optional. Comma-separated values. |  |
 
 ### Return type
 

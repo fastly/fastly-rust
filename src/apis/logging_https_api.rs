@@ -54,7 +54,9 @@ pub struct CreateLogHttpsParams {
     /// HTTP method used for request.
     pub method: Option<String>,
     /// Enforces valid JSON formatting for log entries.
-    pub json_format: Option<String>
+    pub json_format: Option<String>,
+    /// How frequently, in seconds, batches of log data are sent to the HTTPS endpoint. A value of `0` sends logs at the same interval as the default, which is `5` seconds.
+    pub period: Option<i32>
 }
 
 /// struct for passing parameters to the method [`delete_log_https`]
@@ -133,7 +135,9 @@ pub struct UpdateLogHttpsParams {
     /// HTTP method used for request.
     pub method: Option<String>,
     /// Enforces valid JSON formatting for log entries.
-    pub json_format: Option<String>
+    pub json_format: Option<String>,
+    /// How frequently, in seconds, batches of log data are sent to the HTTPS endpoint. A value of `0` sends logs at the same interval as the default, which is `5` seconds.
+    pub period: Option<i32>
 }
 
 
@@ -199,6 +203,7 @@ pub async fn create_log_https(configuration: &mut configuration::Configuration, 
     let header_value = params.header_value;
     let method = params.method;
     let json_format = params.json_format;
+    let period = params.period;
 
 
     let local_var_client = &local_var_configuration.client;
@@ -274,6 +279,9 @@ pub async fn create_log_https(configuration: &mut configuration::Configuration, 
     }
     if let Some(local_var_param_value) = json_format {
         local_var_form_params.insert("json_format", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = period {
+        local_var_form_params.insert("period", local_var_param_value.to_string());
     }
     local_var_req_builder = local_var_req_builder.form(&local_var_form_params);
 
@@ -492,6 +500,7 @@ pub async fn update_log_https(configuration: &mut configuration::Configuration, 
     let header_value = params.header_value;
     let method = params.method;
     let json_format = params.json_format;
+    let period = params.period;
 
 
     let local_var_client = &local_var_configuration.client;
@@ -567,6 +576,9 @@ pub async fn update_log_https(configuration: &mut configuration::Configuration, 
     }
     if let Some(local_var_param_value) = json_format {
         local_var_form_params.insert("json_format", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = period {
+        local_var_form_params.insert("period", local_var_param_value.to_string());
     }
     local_var_req_builder = local_var_req_builder.form(&local_var_form_params);
 

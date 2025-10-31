@@ -815,6 +815,9 @@ pub struct Results {
     /// Count of Edge WAF requests challenged.
     #[serde(rename = "ngwaf_requests_challenged_count", skip_serializing_if = "Option::is_none")]
     pub ngwaf_requests_challenged_count: Option<i32>,
+    /// Number of requests processed by the API Discovery engine.
+    #[serde(rename = "api_discovery_requests_count", skip_serializing_if = "Option::is_none")]
+    pub api_discovery_requests_count: Option<i32>,
     #[serde(rename = "service_id", skip_serializing_if = "Option::is_none")]
     pub service_id: Option<Box<String>>,
     /// Timestamp for the start of the time period being reported
@@ -1094,6 +1097,7 @@ impl Results {
             ngwaf_requests_blocked_count: None,
             ngwaf_requests_timeout_count: None,
             ngwaf_requests_challenged_count: None,
+            api_discovery_requests_count: None,
             service_id: None,
             start_time: None,
         }

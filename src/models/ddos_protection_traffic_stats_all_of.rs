@@ -18,6 +18,9 @@ pub struct DdosProtectionTrafficStatsAllOf {
     pub service_id: Option<String>,
     #[serde(rename = "attributes", skip_serializing_if = "Option::is_none")]
     pub attributes: Option<Vec<crate::models::DdosProtectionAttributeStats>>,
+    /// Rule traffic percentage for the event.
+    #[serde(rename = "traffic_percentage", skip_serializing_if = "Option::is_none")]
+    pub traffic_percentage: Option<f32>,
 }
 
 impl DdosProtectionTrafficStatsAllOf {
@@ -26,6 +29,7 @@ impl DdosProtectionTrafficStatsAllOf {
             customer_id: None,
             service_id: None,
             attributes: None,
+            traffic_percentage: None,
         }
     }
 }

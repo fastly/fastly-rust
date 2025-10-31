@@ -272,6 +272,7 @@ Name | Type | Description | Notes
 **ngwaf_requests_blocked_count** | Option<**i32**> | Count of Next-Gen WAF (Edge WAF & Core WAF) requests blocked. | 
 **ngwaf_requests_timeout_count** | Option<**i32**> | Count of Edge WAF requests timed outcome. | 
 **ngwaf_requests_challenged_count** | Option<**i32**> | Count of Edge WAF requests challenged. | 
+**api_discovery_requests_count** | Option<**i32**> | Number of requests processed by the API Discovery engine. | 
 **service_id** | Option<**String**> |  | [readonly]
 **start_time** | Option<**i64**> | Timestamp for the start of the time period being reported | 
 

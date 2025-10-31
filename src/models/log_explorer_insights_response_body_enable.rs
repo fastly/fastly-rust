@@ -13,7 +13,7 @@ pub struct LogExplorerInsightsResponseBodyEnable {
     #[serde(rename = "product", skip_serializing_if = "Option::is_none")]
     pub product: Option<Box<crate::models::LogExplorerInsightsResponseProductProduct>>,
     #[serde(rename = "service", skip_serializing_if = "Option::is_none")]
-    pub service: Option<Box<crate::models::BotManagementResponseServiceService>>,
+    pub service: Option<Box<crate::models::ApiDiscoveryResponseServiceService>>,
     #[serde(rename = "_links", skip_serializing_if = "Option::is_none")]
     pub _links: Option<Box<crate::models::LogExplorerInsightsResponseLinksLinks>>,
 }

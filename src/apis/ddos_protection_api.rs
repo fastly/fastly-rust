@@ -42,7 +42,9 @@ pub struct DdosProtectionEventRuleListParams {
     /// Cursor value from the `next_cursor` field of a previous response, used to retrieve the next page. To request the first page, this should be empty.
     pub cursor: Option<String>,
     /// Limit how many results are returned.
-    pub limit: Option<i32>
+    pub limit: Option<i32>,
+    /// Include relationships. Optional. Comma-separated values.
+    pub include: Option<String>
 }
 
 /// struct for passing parameters to the method [`ddos_protection_rule_get`]
@@ -262,6 +264,7 @@ pub async fn ddos_protection_event_rule_list(configuration: &mut configuration::
     let event_id = params.event_id;
     let cursor = params.cursor;
     let limit = params.limit;
+    let include = params.include;
 
 
     let local_var_client = &local_var_configuration.client;
@@ -274,6 +277,9 @@ pub async fn ddos_protection_event_rule_list(configuration: &mut configuration::
     }
     if let Some(ref local_var_str) = limit {
         local_var_req_builder = local_var_req_builder.query(&[("limit", &local_var_str.to_string())]);
+    }
+    if let Some(ref local_var_str) = include {
+        local_var_req_builder = local_var_req_builder.query(&[("include", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
