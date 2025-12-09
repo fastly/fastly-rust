@@ -22,6 +22,12 @@ pub struct DdosProtectionEvent {
     /// A human-readable name for the event.
     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
+    /// Number of requests classified as non-attack traffic for an event.
+    #[serde(rename = "requests_allowed", skip_serializing_if = "Option::is_none")]
+    pub requests_allowed: Option<i32>,
+    /// Number of requests classified as DDoS attack traffic for an event.
+    #[serde(rename = "requests_detected", skip_serializing_if = "Option::is_none")]
+    pub requests_detected: Option<i32>,
     /// Alphanumeric string identifying the customer.
     #[serde(rename = "customer_id", skip_serializing_if = "Option::is_none")]
     pub customer_id: Option<String>,
@@ -43,6 +49,8 @@ impl DdosProtectionEvent {
             updated_at: None,
             id: None,
             name: None,
+            requests_allowed: None,
+            requests_detected: None,
             customer_id: None,
             service_id: None,
             started_at: None,

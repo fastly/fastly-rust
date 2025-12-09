@@ -1,10 +1,10 @@
-# KvStoreRequestCreate
+# InlineResponse20011
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**name** | **String** | A human-readable name for the store. Refer to https://docs.fastly.com/products/compute-resource-limits#kv-store for limitations on the KV store name. | 
+**data** | Option<[**Vec&lt;crate::models::ServiceAuthorizationResponseData&gt;**](ServiceAuthorizationResponseData.md)> |  | 
 
 [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

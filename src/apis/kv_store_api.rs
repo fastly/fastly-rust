@@ -15,7 +15,7 @@ use super::{Error, configuration};
 #[derive(Clone, Debug, Default)]
 pub struct KvStoreCreateParams {
     pub location: Option<String>,
-    pub kv_store_request_create: Option<crate::models::KvStoreRequestCreate>
+    pub kv_store_request_create_or_update: Option<crate::models::KvStoreRequestCreateOrUpdate>
 }
 
 /// struct for passing parameters to the method [`kv_store_delete`]
@@ -37,6 +37,13 @@ pub struct KvStoreListParams {
     pub limit: Option<i32>,
     /// Returns a one-element array containing the details for the named KV store.
     pub name: Option<String>
+}
+
+/// struct for passing parameters to the method [`kv_store_put`]
+#[derive(Clone, Debug, Default)]
+pub struct KvStorePutParams {
+    pub store_id: String,
+    pub kv_store_request_create_or_update: Option<crate::models::KvStoreRequestCreateOrUpdate>
 }
 
 
@@ -72,6 +79,15 @@ pub enum KvStoreListError {
     UnknownValue(serde_json::Value),
 }
 
+/// struct for typed errors of method [`kv_store_put`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum KvStorePutError {
+    Status400(),
+    Status404(),
+    UnknownValue(serde_json::Value),
+}
+
 
 /// Create a KV store.
 pub async fn kv_store_create(configuration: &mut configuration::Configuration, params: KvStoreCreateParams) -> Result<crate::models::KvStoreDetails, Error<KvStoreCreateError>> {
@@ -79,7 +95,7 @@ pub async fn kv_store_create(configuration: &mut configuration::Configuration, p
 
     // unbox the parameters
     let location = params.location;
-    let kv_store_request_create = params.kv_store_request_create;
+    let kv_store_request_create_or_update = params.kv_store_request_create_or_update;
 
 
     let local_var_client = &local_var_configuration.client;
@@ -101,7 +117,7 @@ pub async fn kv_store_create(configuration: &mut configuration::Configuration, p
         };
         local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
     };
-    local_var_req_builder = local_var_req_builder.json(&kv_store_request_create);
+    local_var_req_builder = local_var_req_builder.json(&kv_store_request_create_or_update);
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
@@ -235,7 +251,7 @@ pub async fn kv_store_get(configuration: &mut configuration::Configuration, para
 }
 
 /// List all KV stores.
-pub async fn kv_store_list(configuration: &mut configuration::Configuration, params: KvStoreListParams) -> Result<crate::models::InlineResponse2006, Error<KvStoreListError>> {
+pub async fn kv_store_list(configuration: &mut configuration::Configuration, params: KvStoreListParams) -> Result<crate::models::InlineResponse2007, Error<KvStoreListError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -292,6 +308,60 @@ pub async fn kv_store_list(configuration: &mut configuration::Configuration, par
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
         let local_var_entity: Option<KvStoreListError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        Err(Error::ResponseError(local_var_error))
+    }
+}
+
+/// Update the name of a KV store.
+pub async fn kv_store_put(configuration: &mut configuration::Configuration, params: KvStorePutParams) -> Result<(), Error<KvStorePutError>> {
+    let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let store_id = params.store_id;
+    let kv_store_request_create_or_update = params.kv_store_request_create_or_update;
+
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!("{}/resources/stores/kv/{store_id}", local_var_configuration.base_path, store_id=crate::apis::urlencode(store_id));
+    let mut local_var_req_builder = local_var_client.request(reqwest::Method::PUT, local_var_uri_str.as_str());
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+    if let Some(ref local_var_apikey) = local_var_configuration.api_key {
+        let local_var_key = local_var_apikey.key.clone();
+        let local_var_value = match local_var_apikey.prefix {
+            Some(ref local_var_prefix) => format!("{} {}", local_var_prefix, local_var_key),
+            None => local_var_key,
+        };
+        local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
+    };
+    local_var_req_builder = local_var_req_builder.json(&kv_store_request_create_or_update);
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PUT" != "GET" && "PUT" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        Ok(())
+    } else {
+        let local_var_entity: Option<KvStorePutError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }

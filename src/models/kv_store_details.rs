@@ -16,6 +16,12 @@ pub struct KvStoreDetails {
     /// Name of the store.
     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
+    /// Timestamp at which the store was created.
+    #[serde(rename = "created_at", skip_serializing_if = "Option::is_none")]
+    pub created_at: Option<String>,
+    /// Timestamp at which the store was last updated.
+    #[serde(rename = "updated_at", skip_serializing_if = "Option::is_none")]
+    pub updated_at: Option<String>,
 }
 
 impl KvStoreDetails {
@@ -23,6 +29,8 @@ impl KvStoreDetails {
         KvStoreDetails {
             id: None,
             name: None,
+            created_at: None,
+            updated_at: None,
         }
     }
 }

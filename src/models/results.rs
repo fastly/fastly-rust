@@ -818,6 +818,18 @@ pub struct Results {
     /// Number of requests processed by the API Discovery engine.
     #[serde(rename = "api_discovery_requests_count", skip_serializing_if = "Option::is_none")]
     pub api_discovery_requests_count: Option<i32>,
+    /// The number of Image Optimizer requests made from Compute services.
+    #[serde(rename = "imgopto_compute_requests", skip_serializing_if = "Option::is_none")]
+    pub imgopto_compute_requests: Option<i32>,
+    /// Number of billable DNS responses (e.g., A, CNAME).
+    #[serde(rename = "dns_billable_responses_count", skip_serializing_if = "Option::is_none")]
+    pub dns_billable_responses_count: Option<i32>,
+    /// Number of non-billable DNS responses (e.g., NODATA, NXDOMAIN).
+    #[serde(rename = "dns_nonbillable_responses_count", skip_serializing_if = "Option::is_none")]
+    pub dns_nonbillable_responses_count: Option<i32>,
+    /// Number of requests that resulted in a WebSocket upgrade.
+    #[serde(rename = "upgrade", skip_serializing_if = "Option::is_none")]
+    pub upgrade: Option<i32>,
     #[serde(rename = "service_id", skip_serializing_if = "Option::is_none")]
     pub service_id: Option<Box<String>>,
     /// Timestamp for the start of the time period being reported
@@ -1098,6 +1110,10 @@ impl Results {
             ngwaf_requests_timeout_count: None,
             ngwaf_requests_challenged_count: None,
             api_discovery_requests_count: None,
+            imgopto_compute_requests: None,
+            dns_billable_responses_count: None,
+            dns_nonbillable_responses_count: None,
+            upgrade: None,
             service_id: None,
             start_time: None,
         }

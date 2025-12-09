@@ -9,6 +9,7 @@ Method | HTTP request | Description
 [**kv_store_delete**](KvStoreApi.md#kv_store_delete) | **DELETE** /resources/stores/kv/{store_id} | Delete a KV store.
 [**kv_store_get**](KvStoreApi.md#kv_store_get) | **GET** /resources/stores/kv/{store_id} | Describe a KV store.
 [**kv_store_list**](KvStoreApi.md#kv_store_list) | **GET** /resources/stores/kv | List all KV stores.
+[**kv_store_put**](KvStoreApi.md#kv_store_put) | **PUT** /resources/stores/kv/{store_id} | Update a KV store.
 
 
 
@@ -30,7 +31,7 @@ kv_store_create(cfg, params)
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **location** | Option\<**String**> |  |  |
-**kv_store_request_create** | Option\<[**KvStoreRequestCreate**](KvStoreRequestCreate.md)> |  |  |
+**kv_store_request_create_or_update** | Option\<[**KvStoreRequestCreateOrUpdate**](KvStoreRequestCreateOrUpdate.md)> |  |  |
 
 ### Return type
 
@@ -141,7 +142,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::InlineResponse2006**](InlineResponse2006.md)
+[**crate::models::InlineResponse2007**](InlineResponse2007.md)
 
 ### Authorization
 
@@ -151,6 +152,42 @@ Name | Type | Description  | Required | Notes
 
 - **Content-Type**: Not defined
 - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+
+## kv_store_put
+
+Update the name of a KV store.
+
+```rust
+let cfg = &Configuration::default();
+let params = KvStorePutParams {
+    // parameters
+};
+kv_store_put(cfg, params)
+```
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**store_id** | **String** |  | [required] |
+**kv_store_request_create_or_update** | Option\<[**KvStoreRequestCreateOrUpdate**](KvStoreRequestCreateOrUpdate.md)> |  |  |
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[token](../README.md#token)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

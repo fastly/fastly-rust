@@ -22,7 +22,8 @@ pub struct DisableProductDdosProtectionParams {
 #[derive(Clone, Debug, Default)]
 pub struct EnableProductDdosProtectionParams {
     /// Alphanumeric string identifying the service.
-    pub service_id: String
+    pub service_id: String,
+    pub ddos_protection_request_enable_mode: Option<crate::models::DdosProtectionRequestEnableMode>
 }
 
 /// struct for passing parameters to the method [`get_product_ddos_protection`]
@@ -143,12 +144,13 @@ pub async fn disable_product_ddos_protection(configuration: &mut configuration::
     }
 }
 
-/// Enable the DDoS Protection product on a service in 'log' mode.
+/// Enable the DDoS Protection product on a service in default 'log' mode unless otherwise specified in the request body.
 pub async fn enable_product_ddos_protection(configuration: &mut configuration::Configuration, params: EnableProductDdosProtectionParams) -> Result<crate::models::DdosProtectionResponseEnable, Error<EnableProductDdosProtectionError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
     let service_id = params.service_id;
+    let ddos_protection_request_enable_mode = params.ddos_protection_request_enable_mode;
 
 
     let local_var_client = &local_var_configuration.client;
@@ -167,6 +169,7 @@ pub async fn enable_product_ddos_protection(configuration: &mut configuration::C
         };
         local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
     };
+    local_var_req_builder = local_var_req_builder.json(&ddos_protection_request_enable_mode);
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;

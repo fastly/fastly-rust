@@ -51,7 +51,7 @@ Name | Type | Description  | Required | Notes
 
 ## enable_product_ddos_protection
 
-Enable the DDoS Protection product on a service in 'log' mode.
+Enable the DDoS Protection product on a service in default 'log' mode unless otherwise specified in the request body.
 
 ```rust
 let cfg = &Configuration::default();
@@ -67,6 +67,7 @@ enable_product_ddos_protection(cfg, params)
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **service_id** | **String** | Alphanumeric string identifying the service. | [required] |
+**ddos_protection_request_enable_mode** | Option\<[**DdosProtectionRequestEnableMode**](DdosProtectionRequestEnableMode.md)> |  |  |
 
 ### Return type
 
@@ -78,7 +79,7 @@ Name | Type | Description  | Required | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

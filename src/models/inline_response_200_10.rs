@@ -11,13 +11,16 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct InlineResponse20010 {
     #[serde(rename = "data", skip_serializing_if = "Option::is_none")]
-    pub data: Option<Vec<crate::models::ServiceAuthorizationResponseData>>,
+    pub data: Option<Vec<crate::models::SecretResponse>>,
+    #[serde(rename = "meta", skip_serializing_if = "Option::is_none")]
+    pub meta: Option<Box<crate::models::PaginationCursorMeta>>,
 }
 
 impl InlineResponse20010 {
     pub fn new() -> InlineResponse20010 {
         InlineResponse20010 {
             data: None,
+            meta: None,
         }
     }
 }

@@ -9,16 +9,15 @@
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct KvStoreRequestCreate {
-    /// A human-readable name for the store. Refer to https://docs.fastly.com/products/compute-resource-limits#kv-store for limitations on the KV store name.
-    #[serde(rename = "name")]
-    pub name: String,
+pub struct InlineResponse20011 {
+    #[serde(rename = "data", skip_serializing_if = "Option::is_none")]
+    pub data: Option<Vec<crate::models::ServiceAuthorizationResponseData>>,
 }
 
-impl KvStoreRequestCreate {
-    pub fn new(name: String) -> KvStoreRequestCreate {
-        KvStoreRequestCreate {
-            name,
+impl InlineResponse20011 {
+    pub fn new() -> InlineResponse20011 {
+        InlineResponse20011 {
+            data: None,
         }
     }
 }

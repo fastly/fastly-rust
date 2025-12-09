@@ -13,12 +13,16 @@ pub struct NgwafRequestEnable {
     /// The workspace to link.
     #[serde(rename = "workspace_id")]
     pub workspace_id: String,
+    /// The percentage of traffic to inspect.
+    #[serde(rename = "traffic_ramp", skip_serializing_if = "Option::is_none")]
+    pub traffic_ramp: Option<String>,
 }
 
 impl NgwafRequestEnable {
     pub fn new(workspace_id: String) -> NgwafRequestEnable {
         NgwafRequestEnable {
             workspace_id,
+            traffic_ramp: None,
         }
     }
 }
