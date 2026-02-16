@@ -4,8 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**data** | Option<[**Vec&lt;crate::models::SecretStoreResponse&gt;**](SecretStoreResponse.md)> |  | 
-**meta** | Option<[**crate::models::PaginationCursorMeta**](PaginationCursorMeta.md)> |  | 
+**results** | Option<[**Vec&lt;crate::models::Suggestion&gt;**](Suggestion.md)> |  | 
 
 [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

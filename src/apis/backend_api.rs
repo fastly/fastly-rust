@@ -32,6 +32,8 @@ pub struct CreateBackendParams {
     pub connect_timeout: Option<i32>,
     /// Maximum duration in milliseconds to wait for the server response to begin after a TCP connection is established and the request has been sent. If exceeded, the connection is aborted and a synthetic `503` response will be presented instead. May be set at runtime using `bereq.first_byte_timeout`.
     pub first_byte_timeout: Option<i32>,
+    /// Maximum duration in milliseconds to wait for the entire response to be received after a TCP connection is established and the request has been sent. If exceeded, the connection is aborted and a synthetic `503` response will be presented instead. May be set at runtime using `bereq.fetch_timeout`.
+    pub fetch_timeout: Option<i32>,
     /// The name of the healthcheck to use with this backend.
     pub healthcheck: Option<String>,
     /// The hostname of the backend. May be used as an alternative to `address` to set the backend location.
@@ -146,6 +148,8 @@ pub struct UpdateBackendParams {
     pub connect_timeout: Option<i32>,
     /// Maximum duration in milliseconds to wait for the server response to begin after a TCP connection is established and the request has been sent. If exceeded, the connection is aborted and a synthetic `503` response will be presented instead. May be set at runtime using `bereq.first_byte_timeout`.
     pub first_byte_timeout: Option<i32>,
+    /// Maximum duration in milliseconds to wait for the entire response to be received after a TCP connection is established and the request has been sent. If exceeded, the connection is aborted and a synthetic `503` response will be presented instead. May be set at runtime using `bereq.fetch_timeout`.
+    pub fetch_timeout: Option<i32>,
     /// The name of the healthcheck to use with this backend.
     pub healthcheck: Option<String>,
     /// The hostname of the backend. May be used as an alternative to `address` to set the backend location.
@@ -257,6 +261,7 @@ pub async fn create_backend(configuration: &mut configuration::Configuration, pa
     let comment = params.comment;
     let connect_timeout = params.connect_timeout;
     let first_byte_timeout = params.first_byte_timeout;
+    let fetch_timeout = params.fetch_timeout;
     let healthcheck = params.healthcheck;
     let hostname = params.hostname;
     let ipv4 = params.ipv4;
@@ -325,6 +330,9 @@ pub async fn create_backend(configuration: &mut configuration::Configuration, pa
     }
     if let Some(local_var_param_value) = first_byte_timeout {
         local_var_form_params.insert("first_byte_timeout", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = fetch_timeout {
+        local_var_form_params.insert("fetch_timeout", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = healthcheck {
         local_var_form_params.insert("healthcheck", local_var_param_value.to_string());
@@ -618,6 +626,7 @@ pub async fn update_backend(configuration: &mut configuration::Configuration, pa
     let comment = params.comment;
     let connect_timeout = params.connect_timeout;
     let first_byte_timeout = params.first_byte_timeout;
+    let fetch_timeout = params.fetch_timeout;
     let healthcheck = params.healthcheck;
     let hostname = params.hostname;
     let ipv4 = params.ipv4;
@@ -686,6 +695,9 @@ pub async fn update_backend(configuration: &mut configuration::Configuration, pa
     }
     if let Some(local_var_param_value) = first_byte_timeout {
         local_var_form_params.insert("first_byte_timeout", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = fetch_timeout {
+        local_var_form_params.insert("fetch_timeout", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = healthcheck {
         local_var_form_params.insert("healthcheck", local_var_param_value.to_string());

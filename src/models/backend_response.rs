@@ -31,6 +31,9 @@ pub struct BackendResponse {
     /// Maximum duration in milliseconds to wait for the server response to begin after a TCP connection is established and the request has been sent. If exceeded, the connection is aborted and a synthetic `503` response will be presented instead. May be set at runtime using `bereq.first_byte_timeout`.
     #[serde(rename = "first_byte_timeout", skip_serializing_if = "Option::is_none")]
     pub first_byte_timeout: Option<i32>,
+    /// Maximum duration in milliseconds to wait for the entire response to be received after a TCP connection is established and the request has been sent. If exceeded, the connection is aborted and a synthetic `503` response will be presented instead. May be set at runtime using `bereq.fetch_timeout`.
+    #[serde(rename = "fetch_timeout", skip_serializing_if = "Option::is_none")]
+    pub fetch_timeout: Option<i32>,
     /// The name of the healthcheck to use with this backend.
     #[serde(rename = "healthcheck", skip_serializing_if = "Option::is_none")]
     pub healthcheck: Option<String>,
@@ -146,6 +149,7 @@ impl BackendResponse {
             comment: None,
             connect_timeout: None,
             first_byte_timeout: None,
+            fetch_timeout: None,
             healthcheck: None,
             hostname: None,
             ipv4: None,

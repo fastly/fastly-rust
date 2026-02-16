@@ -10,17 +10,18 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct InlineResponse2003 {
-    #[serde(rename = "data")]
-    pub data: Vec<crate::models::DdosProtectionRuleWithStats>,
-    #[serde(rename = "meta")]
-    pub meta: Box<crate::models::PaginationCursorMeta>,
+    #[serde(rename = "meta", skip_serializing_if = "Option::is_none")]
+    pub meta: Option<Box<crate::models::Meta>>,
+    /// The operation tags returned by the request.
+    #[serde(rename = "data", skip_serializing_if = "Option::is_none")]
+    pub data: Option<Vec<crate::models::TagGet>>,
 }
 
 impl InlineResponse2003 {
-    pub fn new(data: Vec<crate::models::DdosProtectionRuleWithStats>, meta: crate::models::PaginationCursorMeta) -> InlineResponse2003 {
+    pub fn new() -> InlineResponse2003 {
         InlineResponse2003 {
-            data,
-            meta: Box::new(meta),
+            meta: None,
+            data: None,
         }
     }
 }

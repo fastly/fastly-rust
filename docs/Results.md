@@ -273,10 +273,31 @@ Name | Type | Description | Notes
 **ngwaf_requests_timeout_count** | Option<**i32**> | Count of Edge WAF requests timed outcome. | 
 **ngwaf_requests_challenged_count** | Option<**i32**> | Count of Edge WAF requests challenged. | 
 **api_discovery_requests_count** | Option<**i32**> | Number of requests processed by the API Discovery engine. | 
+**compute_resp_status_103** | Option<**i32**> | Number of responses delivered with status code 103 (Early Hints) by the Compute platform. | 
+**compute_resp_status_200** | Option<**i32**> | Number of responses delivered with status code 200 (Success) by the Compute platform. | 
+**compute_resp_status_204** | Option<**i32**> | Number of responses delivered with status code 204 (No Content) by the Compute platform. | 
+**compute_resp_status_206** | Option<**i32**> | Number of responses delivered with status code 206 (Partial Content) by the Compute platform. | 
+**compute_resp_status_301** | Option<**i32**> | Number of responses delivered with status code 301 (Moved Permanently) by the Compute platform. | 
+**compute_resp_status_302** | Option<**i32**> | Number of responses delivered with status code 302 (Found) by the Compute platform. | 
+**compute_resp_status_304** | Option<**i32**> | Number of responses delivered with status code 304 (Not Modified) by the Compute platform. | 
+**compute_resp_status_400** | Option<**i32**> | Number of responses delivered with status code 400 (Bad Request) by the Compute platform. | 
+**compute_resp_status_401** | Option<**i32**> | Number of responses delivered with status code 401 (Unauthorized) by the Compute platform. | 
+**compute_resp_status_403** | Option<**i32**> | Number of responses delivered with status code 403 (Forbidden) by the Compute platform. | 
+**compute_resp_status_404** | Option<**i32**> | Number of responses delivered with status code 404 (Not Found) by the Compute platform. | 
+**compute_resp_status_416** | Option<**i32**> | Number of responses delivered with status code 416 (Range Not Satisfiable) by the Compute platform. | 
+**compute_resp_status_429** | Option<**i32**> | Number of responses delivered with status code 429 (Too Many Requests) by the Compute platform. | 
+**compute_resp_status_500** | Option<**i32**> | Number of responses delivered with status code 500 (Internal Server Error) by the Compute platform. | 
+**compute_resp_status_501** | Option<**i32**> | Number of responses delivered with status code 501 (Not Implemented) by the Compute platform. | 
+**compute_resp_status_502** | Option<**i32**> | Number of responses delivered with status code 502 (Bad Gateway) by the Compute platform. | 
+**compute_resp_status_503** | Option<**i32**> | Number of responses delivered with status code 503 (Service Unavailable) by the Compute platform. | 
+**compute_resp_status_504** | Option<**i32**> | Number of responses delivered with status code 504 (Gateway Timeout) by the Compute platform. | 
+**compute_resp_status_505** | Option<**i32**> | Number of responses delivered with status code 505 (HTTP Version Not Supported) by the Compute platform. | 
+**compute_resp_status_530** | Option<**i32**> | Number of responses delivered with status code 530 by the Compute platform. | 
 **imgopto_compute_requests** | Option<**i32**> | The number of Image Optimizer requests made from Compute services. | 
 **dns_billable_responses_count** | Option<**i32**> | Number of billable DNS responses (e.g., A, CNAME). | 
 **dns_nonbillable_responses_count** | Option<**i32**> | Number of non-billable DNS responses (e.g., NODATA, NXDOMAIN). | 
 **upgrade** | Option<**i32**> | Number of requests that resulted in a WebSocket upgrade. | 
+**ngwaf_bot_analysis_request_count** | Option<**i32**> | Count of Next-Gen WAF Bot Management requests. | 
 **service_id** | Option<**String**> |  | [readonly]
 **start_time** | Option<**i64**> | Timestamp for the start of the time period being reported | 
 

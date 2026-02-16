@@ -4,7 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**results** | Option<[**Vec&lt;crate::models::Suggestion&gt;**](Suggestion.md)> |  | 
+**data** | [**Vec&lt;crate::models::DdosProtectionRuleWithStats&gt;**](DdosProtectionRuleWithStats.md) |  | 
+**meta** | [**crate::models::PaginationCursorMeta**](PaginationCursorMeta.md) |  | 
 
 [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

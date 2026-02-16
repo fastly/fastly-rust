@@ -818,6 +818,66 @@ pub struct Results {
     /// Number of requests processed by the API Discovery engine.
     #[serde(rename = "api_discovery_requests_count", skip_serializing_if = "Option::is_none")]
     pub api_discovery_requests_count: Option<i32>,
+    /// Number of responses delivered with status code 103 (Early Hints) by the Compute platform.
+    #[serde(rename = "compute_resp_status_103", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_103: Option<i32>,
+    /// Number of responses delivered with status code 200 (Success) by the Compute platform.
+    #[serde(rename = "compute_resp_status_200", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_200: Option<i32>,
+    /// Number of responses delivered with status code 204 (No Content) by the Compute platform.
+    #[serde(rename = "compute_resp_status_204", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_204: Option<i32>,
+    /// Number of responses delivered with status code 206 (Partial Content) by the Compute platform.
+    #[serde(rename = "compute_resp_status_206", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_206: Option<i32>,
+    /// Number of responses delivered with status code 301 (Moved Permanently) by the Compute platform.
+    #[serde(rename = "compute_resp_status_301", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_301: Option<i32>,
+    /// Number of responses delivered with status code 302 (Found) by the Compute platform.
+    #[serde(rename = "compute_resp_status_302", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_302: Option<i32>,
+    /// Number of responses delivered with status code 304 (Not Modified) by the Compute platform.
+    #[serde(rename = "compute_resp_status_304", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_304: Option<i32>,
+    /// Number of responses delivered with status code 400 (Bad Request) by the Compute platform.
+    #[serde(rename = "compute_resp_status_400", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_400: Option<i32>,
+    /// Number of responses delivered with status code 401 (Unauthorized) by the Compute platform.
+    #[serde(rename = "compute_resp_status_401", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_401: Option<i32>,
+    /// Number of responses delivered with status code 403 (Forbidden) by the Compute platform.
+    #[serde(rename = "compute_resp_status_403", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_403: Option<i32>,
+    /// Number of responses delivered with status code 404 (Not Found) by the Compute platform.
+    #[serde(rename = "compute_resp_status_404", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_404: Option<i32>,
+    /// Number of responses delivered with status code 416 (Range Not Satisfiable) by the Compute platform.
+    #[serde(rename = "compute_resp_status_416", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_416: Option<i32>,
+    /// Number of responses delivered with status code 429 (Too Many Requests) by the Compute platform.
+    #[serde(rename = "compute_resp_status_429", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_429: Option<i32>,
+    /// Number of responses delivered with status code 500 (Internal Server Error) by the Compute platform.
+    #[serde(rename = "compute_resp_status_500", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_500: Option<i32>,
+    /// Number of responses delivered with status code 501 (Not Implemented) by the Compute platform.
+    #[serde(rename = "compute_resp_status_501", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_501: Option<i32>,
+    /// Number of responses delivered with status code 502 (Bad Gateway) by the Compute platform.
+    #[serde(rename = "compute_resp_status_502", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_502: Option<i32>,
+    /// Number of responses delivered with status code 503 (Service Unavailable) by the Compute platform.
+    #[serde(rename = "compute_resp_status_503", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_503: Option<i32>,
+    /// Number of responses delivered with status code 504 (Gateway Timeout) by the Compute platform.
+    #[serde(rename = "compute_resp_status_504", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_504: Option<i32>,
+    /// Number of responses delivered with status code 505 (HTTP Version Not Supported) by the Compute platform.
+    #[serde(rename = "compute_resp_status_505", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_505: Option<i32>,
+    /// Number of responses delivered with status code 530 by the Compute platform.
+    #[serde(rename = "compute_resp_status_530", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_530: Option<i32>,
     /// The number of Image Optimizer requests made from Compute services.
     #[serde(rename = "imgopto_compute_requests", skip_serializing_if = "Option::is_none")]
     pub imgopto_compute_requests: Option<i32>,
@@ -830,6 +890,9 @@ pub struct Results {
     /// Number of requests that resulted in a WebSocket upgrade.
     #[serde(rename = "upgrade", skip_serializing_if = "Option::is_none")]
     pub upgrade: Option<i32>,
+    /// Count of Next-Gen WAF Bot Management requests.
+    #[serde(rename = "ngwaf_bot_analysis_request_count", skip_serializing_if = "Option::is_none")]
+    pub ngwaf_bot_analysis_request_count: Option<i32>,
     #[serde(rename = "service_id", skip_serializing_if = "Option::is_none")]
     pub service_id: Option<Box<String>>,
     /// Timestamp for the start of the time period being reported
@@ -1110,10 +1173,31 @@ impl Results {
             ngwaf_requests_timeout_count: None,
             ngwaf_requests_challenged_count: None,
             api_discovery_requests_count: None,
+            compute_resp_status_103: None,
+            compute_resp_status_200: None,
+            compute_resp_status_204: None,
+            compute_resp_status_206: None,
+            compute_resp_status_301: None,
+            compute_resp_status_302: None,
+            compute_resp_status_304: None,
+            compute_resp_status_400: None,
+            compute_resp_status_401: None,
+            compute_resp_status_403: None,
+            compute_resp_status_404: None,
+            compute_resp_status_416: None,
+            compute_resp_status_429: None,
+            compute_resp_status_500: None,
+            compute_resp_status_501: None,
+            compute_resp_status_502: None,
+            compute_resp_status_503: None,
+            compute_resp_status_504: None,
+            compute_resp_status_505: None,
+            compute_resp_status_530: None,
             imgopto_compute_requests: None,
             dns_billable_responses_count: None,
             dns_nonbillable_responses_count: None,
             upgrade: None,
+            ngwaf_bot_analysis_request_count: None,
             service_id: None,
             start_time: None,
         }

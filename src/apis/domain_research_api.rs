@@ -102,7 +102,7 @@ pub async fn domain_status(configuration: &mut configuration::Configuration, par
 }
 
 /// The `Suggest` method performs a real-time query of the search term(s) against the [known zone database](http://zonedb.org), making recommendations, stemming, and applying Unicode folding, IDN normalization, registrar supported-zone restrictions, and other refinements. **Note:** `Suggest` method responses do not include domain availability status. 
-pub async fn suggest_domains(configuration: &mut configuration::Configuration, params: SuggestDomainsParams) -> Result<crate::models::InlineResponse2006, Error<SuggestDomainsError>> {
+pub async fn suggest_domains(configuration: &mut configuration::Configuration, params: SuggestDomainsParams) -> Result<crate::models::InlineResponse2009, Error<SuggestDomainsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters

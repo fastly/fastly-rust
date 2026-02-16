@@ -106,7 +106,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::InlineResponse2001**](InlineResponse2001.md)
+[**crate::models::InlineResponse2004**](InlineResponse2004.md)
 
 ### Authorization
 

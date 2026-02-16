@@ -203,6 +203,195 @@ pub struct Values {
     /// Number of \"Server Error\" codes received from origin.
     #[serde(rename = "origin_status_5xx", skip_serializing_if = "Option::is_none")]
     pub origin_status_5xx: Option<i64>,
+    /// Total body bytes sent to backends (origins) by the Compute platform.
+    #[serde(rename = "compute_bereq_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub compute_bereq_body_bytes: Option<i64>,
+    /// Number of backend request errors, including timeouts, by the Compute platform.
+    #[serde(rename = "compute_bereq_errors", skip_serializing_if = "Option::is_none")]
+    pub compute_bereq_errors: Option<i64>,
+    /// Total header bytes sent to backends (origins) by the Compute platform.
+    #[serde(rename = "compute_bereq_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub compute_bereq_header_bytes: Option<i64>,
+    /// Number of backend requests started by the Compute platform.
+    #[serde(rename = "compute_bereqs", skip_serializing_if = "Option::is_none")]
+    pub compute_bereqs: Option<i64>,
+    /// Total body bytes received from backends (origins) by the Compute platform.
+    #[serde(rename = "compute_beresp_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub compute_beresp_body_bytes: Option<i64>,
+    /// Total header bytes received from backends (origins) by the Compute platform.
+    #[serde(rename = "compute_beresp_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub compute_beresp_header_bytes: Option<i64>,
+    /// The amount of active CPU time used to process your requests (in milliseconds).
+    #[serde(rename = "compute_execution_time_ms", skip_serializing_if = "Option::is_none")]
+    pub compute_execution_time_ms: Option<i64>,
+    /// Number of \"Informational\" category status codes received from origin by the Compute platform.
+    #[serde(rename = "compute_origin_status_1xx", skip_serializing_if = "Option::is_none")]
+    pub compute_origin_status_1xx: Option<i64>,
+    /// Number of responses received from origin with status code 200 (Success) by the Compute platform.
+    #[serde(rename = "compute_origin_status_200", skip_serializing_if = "Option::is_none")]
+    pub compute_origin_status_200: Option<i64>,
+    /// Number of responses received from origin with status code 204 (No Content) by the Compute platform.
+    #[serde(rename = "compute_origin_status_204", skip_serializing_if = "Option::is_none")]
+    pub compute_origin_status_204: Option<i64>,
+    /// Number of responses received from origin with status code 206 (Partial Content) by the Compute platform.
+    #[serde(rename = "compute_origin_status_206", skip_serializing_if = "Option::is_none")]
+    pub compute_origin_status_206: Option<i64>,
+    /// Number of \"Success\" status codes received from origin by the Compute platform.
+    #[serde(rename = "compute_origin_status_2xx", skip_serializing_if = "Option::is_none")]
+    pub compute_origin_status_2xx: Option<i64>,
+    /// Number of responses received from origin with status code 301 (Moved Permanently) by the Compute platform.
+    #[serde(rename = "compute_origin_status_301", skip_serializing_if = "Option::is_none")]
+    pub compute_origin_status_301: Option<i64>,
+    /// Number of responses received from origin with status code 302 (Found) by the Compute platform.
+    #[serde(rename = "compute_origin_status_302", skip_serializing_if = "Option::is_none")]
+    pub compute_origin_status_302: Option<i64>,
+    /// Number of responses received from origin with status code 304 (Not Modified) by the Compute platform.
+    #[serde(rename = "compute_origin_status_304", skip_serializing_if = "Option::is_none")]
+    pub compute_origin_status_304: Option<i64>,
+    /// Number of \"Redirection\" codes received from origin by the Compute platform.
+    #[serde(rename = "compute_origin_status_3xx", skip_serializing_if = "Option::is_none")]
+    pub compute_origin_status_3xx: Option<i64>,
+    /// Number of responses received from origin with status code 400 (Bad Request) by the Compute platform.
+    #[serde(rename = "compute_origin_status_400", skip_serializing_if = "Option::is_none")]
+    pub compute_origin_status_400: Option<i64>,
+    /// Number of responses received from origin with status code 401 (Unauthorized) by the Compute platform.
+    #[serde(rename = "compute_origin_status_401", skip_serializing_if = "Option::is_none")]
+    pub compute_origin_status_401: Option<i64>,
+    /// Number of responses received from origin with status code 403 (Forbidden) by the Compute platform.
+    #[serde(rename = "compute_origin_status_403", skip_serializing_if = "Option::is_none")]
+    pub compute_origin_status_403: Option<i64>,
+    /// Number of responses received from origin with status code 404 (Not Found) by the Compute platform.
+    #[serde(rename = "compute_origin_status_404", skip_serializing_if = "Option::is_none")]
+    pub compute_origin_status_404: Option<i64>,
+    /// Number of responses received from origin with status code 416 (Range Not Satisfiable) by the Compute platform.
+    #[serde(rename = "compute_origin_status_416", skip_serializing_if = "Option::is_none")]
+    pub compute_origin_status_416: Option<i64>,
+    /// Number of responses received from origin with status code 429 (Too Many Requests) by the Compute platform.
+    #[serde(rename = "compute_origin_status_429", skip_serializing_if = "Option::is_none")]
+    pub compute_origin_status_429: Option<i64>,
+    /// Number of \"Client Error\" codes received from origin by the Compute platform.
+    #[serde(rename = "compute_origin_status_4xx", skip_serializing_if = "Option::is_none")]
+    pub compute_origin_status_4xx: Option<i64>,
+    /// Number of responses received from origin with status code 500 (Internal Server Error) by the Compute platform.
+    #[serde(rename = "compute_origin_status_500", skip_serializing_if = "Option::is_none")]
+    pub compute_origin_status_500: Option<i64>,
+    /// Number of responses received from origin with status code 501 (Not Implemented) by the Compute platform.
+    #[serde(rename = "compute_origin_status_501", skip_serializing_if = "Option::is_none")]
+    pub compute_origin_status_501: Option<i64>,
+    /// Number of responses received from origin with status code 502 (Bad Gateway) by the Compute platform.
+    #[serde(rename = "compute_origin_status_502", skip_serializing_if = "Option::is_none")]
+    pub compute_origin_status_502: Option<i64>,
+    /// Number of responses received from origin with status code 503 (Service Unavailable) by the Compute platform.
+    #[serde(rename = "compute_origin_status_503", skip_serializing_if = "Option::is_none")]
+    pub compute_origin_status_503: Option<i64>,
+    /// Number of responses received from origin with status code 504 (Gateway Timeout) by the Compute platform.
+    #[serde(rename = "compute_origin_status_504", skip_serializing_if = "Option::is_none")]
+    pub compute_origin_status_504: Option<i64>,
+    /// Number of responses received from origin with status code 505 (HTTP Version Not Supported) by the Compute platform.
+    #[serde(rename = "compute_origin_status_505", skip_serializing_if = "Option::is_none")]
+    pub compute_origin_status_505: Option<i64>,
+    /// Number of responses received from origin with status code 530 by the Compute platform.
+    #[serde(rename = "compute_origin_status_530", skip_serializing_if = "Option::is_none")]
+    pub compute_origin_status_530: Option<i64>,
+    /// Number of \"Server Error\" codes received from origin by the Compute platform.
+    #[serde(rename = "compute_origin_status_5xx", skip_serializing_if = "Option::is_none")]
+    pub compute_origin_status_5xx: Option<i64>,
+    /// Total body bytes received by the Compute platform.
+    #[serde(rename = "compute_req_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub compute_req_body_bytes: Option<i64>,
+    /// Total header bytes received by the Compute platform.
+    #[serde(rename = "compute_req_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub compute_req_header_bytes: Option<i64>,
+    /// The total amount of request processing time you will be billed for, measured in 50 millisecond increments.
+    #[serde(rename = "compute_request_time_billed_ms", skip_serializing_if = "Option::is_none")]
+    pub compute_request_time_billed_ms: Option<i64>,
+    /// The total amount of time used to process your requests, including active CPU time (in milliseconds).
+    #[serde(rename = "compute_request_time_ms", skip_serializing_if = "Option::is_none")]
+    pub compute_request_time_ms: Option<i64>,
+    /// The total number of requests that were received by the Compute platform.
+    #[serde(rename = "compute_request", skip_serializing_if = "Option::is_none")]
+    pub compute_request: Option<i64>,
+    /// Total body bytes sent from Compute to the end user.
+    #[serde(rename = "compute_resp_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_body_bytes: Option<i64>,
+    /// Total header bytes sent from Compute to the end user.
+    #[serde(rename = "compute_resp_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_header_bytes: Option<i64>,
+    /// Number of responses delivered with status code 103 (Early Hints) by the Compute platform.
+    #[serde(rename = "compute_resp_status_103", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_103: Option<i64>,
+    /// Number of 1xx \"Informational\" category status codes delivered by the Compute platform.
+    #[serde(rename = "compute_resp_status_1xx", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_1xx: Option<i64>,
+    /// Number of responses delivered with status code 200 (Success) by the Compute platform.
+    #[serde(rename = "compute_resp_status_200", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_200: Option<i64>,
+    /// Number of responses delivered with status code 204 (No Content) by the Compute platform.
+    #[serde(rename = "compute_resp_status_204", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_204: Option<i64>,
+    /// Number of responses delivered with status code 206 (Partial Content) by the Compute platform.
+    #[serde(rename = "compute_resp_status_206", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_206: Option<i64>,
+    /// Number of 2xx \"Success\" status codes delivered by the Compute platform.
+    #[serde(rename = "compute_resp_status_2xx", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_2xx: Option<i64>,
+    /// Number of responses delivered with status code 301 (Moved Permanently) by the Compute platform.
+    #[serde(rename = "compute_resp_status_301", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_301: Option<i64>,
+    /// Number of responses delivered with status code 302 (Found) by the Compute platform.
+    #[serde(rename = "compute_resp_status_302", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_302: Option<i64>,
+    /// Number of responses delivered with status code 304 (Not Modified) by the Compute platform.
+    #[serde(rename = "compute_resp_status_304", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_304: Option<i64>,
+    /// Number of 3xx \"Redirection\" codes delivered by the Compute platform.
+    #[serde(rename = "compute_resp_status_3xx", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_3xx: Option<i64>,
+    /// Number of responses delivered with status code 400 (Bad Request) by the Compute platform.
+    #[serde(rename = "compute_resp_status_400", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_400: Option<i64>,
+    /// Number of responses delivered with status code 401 (Unauthorized) by the Compute platform.
+    #[serde(rename = "compute_resp_status_401", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_401: Option<i64>,
+    /// Number of responses delivered with status code 403 (Forbidden) by the Compute platform.
+    #[serde(rename = "compute_resp_status_403", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_403: Option<i64>,
+    /// Number of responses delivered with status code 404 (Not Found) by the Compute platform.
+    #[serde(rename = "compute_resp_status_404", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_404: Option<i64>,
+    /// Number of responses delivered with status code 416 (Range Not Satisfiable) by the Compute platform.
+    #[serde(rename = "compute_resp_status_416", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_416: Option<i64>,
+    /// Number of responses delivered with status code 429 (Too Many Requests) by the Compute platform.
+    #[serde(rename = "compute_resp_status_429", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_429: Option<i64>,
+    /// Number of 4xx \"Client Error\" codes delivered by the Compute platform.
+    #[serde(rename = "compute_resp_status_4xx", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_4xx: Option<i64>,
+    /// Number of responses delivered with status code 500 (Internal Server Error) by the Compute platform.
+    #[serde(rename = "compute_resp_status_500", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_500: Option<i64>,
+    /// Number of responses delivered with status code 501 (Not Implemented) by the Compute platform.
+    #[serde(rename = "compute_resp_status_501", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_501: Option<i64>,
+    /// Number of responses delivered with status code 502 (Bad Gateway) by the Compute platform.
+    #[serde(rename = "compute_resp_status_502", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_502: Option<i64>,
+    /// Number of responses delivered with status code 503 (Service Unavailable) by the Compute platform.
+    #[serde(rename = "compute_resp_status_503", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_503: Option<i64>,
+    /// Number of responses delivered with status code 504 (Gateway Timeout) by the Compute platform.
+    #[serde(rename = "compute_resp_status_504", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_504: Option<i64>,
+    /// Number of responses delivered with status code 505 (HTTP Version Not Supported) by the Compute platform.
+    #[serde(rename = "compute_resp_status_505", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_505: Option<i64>,
+    /// Number of responses delivered with status code 530 by the Compute platform.
+    #[serde(rename = "compute_resp_status_530", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_530: Option<i64>,
+    /// Number of \"Server Error\" category status codes delivered by the Compute platform.
+    #[serde(rename = "compute_resp_status_5xx", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_5xx: Option<i64>,
 }
 
 impl Values {
@@ -273,6 +462,69 @@ impl Values {
             origin_status_3xx: None,
             origin_status_4xx: None,
             origin_status_5xx: None,
+            compute_bereq_body_bytes: None,
+            compute_bereq_errors: None,
+            compute_bereq_header_bytes: None,
+            compute_bereqs: None,
+            compute_beresp_body_bytes: None,
+            compute_beresp_header_bytes: None,
+            compute_execution_time_ms: None,
+            compute_origin_status_1xx: None,
+            compute_origin_status_200: None,
+            compute_origin_status_204: None,
+            compute_origin_status_206: None,
+            compute_origin_status_2xx: None,
+            compute_origin_status_301: None,
+            compute_origin_status_302: None,
+            compute_origin_status_304: None,
+            compute_origin_status_3xx: None,
+            compute_origin_status_400: None,
+            compute_origin_status_401: None,
+            compute_origin_status_403: None,
+            compute_origin_status_404: None,
+            compute_origin_status_416: None,
+            compute_origin_status_429: None,
+            compute_origin_status_4xx: None,
+            compute_origin_status_500: None,
+            compute_origin_status_501: None,
+            compute_origin_status_502: None,
+            compute_origin_status_503: None,
+            compute_origin_status_504: None,
+            compute_origin_status_505: None,
+            compute_origin_status_530: None,
+            compute_origin_status_5xx: None,
+            compute_req_body_bytes: None,
+            compute_req_header_bytes: None,
+            compute_request_time_billed_ms: None,
+            compute_request_time_ms: None,
+            compute_request: None,
+            compute_resp_body_bytes: None,
+            compute_resp_header_bytes: None,
+            compute_resp_status_103: None,
+            compute_resp_status_1xx: None,
+            compute_resp_status_200: None,
+            compute_resp_status_204: None,
+            compute_resp_status_206: None,
+            compute_resp_status_2xx: None,
+            compute_resp_status_301: None,
+            compute_resp_status_302: None,
+            compute_resp_status_304: None,
+            compute_resp_status_3xx: None,
+            compute_resp_status_400: None,
+            compute_resp_status_401: None,
+            compute_resp_status_403: None,
+            compute_resp_status_404: None,
+            compute_resp_status_416: None,
+            compute_resp_status_429: None,
+            compute_resp_status_4xx: None,
+            compute_resp_status_500: None,
+            compute_resp_status_501: None,
+            compute_resp_status_502: None,
+            compute_resp_status_503: None,
+            compute_resp_status_504: None,
+            compute_resp_status_505: None,
+            compute_resp_status_530: None,
+            compute_resp_status_5xx: None,
         }
     }
 }

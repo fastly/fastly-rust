@@ -15,7 +15,7 @@ pub struct LogInsights {
     #[serde(rename = "dimension_attributes", skip_serializing_if = "Option::is_none")]
     pub dimension_attributes: Option<Box<crate::models::LogInsightsDimensionAttributes>>,
     #[serde(rename = "values", skip_serializing_if = "Option::is_none")]
-    pub values: Option<Box<crate::models::LogInsightsValues>>,
+    pub values: Option<Vec<crate::models::LogInsightsValues>>,
 }
 
 impl LogInsights {

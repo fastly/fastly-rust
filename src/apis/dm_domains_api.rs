@@ -247,7 +247,7 @@ pub async fn get_dm_domain(configuration: &mut configuration::Configuration, par
 }
 
 /// List all domains
-pub async fn list_dm_domains(configuration: &mut configuration::Configuration, params: ListDmDomainsParams) -> Result<crate::models::InlineResponse2004, Error<ListDmDomainsError>> {
+pub async fn list_dm_domains(configuration: &mut configuration::Configuration, params: ListDmDomainsParams) -> Result<crate::models::InlineResponse2007, Error<ListDmDomainsError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters

@@ -199,7 +199,7 @@ pub async fn get_automation_token_id(configuration: &mut configuration::Configur
 }
 
 /// List of services associated with the automation token.
-pub async fn get_automation_tokens_id_services(configuration: &mut configuration::Configuration, params: GetAutomationTokensIdServicesParams) -> Result<crate::models::InlineResponse2001, Error<GetAutomationTokensIdServicesError>> {
+pub async fn get_automation_tokens_id_services(configuration: &mut configuration::Configuration, params: GetAutomationTokensIdServicesParams) -> Result<crate::models::InlineResponse2004, Error<GetAutomationTokensIdServicesError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters

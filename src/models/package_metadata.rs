@@ -23,10 +23,10 @@ pub struct PackageMetadata {
     /// The language of the Compute package.
     #[serde(rename = "language", skip_serializing_if = "Option::is_none")]
     pub language: Option<String>,
-    /// Size of the Compute package in bytes.
+    /// Size of the Compute package in bytes. This is deprecated along with `hashsum`.
     #[serde(rename = "size", skip_serializing_if = "Option::is_none")]
     pub size: Option<i32>,
-    /// Hash of the Compute package.
+    /// Hash of the Compute package. This is deprecated in favor of `files_hash`.
     #[serde(rename = "hashsum", skip_serializing_if = "Option::is_none")]
     pub hashsum: Option<String>,
     /// Hash of the files within the Compute package.

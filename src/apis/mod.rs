@@ -65,6 +65,7 @@ pub mod acl_api;
 pub mod acl_entry_api;
 pub mod acls_in_compute_api;
 pub mod apex_redirect_api;
+pub mod apisecurity_operations_api;
 pub mod automation_tokens_api;
 pub mod backend_api;
 pub mod billing_address_api;

@@ -182,7 +182,7 @@ pub async fn ddos_protection_event_get(configuration: &mut configuration::Config
 }
 
 /// Get events.
-pub async fn ddos_protection_event_list(configuration: &mut configuration::Configuration, params: DdosProtectionEventListParams) -> Result<crate::models::InlineResponse2002, Error<DdosProtectionEventListError>> {
+pub async fn ddos_protection_event_list(configuration: &mut configuration::Configuration, params: DdosProtectionEventListParams) -> Result<crate::models::InlineResponse2005, Error<DdosProtectionEventListError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -257,7 +257,7 @@ pub async fn ddos_protection_event_list(configuration: &mut configuration::Confi
 }
 
 /// Get all rules for an event.
-pub async fn ddos_protection_event_rule_list(configuration: &mut configuration::Configuration, params: DdosProtectionEventRuleListParams) -> Result<crate::models::InlineResponse2003, Error<DdosProtectionEventRuleListError>> {
+pub async fn ddos_protection_event_rule_list(configuration: &mut configuration::Configuration, params: DdosProtectionEventRuleListParams) -> Result<crate::models::InlineResponse2006, Error<DdosProtectionEventRuleListError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters

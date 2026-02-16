@@ -10,14 +10,17 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct InlineResponse2001 {
-    /// The service IDs of the services the token will have access to. Separate service IDs with a space.
+    #[serde(rename = "meta", skip_serializing_if = "Option::is_none")]
+    pub meta: Option<Box<crate::models::Meta>>,
+    /// The discovered operations returned by the request.
     #[serde(rename = "data", skip_serializing_if = "Option::is_none")]
-    pub data: Option<Vec<String>>,
+    pub data: Option<Vec<crate::models::DiscoveredOperationGet>>,
 }
 
 impl InlineResponse2001 {
     pub fn new() -> InlineResponse2001 {
         InlineResponse2001 {
+            meta: None,
             data: None,
         }
     }

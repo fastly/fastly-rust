@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**data** | [**Vec&lt;crate::models::DdosProtectionRuleWithStats&gt;**](DdosProtectionRuleWithStats.md) |  | 
-**meta** | [**crate::models::PaginationCursorMeta**](PaginationCursorMeta.md) |  | 
+**meta** | Option<[**crate::models::Meta**](Meta.md)> |  | 
+**data** | Option<[**Vec&lt;crate::models::TagGet&gt;**](TagGet.md)> | The operation tags returned by the request. | 
 
 [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
