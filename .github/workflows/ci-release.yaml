@@ -13,6 +13,9 @@ jobs:
   publish:
     name: Publish to crates.io
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -30,10 +33,15 @@ jobs:
         run: ./.github/scripts/pack.sh
         working-directory: ./main
         shell: bash
+      - name: Auth for trusted publishing
+        uses: rust-lang/crates-io-auth-action@v1
+        id: auth
       - name: Publish API client
-        run: CARGO_REGISTRY_TOKEN=${{ secrets.CRATES_PUBLISH_TOKEN }} ./.github/scripts/publish.sh
+        run: ./.github/scripts/publish.sh
         working-directory: ./main
         shell: bash
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ steps.auth.outputs.token }}
       - name: Write release body file
         run: CODE_PATH=./main ./main/.github/scripts/release_body.sh > ./dist/release_body.txt
         shell: bash
