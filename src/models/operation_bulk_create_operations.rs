@@ -9,20 +9,20 @@
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct OperationCreate {
+pub struct OperationBulkCreateOperations {
     /// The HTTP method for the operation.
     #[serde(rename = "method")]
     pub method: Method,
     /// The domain for the operation.
     #[serde(rename = "domain")]
     pub domain: String,
-    /// The path for the operation, which may include path parameters.
+    /// The path for the operation.
     #[serde(rename = "path")]
     pub path: String,
     /// A description of what the operation does.
     #[serde(rename = "description", skip_serializing_if = "Option::is_none")]
     pub description: Option<String>,
-    /// An array of operation tag IDs associated with this operation.
+    /// An array of tag IDs to associate with this operation.
     #[serde(rename = "tag_ids", skip_serializing_if = "Option::is_none")]
     pub tag_ids: Option<Vec<String>>,
     /// The status to assign to the operation. Defaults to SAVED if omitted.
@@ -30,9 +30,9 @@ pub struct OperationCreate {
     pub status: Option<Status>,
 }
 
-impl OperationCreate {
-    pub fn new(method: Method, domain: String, path: String) -> OperationCreate {
-        OperationCreate {
+impl OperationBulkCreateOperations {
+    pub fn new(method: Method, domain: String, path: String) -> OperationBulkCreateOperations {
+        OperationBulkCreateOperations {
             method,
             domain,
             path,

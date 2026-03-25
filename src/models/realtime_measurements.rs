@@ -524,12 +524,18 @@ pub struct RealtimeMeasurements {
     /// Number of backend request errors, including timeouts.
     #[serde(rename = "compute_bereq_errors", skip_serializing_if = "Option::is_none")]
     pub compute_bereq_errors: Option<i64>,
+    /// Number of backend request errors, including timeouts.
+    #[serde(rename = "compute_service_bereq_error", skip_serializing_if = "Option::is_none")]
+    pub compute_service_bereq_error: Option<i64>,
     /// Number of times a guest exceeded its resource limit, includes heap, stack, globals, and code execution timeout.
     #[serde(rename = "compute_resource_limit_exceeded", skip_serializing_if = "Option::is_none")]
     pub compute_resource_limit_exceeded: Option<i64>,
     /// Number of times a guest exceeded its heap limit.
     #[serde(rename = "compute_heap_limit_exceeded", skip_serializing_if = "Option::is_none")]
     pub compute_heap_limit_exceeded: Option<i64>,
+    /// Number of times a guest exceeded its heap limit.
+    #[serde(rename = "compute_service_memory_exceeded_error", skip_serializing_if = "Option::is_none")]
+    pub compute_service_memory_exceeded_error: Option<i64>,
     /// Number of times a guest exceeded its stack limit.
     #[serde(rename = "compute_stack_limit_exceeded", skip_serializing_if = "Option::is_none")]
     pub compute_stack_limit_exceeded: Option<i64>,
@@ -872,6 +878,54 @@ pub struct RealtimeMeasurements {
     /// Count of Next-Gen WAF Bot Management requests.
     #[serde(rename = "ngwaf_bot_analysis_request_count", skip_serializing_if = "Option::is_none")]
     pub ngwaf_bot_analysis_request_count: Option<i32>,
+    /// Count of AVIF images delivered to end user by Image Optimizer.
+    #[serde(rename = "imgopto_avif_count", skip_serializing_if = "Option::is_none")]
+    pub imgopto_avif_count: Option<i32>,
+    /// Count of JPEG images delivered to end user by Image Optimizer.
+    #[serde(rename = "imgopto_jpeg_count", skip_serializing_if = "Option::is_none")]
+    pub imgopto_jpeg_count: Option<i32>,
+    /// Count of PNG images delivered to end user by Image Optimizer.
+    #[serde(rename = "imgopto_png_count", skip_serializing_if = "Option::is_none")]
+    pub imgopto_png_count: Option<i32>,
+    /// Count of GIF images delivered to end user by Image Optimizer.
+    #[serde(rename = "imgopto_gif_count", skip_serializing_if = "Option::is_none")]
+    pub imgopto_gif_count: Option<i32>,
+    /// Count of WebP images delivered to end user by Image Optimizer.
+    #[serde(rename = "imgopto_webp_count", skip_serializing_if = "Option::is_none")]
+    pub imgopto_webp_count: Option<i32>,
+    /// Count of JPEGXL images delivered to end user by Image Optimizer.
+    #[serde(rename = "imgopto_jpegxl_count", skip_serializing_if = "Option::is_none")]
+    pub imgopto_jpegxl_count: Option<i32>,
+    /// Count of SVG images delivered to end user by Image Optimizer.
+    #[serde(rename = "imgopto_svg_count", skip_serializing_if = "Option::is_none")]
+    pub imgopto_svg_count: Option<i32>,
+    /// Count of MP4s delivered to end user by Image Optimizer.
+    #[serde(rename = "imgopto_mp4_count", skip_serializing_if = "Option::is_none")]
+    pub imgopto_mp4_count: Option<i32>,
+    /// Aggregate of fatal errors caused by exceeding allocated resource limits, specifically runtime duration, vCPU usage, and heap memory limits.
+    #[serde(rename = "compute_service_resource_limits_error", skip_serializing_if = "Option::is_none")]
+    pub compute_service_resource_limits_error: Option<i32>,
+    /// Fatal errors caused by service logic faults, including stack overflows, unreachable code traps, illegal memory access, or attempts to send multiple responses.
+    #[serde(rename = "compute_service_runtime_error", skip_serializing_if = "Option::is_none")]
+    pub compute_service_runtime_error: Option<i32>,
+    /// Fatal errors caused by the service path exceeding hop or service limits, or where a forwarding loop is detected via CDN-Loop headers.
+    #[serde(rename = "compute_service_chain_error", skip_serializing_if = "Option::is_none")]
+    pub compute_service_chain_error: Option<i32>,
+    /// Fatal errors caused by internal errors in Fastly’s Compute platform.
+    #[serde(rename = "compute_platform_internal_error", skip_serializing_if = "Option::is_none")]
+    pub compute_platform_internal_error: Option<i32>,
+    /// Fatal errors caused by exceeding the per-request runtime limit.
+    #[serde(rename = "compute_service_timeout_error", skip_serializing_if = "Option::is_none")]
+    pub compute_service_timeout_error: Option<i32>,
+    /// Fatal errors caused by exceeding the per-request vCPU time limit.
+    #[serde(rename = "compute_service_vcpu_exceeded_error", skip_serializing_if = "Option::is_none")]
+    pub compute_service_vcpu_exceeded_error: Option<i32>,
+    /// Non-fatal errors caused by attempts to exceed defined operational limits, such as simultaneous backend requests or cache transactions.
+    #[serde(rename = "compute_service_limits_error", skip_serializing_if = "Option::is_none")]
+    pub compute_service_limits_error: Option<i32>,
+    /// Fatal errors caused by unprocessable requests to the service, such as requests with malformed CDN-Loop headers or invalid purge credentials.
+    #[serde(rename = "compute_platform_invalid_request_error", skip_serializing_if = "Option::is_none")]
+    pub compute_platform_invalid_request_error: Option<i32>,
 }
 
 impl RealtimeMeasurements {
@@ -1049,8 +1103,10 @@ impl RealtimeMeasurements {
             shield_cache_fetches: None,
             compute_bereqs: None,
             compute_bereq_errors: None,
+            compute_service_bereq_error: None,
             compute_resource_limit_exceeded: None,
             compute_heap_limit_exceeded: None,
+            compute_service_memory_exceeded_error: None,
             compute_stack_limit_exceeded: None,
             compute_globals_limit_exceeded: None,
             compute_guest_errors: None,
@@ -1165,6 +1221,22 @@ impl RealtimeMeasurements {
             dns_nonbillable_responses_count: None,
             upgrade: None,
             ngwaf_bot_analysis_request_count: None,
+            imgopto_avif_count: None,
+            imgopto_jpeg_count: None,
+            imgopto_png_count: None,
+            imgopto_gif_count: None,
+            imgopto_webp_count: None,
+            imgopto_jpegxl_count: None,
+            imgopto_svg_count: None,
+            imgopto_mp4_count: None,
+            compute_service_resource_limits_error: None,
+            compute_service_runtime_error: None,
+            compute_service_chain_error: None,
+            compute_platform_internal_error: None,
+            compute_service_timeout_error: None,
+            compute_service_vcpu_exceeded_error: None,
+            compute_service_limits_error: None,
+            compute_platform_invalid_request_error: None,
         }
     }
 }

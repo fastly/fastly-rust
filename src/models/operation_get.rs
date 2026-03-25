@@ -37,6 +37,12 @@ pub struct OperationGet {
     /// The timestamp when the operation was last seen in traffic.
     #[serde(rename = "last_seen_at", skip_serializing_if = "Option::is_none")]
     pub last_seen_at: Option<String>,
+    /// Requests per second observed for this operation.
+    #[serde(rename = "rps", skip_serializing_if = "Option::is_none")]
+    pub rps: Option<f32>,
+    /// The status of the operation.
+    #[serde(rename = "status", skip_serializing_if = "Option::is_none")]
+    pub status: Option<Status>,
 }
 
 impl OperationGet {
@@ -51,6 +57,8 @@ impl OperationGet {
             created_at: None,
             updated_at,
             last_seen_at: None,
+            rps: None,
+            status: None,
         }
     }
 }
@@ -81,6 +89,20 @@ pub enum Method {
 impl Default for Method {
     fn default() -> Method {
         Self::GET
+    }
+}
+/// The status of the operation.
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum Status {
+    #[serde(rename = "SAVED")]
+    SAVED,
+    #[serde(rename = "IGNORED")]
+    IGNORED,
+}
+
+impl Default for Status {
+    fn default() -> Status {
+        Self::SAVED
     }
 }
 

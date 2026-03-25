@@ -136,6 +136,7 @@ list_dm_domains(cfg, params)
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **fqdn** | Option\<**String**> |  |  |
+**fqdn_match** | Option\<**String**> | (Optional) Filter fully-qualified domain name (FQDN) specifically by match type. If used, requires filtering by FQDN. |  |[default to contains]
 **service_id** | Option\<**String**> | Filter results based on a service_id. |  |
 **sort** | Option\<**String**> | The order in which to list the results. |  |[default to fqdn]
 **activated** | Option\<**bool**> |  |  |

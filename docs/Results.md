@@ -175,8 +175,10 @@ Name | Type | Description | Notes
 **compute_beresp_body_bytes** | Option<**i64**> | Total body bytes received from backends (origins) by the Compute platform. | 
 **compute_bereqs** | Option<**i64**> | Number of backend requests started. | 
 **compute_bereq_errors** | Option<**i64**> | Number of backend request errors, including timeouts. | 
+**compute_service_bereq_error** | Option<**i64**> | Number of backend request errors, including timeouts. | 
 **compute_resource_limit_exceeded** | Option<**i64**> | Number of times a guest exceeded its resource limit, includes heap, stack, globals, and code execution timeout. | 
 **compute_heap_limit_exceeded** | Option<**i64**> | Number of times a guest exceeded its heap limit. | 
+**compute_service_memory_exceeded_error** | Option<**i64**> | Number of times a guest exceeded its heap limit. | 
 **compute_stack_limit_exceeded** | Option<**i64**> | Number of times a guest exceeded its stack limit. | 
 **compute_globals_limit_exceeded** | Option<**i64**> | Number of times a guest exceeded its globals limit. | 
 **compute_guest_errors** | Option<**i64**> | Number of times a service experienced a guest code error. | 
@@ -298,6 +300,22 @@ Name | Type | Description | Notes
 **dns_nonbillable_responses_count** | Option<**i32**> | Number of non-billable DNS responses (e.g., NODATA, NXDOMAIN). | 
 **upgrade** | Option<**i32**> | Number of requests that resulted in a WebSocket upgrade. | 
 **ngwaf_bot_analysis_request_count** | Option<**i32**> | Count of Next-Gen WAF Bot Management requests. | 
+**imgopto_avif_count** | Option<**i32**> | Count of AVIF images delivered to end user by Image Optimizer. | 
+**imgopto_jpeg_count** | Option<**i32**> | Count of JPEG images delivered to end user by Image Optimizer. | 
+**imgopto_png_count** | Option<**i32**> | Count of PNG images delivered to end user by Image Optimizer. | 
+**imgopto_gif_count** | Option<**i32**> | Count of GIF images delivered to end user by Image Optimizer. | 
+**imgopto_webp_count** | Option<**i32**> | Count of WebP images delivered to end user by Image Optimizer. | 
+**imgopto_jpegxl_count** | Option<**i32**> | Count of JPEGXL images delivered to end user by Image Optimizer. | 
+**imgopto_svg_count** | Option<**i32**> | Count of SVG images delivered to end user by Image Optimizer. | 
+**imgopto_mp4_count** | Option<**i32**> | Count of MP4s delivered to end user by Image Optimizer. | 
+**compute_service_resource_limits_error** | Option<**i32**> | Aggregate of fatal errors caused by exceeding allocated resource limits, specifically runtime duration, vCPU usage, and heap memory limits. | 
+**compute_service_runtime_error** | Option<**i32**> | Fatal errors caused by service logic faults, including stack overflows, unreachable code traps, illegal memory access, or attempts to send multiple responses. | 
+**compute_service_chain_error** | Option<**i32**> | Fatal errors caused by the service path exceeding hop or service limits, or where a forwarding loop is detected via CDN-Loop headers. | 
+**compute_platform_internal_error** | Option<**i32**> | Fatal errors caused by internal errors in Fastly’s Compute platform. | 
+**compute_service_timeout_error** | Option<**i32**> | Fatal errors caused by exceeding the per-request runtime limit. | 
+**compute_service_vcpu_exceeded_error** | Option<**i32**> | Fatal errors caused by exceeding the per-request vCPU time limit. | 
+**compute_service_limits_error** | Option<**i32**> | Non-fatal errors caused by attempts to exceed defined operational limits, such as simultaneous backend requests or cache transactions. | 
+**compute_platform_invalid_request_error** | Option<**i32**> | Fatal errors caused by unprocessable requests to the service, such as requests with malformed CDN-Loop headers or invalid purge credentials. | 
 **service_id** | Option<**String**> |  | [readonly]
 **start_time** | Option<**i64**> | Timestamp for the start of the time period being reported | 
 

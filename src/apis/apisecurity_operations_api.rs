@@ -11,6 +11,30 @@ use reqwest;
 use crate::apis::ResponseContent;
 use super::{Error, configuration};
 
+/// struct for passing parameters to the method [`api_security_bulk_add_tags_to_operations`]
+#[derive(Clone, Debug, Default)]
+pub struct ApiSecurityBulkAddTagsToOperationsParams {
+    /// The unique identifier of the service.
+    pub service_id: String,
+    pub operation_bulk_add_tags: Option<crate::models::OperationBulkAddTags>
+}
+
+/// struct for passing parameters to the method [`api_security_bulk_create_operations`]
+#[derive(Clone, Debug, Default)]
+pub struct ApiSecurityBulkCreateOperationsParams {
+    /// The unique identifier of the service.
+    pub service_id: String,
+    pub operation_bulk_create: Option<crate::models::OperationBulkCreate>
+}
+
+/// struct for passing parameters to the method [`api_security_bulk_delete_operations`]
+#[derive(Clone, Debug, Default)]
+pub struct ApiSecurityBulkDeleteOperationsParams {
+    /// The unique identifier of the service.
+    pub service_id: String,
+    pub operation_bulk_delete: Option<crate::models::OperationBulkDelete>
+}
+
 /// struct for passing parameters to the method [`api_security_create_operation`]
 #[derive(Clone, Debug, Default)]
 pub struct ApiSecurityCreateOperationParams {
@@ -68,8 +92,12 @@ pub struct ApiSecurityGetOperationTagParams {
 pub struct ApiSecurityListDiscoveredOperationsParams {
     /// The unique identifier of the service.
     pub service_id: String,
-    /// Filter operations by status. Only operations with this status will be returned.
-    pub status: Option<String>,
+    /// Filter operations by HTTP method.
+    pub method: Option<Vec<String>>,
+    /// Filter operations by fully-qualified domain name (exact match).
+    pub domain: Option<Vec<String>>,
+    /// Filter operations by path (exact match).
+    pub path: Option<String>,
     /// The maximum number of operations to return per page.
     pub limit: Option<i32>,
     /// The page number to return.
@@ -80,7 +108,11 @@ pub struct ApiSecurityListDiscoveredOperationsParams {
 #[derive(Clone, Debug, Default)]
 pub struct ApiSecurityListOperationTagsParams {
     /// The unique identifier of the service.
-    pub service_id: String
+    pub service_id: String,
+    /// The maximum number of operations to return per page.
+    pub limit: Option<i32>,
+    /// The page number to return.
+    pub page: Option<i32>
 }
 
 /// struct for passing parameters to the method [`api_security_list_operations`]
@@ -90,6 +122,14 @@ pub struct ApiSecurityListOperationsParams {
     pub service_id: String,
     /// Filter operations by operation tag ID. Only operations associated with this operation tag will be returned.
     pub tag_id: Option<String>,
+    /// Filter operations by status. Defaults to SAVED if omitted.
+    pub status: Option<String>,
+    /// Filter operations by HTTP method.
+    pub method: Option<Vec<String>>,
+    /// Filter operations by fully-qualified domain name (exact match).
+    pub domain: Option<Vec<String>>,
+    /// Filter operations by path (exact match).
+    pub path: Option<String>,
     /// The maximum number of operations to return per page.
     pub limit: Option<i32>,
     /// The page number to return.
@@ -116,6 +156,42 @@ pub struct ApiSecurityUpdateOperationTagParams {
     pub body: Option<crate::models::TagBase>
 }
 
+
+/// struct for typed errors of method [`api_security_bulk_add_tags_to_operations`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ApiSecurityBulkAddTagsToOperationsError {
+    Status400(serde_json::Value),
+    Status401(serde_json::Value),
+    Status403(serde_json::Value),
+    Status404(serde_json::Value),
+    Status429(serde_json::Value),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`api_security_bulk_create_operations`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ApiSecurityBulkCreateOperationsError {
+    Status400(serde_json::Value),
+    Status401(serde_json::Value),
+    Status403(serde_json::Value),
+    Status404(serde_json::Value),
+    Status429(serde_json::Value),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`api_security_bulk_delete_operations`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ApiSecurityBulkDeleteOperationsError {
+    Status400(serde_json::Value),
+    Status401(serde_json::Value),
+    Status403(serde_json::Value),
+    Status404(serde_json::Value),
+    Status429(serde_json::Value),
+    UnknownValue(serde_json::Value),
+}
 
 /// struct for typed errors of method [`api_security_create_operation`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -247,6 +323,168 @@ pub enum ApiSecurityUpdateOperationTagError {
     UnknownValue(serde_json::Value),
 }
 
+
+/// Add tags to multiple operations in a single request.
+pub async fn api_security_bulk_add_tags_to_operations(configuration: &mut configuration::Configuration, params: ApiSecurityBulkAddTagsToOperationsParams) -> Result<crate::models::InlineResponse2071, Error<ApiSecurityBulkAddTagsToOperationsError>> {
+    let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let service_id = params.service_id;
+    let operation_bulk_add_tags = params.operation_bulk_add_tags;
+
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!("{}/api-security/v1/services/{service_id}/operations-bulk-tags", local_var_configuration.base_path, service_id=crate::apis::urlencode(service_id));
+    let mut local_var_req_builder = local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+    if let Some(ref local_var_apikey) = local_var_configuration.api_key {
+        let local_var_key = local_var_apikey.key.clone();
+        let local_var_value = match local_var_apikey.prefix {
+            Some(ref local_var_prefix) => format!("{} {}", local_var_prefix, local_var_key),
+            None => local_var_key,
+        };
+        local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
+    };
+    local_var_req_builder = local_var_req_builder.json(&operation_bulk_add_tags);
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        serde_json::from_str(&local_var_content).map_err(Error::from)
+    } else {
+        let local_var_entity: Option<ApiSecurityBulkAddTagsToOperationsError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        Err(Error::ResponseError(local_var_error))
+    }
+}
+
+/// Create multiple operations associated with a specific service in a single request.
+pub async fn api_security_bulk_create_operations(configuration: &mut configuration::Configuration, params: ApiSecurityBulkCreateOperationsParams) -> Result<crate::models::InlineResponse207, Error<ApiSecurityBulkCreateOperationsError>> {
+    let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let service_id = params.service_id;
+    let operation_bulk_create = params.operation_bulk_create;
+
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!("{}/api-security/v1/services/{service_id}/operations-bulk", local_var_configuration.base_path, service_id=crate::apis::urlencode(service_id));
+    let mut local_var_req_builder = local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+    if let Some(ref local_var_apikey) = local_var_configuration.api_key {
+        let local_var_key = local_var_apikey.key.clone();
+        let local_var_value = match local_var_apikey.prefix {
+            Some(ref local_var_prefix) => format!("{} {}", local_var_prefix, local_var_key),
+            None => local_var_key,
+        };
+        local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
+    };
+    local_var_req_builder = local_var_req_builder.json(&operation_bulk_create);
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "POST" != "GET" && "POST" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        serde_json::from_str(&local_var_content).map_err(Error::from)
+    } else {
+        let local_var_entity: Option<ApiSecurityBulkCreateOperationsError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        Err(Error::ResponseError(local_var_error))
+    }
+}
+
+/// Delete multiple operations in a single request.
+pub async fn api_security_bulk_delete_operations(configuration: &mut configuration::Configuration, params: ApiSecurityBulkDeleteOperationsParams) -> Result<crate::models::InlineResponse2071, Error<ApiSecurityBulkDeleteOperationsError>> {
+    let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let service_id = params.service_id;
+    let operation_bulk_delete = params.operation_bulk_delete;
+
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!("{}/api-security/v1/services/{service_id}/operations-bulk", local_var_configuration.base_path, service_id=crate::apis::urlencode(service_id));
+    let mut local_var_req_builder = local_var_client.request(reqwest::Method::DELETE, local_var_uri_str.as_str());
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+    if let Some(ref local_var_apikey) = local_var_configuration.api_key {
+        let local_var_key = local_var_apikey.key.clone();
+        let local_var_value = match local_var_apikey.prefix {
+            Some(ref local_var_prefix) => format!("{} {}", local_var_prefix, local_var_key),
+            None => local_var_key,
+        };
+        local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
+    };
+    local_var_req_builder = local_var_req_builder.json(&operation_bulk_delete);
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "DELETE" != "GET" && "DELETE" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        serde_json::from_str(&local_var_content).map_err(Error::from)
+    } else {
+        let local_var_entity: Option<ApiSecurityBulkDeleteOperationsError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        Err(Error::ResponseError(local_var_error))
+    }
+}
 
 /// Create a new operation associated with a specific service.
 pub async fn api_security_create_operation(configuration: &mut configuration::Configuration, params: ApiSecurityCreateOperationParams) -> Result<crate::models::OperationGet, Error<ApiSecurityCreateOperationError>> {
@@ -574,7 +812,9 @@ pub async fn api_security_list_discovered_operations(configuration: &mut configu
 
     // unbox the parameters
     let service_id = params.service_id;
-    let status = params.status;
+    let method = params.method;
+    let domain = params.domain;
+    let path = params.path;
     let limit = params.limit;
     let page = params.page;
 
@@ -584,8 +824,20 @@ pub async fn api_security_list_discovered_operations(configuration: &mut configu
     let local_var_uri_str = format!("{}/api-security/v1/services/{service_id}/discovered-operations", local_var_configuration.base_path, service_id=crate::apis::urlencode(service_id));
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
-    if let Some(ref local_var_str) = status {
-        local_var_req_builder = local_var_req_builder.query(&[("status", &local_var_str.to_string())]);
+    if let Some(ref local_var_str) = method {
+        local_var_req_builder = match "multi" {
+            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("method".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
+            _ => local_var_req_builder.query(&[("method", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+        };
+    }
+    if let Some(ref local_var_str) = domain {
+        local_var_req_builder = match "multi" {
+            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("domain".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
+            _ => local_var_req_builder.query(&[("domain", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+        };
+    }
+    if let Some(ref local_var_str) = path {
+        local_var_req_builder = local_var_req_builder.query(&[("path", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = limit {
         local_var_req_builder = local_var_req_builder.query(&[("limit", &local_var_str.to_string())]);
@@ -638,6 +890,8 @@ pub async fn api_security_list_operation_tags(configuration: &mut configuration:
 
     // unbox the parameters
     let service_id = params.service_id;
+    let limit = params.limit;
+    let page = params.page;
 
 
     let local_var_client = &local_var_configuration.client;
@@ -645,6 +899,12 @@ pub async fn api_security_list_operation_tags(configuration: &mut configuration:
     let local_var_uri_str = format!("{}/api-security/v1/services/{service_id}/tags", local_var_configuration.base_path, service_id=crate::apis::urlencode(service_id));
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
+    if let Some(ref local_var_str) = limit {
+        local_var_req_builder = local_var_req_builder.query(&[("limit", &local_var_str.to_string())]);
+    }
+    if let Some(ref local_var_str) = page {
+        local_var_req_builder = local_var_req_builder.query(&[("page", &local_var_str.to_string())]);
+    }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
@@ -691,6 +951,10 @@ pub async fn api_security_list_operations(configuration: &mut configuration::Con
     // unbox the parameters
     let service_id = params.service_id;
     let tag_id = params.tag_id;
+    let status = params.status;
+    let method = params.method;
+    let domain = params.domain;
+    let path = params.path;
     let limit = params.limit;
     let page = params.page;
 
@@ -702,6 +966,24 @@ pub async fn api_security_list_operations(configuration: &mut configuration::Con
 
     if let Some(ref local_var_str) = tag_id {
         local_var_req_builder = local_var_req_builder.query(&[("tag_id", &local_var_str.to_string())]);
+    }
+    if let Some(ref local_var_str) = status {
+        local_var_req_builder = local_var_req_builder.query(&[("status", &local_var_str.to_string())]);
+    }
+    if let Some(ref local_var_str) = method {
+        local_var_req_builder = match "multi" {
+            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("method".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
+            _ => local_var_req_builder.query(&[("method", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+        };
+    }
+    if let Some(ref local_var_str) = domain {
+        local_var_req_builder = match "multi" {
+            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("domain".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
+            _ => local_var_req_builder.query(&[("domain", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+        };
+    }
+    if let Some(ref local_var_str) = path {
+        local_var_req_builder = local_var_req_builder.query(&[("path", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = limit {
         local_var_req_builder = local_var_req_builder.query(&[("limit", &local_var_str.to_string())]);

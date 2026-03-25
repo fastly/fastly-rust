@@ -33,6 +33,8 @@ pub struct GetDmDomainParams {
 #[derive(Clone, Debug, Default)]
 pub struct ListDmDomainsParams {
     pub fqdn: Option<String>,
+    /// (Optional) Filter fully-qualified domain name (FQDN) specifically by match type. If used, requires filtering by FQDN.
+    pub fqdn_match: Option<String>,
     /// Filter results based on a service_id.
     pub service_id: Option<String>,
     /// The order in which to list the results.
@@ -252,6 +254,7 @@ pub async fn list_dm_domains(configuration: &mut configuration::Configuration, p
 
     // unbox the parameters
     let fqdn = params.fqdn;
+    let fqdn_match = params.fqdn_match;
     let service_id = params.service_id;
     let sort = params.sort;
     let activated = params.activated;
@@ -267,6 +270,9 @@ pub async fn list_dm_domains(configuration: &mut configuration::Configuration, p
 
     if let Some(ref local_var_str) = fqdn {
         local_var_req_builder = local_var_req_builder.query(&[("fqdn", &local_var_str.to_string())]);
+    }
+    if let Some(ref local_var_str) = fqdn_match {
+        local_var_req_builder = local_var_req_builder.query(&[("fqdn_match", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = service_id {
         local_var_req_builder = local_var_req_builder.query(&[("service_id", &local_var_str.to_string())]);

@@ -25,6 +25,9 @@ pub struct OperationUpdate {
     /// An array of operation tag IDs associated with this operation.
     #[serde(rename = "tag_ids", skip_serializing_if = "Option::is_none")]
     pub tag_ids: Option<Vec<String>>,
+    /// The status of the operation.
+    #[serde(rename = "status", skip_serializing_if = "Option::is_none")]
+    pub status: Option<Status>,
 }
 
 impl OperationUpdate {
@@ -35,6 +38,7 @@ impl OperationUpdate {
             path: None,
             description: None,
             tag_ids: None,
+            status: None,
         }
     }
 }
@@ -65,6 +69,20 @@ pub enum Method {
 impl Default for Method {
     fn default() -> Method {
         Self::GET
+    }
+}
+/// The status of the operation.
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum Status {
+    #[serde(rename = "SAVED")]
+    SAVED,
+    #[serde(rename = "IGNORED")]
+    IGNORED,
+}
+
+impl Default for Status {
+    fn default() -> Status {
+        Self::SAVED
     }
 }
 

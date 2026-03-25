@@ -19,26 +19,30 @@ pub struct DiscoveredOperationGet {
     /// The path for the operation, which may include path parameters.
     #[serde(rename = "path")]
     pub path: String,
-    /// The current status of the operation.
-    #[serde(rename = "status", skip_serializing_if = "Option::is_none")]
-    pub status: Option<Status>,
+    /// The unique identifier of the discovered operation.
+    #[serde(rename = "id")]
+    pub id: String,
     /// The timestamp when the operation was last updated.
     #[serde(rename = "updated_at", skip_serializing_if = "Option::is_none")]
     pub updated_at: Option<String>,
     /// The timestamp when the operation was last seen in traffic.
     #[serde(rename = "last_seen_at", skip_serializing_if = "Option::is_none")]
     pub last_seen_at: Option<String>,
+    /// Requests per second observed for this operation.
+    #[serde(rename = "rps", skip_serializing_if = "Option::is_none")]
+    pub rps: Option<f32>,
 }
 
 impl DiscoveredOperationGet {
-    pub fn new(method: Method, domain: String, path: String) -> DiscoveredOperationGet {
+    pub fn new(method: Method, domain: String, path: String, id: String) -> DiscoveredOperationGet {
         DiscoveredOperationGet {
             method,
             domain,
             path,
-            status: None,
+            id,
             updated_at: None,
             last_seen_at: None,
+            rps: None,
         }
     }
 }
@@ -69,22 +73,6 @@ pub enum Method {
 impl Default for Method {
     fn default() -> Method {
         Self::GET
-    }
-}
-/// The current status of the operation.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
-pub enum Status {
-    #[serde(rename = "DISCOVERED")]
-    DISCOVERED,
-    #[serde(rename = "SAVED")]
-    SAVED,
-    #[serde(rename = "IGNORED")]
-    IGNORED,
-}
-
-impl Default for Status {
-    fn default() -> Status {
-        Self::DISCOVERED
     }
 }
 

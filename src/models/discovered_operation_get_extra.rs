@@ -10,41 +10,29 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct DiscoveredOperationGetExtra {
-    /// The current status of the operation.
-    #[serde(rename = "status", skip_serializing_if = "Option::is_none")]
-    pub status: Option<Status>,
+    /// The unique identifier of the discovered operation.
+    #[serde(rename = "id")]
+    pub id: String,
     /// The timestamp when the operation was last updated.
     #[serde(rename = "updated_at", skip_serializing_if = "Option::is_none")]
     pub updated_at: Option<String>,
     /// The timestamp when the operation was last seen in traffic.
     #[serde(rename = "last_seen_at", skip_serializing_if = "Option::is_none")]
     pub last_seen_at: Option<String>,
+    /// Requests per second observed for this operation.
+    #[serde(rename = "rps", skip_serializing_if = "Option::is_none")]
+    pub rps: Option<f32>,
 }
 
 impl DiscoveredOperationGetExtra {
-    pub fn new() -> DiscoveredOperationGetExtra {
+    pub fn new(id: String) -> DiscoveredOperationGetExtra {
         DiscoveredOperationGetExtra {
-            status: None,
+            id,
             updated_at: None,
             last_seen_at: None,
+            rps: None,
         }
     }
 }
 
-/// The current status of the operation.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
-pub enum Status {
-    #[serde(rename = "DISCOVERED")]
-    DISCOVERED,
-    #[serde(rename = "SAVED")]
-    SAVED,
-    #[serde(rename = "IGNORED")]
-    IGNORED,
-}
-
-impl Default for Status {
-    fn default() -> Status {
-        Self::DISCOVERED
-    }
-}
 

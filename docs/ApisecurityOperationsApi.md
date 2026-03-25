@@ -5,6 +5,9 @@
 
 Method | HTTP request | Description
 ------ | ------------ | -----------
+[**api_security_bulk_add_tags_to_operations**](ApisecurityOperationsApi.md#api_security_bulk_add_tags_to_operations) | **POST** /api-security/v1/services/{service_id}/operations-bulk-tags | Bulk add tags to operations
+[**api_security_bulk_create_operations**](ApisecurityOperationsApi.md#api_security_bulk_create_operations) | **POST** /api-security/v1/services/{service_id}/operations-bulk | Bulk create operations
+[**api_security_bulk_delete_operations**](ApisecurityOperationsApi.md#api_security_bulk_delete_operations) | **DELETE** /api-security/v1/services/{service_id}/operations-bulk | Bulk delete operations
 [**api_security_create_operation**](ApisecurityOperationsApi.md#api_security_create_operation) | **POST** /api-security/v1/services/{service_id}/operations | Create operation
 [**api_security_create_operation_tag**](ApisecurityOperationsApi.md#api_security_create_operation_tag) | **POST** /api-security/v1/services/{service_id}/tags | Create operation tag
 [**api_security_delete_operation**](ApisecurityOperationsApi.md#api_security_delete_operation) | **DELETE** /api-security/v1/services/{service_id}/operations/{operation_id} | Delete operation
@@ -17,6 +20,114 @@ Method | HTTP request | Description
 [**api_security_update_operation**](ApisecurityOperationsApi.md#api_security_update_operation) | **PATCH** /api-security/v1/services/{service_id}/operations/{operation_id} | Update operation
 [**api_security_update_operation_tag**](ApisecurityOperationsApi.md#api_security_update_operation_tag) | **PATCH** /api-security/v1/services/{service_id}/tags/{tag_id} | Update operation tag
 
+
+
+## api_security_bulk_add_tags_to_operations
+
+Add tags to multiple operations in a single request.
+
+```rust
+let cfg = &Configuration::default();
+let params = ApiSecurityBulkAddTagsToOperationsParams {
+    // parameters
+};
+api_security_bulk_add_tags_to_operations(cfg, params)
+```
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**service_id** | **String** | The unique identifier of the service. | [required] |
+**operation_bulk_add_tags** | Option\<[**OperationBulkAddTags**](OperationBulkAddTags.md)> |  |  |
+
+### Return type
+
+[**crate::models::InlineResponse2071**](InlineResponse2071.md)
+
+### Authorization
+
+[token](../README.md#token)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+
+## api_security_bulk_create_operations
+
+Create multiple operations associated with a specific service in a single request.
+
+```rust
+let cfg = &Configuration::default();
+let params = ApiSecurityBulkCreateOperationsParams {
+    // parameters
+};
+api_security_bulk_create_operations(cfg, params)
+```
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**service_id** | **String** | The unique identifier of the service. | [required] |
+**operation_bulk_create** | Option\<[**OperationBulkCreate**](OperationBulkCreate.md)> |  |  |
+
+### Return type
+
+[**crate::models::InlineResponse207**](InlineResponse207.md)
+
+### Authorization
+
+[token](../README.md#token)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+
+## api_security_bulk_delete_operations
+
+Delete multiple operations in a single request.
+
+```rust
+let cfg = &Configuration::default();
+let params = ApiSecurityBulkDeleteOperationsParams {
+    // parameters
+};
+api_security_bulk_delete_operations(cfg, params)
+```
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**service_id** | **String** | The unique identifier of the service. | [required] |
+**operation_bulk_delete** | Option\<[**OperationBulkDelete**](OperationBulkDelete.md)> |  |  |
+
+### Return type
+
+[**crate::models::InlineResponse2071**](InlineResponse2071.md)
+
+### Authorization
+
+[token](../README.md#token)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 
 ## api_security_create_operation
@@ -253,7 +364,9 @@ api_security_list_discovered_operations(cfg, params)
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **service_id** | **String** | The unique identifier of the service. | [required] |
-**status** | Option\<**String**> | Filter operations by status. Only operations with this status will be returned. |  |
+**method** | Option\<[**Vec&lt;String&gt;**](String.md)> | Filter operations by HTTP method. |  |
+**domain** | Option\<[**Vec&lt;String&gt;**](String.md)> | Filter operations by fully-qualified domain name (exact match). |  |
+**path** | Option\<**String**> | Filter operations by path (exact match). |  |
 **limit** | Option\<**i32**> | The maximum number of operations to return per page. |  |[default to 100]
 **page** | Option\<**i32**> | The page number to return. |  |[default to 0]
 
@@ -291,6 +404,8 @@ api_security_list_operation_tags(cfg, params)
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **service_id** | **String** | The unique identifier of the service. | [required] |
+**limit** | Option\<**i32**> | The maximum number of operations to return per page. |  |[default to 100]
+**page** | Option\<**i32**> | The page number to return. |  |[default to 0]
 
 ### Return type
 
@@ -327,6 +442,10 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **service_id** | **String** | The unique identifier of the service. | [required] |
 **tag_id** | Option\<**String**> | Filter operations by operation tag ID. Only operations associated with this operation tag will be returned. |  |
+**status** | Option\<**String**> | Filter operations by status. Defaults to SAVED if omitted. |  |[default to SAVED]
+**method** | Option\<[**Vec&lt;String&gt;**](String.md)> | Filter operations by HTTP method. |  |
+**domain** | Option\<[**Vec&lt;String&gt;**](String.md)> | Filter operations by fully-qualified domain name (exact match). |  |
+**path** | Option\<**String**> | Filter operations by path (exact match). |  |
 **limit** | Option\<**i32**> | The maximum number of operations to return per page. |  |[default to 100]
 **page** | Option\<**i32**> | The page number to return. |  |[default to 0]
 

@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **path** | Option<**String**> | The path for the operation, which may include path parameters. | 
 **description** | Option<**String**> | A description of what the operation does. | 
 **tag_ids** | Option<**Vec<String>**> | An array of operation tag IDs associated with this operation. | 
+**status** | Option<**String**> | The status of the operation. | 
 
 [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
