@@ -38,7 +38,7 @@ Name | Type | Description  | Required | Notes
 **format** | Option\<**String**> | A Fastly [log format string](https://www.fastly.com/documentation/guides/integrations/streaming-logs/custom-log-formats/). |  |[default to %h %l %u %t "%r" %&gt;s %b]
 **log_processing_region** | Option\<**String**> | The geographic region where the logs will be processed before streaming. Valid values are `us`, `eu`, and `none` for global. |  |[default to LogProcessingRegion_None]
 **format_version** | Option\<**i32**> | The version of the custom logging format used for the configured endpoint. The logging call gets placed by default in `vcl_log` if `format_version` is set to `2` and in `vcl_deliver` if `format_version` is set to `1`.  |  |[default to FormatVersion_v2]
-**message_type** | Option\<**String**> | How the message should be formatted. |  |[default to MessageType_Classic]
+**message_type** | Option\<**String**> | How the message should be formatted. |  |[default to MessageType_Blank]
 **timestamp_format** | Option\<**String**> | A timestamp format |  |
 **compression_codec** | Option\<**String**> | The codec used for compressing your logs. Valid values are `zstd`, `snappy`, and `gzip`. Specifying both `compression_codec` and `gzip_level` in the same API request will result in an error. |  |
 **period** | Option\<**i32**> | How frequently log files are finalized so they can be available for reading (in seconds). |  |[default to 3600]
@@ -204,7 +204,7 @@ Name | Type | Description  | Required | Notes
 **format** | Option\<**String**> | A Fastly [log format string](https://www.fastly.com/documentation/guides/integrations/streaming-logs/custom-log-formats/). |  |[default to %h %l %u %t "%r" %&gt;s %b]
 **log_processing_region** | Option\<**String**> | The geographic region where the logs will be processed before streaming. Valid values are `us`, `eu`, and `none` for global. |  |[default to LogProcessingRegion_None]
 **format_version** | Option\<**i32**> | The version of the custom logging format used for the configured endpoint. The logging call gets placed by default in `vcl_log` if `format_version` is set to `2` and in `vcl_deliver` if `format_version` is set to `1`.  |  |[default to FormatVersion_v2]
-**message_type** | Option\<**String**> | How the message should be formatted. |  |[default to MessageType_Classic]
+**message_type** | Option\<**String**> | How the message should be formatted. |  |[default to MessageType_Blank]
 **timestamp_format** | Option\<**String**> | A timestamp format |  |
 **compression_codec** | Option\<**String**> | The codec used for compressing your logs. Valid values are `zstd`, `snappy`, and `gzip`. Specifying both `compression_codec` and `gzip_level` in the same API request will result in an error. |  |
 **period** | Option\<**i32**> | How frequently log files are finalized so they can be available for reading (in seconds). |  |[default to 3600]

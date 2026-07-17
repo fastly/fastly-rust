@@ -32,6 +32,21 @@ pub struct GetProductBotManagementParams {
     pub service_id: String
 }
 
+/// struct for passing parameters to the method [`get_product_bot_management_configuration`]
+#[derive(Clone, Debug, Default)]
+pub struct GetProductBotManagementConfigurationParams {
+    /// Alphanumeric string identifying the service.
+    pub service_id: String
+}
+
+/// struct for passing parameters to the method [`set_product_bot_management_configuration`]
+#[derive(Clone, Debug, Default)]
+pub struct SetProductBotManagementConfigurationParams {
+    /// Alphanumeric string identifying the service.
+    pub service_id: String,
+    pub bot_management_request_update_configuration: Option<crate::models::BotManagementRequestUpdateConfiguration>
+}
+
 
 /// struct for typed errors of method [`disable_product_bot_management`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -54,10 +69,24 @@ pub enum GetProductBotManagementError {
     UnknownValue(serde_json::Value),
 }
 
+/// struct for typed errors of method [`get_product_bot_management_configuration`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetProductBotManagementConfigurationError {
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method [`get_services_product_bot_management`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetServicesProductBotManagementError {
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`set_product_bot_management_configuration`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum SetProductBotManagementConfigurationError {
     UnknownValue(serde_json::Value),
 }
 
@@ -218,6 +247,58 @@ pub async fn get_product_bot_management(configuration: &mut configuration::Confi
     }
 }
 
+/// Get the configuration of the Bot Management product on a service.
+pub async fn get_product_bot_management_configuration(configuration: &mut configuration::Configuration, params: GetProductBotManagementConfigurationParams) -> Result<crate::models::BotManagementResponseConfigure, Error<GetProductBotManagementConfigurationError>> {
+    let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let service_id = params.service_id;
+
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!("{}/enabled-products/v1/bot_management/services/{service_id}/configuration", local_var_configuration.base_path, service_id=crate::apis::urlencode(service_id));
+    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+    if let Some(ref local_var_apikey) = local_var_configuration.api_key {
+        let local_var_key = local_var_apikey.key.clone();
+        let local_var_value = match local_var_apikey.prefix {
+            Some(ref local_var_prefix) => format!("{} {}", local_var_prefix, local_var_key),
+            None => local_var_key,
+        };
+        local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
+    };
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "GET" != "GET" && "GET" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        serde_json::from_str(&local_var_content).map_err(Error::from)
+    } else {
+        let local_var_entity: Option<GetProductBotManagementConfigurationError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        Err(Error::ResponseError(local_var_error))
+    }
+}
+
 /// Get all the services which have the Bot Management product enabled.
 pub async fn get_services_product_bot_management(configuration: &mut configuration::Configuration) -> Result<crate::models::BotManagementResponseBodyGetAllServices, Error<GetServicesProductBotManagementError>> {
     let local_var_configuration = configuration;
@@ -264,6 +345,60 @@ pub async fn get_services_product_bot_management(configuration: &mut configurati
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
         let local_var_entity: Option<GetServicesProductBotManagementError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        Err(Error::ResponseError(local_var_error))
+    }
+}
+
+/// Update the configuration of the Bot Management product on a service.
+pub async fn set_product_bot_management_configuration(configuration: &mut configuration::Configuration, params: SetProductBotManagementConfigurationParams) -> Result<crate::models::BotManagementResponseConfigure, Error<SetProductBotManagementConfigurationError>> {
+    let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let service_id = params.service_id;
+    let bot_management_request_update_configuration = params.bot_management_request_update_configuration;
+
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!("{}/enabled-products/v1/bot_management/services/{service_id}/configuration", local_var_configuration.base_path, service_id=crate::apis::urlencode(service_id));
+    let mut local_var_req_builder = local_var_client.request(reqwest::Method::PATCH, local_var_uri_str.as_str());
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+    if let Some(ref local_var_apikey) = local_var_configuration.api_key {
+        let local_var_key = local_var_apikey.key.clone();
+        let local_var_value = match local_var_apikey.prefix {
+            Some(ref local_var_prefix) => format!("{} {}", local_var_prefix, local_var_key),
+            None => local_var_key,
+        };
+        local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
+    };
+    local_var_req_builder = local_var_req_builder.json(&bot_management_request_update_configuration);
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PATCH" != "GET" && "PATCH" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        serde_json::from_str(&local_var_content).map_err(Error::from)
+    } else {
+        let local_var_entity: Option<SetProductBotManagementConfigurationError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }

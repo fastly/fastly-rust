@@ -42,14 +42,18 @@ pub struct CreateBackendParams {
     pub ipv4: Option<String>,
     /// IPv6 address of the backend. May be used as an alternative to `address` to set the backend location.
     pub ipv6: Option<String>,
-    /// How long in seconds to keep a persistent connection to the backend between requests. By default, Varnish keeps connections open as long as it can.
+    /// How long (in seconds) to keep a persistent connection to the backend between requests. By default, Fastly keeps connections open as long as it can.
     pub keepalive_time: Option<i32>,
     /// Maximum number of concurrent connections this backend will accept.
     pub max_conn: Option<i32>,
+    /// Maximum time from creation (in milliseconds) that a pooled HTTP keepalive connection will be eligible for reuse; 0 is treated as unlimited.
+    pub max_lifetime: Option<i32>,
     /// Maximum allowed TLS version on SSL connections to this backend. If your backend server is not able to negotiate a connection meeting this constraint, a synthetic `503` error response will be generated.
     pub max_tls_version: Option<String>,
     /// Minimum allowed TLS version on SSL connections to this backend. If your backend server is not able to negotiate a connection meeting this constraint, a synthetic `503` error response will be generated.
     pub min_tls_version: Option<String>,
+    /// Maximum number of requests allowed over a single, pooled HTTP keepalive connection to this backend; 0 is treated as unlimited.
+    pub max_use: Option<i32>,
     /// The name of the backend.
     pub name: Option<String>,
     /// If set, will replace the client-supplied HTTP `Host` header on connections to this backend. Applied after VCL has been processed, so this setting will take precedence over changing `bereq.http.Host` in VCL.
@@ -158,14 +162,18 @@ pub struct UpdateBackendParams {
     pub ipv4: Option<String>,
     /// IPv6 address of the backend. May be used as an alternative to `address` to set the backend location.
     pub ipv6: Option<String>,
-    /// How long in seconds to keep a persistent connection to the backend between requests. By default, Varnish keeps connections open as long as it can.
+    /// How long (in seconds) to keep a persistent connection to the backend between requests. By default, Fastly keeps connections open as long as it can.
     pub keepalive_time: Option<i32>,
     /// Maximum number of concurrent connections this backend will accept.
     pub max_conn: Option<i32>,
+    /// Maximum time from creation (in milliseconds) that a pooled HTTP keepalive connection will be eligible for reuse; 0 is treated as unlimited.
+    pub max_lifetime: Option<i32>,
     /// Maximum allowed TLS version on SSL connections to this backend. If your backend server is not able to negotiate a connection meeting this constraint, a synthetic `503` error response will be generated.
     pub max_tls_version: Option<String>,
     /// Minimum allowed TLS version on SSL connections to this backend. If your backend server is not able to negotiate a connection meeting this constraint, a synthetic `503` error response will be generated.
     pub min_tls_version: Option<String>,
+    /// Maximum number of requests allowed over a single, pooled HTTP keepalive connection to this backend; 0 is treated as unlimited.
+    pub max_use: Option<i32>,
     /// The name of the backend.
     pub name: Option<String>,
     /// If set, will replace the client-supplied HTTP `Host` header on connections to this backend. Applied after VCL has been processed, so this setting will take precedence over changing `bereq.http.Host` in VCL.
@@ -268,8 +276,10 @@ pub async fn create_backend(configuration: &mut configuration::Configuration, pa
     let ipv6 = params.ipv6;
     let keepalive_time = params.keepalive_time;
     let max_conn = params.max_conn;
+    let max_lifetime = params.max_lifetime;
     let max_tls_version = params.max_tls_version;
     let min_tls_version = params.min_tls_version;
+    let max_use = params.max_use;
     let name = params.name;
     let override_host = params.override_host;
     let port = params.port;
@@ -352,11 +362,17 @@ pub async fn create_backend(configuration: &mut configuration::Configuration, pa
     if let Some(local_var_param_value) = max_conn {
         local_var_form_params.insert("max_conn", local_var_param_value.to_string());
     }
+    if let Some(local_var_param_value) = max_lifetime {
+        local_var_form_params.insert("max_lifetime", local_var_param_value.to_string());
+    }
     if let Some(local_var_param_value) = max_tls_version {
         local_var_form_params.insert("max_tls_version", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = min_tls_version {
         local_var_form_params.insert("min_tls_version", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = max_use {
+        local_var_form_params.insert("max_use", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = name {
         local_var_form_params.insert("name", local_var_param_value.to_string());
@@ -633,8 +649,10 @@ pub async fn update_backend(configuration: &mut configuration::Configuration, pa
     let ipv6 = params.ipv6;
     let keepalive_time = params.keepalive_time;
     let max_conn = params.max_conn;
+    let max_lifetime = params.max_lifetime;
     let max_tls_version = params.max_tls_version;
     let min_tls_version = params.min_tls_version;
+    let max_use = params.max_use;
     let name = params.name;
     let override_host = params.override_host;
     let port = params.port;
@@ -717,11 +735,17 @@ pub async fn update_backend(configuration: &mut configuration::Configuration, pa
     if let Some(local_var_param_value) = max_conn {
         local_var_form_params.insert("max_conn", local_var_param_value.to_string());
     }
+    if let Some(local_var_param_value) = max_lifetime {
+        local_var_form_params.insert("max_lifetime", local_var_param_value.to_string());
+    }
     if let Some(local_var_param_value) = max_tls_version {
         local_var_form_params.insert("max_tls_version", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = min_tls_version {
         local_var_form_params.insert("min_tls_version", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = max_use {
+        local_var_form_params.insert("max_use", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = name {
         local_var_form_params.insert("name", local_var_param_value.to_string());

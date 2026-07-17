@@ -176,19 +176,19 @@ impl Default for FormatVersion {
 /// How the message should be formatted.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum MessageType {
+    #[serde(rename = "blank")]
+    Blank,
     #[serde(rename = "classic")]
     Classic,
     #[serde(rename = "loggly")]
     Loggly,
     #[serde(rename = "logplex")]
     Logplex,
-    #[serde(rename = "blank")]
-    Blank,
 }
 
 impl Default for MessageType {
     fn default() -> MessageType {
-        Self::Classic
+        Self::Blank
     }
 }
 /// The codec used for compressing your logs. Valid values are `zstd`, `snappy`, and `gzip`. Specifying both `compression_codec` and `gzip_level` in the same API request will result in an error.

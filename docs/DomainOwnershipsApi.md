@@ -27,7 +27,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**crate::models::InlineResponse2008**](InlineResponse2008.md)
+[**crate::models::InlineResponse20015**](InlineResponse20015.md)
 
 ### Authorization
 

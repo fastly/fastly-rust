@@ -12,31 +12,31 @@ use std::fmt;
 /// How the message should be formatted.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum LoggingMessageType {
+    #[serde(rename = "blank")]
+    Blank,
     #[serde(rename = "classic")]
     Classic,
     #[serde(rename = "loggly")]
     Loggly,
     #[serde(rename = "logplex")]
     Logplex,
-    #[serde(rename = "blank")]
-    Blank,
 
 }
 
 impl fmt::Display for LoggingMessageType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
+            Self::Blank => write!(f, "{}", "blank"),
             Self::Classic => write!(f, "{}", "classic"),
             Self::Loggly => write!(f, "{}", "loggly"),
             Self::Logplex => write!(f, "{}", "logplex"),
-            Self::Blank => write!(f, "{}", "blank"),
         }
     }
 }
 
 impl Default for LoggingMessageType {
     fn default() -> LoggingMessageType {
-        Self::Classic
+        Self::Blank
     }
 }
 

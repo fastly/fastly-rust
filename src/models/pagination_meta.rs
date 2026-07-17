@@ -5,32 +5,34 @@
  *
  */
 
+/// PaginationMeta : Cursor-based pagination metadata.
 
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct PaginationMeta {
-    /// Current page.
-    #[serde(rename = "current_page", skip_serializing_if = "Option::is_none")]
-    pub current_page: Option<i32>,
-    /// Number of records per page.
-    #[serde(rename = "per_page", skip_serializing_if = "Option::is_none")]
-    pub per_page: Option<i32>,
-    /// Total records in result set.
-    #[serde(rename = "record_count", skip_serializing_if = "Option::is_none")]
-    pub record_count: Option<i32>,
-    /// Total pages in result set.
-    #[serde(rename = "total_pages", skip_serializing_if = "Option::is_none")]
-    pub total_pages: Option<i32>,
+    /// The number of records returned per page.
+    #[serde(rename = "limit", skip_serializing_if = "Option::is_none")]
+    pub limit: Option<i32>,
+    /// Cursor value used to retrieve the next page of results. Empty if there are no more results.
+    #[serde(rename = "next_cursor", skip_serializing_if = "Option::is_none")]
+    pub next_cursor: Option<String>,
+    /// Cursor value used to retrieve the previous page of results. Empty if there is no previous page.
+    #[serde(rename = "previous_cursor", skip_serializing_if = "Option::is_none")]
+    pub previous_cursor: Option<String>,
+    /// The sort order applied to the results.
+    #[serde(rename = "sort", skip_serializing_if = "Option::is_none")]
+    pub sort: Option<String>,
 }
 
 impl PaginationMeta {
+    /// Cursor-based pagination metadata.
     pub fn new() -> PaginationMeta {
         PaginationMeta {
-            current_page: None,
-            per_page: None,
-            record_count: None,
-            total_pages: None,
+            limit: None,
+            next_cursor: None,
+            previous_cursor: None,
+            sort: None,
         }
     }
 }

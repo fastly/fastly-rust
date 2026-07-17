@@ -15,9 +15,8 @@ pub struct RealtimeEntry {
     pub recorded: Option<Box<crate::models::RealtimeEntryRecorded>>,
     #[serde(rename = "aggregated", skip_serializing_if = "Option::is_none")]
     pub aggregated: Option<Box<crate::models::RealtimeEntryAggregated>>,
-    /// Groups [measurements](#measurements-data-model) by POP. See the [POPs API](https://www.fastly.com/documentation/reference/api/utils/pops/) for details of POP identifiers.
     #[serde(rename = "datacenter", skip_serializing_if = "Option::is_none")]
-    pub datacenter: Option<::std::collections::HashMap<String, crate::models::RealtimeMeasurements>>,
+    pub datacenter: Option<Box<crate::models::RealtimeEntryDatacenter>>,
 }
 
 impl RealtimeEntry {

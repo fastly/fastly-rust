@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**data** | Option<[**Vec&lt;crate::models::KvStoreDetails&gt;**](KvStoreDetails.md)> |  | 
-**meta** | Option<[**crate::models::PaginationCursorMeta**](PaginationCursorMeta.md)> |  | 
+**data** | Option<[**Vec&lt;crate::models::SecurityHeader&gt;**](SecurityHeader.md)> |  | 
+**meta** | Option<[**crate::models::PaginationMeta**](PaginationMeta.md)> |  | 
 
 [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

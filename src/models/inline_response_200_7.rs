@@ -11,10 +11,9 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct InlineResponse2007 {
     #[serde(rename = "data", skip_serializing_if = "Option::is_none")]
-    pub data: Option<Vec<crate::models::SuccessfulResponseAsObject>>,
-    /// Meta for the pagination.
+    pub data: Option<Vec<crate::models::Script>>,
     #[serde(rename = "meta", skip_serializing_if = "Option::is_none")]
-    pub meta: Option<Box<serde_json::Value>>,
+    pub meta: Option<Box<crate::models::PaginationMeta>>,
 }
 
 impl InlineResponse2007 {

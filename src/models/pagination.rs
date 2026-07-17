@@ -13,7 +13,7 @@ pub struct Pagination {
     #[serde(rename = "links", skip_serializing_if = "Option::is_none")]
     pub links: Option<Box<crate::models::PaginationLinks>>,
     #[serde(rename = "meta", skip_serializing_if = "Option::is_none")]
-    pub meta: Option<Box<crate::models::PaginationMeta>>,
+    pub meta: Option<Box<crate::models::PaginationMeta1>>,
 }
 
 impl Pagination {

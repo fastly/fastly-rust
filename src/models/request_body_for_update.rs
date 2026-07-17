@@ -14,6 +14,9 @@ pub struct RequestBodyForUpdate {
     /// The `service_id` associated with your domain or `null` if there is no association.
     #[serde(rename = "service_id", skip_serializing_if = "Option::is_none")]
     pub service_id: Option<String>,
+    /// The `routing_configuration_id` associated with your domain or `null` if there is no association.
+    #[serde(rename = "routing_configuration_id", skip_serializing_if = "Option::is_none")]
+    pub routing_configuration_id: Option<String>,
     /// A freeform descriptive note.
     #[serde(rename = "description", skip_serializing_if = "Option::is_none")]
     pub description: Option<String>,
@@ -24,6 +27,7 @@ impl RequestBodyForUpdate {
     pub fn new() -> RequestBodyForUpdate {
         RequestBodyForUpdate {
             service_id: None,
+            routing_configuration_id: None,
             description: None,
         }
     }

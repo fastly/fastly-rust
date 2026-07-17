@@ -145,7 +145,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::InlineResponse20013**](InlineResponse20013.md)
+[**crate::models::InlineResponse20021**](InlineResponse20021.md)
 
 ### Authorization
 

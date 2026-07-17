@@ -46,18 +46,24 @@ pub struct BackendResponse {
     /// IPv6 address of the backend. May be used as an alternative to `address` to set the backend location.
     #[serde(rename = "ipv6", skip_serializing_if = "Option::is_none")]
     pub ipv6: Option<String>,
-    /// How long in seconds to keep a persistent connection to the backend between requests. By default, Varnish keeps connections open as long as it can.
+    /// How long (in seconds) to keep a persistent connection to the backend between requests. By default, Fastly keeps connections open as long as it can.
     #[serde(rename = "keepalive_time", skip_serializing_if = "Option::is_none")]
     pub keepalive_time: Option<i32>,
     /// Maximum number of concurrent connections this backend will accept.
     #[serde(rename = "max_conn", skip_serializing_if = "Option::is_none")]
     pub max_conn: Option<i32>,
+    /// Maximum time from creation (in milliseconds) that a pooled HTTP keepalive connection will be eligible for reuse; 0 is treated as unlimited.
+    #[serde(rename = "max_lifetime", skip_serializing_if = "Option::is_none")]
+    pub max_lifetime: Option<i32>,
     /// Maximum allowed TLS version on SSL connections to this backend. If your backend server is not able to negotiate a connection meeting this constraint, a synthetic `503` error response will be generated.
     #[serde(rename = "max_tls_version", skip_serializing_if = "Option::is_none")]
     pub max_tls_version: Option<String>,
     /// Minimum allowed TLS version on SSL connections to this backend. If your backend server is not able to negotiate a connection meeting this constraint, a synthetic `503` error response will be generated.
     #[serde(rename = "min_tls_version", skip_serializing_if = "Option::is_none")]
     pub min_tls_version: Option<String>,
+    /// Maximum number of requests allowed over a single, pooled HTTP keepalive connection to this backend; 0 is treated as unlimited.
+    #[serde(rename = "max_use", skip_serializing_if = "Option::is_none")]
+    pub max_use: Option<i32>,
     /// The name of the backend.
     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
@@ -156,8 +162,10 @@ impl BackendResponse {
             ipv6: None,
             keepalive_time: None,
             max_conn: None,
+            max_lifetime: None,
             max_tls_version: None,
             min_tls_version: None,
+            max_use: None,
             name: None,
             override_host: None,
             port: None,

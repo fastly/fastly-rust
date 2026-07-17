@@ -10,17 +10,17 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct InlineResponse2006 {
-    #[serde(rename = "data")]
-    pub data: Vec<crate::models::DdosProtectionRuleWithStats>,
-    #[serde(rename = "meta")]
-    pub meta: Box<crate::models::PaginationCursorMeta>,
+    #[serde(rename = "data", skip_serializing_if = "Option::is_none")]
+    pub data: Option<Vec<crate::models::Page>>,
+    #[serde(rename = "meta", skip_serializing_if = "Option::is_none")]
+    pub meta: Option<Box<crate::models::PaginationMeta>>,
 }
 
 impl InlineResponse2006 {
-    pub fn new(data: Vec<crate::models::DdosProtectionRuleWithStats>, meta: crate::models::PaginationCursorMeta) -> InlineResponse2006 {
+    pub fn new() -> InlineResponse2006 {
         InlineResponse2006 {
-            data,
-            meta: Box::new(meta),
+            data: None,
+            meta: None,
         }
     }
 }
