@@ -392,6 +392,24 @@ pub struct Values {
     /// Number of \"Server Error\" category status codes delivered by the Compute platform.
     #[serde(rename = "compute_resp_status_5xx", skip_serializing_if = "Option::is_none")]
     pub compute_resp_status_5xx: Option<i64>,
+    /// Number of requests received over HTTP/2.
+    #[serde(rename = "http2", skip_serializing_if = "Option::is_none")]
+    pub http2: Option<i64>,
+    /// Number of requests received over HTTP/3.
+    #[serde(rename = "http3", skip_serializing_if = "Option::is_none")]
+    pub http3: Option<i64>,
+    /// Number of requests received over TLS 1.0.
+    #[serde(rename = "tls_v10", skip_serializing_if = "Option::is_none")]
+    pub tls_v10: Option<i64>,
+    /// Number of requests received over TLS 1.1.
+    #[serde(rename = "tls_v11", skip_serializing_if = "Option::is_none")]
+    pub tls_v11: Option<i64>,
+    /// Number of requests received over TLS 1.2.
+    #[serde(rename = "tls_v12", skip_serializing_if = "Option::is_none")]
+    pub tls_v12: Option<i64>,
+    /// Number of requests received over TLS 1.3.
+    #[serde(rename = "tls_v13", skip_serializing_if = "Option::is_none")]
+    pub tls_v13: Option<i64>,
 }
 
 impl Values {
@@ -525,6 +543,12 @@ impl Values {
             compute_resp_status_505: None,
             compute_resp_status_530: None,
             compute_resp_status_5xx: None,
+            http2: None,
+            http3: None,
+            tls_v10: None,
+            tls_v11: None,
+            tls_v12: None,
+            tls_v13: None,
         }
     }
 }

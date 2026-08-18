@@ -1040,6 +1040,12 @@ pub struct Results {
     /// Number of backend requests from a Compute service that failed at the HTTP protocol level. Sum of `compute_service_bereq_http_proto_v1_error`, `compute_service_bereq_http_proto_v2_error`, `compute_service_bereq_http_incomplete_error`, `compute_service_bereq_http_timeout_error`, and `compute_service_bereq_http_other_error`.
     #[serde(rename = "compute_service_bereq_http_error", skip_serializing_if = "Option::is_none")]
     pub compute_service_bereq_http_error: Option<i32>,
+    /// Number of Private Access Token challenges issued.
+    #[serde(rename = "bot_challenges_pats_issued", skip_serializing_if = "Option::is_none")]
+    pub bot_challenges_pats_issued: Option<i32>,
+    /// Number of successful Private Access Token challenge solutions processed.
+    #[serde(rename = "bot_challenges_pats_succeeded", skip_serializing_if = "Option::is_none")]
+    pub bot_challenges_pats_succeeded: Option<i32>,
     #[serde(rename = "service_id", skip_serializing_if = "Option::is_none")]
     pub service_id: Option<Box<String>>,
     /// Timestamp for the start of the time period being reported
@@ -1394,6 +1400,8 @@ impl Results {
             compute_service_bereq_conn_error: None,
             compute_service_bereq_tls_error: None,
             compute_service_bereq_http_error: None,
+            bot_challenges_pats_issued: None,
+            bot_challenges_pats_succeeded: None,
             service_id: None,
             start_time: None,
         }

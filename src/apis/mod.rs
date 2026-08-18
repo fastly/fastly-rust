@@ -115,6 +115,7 @@ pub mod logging_cloudfiles_api;
 pub mod logging_datadog_api;
 pub mod logging_digitalocean_api;
 pub mod logging_elasticsearch_api;
+pub mod logging_endpoint_errors_api;
 pub mod logging_ftp_api;
 pub mod logging_gcs_api;
 pub mod logging_grafanacloudlogs_api;

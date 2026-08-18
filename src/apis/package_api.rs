@@ -133,7 +133,9 @@ pub async fn put_package(configuration: &mut configuration::Configuration, param
         local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
     };
     let mut local_var_form = reqwest::multipart::Form::new();
-    // TODO: support file upload for 'package' parameter
+    if let Some(local_var_param_value) = package {
+        local_var_form = local_var_form.file("package", local_var_param_value).await?;
+    }
     local_var_req_builder = local_var_req_builder.multipart(local_var_form);
 
     let local_var_req = local_var_req_builder.build()?;

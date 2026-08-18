@@ -26,6 +26,7 @@ pub struct NgwafSimulateWafRequestParams {
 pub enum NgwafSimulateWafRequestError {
     Status400(serde_json::Value),
     Status401(serde_json::Value),
+    Status403(serde_json::Value),
     Status404(serde_json::Value),
     Status429(serde_json::Value),
     UnknownValue(serde_json::Value),

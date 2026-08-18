@@ -340,6 +340,8 @@ Name | Type | Description | Notes
 **compute_service_bereq_conn_error** | Option<**i32**> | Number of backend requests from a Compute service that failed at the TCP connection level. Sum of `compute_service_bereq_conn_timeout_error`, `compute_service_bereq_conn_refused_error`, and `compute_service_bereq_conn_other_error`. | 
 **compute_service_bereq_tls_error** | Option<**i32**> | Number of backend requests from a Compute service that failed during the TLS handshake or session with the origin. Sum of `compute_service_bereq_tls_server_cert_error` and `compute_service_bereq_tls_other_error`. | 
 **compute_service_bereq_http_error** | Option<**i32**> | Number of backend requests from a Compute service that failed at the HTTP protocol level. Sum of `compute_service_bereq_http_proto_v1_error`, `compute_service_bereq_http_proto_v2_error`, `compute_service_bereq_http_incomplete_error`, `compute_service_bereq_http_timeout_error`, and `compute_service_bereq_http_other_error`. | 
+**bot_challenges_pats_issued** | Option<**i32**> | Number of Private Access Token challenges issued. | 
+**bot_challenges_pats_succeeded** | Option<**i32**> | Number of successful Private Access Token challenge solutions processed. | 
 
 [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
