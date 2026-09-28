@@ -78,6 +78,8 @@ Name | Type | Description | Notes
 **attack_passed_req_header_bytes** | Option<**i64**> | Total header bytes received from requests that triggered a WAF rule that was passed. | 
 **attack_resp_synth_bytes** | Option<**i64**> | Total bytes delivered for requests that triggered a WAF rule and returned a synthetic response. | 
 **imgopto** | Option<**i64**> | Number of responses that came from the Fastly Image Optimizer service. If the service receives 10 requests for an image, this stat will be 10 regardless of how many times the image was transformed. | 
+**imgopto_input_image_bytes** | Option<**i64**> | The total image bytes that would have been delivered if the images had not been transformed by the Fastly Image Optimizer. Bytes are counted once per client request. Byte counts exclude shield traffic and requests where Fastly Image Optimizer proxied a request without attempting to transform it (e.g., file types that are not supported by Image Optimizer). | 
+**imgopto_output_image_bytes** | Option<**i64**> | The total image bytes delivered that have been transformed by the Fastly Image Optimizer. Bytes are counted once per client request. Byte counts exclude shield traffic and requests where Fastly Image Optimizer proxied a request without attempting to transform it (e.g., file types that are not supported by Image Optimizer). | 
 **imgopto_resp_body_bytes** | Option<**i64**> | Total body bytes delivered from the Fastly Image Optimizer service, including shield traffic. | 
 **imgopto_resp_header_bytes** | Option<**i64**> | Total header bytes delivered from the Fastly Image Optimizer service, including shield traffic. | 
 **imgopto_shield** | Option<**i64**> | Number of responses that came from the Fastly Image Optimizer service via a shield. | 
@@ -349,6 +351,19 @@ Name | Type | Description | Notes
 **compute_service_bereq_http_error** | Option<**i32**> | Number of backend requests from a Compute service that failed at the HTTP protocol level. Sum of `compute_service_bereq_http_proto_v1_error`, `compute_service_bereq_http_proto_v2_error`, `compute_service_bereq_http_incomplete_error`, `compute_service_bereq_http_timeout_error`, and `compute_service_bereq_http_other_error`. | 
 **bot_challenges_pats_issued** | Option<**i32**> | Number of Private Access Token challenges issued. | 
 **bot_challenges_pats_succeeded** | Option<**i32**> | Number of successful Private Access Token challenge solutions processed. | 
+**bot_edge_requests_headless_count** | Option<**i32**> | Number of edge requests where a headless bot was detected. | 
+**status_499** | Option<**i32**> | Number of responses sent with status code 499 (Client Disconnected). | 
+**arc_requests** | Option<**i32**> | Number of requests received by AI Runtime Control. | 
+**ddos_challenge_complete_tokens_checked** | Option<**i32**> | The number of challenge-complete tokens checked while enforcing DDoS protection rules. | 
+**ddos_challenge_complete_tokens_passed** | Option<**i32**> | The number of challenge-complete tokens that passed validation while enforcing DDoS protection rules. | 
+**ddos_challenge_complete_tokens_failed** | Option<**i32**> | The number of challenge-complete tokens that failed validation while enforcing DDoS protection rules. | 
+**ddos_challenge_starts** | Option<**i32**> | The number of challenge-start tokens created while enforcing DDoS protection rules. | 
+**ddos_challenge_complete_tokens_issued** | Option<**i32**> | Number of challenge-complete tokens issued as a result of a DDoS action. For example, issuing a challenge-complete token after a series of CAPTCHA challenges ending in success. | 
+**ddos_challenges_issued** | Option<**i32**> | Number of challenges issued from a DDoS action. | 
+**ddos_challenges_succeeded** | Option<**i32**> | Number of successful challenge solutions processed as a result of a DDoS action. For example, a correct CAPTCHA solution. | 
+**ddos_challenges_failed** | Option<**i32**> | Number of failed challenge solutions processed as a result of a DDoS action. For example, an incorrect CAPTCHA solution. | 
+**ddos_challenges_pats_issued** | Option<**i32**> | Number of Private Access Token challenges issued as a result of a DDoS action. | 
+**ddos_challenges_pats_succeeded** | Option<**i32**> | Number of successful Private Access Token challenge solutions processed as a result of a DDoS action. | 
 **service_id** | Option<**String**> |  | [readonly]
 **start_time** | Option<**i64**> | Timestamp for the start of the time period being reported | 
 

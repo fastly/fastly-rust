@@ -410,6 +410,9 @@ pub struct DomainInspectorMeasurements {
     /// Number of requests received over TLS 1.3.
     #[serde(rename = "tls_v13", skip_serializing_if = "Option::is_none")]
     pub tls_v13: Option<i64>,
+    /// Number of responses sent with status code 499 (Client Disconnected).
+    #[serde(rename = "status_499", skip_serializing_if = "Option::is_none")]
+    pub status_499: Option<i64>,
 }
 
 impl DomainInspectorMeasurements {
@@ -549,6 +552,7 @@ impl DomainInspectorMeasurements {
             tls_v11: None,
             tls_v12: None,
             tls_v13: None,
+            status_499: None,
         }
     }
 }

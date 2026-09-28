@@ -233,6 +233,12 @@ pub struct Results {
     /// Number of responses that came from the Fastly Image Optimizer service. If the service receives 10 requests for an image, this stat will be 10 regardless of how many times the image was transformed.
     #[serde(rename = "imgopto", skip_serializing_if = "Option::is_none")]
     pub imgopto: Option<i64>,
+    /// The total image bytes that would have been delivered if the images had not been transformed by the Fastly Image Optimizer. Bytes are counted once per client request. Byte counts exclude shield traffic and requests where Fastly Image Optimizer proxied a request without attempting to transform it (e.g., file types that are not supported by Image Optimizer).
+    #[serde(rename = "imgopto_input_image_bytes", skip_serializing_if = "Option::is_none")]
+    pub imgopto_input_image_bytes: Option<i64>,
+    /// The total image bytes delivered that have been transformed by the Fastly Image Optimizer. Bytes are counted once per client request. Byte counts exclude shield traffic and requests where Fastly Image Optimizer proxied a request without attempting to transform it (e.g., file types that are not supported by Image Optimizer).
+    #[serde(rename = "imgopto_output_image_bytes", skip_serializing_if = "Option::is_none")]
+    pub imgopto_output_image_bytes: Option<i64>,
     /// Total body bytes delivered from the Fastly Image Optimizer service, including shield traffic.
     #[serde(rename = "imgopto_resp_body_bytes", skip_serializing_if = "Option::is_none")]
     pub imgopto_resp_body_bytes: Option<i64>,
@@ -1046,6 +1052,45 @@ pub struct Results {
     /// Number of successful Private Access Token challenge solutions processed.
     #[serde(rename = "bot_challenges_pats_succeeded", skip_serializing_if = "Option::is_none")]
     pub bot_challenges_pats_succeeded: Option<i32>,
+    /// Number of edge requests where a headless bot was detected.
+    #[serde(rename = "bot_edge_requests_headless_count", skip_serializing_if = "Option::is_none")]
+    pub bot_edge_requests_headless_count: Option<i32>,
+    /// Number of responses sent with status code 499 (Client Disconnected).
+    #[serde(rename = "status_499", skip_serializing_if = "Option::is_none")]
+    pub status_499: Option<i32>,
+    /// Number of requests received by AI Runtime Control.
+    #[serde(rename = "arc_requests", skip_serializing_if = "Option::is_none")]
+    pub arc_requests: Option<i32>,
+    /// The number of challenge-complete tokens checked while enforcing DDoS protection rules.
+    #[serde(rename = "ddos_challenge_complete_tokens_checked", skip_serializing_if = "Option::is_none")]
+    pub ddos_challenge_complete_tokens_checked: Option<i32>,
+    /// The number of challenge-complete tokens that passed validation while enforcing DDoS protection rules.
+    #[serde(rename = "ddos_challenge_complete_tokens_passed", skip_serializing_if = "Option::is_none")]
+    pub ddos_challenge_complete_tokens_passed: Option<i32>,
+    /// The number of challenge-complete tokens that failed validation while enforcing DDoS protection rules.
+    #[serde(rename = "ddos_challenge_complete_tokens_failed", skip_serializing_if = "Option::is_none")]
+    pub ddos_challenge_complete_tokens_failed: Option<i32>,
+    /// The number of challenge-start tokens created while enforcing DDoS protection rules.
+    #[serde(rename = "ddos_challenge_starts", skip_serializing_if = "Option::is_none")]
+    pub ddos_challenge_starts: Option<i32>,
+    /// Number of challenge-complete tokens issued as a result of a DDoS action. For example, issuing a challenge-complete token after a series of CAPTCHA challenges ending in success.
+    #[serde(rename = "ddos_challenge_complete_tokens_issued", skip_serializing_if = "Option::is_none")]
+    pub ddos_challenge_complete_tokens_issued: Option<i32>,
+    /// Number of challenges issued from a DDoS action.
+    #[serde(rename = "ddos_challenges_issued", skip_serializing_if = "Option::is_none")]
+    pub ddos_challenges_issued: Option<i32>,
+    /// Number of successful challenge solutions processed as a result of a DDoS action. For example, a correct CAPTCHA solution.
+    #[serde(rename = "ddos_challenges_succeeded", skip_serializing_if = "Option::is_none")]
+    pub ddos_challenges_succeeded: Option<i32>,
+    /// Number of failed challenge solutions processed as a result of a DDoS action. For example, an incorrect CAPTCHA solution.
+    #[serde(rename = "ddos_challenges_failed", skip_serializing_if = "Option::is_none")]
+    pub ddos_challenges_failed: Option<i32>,
+    /// Number of Private Access Token challenges issued as a result of a DDoS action.
+    #[serde(rename = "ddos_challenges_pats_issued", skip_serializing_if = "Option::is_none")]
+    pub ddos_challenges_pats_issued: Option<i32>,
+    /// Number of successful Private Access Token challenge solutions processed as a result of a DDoS action.
+    #[serde(rename = "ddos_challenges_pats_succeeded", skip_serializing_if = "Option::is_none")]
+    pub ddos_challenges_pats_succeeded: Option<i32>,
     #[serde(rename = "service_id", skip_serializing_if = "Option::is_none")]
     pub service_id: Option<Box<String>>,
     /// Timestamp for the start of the time period being reported
@@ -1131,6 +1176,8 @@ impl Results {
             attack_passed_req_header_bytes: None,
             attack_resp_synth_bytes: None,
             imgopto: None,
+            imgopto_input_image_bytes: None,
+            imgopto_output_image_bytes: None,
             imgopto_resp_body_bytes: None,
             imgopto_resp_header_bytes: None,
             imgopto_shield: None,
@@ -1402,6 +1449,19 @@ impl Results {
             compute_service_bereq_http_error: None,
             bot_challenges_pats_issued: None,
             bot_challenges_pats_succeeded: None,
+            bot_edge_requests_headless_count: None,
+            status_499: None,
+            arc_requests: None,
+            ddos_challenge_complete_tokens_checked: None,
+            ddos_challenge_complete_tokens_passed: None,
+            ddos_challenge_complete_tokens_failed: None,
+            ddos_challenge_starts: None,
+            ddos_challenge_complete_tokens_issued: None,
+            ddos_challenges_issued: None,
+            ddos_challenges_succeeded: None,
+            ddos_challenges_failed: None,
+            ddos_challenges_pats_issued: None,
+            ddos_challenges_pats_succeeded: None,
             service_id: None,
             start_time: None,
         }
