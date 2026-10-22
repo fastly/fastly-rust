@@ -5,82 +5,1454 @@
  *
  */
 
-/// PlatformValues : The results of the query, optionally filtered and grouped over the requested timespan.
+/// PlatformValues : Metric values for the timestamp field. Note that this dataset is sparse: only the keys with non-zero values will be included in the record. 
 
 
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct PlatformValues {
-    /// Timestamp of the metrics data point.
+    /// Timestamp for the start of the time period being reported
     #[serde(rename = "timestamp", skip_serializing_if = "Option::is_none")]
     pub timestamp: Option<String>,
-    /// 25th percentile of time to first byte from origin, in microseconds.
-    #[serde(rename = "ttfb_origin_p25_us", skip_serializing_if = "Option::is_none")]
-    pub ttfb_origin_p25_us: Option<f32>,
-    /// 50th percentile of time to first byte from origin, in microseconds.
-    #[serde(rename = "ttfb_origin_p50_us", skip_serializing_if = "Option::is_none")]
-    pub ttfb_origin_p50_us: Option<f32>,
-    /// 75th percentile of time to first byte from origin, in microseconds.
-    #[serde(rename = "ttfb_origin_p75_us", skip_serializing_if = "Option::is_none")]
-    pub ttfb_origin_p75_us: Option<f32>,
-    /// 95th percentile of time to first byte from origin, in microseconds.
-    #[serde(rename = "ttfb_origin_p95_us", skip_serializing_if = "Option::is_none")]
-    pub ttfb_origin_p95_us: Option<f32>,
-    /// 99th percentile of time to first byte from origin, in microseconds.
-    #[serde(rename = "ttfb_origin_p99_us", skip_serializing_if = "Option::is_none")]
-    pub ttfb_origin_p99_us: Option<f32>,
-    /// 25th percentile of time to first byte from shield, in microseconds.
-    #[serde(rename = "ttfb_shield_p25_us", skip_serializing_if = "Option::is_none")]
-    pub ttfb_shield_p25_us: Option<f32>,
-    /// 50th percentile of time to first byte from shield, in microseconds.
-    #[serde(rename = "ttfb_shield_p50_us", skip_serializing_if = "Option::is_none")]
-    pub ttfb_shield_p50_us: Option<f32>,
-    /// 75th percentile of time to first byte from shield, in microseconds.
-    #[serde(rename = "ttfb_shield_p75_us", skip_serializing_if = "Option::is_none")]
-    pub ttfb_shield_p75_us: Option<f32>,
-    /// 95th percentile of time to first byte from shield, in microseconds.
-    #[serde(rename = "ttfb_shield_p95_us", skip_serializing_if = "Option::is_none")]
-    pub ttfb_shield_p95_us: Option<f32>,
-    /// 99th percentile of time to first byte from shield, in microseconds.
-    #[serde(rename = "ttfb_shield_p99_us", skip_serializing_if = "Option::is_none")]
-    pub ttfb_shield_p99_us: Option<f32>,
-    /// 25th percentile of time to first byte from edge, in microseconds.
-    #[serde(rename = "ttfb_edge_p25_us", skip_serializing_if = "Option::is_none")]
-    pub ttfb_edge_p25_us: Option<f32>,
-    /// 50th percentile of time to first byte from edge, in microseconds.
-    #[serde(rename = "ttfb_edge_p50_us", skip_serializing_if = "Option::is_none")]
-    pub ttfb_edge_p50_us: Option<f32>,
-    /// 75th percentile of time to first byte from edge, in microseconds.
-    #[serde(rename = "ttfb_edge_p75_us", skip_serializing_if = "Option::is_none")]
-    pub ttfb_edge_p75_us: Option<f32>,
-    /// 95th percentile of time to first byte from edge, in microseconds.
-    #[serde(rename = "ttfb_edge_p95_us", skip_serializing_if = "Option::is_none")]
-    pub ttfb_edge_p95_us: Option<f32>,
-    /// 99th percentile of time to first byte from edge, in microseconds.
-    #[serde(rename = "ttfb_edge_p99_us", skip_serializing_if = "Option::is_none")]
-    pub ttfb_edge_p99_us: Option<f32>,
+    /// Datacenter for this data point. Only present if the request was made with `group_by=datacenter`.
+    #[serde(rename = "datacenter", skip_serializing_if = "Option::is_none")]
+    pub datacenter: Option<String>,
+    /// Region for this data point. Only present if the request was made with `group_by=region`.
+    #[serde(rename = "region", skip_serializing_if = "Option::is_none")]
+    pub region: Option<String>,
+    /// Number of requests processed.
+    #[serde(rename = "requests", skip_serializing_if = "Option::is_none")]
+    pub requests: Option<i64>,
+    /// Number of cache hits.
+    #[serde(rename = "hits", skip_serializing_if = "Option::is_none")]
+    pub hits: Option<i64>,
+    /// Total amount of time spent processing cache hits (in seconds).
+    #[serde(rename = "hits_time", skip_serializing_if = "Option::is_none")]
+    pub hits_time: Option<f32>,
+    /// Number of cache misses.
+    #[serde(rename = "miss", skip_serializing_if = "Option::is_none")]
+    pub miss: Option<i64>,
+    /// Total amount of time spent processing cache misses (in seconds).
+    #[serde(rename = "miss_time", skip_serializing_if = "Option::is_none")]
+    pub miss_time: Option<f32>,
+    /// Number of requests that passed through the CDN without being cached.
+    #[serde(rename = "pass", skip_serializing_if = "Option::is_none")]
+    pub pass: Option<i64>,
+    /// Total amount of time spent processing cache passes (in seconds).
+    #[serde(rename = "pass_time", skip_serializing_if = "Option::is_none")]
+    pub pass_time: Option<f32>,
+    /// Number of cache errors.
+    #[serde(rename = "errors", skip_serializing_if = "Option::is_none")]
+    pub errors: Option<i64>,
+    /// Number of restarts performed.
+    #[serde(rename = "restarts", skip_serializing_if = "Option::is_none")]
+    pub restarts: Option<i64>,
+    /// Ratio of cache hits to cache misses (between 0 and 1).
+    #[serde(rename = "hit_ratio", skip_serializing_if = "Option::is_none")]
+    pub hit_ratio: Option<f32>,
+    /// Total bytes delivered (`resp_header_bytes` + `resp_body_bytes` + `bereq_header_bytes` + `bereq_body_bytes` + `compute_resp_header_bytes` + `compute_resp_body_bytes` + `compute_bereq_header_bytes` + `compute_bereq_body_bytes` + `websocket_resp_header_bytes` + `websocket_resp_body_bytes` + `websocket_bereq_header_bytes` + `websocket_bereq_body_bytes` + `fanout_resp_header_bytes` + `fanout_resp_body_bytes` + `fanout_bereq_header_bytes` + `fanout_bereq_body_bytes`).
+    #[serde(rename = "bandwidth", skip_serializing_if = "Option::is_none")]
+    pub bandwidth: Option<i64>,
+    /// Total body bytes received.
+    #[serde(rename = "req_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub req_body_bytes: Option<i64>,
+    /// Total header bytes received.
+    #[serde(rename = "req_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub req_header_bytes: Option<i64>,
+    /// Total body bytes delivered (edge_resp_body_bytes + shield_resp_body_bytes).
+    #[serde(rename = "resp_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub resp_body_bytes: Option<i64>,
+    /// Total header bytes delivered (edge_resp_header_bytes + shield_resp_header_bytes).
+    #[serde(rename = "resp_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub resp_header_bytes: Option<i64>,
+    /// Total body bytes sent to origin.
+    #[serde(rename = "bereq_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub bereq_body_bytes: Option<i64>,
+    /// Total header bytes sent to origin.
+    #[serde(rename = "bereq_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub bereq_header_bytes: Option<i64>,
+    /// Number of requests that were designated uncachable.
+    #[serde(rename = "uncacheable", skip_serializing_if = "Option::is_none")]
+    pub uncacheable: Option<i64>,
+    /// Optional. Pipe operations performed (legacy feature).
+    #[serde(rename = "pipe", skip_serializing_if = "Option::is_none")]
+    pub pipe: Option<i64>,
+    /// Number of requests that returned a synthetic response (i.e., response objects created with the `synthetic` VCL statement).
+    #[serde(rename = "synth", skip_serializing_if = "Option::is_none")]
+    pub synth: Option<i64>,
+    /// Number of requests that were received over TLS.
+    #[serde(rename = "tls", skip_serializing_if = "Option::is_none")]
+    pub tls: Option<i64>,
+    /// Number of requests received over TLS 1.0.
+    #[serde(rename = "tls_v10", skip_serializing_if = "Option::is_none")]
+    pub tls_v10: Option<i64>,
+    /// Number of requests received over TLS 1.1.
+    #[serde(rename = "tls_v11", skip_serializing_if = "Option::is_none")]
+    pub tls_v11: Option<i64>,
+    /// Number of requests received over TLS 1.2.
+    #[serde(rename = "tls_v12", skip_serializing_if = "Option::is_none")]
+    pub tls_v12: Option<i64>,
+    /// Number of requests received over TLS 1.3.
+    #[serde(rename = "tls_v13", skip_serializing_if = "Option::is_none")]
+    pub tls_v13: Option<i64>,
+    /// Number of requests sent by end users to Fastly.
+    #[serde(rename = "edge_requests", skip_serializing_if = "Option::is_none")]
+    pub edge_requests: Option<i64>,
+    /// Total header bytes delivered from Fastly to the end user.
+    #[serde(rename = "edge_resp_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub edge_resp_header_bytes: Option<i64>,
+    /// Total body bytes delivered from Fastly to the end user.
+    #[serde(rename = "edge_resp_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub edge_resp_body_bytes: Option<i64>,
+    /// Number of requests sent by end users to Fastly that resulted in a hit at the edge.
+    #[serde(rename = "edge_hit_requests", skip_serializing_if = "Option::is_none")]
+    pub edge_hit_requests: Option<i64>,
+    /// Number of requests sent by end users to Fastly that resulted in a miss at the edge.
+    #[serde(rename = "edge_miss_requests", skip_serializing_if = "Option::is_none")]
+    pub edge_miss_requests: Option<i64>,
+    /// Number of requests sent to origin.
+    #[serde(rename = "origin_fetches", skip_serializing_if = "Option::is_none")]
+    pub origin_fetches: Option<i64>,
+    /// Total request header bytes sent to origin.
+    #[serde(rename = "origin_fetch_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub origin_fetch_header_bytes: Option<i64>,
+    /// Total request body bytes sent to origin.
+    #[serde(rename = "origin_fetch_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub origin_fetch_body_bytes: Option<i64>,
+    /// Total header bytes received from origin.
+    #[serde(rename = "origin_fetch_resp_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub origin_fetch_resp_header_bytes: Option<i64>,
+    /// Total body bytes received from origin.
+    #[serde(rename = "origin_fetch_resp_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub origin_fetch_resp_body_bytes: Option<i64>,
+    /// Number of responses received from origin with a `304` status code in response to an `If-Modified-Since` or `If-None-Match` request. Under regular scenarios, a revalidation will imply a cache hit. However, if using Fastly Image Optimizer or segmented caching this may result in a cache miss.
+    #[serde(rename = "origin_revalidations", skip_serializing_if = "Option::is_none")]
+    pub origin_revalidations: Option<i64>,
+    /// The total number of completed requests made to backends (origins) that returned cacheable content.
+    #[serde(rename = "origin_cache_fetches", skip_serializing_if = "Option::is_none")]
+    pub origin_cache_fetches: Option<i64>,
+    /// Number of requests from edge to the shield POP.
+    #[serde(rename = "shield", skip_serializing_if = "Option::is_none")]
+    pub shield: Option<i64>,
+    /// Total body bytes delivered via a shield.
+    #[serde(rename = "shield_resp_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub shield_resp_body_bytes: Option<i64>,
+    /// Total header bytes delivered via a shield.
+    #[serde(rename = "shield_resp_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub shield_resp_header_bytes: Option<i64>,
+    /// Number of requests made from one Fastly POP to another, as part of shielding.
+    #[serde(rename = "shield_fetches", skip_serializing_if = "Option::is_none")]
+    pub shield_fetches: Option<i64>,
+    /// Total request header bytes sent to a shield.
+    #[serde(rename = "shield_fetch_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub shield_fetch_header_bytes: Option<i64>,
+    /// Total request body bytes sent to a shield.
+    #[serde(rename = "shield_fetch_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub shield_fetch_body_bytes: Option<i64>,
+    /// Total response header bytes sent from a shield to the edge.
+    #[serde(rename = "shield_fetch_resp_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub shield_fetch_resp_header_bytes: Option<i64>,
+    /// Total response body bytes sent from a shield to the edge.
+    #[serde(rename = "shield_fetch_resp_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub shield_fetch_resp_body_bytes: Option<i64>,
+    /// Number of responses received from origin with a `304` status code, in response to an `If-Modified-Since` or `If-None-Match` request to a shield. Under regular scenarios, a revalidation will imply a cache hit. However, if using segmented caching this may result in a cache miss.
+    #[serde(rename = "shield_revalidations", skip_serializing_if = "Option::is_none")]
+    pub shield_revalidations: Option<i64>,
+    /// The total number of completed requests made to shields that returned cacheable content.
+    #[serde(rename = "shield_cache_fetches", skip_serializing_if = "Option::is_none")]
+    pub shield_cache_fetches: Option<i64>,
+    /// Number of requests that were received over IPv6.
+    #[serde(rename = "ipv6", skip_serializing_if = "Option::is_none")]
+    pub ipv6: Option<i64>,
+    /// Number of responses that came from the Fastly On-the-Fly Packaging service for video-on-demand.
+    #[serde(rename = "otfp", skip_serializing_if = "Option::is_none")]
+    pub otfp: Option<i64>,
+    /// Total body bytes delivered from the Fastly On-the-Fly Packaging service for video-on-demand.
+    #[serde(rename = "otfp_resp_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub otfp_resp_body_bytes: Option<i64>,
+    /// Total header bytes delivered from the Fastly On-the-Fly Packaging service for video-on-demand.
+    #[serde(rename = "otfp_resp_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub otfp_resp_header_bytes: Option<i64>,
+    /// Total body bytes delivered via a shield for the Fastly On-the-Fly Packaging service for video-on-demand.
+    #[serde(rename = "otfp_shield_resp_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub otfp_shield_resp_body_bytes: Option<i64>,
+    /// Total header bytes delivered via a shield for the Fastly On-the-Fly Packaging service for video-on-demand.
+    #[serde(rename = "otfp_shield_resp_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub otfp_shield_resp_header_bytes: Option<i64>,
+    /// Number of responses that were manifest files from the Fastly On-the-Fly Packaging service for video-on-demand.
+    #[serde(rename = "otfp_manifests", skip_serializing_if = "Option::is_none")]
+    pub otfp_manifests: Option<i64>,
+    /// Total amount of time spent delivering a response from the Fastly On-the-Fly Packaging service for video-on-demand (in seconds).
+    #[serde(rename = "otfp_deliver_time", skip_serializing_if = "Option::is_none")]
+    pub otfp_deliver_time: Option<f32>,
+    /// Total amount of time spent delivering a response via a shield from the Fastly On-the-Fly Packaging service for video-on-demand (in seconds).
+    #[serde(rename = "otfp_shield_time", skip_serializing_if = "Option::is_none")]
+    pub otfp_shield_time: Option<f32>,
+    /// Number of responses with the video segment or video manifest MIME type (i.e., application/x-mpegurl, application/vnd.apple.mpegurl, application/f4m, application/dash+xml, application/vnd.ms-sstr+xml, ideo/mp2t, audio/aac, video/f4f, video/x-flv, video/mp4, audio/mp4).
+    #[serde(rename = "video", skip_serializing_if = "Option::is_none")]
+    pub video: Option<i64>,
+    /// Number of responses with the PCI flag turned on.
+    #[serde(rename = "pci", skip_serializing_if = "Option::is_none")]
+    pub pci: Option<i64>,
+    /// Number of log lines sent.
+    #[serde(rename = "log", skip_serializing_if = "Option::is_none")]
+    pub log: Option<i64>,
+    /// Total log bytes sent.
+    #[serde(rename = "log_bytes", skip_serializing_if = "Option::is_none")]
+    pub log_bytes: Option<i64>,
+    /// Number of requests received over HTTP/2.
+    #[serde(rename = "http2", skip_serializing_if = "Option::is_none")]
+    pub http2: Option<i64>,
+    /// Number of requests received over HTTP/3.
+    #[serde(rename = "http3", skip_serializing_if = "Option::is_none")]
+    pub http3: Option<i64>,
+    /// Total body bytes received from requests that triggered a WAF rule.
+    #[serde(rename = "attack_req_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub attack_req_body_bytes: Option<i64>,
+    /// Total header bytes received from requests that triggered a WAF rule.
+    #[serde(rename = "attack_req_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub attack_req_header_bytes: Option<i64>,
+    /// Total body bytes received from requests that triggered a WAF rule that was logged.
+    #[serde(rename = "attack_logged_req_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub attack_logged_req_body_bytes: Option<i64>,
+    /// Total header bytes received from requests that triggered a WAF rule that was logged.
+    #[serde(rename = "attack_logged_req_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub attack_logged_req_header_bytes: Option<i64>,
+    /// Total body bytes received from requests that triggered a WAF rule that was blocked.
+    #[serde(rename = "attack_blocked_req_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub attack_blocked_req_body_bytes: Option<i64>,
+    /// Total header bytes received from requests that triggered a WAF rule that was blocked.
+    #[serde(rename = "attack_blocked_req_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub attack_blocked_req_header_bytes: Option<i64>,
+    /// Total body bytes received from requests that triggered a WAF rule that was passed.
+    #[serde(rename = "attack_passed_req_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub attack_passed_req_body_bytes: Option<i64>,
+    /// Total header bytes received from requests that triggered a WAF rule that was passed.
+    #[serde(rename = "attack_passed_req_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub attack_passed_req_header_bytes: Option<i64>,
+    /// Total bytes delivered for requests that triggered a WAF rule and returned a synthetic response.
+    #[serde(rename = "attack_resp_synth_bytes", skip_serializing_if = "Option::is_none")]
+    pub attack_resp_synth_bytes: Option<i64>,
+    /// Number of responses that came from the Fastly Image Optimizer service. If the service receives 10 requests for an image, this stat will be 10 regardless of how many times the image was transformed.
+    #[serde(rename = "imgopto", skip_serializing_if = "Option::is_none")]
+    pub imgopto: Option<i64>,
+    /// The total image bytes that would have been delivered if the images had not been transformed by the Fastly Image Optimizer. Bytes are counted once per client request. Byte counts exclude shield traffic and requests where Fastly Image Optimizer proxied a request without attempting to transform it (e.g., file types that are not supported by Image Optimizer).
+    #[serde(rename = "imgopto_input_image_bytes", skip_serializing_if = "Option::is_none")]
+    pub imgopto_input_image_bytes: Option<i64>,
+    /// The total image bytes delivered that have been transformed by the Fastly Image Optimizer. Bytes are counted once per client request. Byte counts exclude shield traffic and requests where Fastly Image Optimizer proxied a request without attempting to transform it (e.g., file types that are not supported by Image Optimizer).
+    #[serde(rename = "imgopto_output_image_bytes", skip_serializing_if = "Option::is_none")]
+    pub imgopto_output_image_bytes: Option<i64>,
+    /// Total body bytes delivered from the Fastly Image Optimizer service, including shield traffic.
+    #[serde(rename = "imgopto_resp_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub imgopto_resp_body_bytes: Option<i64>,
+    /// Total header bytes delivered from the Fastly Image Optimizer service, including shield traffic.
+    #[serde(rename = "imgopto_resp_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub imgopto_resp_header_bytes: Option<i64>,
+    /// Number of responses that came from the Fastly Image Optimizer service via a shield.
+    #[serde(rename = "imgopto_shield", skip_serializing_if = "Option::is_none")]
+    pub imgopto_shield: Option<i64>,
+    /// Total body bytes delivered via a shield from the Fastly Image Optimizer service.
+    #[serde(rename = "imgopto_shield_resp_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub imgopto_shield_resp_body_bytes: Option<i64>,
+    /// Total header bytes delivered via a shield from the Fastly Image Optimizer service.
+    #[serde(rename = "imgopto_shield_resp_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub imgopto_shield_resp_header_bytes: Option<i64>,
+    /// Number of transforms performed by the Fastly Image Optimizer service.
+    #[serde(rename = "imgopto_transforms", skip_serializing_if = "Option::is_none")]
+    pub imgopto_transforms: Option<i64>,
+    /// Number of video responses that came from the Fastly Image Optimizer service.
+    #[serde(rename = "imgvideo", skip_serializing_if = "Option::is_none")]
+    pub imgvideo: Option<i64>,
+    /// Number of video frames that came from the Fastly Image Optimizer service. A video frame is an individual image within a sequence of video.
+    #[serde(rename = "imgvideo_frames", skip_serializing_if = "Option::is_none")]
+    pub imgvideo_frames: Option<i64>,
+    /// Total header bytes of video delivered from the Fastly Image Optimizer service.
+    #[serde(rename = "imgvideo_resp_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub imgvideo_resp_header_bytes: Option<i64>,
+    /// Total body bytes of video delivered from the Fastly Image Optimizer service.
+    #[serde(rename = "imgvideo_resp_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub imgvideo_resp_body_bytes: Option<i64>,
+    /// Total header bytes of video delivered via a shield from the Fastly Image Optimizer service.
+    #[serde(rename = "imgvideo_shield_resp_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub imgvideo_shield_resp_header_bytes: Option<i64>,
+    /// Total body bytes of video delivered via a shield from the Fastly Image Optimizer service.
+    #[serde(rename = "imgvideo_shield_resp_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub imgvideo_shield_resp_body_bytes: Option<i64>,
+    /// Number of video responses delivered via a shield that came from the Fastly Image Optimizer service.
+    #[serde(rename = "imgvideo_shield", skip_serializing_if = "Option::is_none")]
+    pub imgvideo_shield: Option<i64>,
+    /// Number of video frames delivered via a shield that came from the Fastly Image Optimizer service. A video frame is an individual image within a sequence of video.
+    #[serde(rename = "imgvideo_shield_frames", skip_serializing_if = "Option::is_none")]
+    pub imgvideo_shield_frames: Option<i64>,
+    /// Number of responses sent with status code 200 (Success).
+    #[serde(rename = "status_200", skip_serializing_if = "Option::is_none")]
+    pub status_200: Option<i64>,
+    /// Number of responses sent with status code 204 (No Content).
+    #[serde(rename = "status_204", skip_serializing_if = "Option::is_none")]
+    pub status_204: Option<i64>,
+    /// Number of responses sent with status code 206 (Partial Content).
+    #[serde(rename = "status_206", skip_serializing_if = "Option::is_none")]
+    pub status_206: Option<i64>,
+    /// Number of responses sent with status code 301 (Moved Permanently).
+    #[serde(rename = "status_301", skip_serializing_if = "Option::is_none")]
+    pub status_301: Option<i64>,
+    /// Number of responses sent with status code 302 (Found).
+    #[serde(rename = "status_302", skip_serializing_if = "Option::is_none")]
+    pub status_302: Option<i64>,
+    /// Number of responses sent with status code 304 (Not Modified).
+    #[serde(rename = "status_304", skip_serializing_if = "Option::is_none")]
+    pub status_304: Option<i64>,
+    /// Number of responses sent with status code 400 (Bad Request).
+    #[serde(rename = "status_400", skip_serializing_if = "Option::is_none")]
+    pub status_400: Option<i64>,
+    /// Number of responses sent with status code 401 (Unauthorized).
+    #[serde(rename = "status_401", skip_serializing_if = "Option::is_none")]
+    pub status_401: Option<i64>,
+    /// Number of responses sent with status code 403 (Forbidden).
+    #[serde(rename = "status_403", skip_serializing_if = "Option::is_none")]
+    pub status_403: Option<i64>,
+    /// Number of responses sent with status code 404 (Not Found).
+    #[serde(rename = "status_404", skip_serializing_if = "Option::is_none")]
+    pub status_404: Option<i64>,
+    /// Number of responses sent with status code 406 (Not Acceptable).
+    #[serde(rename = "status_406", skip_serializing_if = "Option::is_none")]
+    pub status_406: Option<i64>,
+    /// Number of responses sent with status code 416 (Range Not Satisfiable).
+    #[serde(rename = "status_416", skip_serializing_if = "Option::is_none")]
+    pub status_416: Option<i64>,
+    /// Number of responses sent with status code 429 (Too Many Requests).
+    #[serde(rename = "status_429", skip_serializing_if = "Option::is_none")]
+    pub status_429: Option<i64>,
+    /// Number of responses sent with status code 500 (Internal Server Error).
+    #[serde(rename = "status_500", skip_serializing_if = "Option::is_none")]
+    pub status_500: Option<i64>,
+    /// Number of responses sent with status code 501 (Not Implemented).
+    #[serde(rename = "status_501", skip_serializing_if = "Option::is_none")]
+    pub status_501: Option<i64>,
+    /// Number of responses sent with status code 502 (Bad Gateway).
+    #[serde(rename = "status_502", skip_serializing_if = "Option::is_none")]
+    pub status_502: Option<i64>,
+    /// Number of responses sent with status code 503 (Service Unavailable).
+    #[serde(rename = "status_503", skip_serializing_if = "Option::is_none")]
+    pub status_503: Option<i64>,
+    /// Number of responses sent with status code 504 (Gateway Timeout).
+    #[serde(rename = "status_504", skip_serializing_if = "Option::is_none")]
+    pub status_504: Option<i64>,
+    /// Number of responses sent with status code 505 (HTTP Version Not Supported).
+    #[serde(rename = "status_505", skip_serializing_if = "Option::is_none")]
+    pub status_505: Option<i64>,
+    /// Number of responses sent with status code 530.
+    #[serde(rename = "status_530", skip_serializing_if = "Option::is_none")]
+    pub status_530: Option<i64>,
+    /// Number of \"Informational\" category status codes delivered.
+    #[serde(rename = "status_1xx", skip_serializing_if = "Option::is_none")]
+    pub status_1xx: Option<i64>,
+    /// Number of \"Success\" status codes delivered.
+    #[serde(rename = "status_2xx", skip_serializing_if = "Option::is_none")]
+    pub status_2xx: Option<i64>,
+    /// Number of \"Redirection\" codes delivered.
+    #[serde(rename = "status_3xx", skip_serializing_if = "Option::is_none")]
+    pub status_3xx: Option<i64>,
+    /// Number of \"Client Error\" codes delivered.
+    #[serde(rename = "status_4xx", skip_serializing_if = "Option::is_none")]
+    pub status_4xx: Option<i64>,
+    /// Number of \"Server Error\" codes delivered.
+    #[serde(rename = "status_5xx", skip_serializing_if = "Option::is_none")]
+    pub status_5xx: Option<i64>,
+    /// Number of objects served that were under 1KB in size.
+    #[serde(rename = "object_size_1k", skip_serializing_if = "Option::is_none")]
+    pub object_size_1k: Option<i64>,
+    /// Number of objects served that were between 1KB and 10KB in size.
+    #[serde(rename = "object_size_10k", skip_serializing_if = "Option::is_none")]
+    pub object_size_10k: Option<i64>,
+    /// Number of objects served that were between 10KB and 100KB in size.
+    #[serde(rename = "object_size_100k", skip_serializing_if = "Option::is_none")]
+    pub object_size_100k: Option<i64>,
+    /// Number of objects served that were between 100KB and 1MB in size.
+    #[serde(rename = "object_size_1m", skip_serializing_if = "Option::is_none")]
+    pub object_size_1m: Option<i64>,
+    /// Number of objects served that were between 1MB and 10MB in size.
+    #[serde(rename = "object_size_10m", skip_serializing_if = "Option::is_none")]
+    pub object_size_10m: Option<i64>,
+    /// Number of objects served that were between 10MB and 100MB in size.
+    #[serde(rename = "object_size_100m", skip_serializing_if = "Option::is_none")]
+    pub object_size_100m: Option<i64>,
+    /// Number of objects served that were between 100MB and 1GB in size.
+    #[serde(rename = "object_size_1g", skip_serializing_if = "Option::is_none")]
+    pub object_size_1g: Option<i64>,
+    /// Time spent inside the `vcl_recv` Varnish subroutine (in seconds).
+    #[serde(rename = "recv_sub_time", skip_serializing_if = "Option::is_none")]
+    pub recv_sub_time: Option<f32>,
+    /// Number of executions of the `vcl_recv` Varnish subroutine.
+    #[serde(rename = "recv_sub_count", skip_serializing_if = "Option::is_none")]
+    pub recv_sub_count: Option<i64>,
+    /// Time spent inside the `vcl_hash` Varnish subroutine (in seconds).
+    #[serde(rename = "hash_sub_time", skip_serializing_if = "Option::is_none")]
+    pub hash_sub_time: Option<f32>,
+    /// Number of executions of the `vcl_hash` Varnish subroutine.
+    #[serde(rename = "hash_sub_count", skip_serializing_if = "Option::is_none")]
+    pub hash_sub_count: Option<i64>,
+    /// Time spent inside the `vcl_miss` Varnish subroutine (in seconds).
+    #[serde(rename = "miss_sub_time", skip_serializing_if = "Option::is_none")]
+    pub miss_sub_time: Option<f32>,
+    /// Number of executions of the `vcl_miss` Varnish subroutine.
+    #[serde(rename = "miss_sub_count", skip_serializing_if = "Option::is_none")]
+    pub miss_sub_count: Option<i64>,
+    /// Time spent inside the `vcl_fetch` Varnish subroutine (in seconds).
+    #[serde(rename = "fetch_sub_time", skip_serializing_if = "Option::is_none")]
+    pub fetch_sub_time: Option<f32>,
+    /// Number of executions of the `vcl_fetch` Varnish subroutine.
+    #[serde(rename = "fetch_sub_count", skip_serializing_if = "Option::is_none")]
+    pub fetch_sub_count: Option<i64>,
+    /// Time spent inside the `vcl_pass` Varnish subroutine (in seconds).
+    #[serde(rename = "pass_sub_time", skip_serializing_if = "Option::is_none")]
+    pub pass_sub_time: Option<f32>,
+    /// Number of executions of the `vcl_pass` Varnish subroutine.
+    #[serde(rename = "pass_sub_count", skip_serializing_if = "Option::is_none")]
+    pub pass_sub_count: Option<i64>,
+    /// Time spent inside the `vcl_pipe` Varnish subroutine (in seconds).
+    #[serde(rename = "pipe_sub_time", skip_serializing_if = "Option::is_none")]
+    pub pipe_sub_time: Option<f32>,
+    /// Number of executions of the `vcl_pipe` Varnish subroutine.
+    #[serde(rename = "pipe_sub_count", skip_serializing_if = "Option::is_none")]
+    pub pipe_sub_count: Option<i64>,
+    /// Time spent inside the `vcl_deliver` Varnish subroutine (in seconds).
+    #[serde(rename = "deliver_sub_time", skip_serializing_if = "Option::is_none")]
+    pub deliver_sub_time: Option<f32>,
+    /// Number of executions of the `vcl_deliver` Varnish subroutine.
+    #[serde(rename = "deliver_sub_count", skip_serializing_if = "Option::is_none")]
+    pub deliver_sub_count: Option<i64>,
+    /// Time spent inside the `vcl_error` Varnish subroutine (in seconds).
+    #[serde(rename = "error_sub_time", skip_serializing_if = "Option::is_none")]
+    pub error_sub_time: Option<f32>,
+    /// Number of executions of the `vcl_error` Varnish subroutine.
+    #[serde(rename = "error_sub_count", skip_serializing_if = "Option::is_none")]
+    pub error_sub_count: Option<i64>,
+    /// Time spent inside the `vcl_hit` Varnish subroutine (in seconds).
+    #[serde(rename = "hit_sub_time", skip_serializing_if = "Option::is_none")]
+    pub hit_sub_time: Option<f32>,
+    /// Number of executions of the `vcl_hit` Varnish subroutine.
+    #[serde(rename = "hit_sub_count", skip_serializing_if = "Option::is_none")]
+    pub hit_sub_count: Option<i64>,
+    /// Time spent inside the `vcl_prehash` Varnish subroutine (in seconds).
+    #[serde(rename = "prehash_sub_time", skip_serializing_if = "Option::is_none")]
+    pub prehash_sub_time: Option<f32>,
+    /// Number of executions of the `vcl_prehash` Varnish subroutine.
+    #[serde(rename = "prehash_sub_count", skip_serializing_if = "Option::is_none")]
+    pub prehash_sub_count: Option<i64>,
+    /// Time spent inside the `vcl_predeliver` Varnish subroutine (in seconds).
+    #[serde(rename = "predeliver_sub_time", skip_serializing_if = "Option::is_none")]
+    pub predeliver_sub_time: Option<f32>,
+    /// Number of executions of the `vcl_predeliver` Varnish subroutine.
+    #[serde(rename = "predeliver_sub_count", skip_serializing_if = "Option::is_none")]
+    pub predeliver_sub_count: Option<i64>,
+    /// Number of bytes transferred during TLS handshake.
+    #[serde(rename = "tls_handshake_sent_bytes", skip_serializing_if = "Option::is_none")]
+    pub tls_handshake_sent_bytes: Option<i64>,
+    /// Total body bytes delivered for cache hits.
+    #[serde(rename = "hit_resp_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub hit_resp_body_bytes: Option<i64>,
+    /// Total body bytes delivered for cache misses.
+    #[serde(rename = "miss_resp_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub miss_resp_body_bytes: Option<i64>,
+    /// Total body bytes delivered for cache passes.
+    #[serde(rename = "pass_resp_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub pass_resp_body_bytes: Option<i64>,
+    /// Number of `Range` requests to origin for segments of resources when using segmented caching.
+    #[serde(rename = "segblock_origin_fetches", skip_serializing_if = "Option::is_none")]
+    pub segblock_origin_fetches: Option<i64>,
+    /// Number of `Range` requests to a shield for segments of resources when using segmented caching.
+    #[serde(rename = "segblock_shield_fetches", skip_serializing_if = "Option::is_none")]
+    pub segblock_shield_fetches: Option<i64>,
+    /// The total number of requests that were received for your service by Fastly.
+    #[serde(rename = "compute_requests", skip_serializing_if = "Option::is_none")]
+    pub compute_requests: Option<i64>,
+    /// The total, actual amount of time used to process your requests, including active CPU time (in milliseconds).
+    #[serde(rename = "compute_request_time_ms", skip_serializing_if = "Option::is_none")]
+    pub compute_request_time_ms: Option<f32>,
+    /// The total amount of request processing time you will be billed for, measured in 50 millisecond increments.
+    #[serde(rename = "compute_request_time_billed_ms", skip_serializing_if = "Option::is_none")]
+    pub compute_request_time_billed_ms: Option<f32>,
+    /// The amount of RAM used for your service by Fastly (in bytes).
+    #[serde(rename = "compute_ram_used", skip_serializing_if = "Option::is_none")]
+    pub compute_ram_used: Option<i64>,
+    /// The amount of active CPU time used to process your requests (in milliseconds).
+    #[serde(rename = "compute_execution_time_ms", skip_serializing_if = "Option::is_none")]
+    pub compute_execution_time_ms: Option<f32>,
+    /// Total header bytes received by the Compute platform.
+    #[serde(rename = "compute_req_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub compute_req_header_bytes: Option<i64>,
+    /// Total body bytes received by the Compute platform.
+    #[serde(rename = "compute_req_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub compute_req_body_bytes: Option<i64>,
+    /// Total header bytes sent from Compute to end user.
+    #[serde(rename = "compute_resp_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_header_bytes: Option<i64>,
+    /// Total body bytes sent from Compute to end user.
+    #[serde(rename = "compute_resp_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_body_bytes: Option<i64>,
+    /// Number of \"Informational\" category status codes delivered by the Compute platform.
+    #[serde(rename = "compute_resp_status_1xx", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_1xx: Option<i64>,
+    /// Number of \"Success\" category status codes delivered by the Compute platform.
+    #[serde(rename = "compute_resp_status_2xx", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_2xx: Option<i64>,
+    /// Number of \"Redirection\" category status codes delivered by the Compute platform.
+    #[serde(rename = "compute_resp_status_3xx", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_3xx: Option<i64>,
+    /// Number of \"Client Error\" category status codes delivered by the Compute platform.
+    #[serde(rename = "compute_resp_status_4xx", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_4xx: Option<i64>,
+    /// Number of \"Server Error\" category status codes delivered by the Compute platform.
+    #[serde(rename = "compute_resp_status_5xx", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_5xx: Option<i64>,
+    /// Total header bytes sent to backends (origins) by the Compute platform.
+    #[serde(rename = "compute_bereq_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub compute_bereq_header_bytes: Option<i64>,
+    /// Total body bytes sent to backends (origins) by the Compute platform.
+    #[serde(rename = "compute_bereq_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub compute_bereq_body_bytes: Option<i64>,
+    /// Total header bytes received from backends (origins) by the Compute platform.
+    #[serde(rename = "compute_beresp_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub compute_beresp_header_bytes: Option<i64>,
+    /// Total body bytes received from backends (origins) by the Compute platform.
+    #[serde(rename = "compute_beresp_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub compute_beresp_body_bytes: Option<i64>,
+    /// Number of backend requests started.
+    #[serde(rename = "compute_bereqs", skip_serializing_if = "Option::is_none")]
+    pub compute_bereqs: Option<i64>,
+    /// Number of backend request errors, including timeouts.
+    #[serde(rename = "compute_service_bereq_error", skip_serializing_if = "Option::is_none")]
+    pub compute_service_bereq_error: Option<i64>,
+    /// Number of times a guest exceeded its heap limit.
+    #[serde(rename = "compute_service_memory_exceeded_error", skip_serializing_if = "Option::is_none")]
+    pub compute_service_memory_exceeded_error: Option<i64>,
+    /// Body bytes delivered for edge hits.
+    #[serde(rename = "edge_hit_resp_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub edge_hit_resp_body_bytes: Option<i64>,
+    /// Header bytes delivered for edge hits.
+    #[serde(rename = "edge_hit_resp_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub edge_hit_resp_header_bytes: Option<i64>,
+    /// Body bytes delivered for edge misses.
+    #[serde(rename = "edge_miss_resp_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub edge_miss_resp_body_bytes: Option<i64>,
+    /// Header bytes delivered for edge misses.
+    #[serde(rename = "edge_miss_resp_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub edge_miss_resp_header_bytes: Option<i64>,
+    /// Body bytes received from origin for cacheable content.
+    #[serde(rename = "origin_cache_fetch_resp_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub origin_cache_fetch_resp_body_bytes: Option<i64>,
+    /// Header bytes received from an origin for cacheable content.
+    #[serde(rename = "origin_cache_fetch_resp_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub origin_cache_fetch_resp_header_bytes: Option<i64>,
+    /// Number of requests that resulted in a hit at a shield.
+    #[serde(rename = "shield_hit_requests", skip_serializing_if = "Option::is_none")]
+    pub shield_hit_requests: Option<i64>,
+    /// Number of requests that resulted in a miss at a shield.
+    #[serde(rename = "shield_miss_requests", skip_serializing_if = "Option::is_none")]
+    pub shield_miss_requests: Option<i64>,
+    /// Header bytes delivered for shield hits.
+    #[serde(rename = "shield_hit_resp_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub shield_hit_resp_header_bytes: Option<i64>,
+    /// Body bytes delivered for shield hits.
+    #[serde(rename = "shield_hit_resp_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub shield_hit_resp_body_bytes: Option<i64>,
+    /// Header bytes delivered for shield misses.
+    #[serde(rename = "shield_miss_resp_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub shield_miss_resp_header_bytes: Option<i64>,
+    /// Body bytes delivered for shield misses.
+    #[serde(rename = "shield_miss_resp_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub shield_miss_resp_body_bytes: Option<i64>,
+    /// Total header bytes received from end users over passthrough WebSocket connections.
+    #[serde(rename = "websocket_req_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub websocket_req_header_bytes: Option<i64>,
+    /// Total message content bytes received from end users over passthrough WebSocket connections.
+    #[serde(rename = "websocket_req_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub websocket_req_body_bytes: Option<i64>,
+    /// Total header bytes sent to end users over passthrough WebSocket connections.
+    #[serde(rename = "websocket_resp_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub websocket_resp_header_bytes: Option<i64>,
+    /// Total message content bytes sent to end users over passthrough WebSocket connections.
+    #[serde(rename = "websocket_resp_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub websocket_resp_body_bytes: Option<i64>,
+    /// Total header bytes sent to backends over passthrough WebSocket connections.
+    #[serde(rename = "websocket_bereq_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub websocket_bereq_header_bytes: Option<i64>,
+    /// Total message content bytes sent to backends over passthrough WebSocket connections.
+    #[serde(rename = "websocket_bereq_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub websocket_bereq_body_bytes: Option<i64>,
+    /// Total header bytes received from backends over passthrough WebSocket connections.
+    #[serde(rename = "websocket_beresp_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub websocket_beresp_header_bytes: Option<i64>,
+    /// Total message content bytes received from backends over passthrough WebSocket connections.
+    #[serde(rename = "websocket_beresp_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub websocket_beresp_body_bytes: Option<i64>,
+    /// Total duration of passthrough WebSocket connections with end users.
+    #[serde(rename = "websocket_conn_time_ms", skip_serializing_if = "Option::is_none")]
+    pub websocket_conn_time_ms: Option<i64>,
+    /// Total published messages received from the publish API endpoint.
+    #[serde(rename = "fanout_recv_publishes", skip_serializing_if = "Option::is_none")]
+    pub fanout_recv_publishes: Option<i64>,
+    /// Total published messages sent to end users.
+    #[serde(rename = "fanout_send_publishes", skip_serializing_if = "Option::is_none")]
+    pub fanout_send_publishes: Option<i64>,
+    /// The total number of class a operations for the KV store.
+    #[serde(rename = "kv_store_class_a_operations", skip_serializing_if = "Option::is_none")]
+    pub kv_store_class_a_operations: Option<i64>,
+    /// The total number of class b operations for the KV store.
+    #[serde(rename = "kv_store_class_b_operations", skip_serializing_if = "Option::is_none")]
+    pub kv_store_class_b_operations: Option<i64>,
+    /// Total header bytes received from end users over Fanout connections.
+    #[serde(rename = "fanout_req_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub fanout_req_header_bytes: Option<i64>,
+    /// Total body or message content bytes received from end users over Fanout connections.
+    #[serde(rename = "fanout_req_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub fanout_req_body_bytes: Option<i64>,
+    /// Total header bytes sent to end users over Fanout connections.
+    #[serde(rename = "fanout_resp_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub fanout_resp_header_bytes: Option<i64>,
+    /// Total body or message content bytes sent to end users over Fanout connections, excluding published message content.
+    #[serde(rename = "fanout_resp_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub fanout_resp_body_bytes: Option<i64>,
+    /// Total header bytes sent to backends over Fanout connections.
+    #[serde(rename = "fanout_bereq_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub fanout_bereq_header_bytes: Option<i64>,
+    /// Total body or message content bytes sent to backends over Fanout connections.
+    #[serde(rename = "fanout_bereq_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub fanout_bereq_body_bytes: Option<i64>,
+    /// Total header bytes received from backends over Fanout connections.
+    #[serde(rename = "fanout_beresp_header_bytes", skip_serializing_if = "Option::is_none")]
+    pub fanout_beresp_header_bytes: Option<i64>,
+    /// Total body or message content bytes received from backends over Fanout connections.
+    #[serde(rename = "fanout_beresp_body_bytes", skip_serializing_if = "Option::is_none")]
+    pub fanout_beresp_body_bytes: Option<i64>,
+    /// Total duration of Fanout connections with end users.
+    #[serde(rename = "fanout_conn_time_ms", skip_serializing_if = "Option::is_none")]
+    pub fanout_conn_time_ms: Option<i64>,
+    /// For HTTP/2, the number of connections the limit-streams action was applied to. The limit-streams action caps the allowed number of concurrent streams in a connection.
+    #[serde(rename = "ddos_action_limit_streams_connections", skip_serializing_if = "Option::is_none")]
+    pub ddos_action_limit_streams_connections: Option<i64>,
+    /// For HTTP/2, the number of requests made on a connection for which the limit-streams action was taken. The limit-streams action caps the allowed number of concurrent streams in a connection.
+    #[serde(rename = "ddos_action_limit_streams_requests", skip_serializing_if = "Option::is_none")]
+    pub ddos_action_limit_streams_requests: Option<i64>,
+    /// The number of times the tarpit-accept action was taken. The tarpit-accept action adds a delay when accepting future connections.
+    #[serde(rename = "ddos_action_tarpit_accept", skip_serializing_if = "Option::is_none")]
+    pub ddos_action_tarpit_accept: Option<i64>,
+    /// The number of times the tarpit action was taken. The tarpit action delays writing the response to the client.
+    #[serde(rename = "ddos_action_tarpit", skip_serializing_if = "Option::is_none")]
+    pub ddos_action_tarpit: Option<i64>,
+    /// The number of times the close action was taken. The close action aborts the connection as soon as possible. The close action takes effect either right after accept, right after the client hello, or right after the response was sent.
+    #[serde(rename = "ddos_action_close", skip_serializing_if = "Option::is_none")]
+    pub ddos_action_close: Option<i64>,
+    /// The number of times the blackhole action was taken. The blackhole action quietly closes a TCP connection without sending a reset. The blackhole action quietly closes a TCP connection without notifying its peer (all TCP state is dropped).
+    #[serde(rename = "ddos_action_blackhole", skip_serializing_if = "Option::is_none")]
+    pub ddos_action_blackhole: Option<i64>,
+    /// The number of challenge-start tokens created.
+    #[serde(rename = "bot_challenge_starts", skip_serializing_if = "Option::is_none")]
+    pub bot_challenge_starts: Option<i64>,
+    /// The number of challenge-complete tokens that passed validation.
+    #[serde(rename = "bot_challenge_complete_tokens_passed", skip_serializing_if = "Option::is_none")]
+    pub bot_challenge_complete_tokens_passed: Option<i64>,
+    /// The number of challenge-complete tokens that failed validation.
+    #[serde(rename = "bot_challenge_complete_tokens_failed", skip_serializing_if = "Option::is_none")]
+    pub bot_challenge_complete_tokens_failed: Option<i64>,
+    /// The number of challenge-complete tokens checked.
+    #[serde(rename = "bot_challenge_complete_tokens_checked", skip_serializing_if = "Option::is_none")]
+    pub bot_challenge_complete_tokens_checked: Option<i64>,
+    /// The number of challenge-complete tokens not checked because the feature was disabled.
+    #[serde(rename = "bot_challenge_complete_tokens_disabled", skip_serializing_if = "Option::is_none")]
+    pub bot_challenge_complete_tokens_disabled: Option<i64>,
+    /// The number of challenge-complete tokens issued. For example, issuing a challenge-complete token after a series of CAPTCHA challenges ending in success.
+    #[serde(rename = "bot_challenge_complete_tokens_issued", skip_serializing_if = "Option::is_none")]
+    pub bot_challenge_complete_tokens_issued: Option<i64>,
+    /// The number of challenges issued. For example, the issuance of a CAPTCHA challenge.
+    #[serde(rename = "bot_challenges_issued", skip_serializing_if = "Option::is_none")]
+    pub bot_challenges_issued: Option<i64>,
+    /// The number of successful challenge solutions processed. For example, a correct CAPTCHA solution.
+    #[serde(rename = "bot_challenges_succeeded", skip_serializing_if = "Option::is_none")]
+    pub bot_challenges_succeeded: Option<i64>,
+    /// The number of failed challenge solutions processed. For example, an incorrect CAPTCHA solution.
+    #[serde(rename = "bot_challenges_failed", skip_serializing_if = "Option::is_none")]
+    pub bot_challenges_failed: Option<i64>,
+    /// The number of times the downgrade action was taken. The downgrade action restricts the client to http1.
+    #[serde(rename = "ddos_action_downgrade", skip_serializing_if = "Option::is_none")]
+    pub ddos_action_downgrade: Option<i64>,
+    /// The number of connections the downgrade action was applied to. The downgrade action restricts the connection to http1.
+    #[serde(rename = "ddos_action_downgraded_connections", skip_serializing_if = "Option::is_none")]
+    pub ddos_action_downgraded_connections: Option<i64>,
+    /// Number of cache hits for a VCL service.
+    #[serde(rename = "all_hit_requests", skip_serializing_if = "Option::is_none")]
+    pub all_hit_requests: Option<i64>,
+    /// Number of cache misses for a VCL service.
+    #[serde(rename = "all_miss_requests", skip_serializing_if = "Option::is_none")]
+    pub all_miss_requests: Option<i64>,
+    /// Number of requests that passed through the CDN without being cached for a VCL service.
+    #[serde(rename = "all_pass_requests", skip_serializing_if = "Option::is_none")]
+    pub all_pass_requests: Option<i64>,
+    /// Number of cache errors for a VCL service.
+    #[serde(rename = "all_error_requests", skip_serializing_if = "Option::is_none")]
+    pub all_error_requests: Option<i64>,
+    /// Number of requests that returned a synthetic response (i.e., response objects created with the `synthetic` VCL statement) for a VCL service.
+    #[serde(rename = "all_synth_requests", skip_serializing_if = "Option::is_none")]
+    pub all_synth_requests: Option<i64>,
+    /// Number of requests sent by end users to Fastly that resulted in a hit at the edge for a VCL service.
+    #[serde(rename = "all_edge_hit_requests", skip_serializing_if = "Option::is_none")]
+    pub all_edge_hit_requests: Option<i64>,
+    /// Number of requests sent by end users to Fastly that resulted in a miss at the edge for a VCL service.
+    #[serde(rename = "all_edge_miss_requests", skip_serializing_if = "Option::is_none")]
+    pub all_edge_miss_requests: Option<i64>,
+    /// Number of \"Informational\" category status codes delivered for all sources.
+    #[serde(rename = "all_status_1xx", skip_serializing_if = "Option::is_none")]
+    pub all_status_1xx: Option<i64>,
+    /// Number of \"Success\" status codes delivered for all sources.
+    #[serde(rename = "all_status_2xx", skip_serializing_if = "Option::is_none")]
+    pub all_status_2xx: Option<i64>,
+    /// Number of \"Redirection\" codes delivered for all sources.
+    #[serde(rename = "all_status_3xx", skip_serializing_if = "Option::is_none")]
+    pub all_status_3xx: Option<i64>,
+    /// Number of \"Client Error\" codes delivered for all sources.
+    #[serde(rename = "all_status_4xx", skip_serializing_if = "Option::is_none")]
+    pub all_status_4xx: Option<i64>,
+    /// Number of \"Server Error\" codes delivered for all sources.
+    #[serde(rename = "all_status_5xx", skip_serializing_if = "Option::is_none")]
+    pub all_status_5xx: Option<i64>,
+    /// Origin Offload measures the ratio of bytes served to end users that were cached by Fastly, over the bytes served to end users, between 0 and 1. ((`edge_resp_body_bytes` + `edge_resp_header_bytes`) - (`origin_fetch_resp_body_bytes` + `origin_fetch_resp_header_bytes`)) / (`edge_resp_body_bytes` + `edge_resp_header_bytes`).
+    #[serde(rename = "origin_offload", skip_serializing_if = "Option::is_none")]
+    pub origin_offload: Option<f32>,
+    /// Number of requests where Fastly responded with 400 due to the request being a GET or HEAD request containing a body.
+    #[serde(rename = "request_denied_get_head_body", skip_serializing_if = "Option::is_none")]
+    pub request_denied_get_head_body: Option<i64>,
+    /// Number of requests classified as a DDoS attack against a customer origin or service.
+    #[serde(rename = "ddos_protection_requests_detect_count", skip_serializing_if = "Option::is_none")]
+    pub ddos_protection_requests_detect_count: Option<i64>,
+    /// Number of requests classified as a DDoS attack against a customer origin or service that were mitigated by the Fastly platform.
+    #[serde(rename = "ddos_protection_requests_mitigate_count", skip_serializing_if = "Option::is_none")]
+    pub ddos_protection_requests_mitigate_count: Option<i64>,
+    /// Number of requests analyzed for DDoS attacks against a customer origin or service, but with no DDoS detected.
+    #[serde(rename = "ddos_protection_requests_allow_count", skip_serializing_if = "Option::is_none")]
+    pub ddos_protection_requests_allow_count: Option<i64>,
+    /// A count of the number of Class A Object Storage operations.
+    #[serde(rename = "object_storage_class_a_operations_count", skip_serializing_if = "Option::is_none")]
+    pub object_storage_class_a_operations_count: Option<i64>,
+    /// A count of the number of Class B Object Storage operations.
+    #[serde(rename = "object_storage_class_b_operations_count", skip_serializing_if = "Option::is_none")]
+    pub object_storage_class_b_operations_count: Option<i64>,
+    /// Number of requests received by AI Accelerator.
+    #[serde(rename = "aia_requests", skip_serializing_if = "Option::is_none")]
+    pub aia_requests: Option<i64>,
+    /// Number of \"Informational\" category status codes received from AI provider.
+    #[serde(rename = "aia_status_1xx", skip_serializing_if = "Option::is_none")]
+    pub aia_status_1xx: Option<i64>,
+    /// Number of \"Success\" status codes received from AI provider.
+    #[serde(rename = "aia_status_2xx", skip_serializing_if = "Option::is_none")]
+    pub aia_status_2xx: Option<i64>,
+    /// Number of \"Redirection\" received from AI provider.
+    #[serde(rename = "aia_status_3xx", skip_serializing_if = "Option::is_none")]
+    pub aia_status_3xx: Option<i64>,
+    /// Number of \"Client Error\" received from AI provider.
+    #[serde(rename = "aia_status_4xx", skip_serializing_if = "Option::is_none")]
+    pub aia_status_4xx: Option<i64>,
+    /// Number of \"Server Error\" received from AI provider.
+    #[serde(rename = "aia_status_5xx", skip_serializing_if = "Option::is_none")]
+    pub aia_status_5xx: Option<i64>,
+    /// The usage tokens associated with the response returned from the AI Accelerator cache.
+    #[serde(rename = "aia_response_usage_tokens", skip_serializing_if = "Option::is_none")]
+    pub aia_response_usage_tokens: Option<i64>,
+    /// The number of usage tokens reported by the request to the origin from AI Accelerator.
+    #[serde(rename = "aia_origin_usage_tokens", skip_serializing_if = "Option::is_none")]
+    pub aia_origin_usage_tokens: Option<i64>,
+    /// The estimated amount of time saved by responses served from the AI Accelerator semantic cache.
+    #[serde(rename = "aia_estimated_time_saved_ms", skip_serializing_if = "Option::is_none")]
+    pub aia_estimated_time_saved_ms: Option<i64>,
+    /// Number of requests that were collapsed and satisfied by a usable cache object.
+    #[serde(rename = "request_collapse_usable_count", skip_serializing_if = "Option::is_none")]
+    pub request_collapse_usable_count: Option<i64>,
+    /// Number of requests that were collapsed and unable to be satisfied by the resulting cache object.
+    #[serde(rename = "request_collapse_unusable_count", skip_serializing_if = "Option::is_none")]
+    pub request_collapse_unusable_count: Option<i64>,
+    /// Number of cache operations executed by the Compute platform.
+    #[serde(rename = "compute_cache_operations_count", skip_serializing_if = "Option::is_none")]
+    pub compute_cache_operations_count: Option<i64>,
+    /// Total number of Next-Gen WAF (Edge WAF & Core WAF) requests.
+    #[serde(rename = "ngwaf_requests_total_count", skip_serializing_if = "Option::is_none")]
+    pub ngwaf_requests_total_count: Option<i32>,
+    /// Count of Edge WAF requests with an unknown outcome.
+    #[serde(rename = "ngwaf_requests_unknown_count", skip_serializing_if = "Option::is_none")]
+    pub ngwaf_requests_unknown_count: Option<i32>,
+    /// Count of Next-Gen WAF (Edge WAF & Core WAF) requests allowed.
+    #[serde(rename = "ngwaf_requests_allowed_count", skip_serializing_if = "Option::is_none")]
+    pub ngwaf_requests_allowed_count: Option<i32>,
+    /// Count of Edge WAF requests logged.
+    #[serde(rename = "ngwaf_requests_logged_count", skip_serializing_if = "Option::is_none")]
+    pub ngwaf_requests_logged_count: Option<i32>,
+    /// Count of Next-Gen WAF (Edge WAF & Core WAF) requests blocked.
+    #[serde(rename = "ngwaf_requests_blocked_count", skip_serializing_if = "Option::is_none")]
+    pub ngwaf_requests_blocked_count: Option<i32>,
+    /// Count of Edge WAF requests timed outcome.
+    #[serde(rename = "ngwaf_requests_timeout_count", skip_serializing_if = "Option::is_none")]
+    pub ngwaf_requests_timeout_count: Option<i32>,
+    /// Count of Edge WAF requests challenged.
+    #[serde(rename = "ngwaf_requests_challenged_count", skip_serializing_if = "Option::is_none")]
+    pub ngwaf_requests_challenged_count: Option<i32>,
+    /// Number of requests processed by the API Discovery engine.
+    #[serde(rename = "api_discovery_requests_count", skip_serializing_if = "Option::is_none")]
+    pub api_discovery_requests_count: Option<i32>,
+    /// Number of responses delivered with status code 103 (Early Hints) by the Compute platform.
+    #[serde(rename = "compute_resp_status_103", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_103: Option<i32>,
+    /// Number of responses delivered with status code 200 (Success) by the Compute platform.
+    #[serde(rename = "compute_resp_status_200", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_200: Option<i32>,
+    /// Number of responses delivered with status code 204 (No Content) by the Compute platform.
+    #[serde(rename = "compute_resp_status_204", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_204: Option<i32>,
+    /// Number of responses delivered with status code 206 (Partial Content) by the Compute platform.
+    #[serde(rename = "compute_resp_status_206", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_206: Option<i32>,
+    /// Number of responses delivered with status code 301 (Moved Permanently) by the Compute platform.
+    #[serde(rename = "compute_resp_status_301", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_301: Option<i32>,
+    /// Number of responses delivered with status code 302 (Found) by the Compute platform.
+    #[serde(rename = "compute_resp_status_302", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_302: Option<i32>,
+    /// Number of responses delivered with status code 304 (Not Modified) by the Compute platform.
+    #[serde(rename = "compute_resp_status_304", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_304: Option<i32>,
+    /// Number of responses delivered with status code 400 (Bad Request) by the Compute platform.
+    #[serde(rename = "compute_resp_status_400", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_400: Option<i32>,
+    /// Number of responses delivered with status code 401 (Unauthorized) by the Compute platform.
+    #[serde(rename = "compute_resp_status_401", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_401: Option<i32>,
+    /// Number of responses delivered with status code 403 (Forbidden) by the Compute platform.
+    #[serde(rename = "compute_resp_status_403", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_403: Option<i32>,
+    /// Number of responses delivered with status code 404 (Not Found) by the Compute platform.
+    #[serde(rename = "compute_resp_status_404", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_404: Option<i32>,
+    /// Number of responses delivered with status code 416 (Range Not Satisfiable) by the Compute platform.
+    #[serde(rename = "compute_resp_status_416", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_416: Option<i32>,
+    /// Number of responses delivered with status code 429 (Too Many Requests) by the Compute platform.
+    #[serde(rename = "compute_resp_status_429", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_429: Option<i32>,
+    /// Number of responses delivered with status code 500 (Internal Server Error) by the Compute platform.
+    #[serde(rename = "compute_resp_status_500", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_500: Option<i32>,
+    /// Number of responses delivered with status code 501 (Not Implemented) by the Compute platform.
+    #[serde(rename = "compute_resp_status_501", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_501: Option<i32>,
+    /// Number of responses delivered with status code 502 (Bad Gateway) by the Compute platform.
+    #[serde(rename = "compute_resp_status_502", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_502: Option<i32>,
+    /// Number of responses delivered with status code 503 (Service Unavailable) by the Compute platform.
+    #[serde(rename = "compute_resp_status_503", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_503: Option<i32>,
+    /// Number of responses delivered with status code 504 (Gateway Timeout) by the Compute platform.
+    #[serde(rename = "compute_resp_status_504", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_504: Option<i32>,
+    /// Number of responses delivered with status code 505 (HTTP Version Not Supported) by the Compute platform.
+    #[serde(rename = "compute_resp_status_505", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_505: Option<i32>,
+    /// Number of responses delivered with status code 530 by the Compute platform.
+    #[serde(rename = "compute_resp_status_530", skip_serializing_if = "Option::is_none")]
+    pub compute_resp_status_530: Option<i32>,
+    /// The number of Image Optimizer requests made from Compute services.
+    #[serde(rename = "imgopto_compute_requests", skip_serializing_if = "Option::is_none")]
+    pub imgopto_compute_requests: Option<i32>,
+    /// Number of billable DNS responses (e.g., A, CNAME).
+    #[serde(rename = "dns_billable_responses_count", skip_serializing_if = "Option::is_none")]
+    pub dns_billable_responses_count: Option<i32>,
+    /// Number of non-billable DNS responses (e.g., NODATA, NXDOMAIN).
+    #[serde(rename = "dns_nonbillable_responses_count", skip_serializing_if = "Option::is_none")]
+    pub dns_nonbillable_responses_count: Option<i32>,
+    /// Number of requests that resulted in a WebSocket upgrade.
+    #[serde(rename = "upgrade", skip_serializing_if = "Option::is_none")]
+    pub upgrade: Option<i32>,
+    /// Count of Next-Gen WAF Bot Management requests.
+    #[serde(rename = "ngwaf_bot_analysis_request_count", skip_serializing_if = "Option::is_none")]
+    pub ngwaf_bot_analysis_request_count: Option<i32>,
+    /// Count of AVIF images delivered to end user by Image Optimizer.
+    #[serde(rename = "imgopto_avif_count", skip_serializing_if = "Option::is_none")]
+    pub imgopto_avif_count: Option<i32>,
+    /// Count of JPEG images delivered to end user by Image Optimizer.
+    #[serde(rename = "imgopto_jpeg_count", skip_serializing_if = "Option::is_none")]
+    pub imgopto_jpeg_count: Option<i32>,
+    /// Count of PNG images delivered to end user by Image Optimizer.
+    #[serde(rename = "imgopto_png_count", skip_serializing_if = "Option::is_none")]
+    pub imgopto_png_count: Option<i32>,
+    /// Count of GIF images delivered to end user by Image Optimizer.
+    #[serde(rename = "imgopto_gif_count", skip_serializing_if = "Option::is_none")]
+    pub imgopto_gif_count: Option<i32>,
+    /// Count of WebP images delivered to end user by Image Optimizer.
+    #[serde(rename = "imgopto_webp_count", skip_serializing_if = "Option::is_none")]
+    pub imgopto_webp_count: Option<i32>,
+    /// Count of JPEGXL images delivered to end user by Image Optimizer.
+    #[serde(rename = "imgopto_jpegxl_count", skip_serializing_if = "Option::is_none")]
+    pub imgopto_jpegxl_count: Option<i32>,
+    /// Count of SVG images delivered to end user by Image Optimizer.
+    #[serde(rename = "imgopto_svg_count", skip_serializing_if = "Option::is_none")]
+    pub imgopto_svg_count: Option<i32>,
+    /// Count of MP4s delivered to end user by Image Optimizer.
+    #[serde(rename = "imgopto_mp4_count", skip_serializing_if = "Option::is_none")]
+    pub imgopto_mp4_count: Option<i32>,
+    /// Aggregate of fatal errors caused by exceeding allocated resource limits, specifically runtime duration, vCPU usage, and heap memory limits.
+    #[serde(rename = "compute_service_resource_limits_error", skip_serializing_if = "Option::is_none")]
+    pub compute_service_resource_limits_error: Option<i32>,
+    /// Fatal errors caused by service logic faults, including stack overflows, unreachable code traps, illegal memory access, or attempts to send multiple responses.
+    #[serde(rename = "compute_service_runtime_error", skip_serializing_if = "Option::is_none")]
+    pub compute_service_runtime_error: Option<i32>,
+    /// Fatal errors caused by the service path exceeding hop or service limits, or where a forwarding loop is detected via CDN-Loop headers.
+    #[serde(rename = "compute_service_chain_error", skip_serializing_if = "Option::is_none")]
+    pub compute_service_chain_error: Option<i32>,
+    /// Fatal errors caused by internal errors in Fastly’s Compute platform.
+    #[serde(rename = "compute_platform_internal_error", skip_serializing_if = "Option::is_none")]
+    pub compute_platform_internal_error: Option<i32>,
+    /// Fatal errors caused by exceeding the per-request runtime limit.
+    #[serde(rename = "compute_service_timeout_error", skip_serializing_if = "Option::is_none")]
+    pub compute_service_timeout_error: Option<i32>,
+    /// Fatal errors caused by exceeding the per-request vCPU time limit.
+    #[serde(rename = "compute_service_vcpu_exceeded_error", skip_serializing_if = "Option::is_none")]
+    pub compute_service_vcpu_exceeded_error: Option<i32>,
+    /// Non-fatal errors caused by attempts to exceed defined operational limits, such as simultaneous backend requests or cache transactions.
+    #[serde(rename = "compute_service_limits_error", skip_serializing_if = "Option::is_none")]
+    pub compute_service_limits_error: Option<i32>,
+    /// Fatal errors caused by unprocessable requests to the service, such as requests with malformed CDN-Loop headers or invalid purge credentials.
+    #[serde(rename = "compute_platform_invalid_request_error", skip_serializing_if = "Option::is_none")]
+    pub compute_platform_invalid_request_error: Option<i32>,
+    /// Number of WebAssembly (Wasm) sandboxes created.
+    #[serde(rename = "compute_sandboxes", skip_serializing_if = "Option::is_none")]
+    pub compute_sandboxes: Option<i32>,
+    /// Total number of Bot Management requests across all deployments.
+    #[serde(rename = "bot_requests_total_count", skip_serializing_if = "Option::is_none")]
+    pub bot_requests_total_count: Option<i32>,
+    /// Count of edge requests where bot detection analysis was performed.
+    #[serde(rename = "bot_edge_requests_analyzed_count", skip_serializing_if = "Option::is_none")]
+    pub bot_edge_requests_analyzed_count: Option<i32>,
+    /// Count of edge requests where a bot was detected.
+    #[serde(rename = "bot_edge_requests_detected_count", skip_serializing_if = "Option::is_none")]
+    pub bot_edge_requests_detected_count: Option<i32>,
+    /// Count of edge requests where a verified bot was detected.
+    #[serde(rename = "bot_edge_requests_verified_count", skip_serializing_if = "Option::is_none")]
+    pub bot_edge_requests_verified_count: Option<i32>,
+    /// Count of edge requests where an AI crawler was detected.
+    #[serde(rename = "bot_edge_requests_ai_crawler_count", skip_serializing_if = "Option::is_none")]
+    pub bot_edge_requests_ai_crawler_count: Option<i32>,
+    /// Count of edge requests where an AI fetcher was detected.
+    #[serde(rename = "bot_edge_requests_ai_fetcher_count", skip_serializing_if = "Option::is_none")]
+    pub bot_edge_requests_ai_fetcher_count: Option<i32>,
+    /// Count of edge requests where an accessibility bot was detected.
+    #[serde(rename = "bot_edge_requests_accessibility_count", skip_serializing_if = "Option::is_none")]
+    pub bot_edge_requests_accessibility_count: Option<i32>,
+    /// Count of edge requests where a content fetcher was detected.
+    #[serde(rename = "bot_edge_requests_content_fetcher_count", skip_serializing_if = "Option::is_none")]
+    pub bot_edge_requests_content_fetcher_count: Option<i32>,
+    /// Count of edge requests where a monitoring and site tool was detected.
+    #[serde(rename = "bot_edge_requests_monitoring_count", skip_serializing_if = "Option::is_none")]
+    pub bot_edge_requests_monitoring_count: Option<i32>,
+    /// Count of edge requests where an online marketing bot was detected.
+    #[serde(rename = "bot_edge_requests_online_marketing_count", skip_serializing_if = "Option::is_none")]
+    pub bot_edge_requests_online_marketing_count: Option<i32>,
+    /// Count of edge requests where a page preview bot was detected.
+    #[serde(rename = "bot_edge_requests_page_preview_count", skip_serializing_if = "Option::is_none")]
+    pub bot_edge_requests_page_preview_count: Option<i32>,
+    /// Count of edge requests where a platform integration was detected.
+    #[serde(rename = "bot_edge_requests_platform_integrations_count", skip_serializing_if = "Option::is_none")]
+    pub bot_edge_requests_platform_integrations_count: Option<i32>,
+    /// Count of edge requests where a research bot was detected.
+    #[serde(rename = "bot_edge_requests_research_count", skip_serializing_if = "Option::is_none")]
+    pub bot_edge_requests_research_count: Option<i32>,
+    /// Count of edge requests where a search engine crawler was detected.
+    #[serde(rename = "bot_edge_requests_search_engine_crawler_count", skip_serializing_if = "Option::is_none")]
+    pub bot_edge_requests_search_engine_crawler_count: Option<i32>,
+    /// Count of edge requests where a search engine optimization bot was detected.
+    #[serde(rename = "bot_edge_requests_search_engine_optimization_count", skip_serializing_if = "Option::is_none")]
+    pub bot_edge_requests_search_engine_optimization_count: Option<i32>,
+    /// Count of edge requests where a security tool was detected.
+    #[serde(rename = "bot_edge_requests_security_tools_count", skip_serializing_if = "Option::is_none")]
+    pub bot_edge_requests_security_tools_count: Option<i32>,
+    /// The number of times Compute has handed off a request to the Fanout proxy or WebSocket proxy.
+    #[serde(rename = "compute_handoff", skip_serializing_if = "Option::is_none")]
+    pub compute_handoff: Option<i32>,
+    /// Number of backend requests from a Compute service that failed during DNS resolution.
+    #[serde(rename = "compute_service_bereq_dns_error", skip_serializing_if = "Option::is_none")]
+    pub compute_service_bereq_dns_error: Option<i32>,
+    /// Number of backend requests from a Compute service where the connection to the origin timed out before being established.
+    #[serde(rename = "compute_service_bereq_conn_timeout_error", skip_serializing_if = "Option::is_none")]
+    pub compute_service_bereq_conn_timeout_error: Option<i32>,
+    /// Number of backend requests from a Compute service where the origin actively refused the connection.
+    #[serde(rename = "compute_service_bereq_conn_refused_error", skip_serializing_if = "Option::is_none")]
+    pub compute_service_bereq_conn_refused_error: Option<i32>,
+    /// Number of backend requests from a Compute service that failed due to a connection error not classified as a timeout or refusal.
+    #[serde(rename = "compute_service_bereq_conn_other_error", skip_serializing_if = "Option::is_none")]
+    pub compute_service_bereq_conn_other_error: Option<i32>,
+    /// Number of backend requests from a Compute service that failed due to a TLS certificate validation error (e.g., expired, untrusted CA, hostname mismatch).
+    #[serde(rename = "compute_service_bereq_tls_server_cert_error", skip_serializing_if = "Option::is_none")]
+    pub compute_service_bereq_tls_server_cert_error: Option<i32>,
+    /// Number of backend requests from a Compute service that failed due to a TLS error not classified as a certificate error.
+    #[serde(rename = "compute_service_bereq_tls_other_error", skip_serializing_if = "Option::is_none")]
+    pub compute_service_bereq_tls_other_error: Option<i32>,
+    /// Number of backend requests from a Compute service that failed due to an HTTP/1.x protocol violation after the request was transmitted.
+    #[serde(rename = "compute_service_bereq_http_proto_v1_error", skip_serializing_if = "Option::is_none")]
+    pub compute_service_bereq_http_proto_v1_error: Option<i32>,
+    /// Number of backend requests from a Compute service that failed due to an HTTP/2 protocol error, typically a `RST_STREAM` or `GO_AWAY` from the origin.
+    #[serde(rename = "compute_service_bereq_http_proto_v2_error", skip_serializing_if = "Option::is_none")]
+    pub compute_service_bereq_http_proto_v2_error: Option<i32>,
+    /// Number of backend requests from a Compute service where the origin sent an incomplete HTTP response.
+    #[serde(rename = "compute_service_bereq_http_incomplete_error", skip_serializing_if = "Option::is_none")]
+    pub compute_service_bereq_http_incomplete_error: Option<i32>,
+    /// Number of backend requests from a Compute service where the origin did not respond within the configured timeout period.
+    #[serde(rename = "compute_service_bereq_http_timeout_error", skip_serializing_if = "Option::is_none")]
+    pub compute_service_bereq_http_timeout_error: Option<i32>,
+    /// Number of backend requests from a Compute service that failed due to an HTTP-level error not classified in any category.
+    #[serde(rename = "compute_service_bereq_http_other_error", skip_serializing_if = "Option::is_none")]
+    pub compute_service_bereq_http_other_error: Option<i32>,
+    /// Number of backend requests from a Compute service that failed due to an error not classified into the DNS, connection, TLS, or HTTP categories.
+    #[serde(rename = "compute_service_bereq_other_error", skip_serializing_if = "Option::is_none")]
+    pub compute_service_bereq_other_error: Option<i32>,
+    /// Number of backend requests from a Compute service where the origin returned a 5xx status code.
+    #[serde(rename = "compute_service_bereq_5xx_error", skip_serializing_if = "Option::is_none")]
+    pub compute_service_bereq_5xx_error: Option<i32>,
+    /// Number of backend requests from a Compute service that failed at the TCP connection level. Sum of `compute_service_bereq_conn_timeout_error`, `compute_service_bereq_conn_refused_error`, and `compute_service_bereq_conn_other_error`.
+    #[serde(rename = "compute_service_bereq_conn_error", skip_serializing_if = "Option::is_none")]
+    pub compute_service_bereq_conn_error: Option<i32>,
+    /// Number of backend requests from a Compute service that failed during the TLS handshake or session with the origin. Sum of `compute_service_bereq_tls_server_cert_error` and `compute_service_bereq_tls_other_error`.
+    #[serde(rename = "compute_service_bereq_tls_error", skip_serializing_if = "Option::is_none")]
+    pub compute_service_bereq_tls_error: Option<i32>,
+    /// Number of backend requests from a Compute service that failed at the HTTP protocol level. Sum of `compute_service_bereq_http_proto_v1_error`, `compute_service_bereq_http_proto_v2_error`, `compute_service_bereq_http_incomplete_error`, `compute_service_bereq_http_timeout_error`, and `compute_service_bereq_http_other_error`.
+    #[serde(rename = "compute_service_bereq_http_error", skip_serializing_if = "Option::is_none")]
+    pub compute_service_bereq_http_error: Option<i32>,
+    /// Number of Private Access Token challenges issued.
+    #[serde(rename = "bot_challenges_pats_issued", skip_serializing_if = "Option::is_none")]
+    pub bot_challenges_pats_issued: Option<i32>,
+    /// Number of successful Private Access Token challenge solutions processed.
+    #[serde(rename = "bot_challenges_pats_succeeded", skip_serializing_if = "Option::is_none")]
+    pub bot_challenges_pats_succeeded: Option<i32>,
+    /// Number of edge requests where a headless bot was detected.
+    #[serde(rename = "bot_edge_requests_headless_count", skip_serializing_if = "Option::is_none")]
+    pub bot_edge_requests_headless_count: Option<i32>,
+    /// Number of responses sent with status code 499 (Client Disconnected).
+    #[serde(rename = "status_499", skip_serializing_if = "Option::is_none")]
+    pub status_499: Option<i32>,
+    /// Number of requests received by AI Runtime Control.
+    #[serde(rename = "arc_requests", skip_serializing_if = "Option::is_none")]
+    pub arc_requests: Option<i32>,
+    /// The number of challenge-complete tokens checked while enforcing DDoS protection rules.
+    #[serde(rename = "ddos_challenge_complete_tokens_checked", skip_serializing_if = "Option::is_none")]
+    pub ddos_challenge_complete_tokens_checked: Option<i32>,
+    /// The number of challenge-complete tokens that passed validation while enforcing DDoS protection rules.
+    #[serde(rename = "ddos_challenge_complete_tokens_passed", skip_serializing_if = "Option::is_none")]
+    pub ddos_challenge_complete_tokens_passed: Option<i32>,
+    /// The number of challenge-complete tokens that failed validation while enforcing DDoS protection rules.
+    #[serde(rename = "ddos_challenge_complete_tokens_failed", skip_serializing_if = "Option::is_none")]
+    pub ddos_challenge_complete_tokens_failed: Option<i32>,
+    /// The number of challenge-start tokens created while enforcing DDoS protection rules.
+    #[serde(rename = "ddos_challenge_starts", skip_serializing_if = "Option::is_none")]
+    pub ddos_challenge_starts: Option<i32>,
+    /// Number of challenge-complete tokens issued as a result of a DDoS action. For example, issuing a challenge-complete token after a series of CAPTCHA challenges ending in success.
+    #[serde(rename = "ddos_challenge_complete_tokens_issued", skip_serializing_if = "Option::is_none")]
+    pub ddos_challenge_complete_tokens_issued: Option<i32>,
+    /// Number of challenges issued from a DDoS action.
+    #[serde(rename = "ddos_challenges_issued", skip_serializing_if = "Option::is_none")]
+    pub ddos_challenges_issued: Option<i32>,
+    /// Number of successful challenge solutions processed as a result of a DDoS action. For example, a correct CAPTCHA solution.
+    #[serde(rename = "ddos_challenges_succeeded", skip_serializing_if = "Option::is_none")]
+    pub ddos_challenges_succeeded: Option<i32>,
+    /// Number of failed challenge solutions processed as a result of a DDoS action. For example, an incorrect CAPTCHA solution.
+    #[serde(rename = "ddos_challenges_failed", skip_serializing_if = "Option::is_none")]
+    pub ddos_challenges_failed: Option<i32>,
+    /// Number of Private Access Token challenges issued as a result of a DDoS action.
+    #[serde(rename = "ddos_challenges_pats_issued", skip_serializing_if = "Option::is_none")]
+    pub ddos_challenges_pats_issued: Option<i32>,
+    /// Number of successful Private Access Token challenge solutions processed as a result of a DDoS action.
+    #[serde(rename = "ddos_challenges_pats_succeeded", skip_serializing_if = "Option::is_none")]
+    pub ddos_challenges_pats_succeeded: Option<i32>,
+    /// **Gauge.** The number of pages monitored by Content Security Policy.
+    #[serde(rename = "csp_pages_gauge", skip_serializing_if = "Option::is_none")]
+    pub csp_pages_gauge: Option<i64>,
+    /// **Gauge.** The number of Next-Gen WAF rules defined at the account level.
+    #[serde(rename = "ngwaf_account_rules_gauge", skip_serializing_if = "Option::is_none")]
+    pub ngwaf_account_rules_gauge: Option<i64>,
+    /// **Gauge.** The number of Next-Gen WAF workspaces in the account.
+    #[serde(rename = "ngwaf_account_workspaces", skip_serializing_if = "Option::is_none")]
+    pub ngwaf_account_workspaces: Option<i64>,
+    /// **Gauge.** The number of Next-Gen WAF rules defined in a workspace.
+    #[serde(rename = "ngwaf_workspace_rules_gauge", skip_serializing_if = "Option::is_none")]
+    pub ngwaf_workspace_rules_gauge: Option<i64>,
+    /// **Gauge.** The number of Next-Gen WAF thresholds defined in a workspace.
+    #[serde(rename = "ngwaf_workspace_thresholds_gauge", skip_serializing_if = "Option::is_none")]
+    pub ngwaf_workspace_thresholds_gauge: Option<i64>,
+    /// **Gauge.** The number of Object Storage buckets.
+    #[serde(rename = "object_storage_buckets_count", skip_serializing_if = "Option::is_none")]
+    pub object_storage_buckets_count: Option<i64>,
+    /// **Gauge.** The number of bytes stored in Object Storage.
+    #[serde(rename = "object_storage_bytes_count", skip_serializing_if = "Option::is_none")]
+    pub object_storage_bytes_count: Option<i64>,
 }
 
 impl PlatformValues {
-    /// The results of the query, optionally filtered and grouped over the requested timespan.
+    /// Metric values for the timestamp field. Note that this dataset is sparse: only the keys with non-zero values will be included in the record. 
     pub fn new() -> PlatformValues {
         PlatformValues {
             timestamp: None,
-            ttfb_origin_p25_us: None,
-            ttfb_origin_p50_us: None,
-            ttfb_origin_p75_us: None,
-            ttfb_origin_p95_us: None,
-            ttfb_origin_p99_us: None,
-            ttfb_shield_p25_us: None,
-            ttfb_shield_p50_us: None,
-            ttfb_shield_p75_us: None,
-            ttfb_shield_p95_us: None,
-            ttfb_shield_p99_us: None,
-            ttfb_edge_p25_us: None,
-            ttfb_edge_p50_us: None,
-            ttfb_edge_p75_us: None,
-            ttfb_edge_p95_us: None,
-            ttfb_edge_p99_us: None,
+            datacenter: None,
+            region: None,
+            requests: None,
+            hits: None,
+            hits_time: None,
+            miss: None,
+            miss_time: None,
+            pass: None,
+            pass_time: None,
+            errors: None,
+            restarts: None,
+            hit_ratio: None,
+            bandwidth: None,
+            req_body_bytes: None,
+            req_header_bytes: None,
+            resp_body_bytes: None,
+            resp_header_bytes: None,
+            bereq_body_bytes: None,
+            bereq_header_bytes: None,
+            uncacheable: None,
+            pipe: None,
+            synth: None,
+            tls: None,
+            tls_v10: None,
+            tls_v11: None,
+            tls_v12: None,
+            tls_v13: None,
+            edge_requests: None,
+            edge_resp_header_bytes: None,
+            edge_resp_body_bytes: None,
+            edge_hit_requests: None,
+            edge_miss_requests: None,
+            origin_fetches: None,
+            origin_fetch_header_bytes: None,
+            origin_fetch_body_bytes: None,
+            origin_fetch_resp_header_bytes: None,
+            origin_fetch_resp_body_bytes: None,
+            origin_revalidations: None,
+            origin_cache_fetches: None,
+            shield: None,
+            shield_resp_body_bytes: None,
+            shield_resp_header_bytes: None,
+            shield_fetches: None,
+            shield_fetch_header_bytes: None,
+            shield_fetch_body_bytes: None,
+            shield_fetch_resp_header_bytes: None,
+            shield_fetch_resp_body_bytes: None,
+            shield_revalidations: None,
+            shield_cache_fetches: None,
+            ipv6: None,
+            otfp: None,
+            otfp_resp_body_bytes: None,
+            otfp_resp_header_bytes: None,
+            otfp_shield_resp_body_bytes: None,
+            otfp_shield_resp_header_bytes: None,
+            otfp_manifests: None,
+            otfp_deliver_time: None,
+            otfp_shield_time: None,
+            video: None,
+            pci: None,
+            log: None,
+            log_bytes: None,
+            http2: None,
+            http3: None,
+            attack_req_body_bytes: None,
+            attack_req_header_bytes: None,
+            attack_logged_req_body_bytes: None,
+            attack_logged_req_header_bytes: None,
+            attack_blocked_req_body_bytes: None,
+            attack_blocked_req_header_bytes: None,
+            attack_passed_req_body_bytes: None,
+            attack_passed_req_header_bytes: None,
+            attack_resp_synth_bytes: None,
+            imgopto: None,
+            imgopto_input_image_bytes: None,
+            imgopto_output_image_bytes: None,
+            imgopto_resp_body_bytes: None,
+            imgopto_resp_header_bytes: None,
+            imgopto_shield: None,
+            imgopto_shield_resp_body_bytes: None,
+            imgopto_shield_resp_header_bytes: None,
+            imgopto_transforms: None,
+            imgvideo: None,
+            imgvideo_frames: None,
+            imgvideo_resp_header_bytes: None,
+            imgvideo_resp_body_bytes: None,
+            imgvideo_shield_resp_header_bytes: None,
+            imgvideo_shield_resp_body_bytes: None,
+            imgvideo_shield: None,
+            imgvideo_shield_frames: None,
+            status_200: None,
+            status_204: None,
+            status_206: None,
+            status_301: None,
+            status_302: None,
+            status_304: None,
+            status_400: None,
+            status_401: None,
+            status_403: None,
+            status_404: None,
+            status_406: None,
+            status_416: None,
+            status_429: None,
+            status_500: None,
+            status_501: None,
+            status_502: None,
+            status_503: None,
+            status_504: None,
+            status_505: None,
+            status_530: None,
+            status_1xx: None,
+            status_2xx: None,
+            status_3xx: None,
+            status_4xx: None,
+            status_5xx: None,
+            object_size_1k: None,
+            object_size_10k: None,
+            object_size_100k: None,
+            object_size_1m: None,
+            object_size_10m: None,
+            object_size_100m: None,
+            object_size_1g: None,
+            recv_sub_time: None,
+            recv_sub_count: None,
+            hash_sub_time: None,
+            hash_sub_count: None,
+            miss_sub_time: None,
+            miss_sub_count: None,
+            fetch_sub_time: None,
+            fetch_sub_count: None,
+            pass_sub_time: None,
+            pass_sub_count: None,
+            pipe_sub_time: None,
+            pipe_sub_count: None,
+            deliver_sub_time: None,
+            deliver_sub_count: None,
+            error_sub_time: None,
+            error_sub_count: None,
+            hit_sub_time: None,
+            hit_sub_count: None,
+            prehash_sub_time: None,
+            prehash_sub_count: None,
+            predeliver_sub_time: None,
+            predeliver_sub_count: None,
+            tls_handshake_sent_bytes: None,
+            hit_resp_body_bytes: None,
+            miss_resp_body_bytes: None,
+            pass_resp_body_bytes: None,
+            segblock_origin_fetches: None,
+            segblock_shield_fetches: None,
+            compute_requests: None,
+            compute_request_time_ms: None,
+            compute_request_time_billed_ms: None,
+            compute_ram_used: None,
+            compute_execution_time_ms: None,
+            compute_req_header_bytes: None,
+            compute_req_body_bytes: None,
+            compute_resp_header_bytes: None,
+            compute_resp_body_bytes: None,
+            compute_resp_status_1xx: None,
+            compute_resp_status_2xx: None,
+            compute_resp_status_3xx: None,
+            compute_resp_status_4xx: None,
+            compute_resp_status_5xx: None,
+            compute_bereq_header_bytes: None,
+            compute_bereq_body_bytes: None,
+            compute_beresp_header_bytes: None,
+            compute_beresp_body_bytes: None,
+            compute_bereqs: None,
+            compute_service_bereq_error: None,
+            compute_service_memory_exceeded_error: None,
+            edge_hit_resp_body_bytes: None,
+            edge_hit_resp_header_bytes: None,
+            edge_miss_resp_body_bytes: None,
+            edge_miss_resp_header_bytes: None,
+            origin_cache_fetch_resp_body_bytes: None,
+            origin_cache_fetch_resp_header_bytes: None,
+            shield_hit_requests: None,
+            shield_miss_requests: None,
+            shield_hit_resp_header_bytes: None,
+            shield_hit_resp_body_bytes: None,
+            shield_miss_resp_header_bytes: None,
+            shield_miss_resp_body_bytes: None,
+            websocket_req_header_bytes: None,
+            websocket_req_body_bytes: None,
+            websocket_resp_header_bytes: None,
+            websocket_resp_body_bytes: None,
+            websocket_bereq_header_bytes: None,
+            websocket_bereq_body_bytes: None,
+            websocket_beresp_header_bytes: None,
+            websocket_beresp_body_bytes: None,
+            websocket_conn_time_ms: None,
+            fanout_recv_publishes: None,
+            fanout_send_publishes: None,
+            kv_store_class_a_operations: None,
+            kv_store_class_b_operations: None,
+            fanout_req_header_bytes: None,
+            fanout_req_body_bytes: None,
+            fanout_resp_header_bytes: None,
+            fanout_resp_body_bytes: None,
+            fanout_bereq_header_bytes: None,
+            fanout_bereq_body_bytes: None,
+            fanout_beresp_header_bytes: None,
+            fanout_beresp_body_bytes: None,
+            fanout_conn_time_ms: None,
+            ddos_action_limit_streams_connections: None,
+            ddos_action_limit_streams_requests: None,
+            ddos_action_tarpit_accept: None,
+            ddos_action_tarpit: None,
+            ddos_action_close: None,
+            ddos_action_blackhole: None,
+            bot_challenge_starts: None,
+            bot_challenge_complete_tokens_passed: None,
+            bot_challenge_complete_tokens_failed: None,
+            bot_challenge_complete_tokens_checked: None,
+            bot_challenge_complete_tokens_disabled: None,
+            bot_challenge_complete_tokens_issued: None,
+            bot_challenges_issued: None,
+            bot_challenges_succeeded: None,
+            bot_challenges_failed: None,
+            ddos_action_downgrade: None,
+            ddos_action_downgraded_connections: None,
+            all_hit_requests: None,
+            all_miss_requests: None,
+            all_pass_requests: None,
+            all_error_requests: None,
+            all_synth_requests: None,
+            all_edge_hit_requests: None,
+            all_edge_miss_requests: None,
+            all_status_1xx: None,
+            all_status_2xx: None,
+            all_status_3xx: None,
+            all_status_4xx: None,
+            all_status_5xx: None,
+            origin_offload: None,
+            request_denied_get_head_body: None,
+            ddos_protection_requests_detect_count: None,
+            ddos_protection_requests_mitigate_count: None,
+            ddos_protection_requests_allow_count: None,
+            object_storage_class_a_operations_count: None,
+            object_storage_class_b_operations_count: None,
+            aia_requests: None,
+            aia_status_1xx: None,
+            aia_status_2xx: None,
+            aia_status_3xx: None,
+            aia_status_4xx: None,
+            aia_status_5xx: None,
+            aia_response_usage_tokens: None,
+            aia_origin_usage_tokens: None,
+            aia_estimated_time_saved_ms: None,
+            request_collapse_usable_count: None,
+            request_collapse_unusable_count: None,
+            compute_cache_operations_count: None,
+            ngwaf_requests_total_count: None,
+            ngwaf_requests_unknown_count: None,
+            ngwaf_requests_allowed_count: None,
+            ngwaf_requests_logged_count: None,
+            ngwaf_requests_blocked_count: None,
+            ngwaf_requests_timeout_count: None,
+            ngwaf_requests_challenged_count: None,
+            api_discovery_requests_count: None,
+            compute_resp_status_103: None,
+            compute_resp_status_200: None,
+            compute_resp_status_204: None,
+            compute_resp_status_206: None,
+            compute_resp_status_301: None,
+            compute_resp_status_302: None,
+            compute_resp_status_304: None,
+            compute_resp_status_400: None,
+            compute_resp_status_401: None,
+            compute_resp_status_403: None,
+            compute_resp_status_404: None,
+            compute_resp_status_416: None,
+            compute_resp_status_429: None,
+            compute_resp_status_500: None,
+            compute_resp_status_501: None,
+            compute_resp_status_502: None,
+            compute_resp_status_503: None,
+            compute_resp_status_504: None,
+            compute_resp_status_505: None,
+            compute_resp_status_530: None,
+            imgopto_compute_requests: None,
+            dns_billable_responses_count: None,
+            dns_nonbillable_responses_count: None,
+            upgrade: None,
+            ngwaf_bot_analysis_request_count: None,
+            imgopto_avif_count: None,
+            imgopto_jpeg_count: None,
+            imgopto_png_count: None,
+            imgopto_gif_count: None,
+            imgopto_webp_count: None,
+            imgopto_jpegxl_count: None,
+            imgopto_svg_count: None,
+            imgopto_mp4_count: None,
+            compute_service_resource_limits_error: None,
+            compute_service_runtime_error: None,
+            compute_service_chain_error: None,
+            compute_platform_internal_error: None,
+            compute_service_timeout_error: None,
+            compute_service_vcpu_exceeded_error: None,
+            compute_service_limits_error: None,
+            compute_platform_invalid_request_error: None,
+            compute_sandboxes: None,
+            bot_requests_total_count: None,
+            bot_edge_requests_analyzed_count: None,
+            bot_edge_requests_detected_count: None,
+            bot_edge_requests_verified_count: None,
+            bot_edge_requests_ai_crawler_count: None,
+            bot_edge_requests_ai_fetcher_count: None,
+            bot_edge_requests_accessibility_count: None,
+            bot_edge_requests_content_fetcher_count: None,
+            bot_edge_requests_monitoring_count: None,
+            bot_edge_requests_online_marketing_count: None,
+            bot_edge_requests_page_preview_count: None,
+            bot_edge_requests_platform_integrations_count: None,
+            bot_edge_requests_research_count: None,
+            bot_edge_requests_search_engine_crawler_count: None,
+            bot_edge_requests_search_engine_optimization_count: None,
+            bot_edge_requests_security_tools_count: None,
+            compute_handoff: None,
+            compute_service_bereq_dns_error: None,
+            compute_service_bereq_conn_timeout_error: None,
+            compute_service_bereq_conn_refused_error: None,
+            compute_service_bereq_conn_other_error: None,
+            compute_service_bereq_tls_server_cert_error: None,
+            compute_service_bereq_tls_other_error: None,
+            compute_service_bereq_http_proto_v1_error: None,
+            compute_service_bereq_http_proto_v2_error: None,
+            compute_service_bereq_http_incomplete_error: None,
+            compute_service_bereq_http_timeout_error: None,
+            compute_service_bereq_http_other_error: None,
+            compute_service_bereq_other_error: None,
+            compute_service_bereq_5xx_error: None,
+            compute_service_bereq_conn_error: None,
+            compute_service_bereq_tls_error: None,
+            compute_service_bereq_http_error: None,
+            bot_challenges_pats_issued: None,
+            bot_challenges_pats_succeeded: None,
+            bot_edge_requests_headless_count: None,
+            status_499: None,
+            arc_requests: None,
+            ddos_challenge_complete_tokens_checked: None,
+            ddos_challenge_complete_tokens_passed: None,
+            ddos_challenge_complete_tokens_failed: None,
+            ddos_challenge_starts: None,
+            ddos_challenge_complete_tokens_issued: None,
+            ddos_challenges_issued: None,
+            ddos_challenges_succeeded: None,
+            ddos_challenges_failed: None,
+            ddos_challenges_pats_issued: None,
+            ddos_challenges_pats_succeeded: None,
+            csp_pages_gauge: None,
+            ngwaf_account_rules_gauge: None,
+            ngwaf_account_workspaces: None,
+            ngwaf_workspace_rules_gauge: None,
+            ngwaf_workspace_thresholds_gauge: None,
+            object_storage_buckets_count: None,
+            object_storage_bytes_count: None,
         }
     }
 }

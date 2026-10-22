@@ -71,7 +71,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **service_id** | **String** | Alphanumeric string identifying the service. | [required] |
 **dictionary_id** | **String** | Alphanumeric string identifying a Dictionary. | [required] |
-**item_key** | Option\<**String**> | Item key, maximum 256 characters. |  |
+**item_key** | Option\<**String**> | Item key, maximum 255 characters. |  |
 **item_value** | Option\<**String**> | Item value, maximum 8000 characters. |  |
 
 ### Return type
@@ -109,7 +109,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **service_id** | **String** | Alphanumeric string identifying the service. | [required] |
 **dictionary_id** | **String** | Alphanumeric string identifying a Dictionary. | [required] |
-**dictionary_item_key** | **String** | Item key, maximum 256 characters. | [required] |
+**dictionary_item_key** | **String** | Item key, maximum 255 characters. | [required] |
 
 ### Return type
 
@@ -146,7 +146,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **service_id** | **String** | Alphanumeric string identifying the service. | [required] |
 **dictionary_id** | **String** | Alphanumeric string identifying a Dictionary. | [required] |
-**dictionary_item_key** | **String** | Item key, maximum 256 characters. | [required] |
+**dictionary_item_key** | **String** | Item key, maximum 255 characters. | [required] |
 
 ### Return type
 
@@ -223,8 +223,8 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **service_id** | **String** | Alphanumeric string identifying the service. | [required] |
 **dictionary_id** | **String** | Alphanumeric string identifying a Dictionary. | [required] |
-**dictionary_item_key** | **String** | Item key, maximum 256 characters. | [required] |
-**item_key** | Option\<**String**> | Item key, maximum 256 characters. |  |
+**dictionary_item_key** | **String** | Item key, maximum 255 characters. | [required] |
+**item_key** | Option\<**String**> | Item key, maximum 255 characters. |  |
 **item_value** | Option\<**String**> | Item value, maximum 8000 characters. |  |
 
 ### Return type
@@ -262,8 +262,8 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **service_id** | **String** | Alphanumeric string identifying the service. | [required] |
 **dictionary_id** | **String** | Alphanumeric string identifying a Dictionary. | [required] |
-**dictionary_item_key** | **String** | Item key, maximum 256 characters. | [required] |
-**item_key** | Option\<**String**> | Item key, maximum 256 characters. |  |
+**dictionary_item_key** | **String** | Item key, maximum 255 characters. | [required] |
+**item_key** | Option\<**String**> | Item key, maximum 255 characters. |  |
 **item_value** | Option\<**String**> | Item value, maximum 8000 characters. |  |
 
 ### Return type

@@ -13,12 +13,24 @@ pub struct AutomationToken {
     /// The name of the token.
     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
-    /// The role on the token.
+    /// The primary role on the token. For tokens with multiple roles, this returns the highest-priority role for backwards compatibility.
     #[serde(rename = "role", skip_serializing_if = "Option::is_none")]
     pub role: Option<Role>,
-    /// (Optional) The service IDs of the services the token will have access to. Separate service IDs with a space. If no services are specified, the token will have access to all services on the account. 
+    /// All roles assigned to the token. Each role includes an `id` and `name`.
+    #[serde(rename = "roles", skip_serializing_if = "Option::is_none")]
+    pub roles: Option<Vec<crate::models::AutomationTokenRole>>,
+    /// The service IDs of the services the token has access to. Empty when `limit_services` is `false` (full access) or when the token has no service access.
     #[serde(rename = "services", skip_serializing_if = "Option::is_none")]
     pub services: Option<Vec<String>>,
+    /// When `true`, the token is restricted to only the services in the `services` array. When `false`, the token has access to all services.
+    #[serde(rename = "limit_services", skip_serializing_if = "Option::is_none")]
+    pub limit_services: Option<bool>,
+    /// When `true`, the token is restricted to only the workspaces in the `workspaces` array. When `false`, the token has access to all workspaces. Only applies to roles that support workspace access.
+    #[serde(rename = "limit_workspaces", skip_serializing_if = "Option::is_none")]
+    pub limit_workspaces: Option<bool>,
+    /// The workspace IDs of the workspaces the token has access to. Returns an empty array for tokens without workspace access.
+    #[serde(rename = "workspaces", skip_serializing_if = "Option::is_none")]
+    pub workspaces: Option<Vec<String>>,
     /// A space-delimited list of authorization scope.
     #[serde(rename = "scope", skip_serializing_if = "Option::is_none")]
     pub scope: Option<Scope>,
@@ -32,14 +44,18 @@ impl AutomationToken {
         AutomationToken {
             name: None,
             role: None,
+            roles: None,
             services: None,
+            limit_services: None,
+            limit_workspaces: None,
+            workspaces: None,
             scope: None,
             expires_at: None,
         }
     }
 }
 
-/// The role on the token.
+/// The primary role on the token. For tokens with multiple roles, this returns the highest-priority role for backwards compatibility.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum Role {
     #[serde(rename = "billing")]
@@ -48,6 +64,18 @@ pub enum Role {
     Engineer,
     #[serde(rename = "user")]
     User,
+    #[serde(rename = "ngwaf_user_imported")]
+    NgwafUserImported,
+    #[serde(rename = "ngwaf_admin_imported")]
+    NgwafAdminImported,
+    #[serde(rename = "ngwaf_owner_imported")]
+    NgwafOwnerImported,
+    #[serde(rename = "ngwaf_observer_imported")]
+    NgwafObserverImported,
+    #[serde(rename = "tls_admin")]
+    TlsAdmin,
+    #[serde(rename = "tls_viewer")]
+    TlsViewer,
 }
 
 impl Default for Role {

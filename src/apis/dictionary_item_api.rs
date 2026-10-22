@@ -28,7 +28,7 @@ pub struct CreateDictionaryItemParams {
     pub service_id: String,
     /// Alphanumeric string identifying a Dictionary.
     pub dictionary_id: String,
-    /// Item key, maximum 256 characters.
+    /// Item key, maximum 255 characters.
     pub item_key: Option<String>,
     /// Item value, maximum 8000 characters.
     pub item_value: Option<String>
@@ -41,7 +41,7 @@ pub struct DeleteDictionaryItemParams {
     pub service_id: String,
     /// Alphanumeric string identifying a Dictionary.
     pub dictionary_id: String,
-    /// Item key, maximum 256 characters.
+    /// Item key, maximum 255 characters.
     pub dictionary_item_key: String
 }
 
@@ -52,7 +52,7 @@ pub struct GetDictionaryItemParams {
     pub service_id: String,
     /// Alphanumeric string identifying a Dictionary.
     pub dictionary_id: String,
-    /// Item key, maximum 256 characters.
+    /// Item key, maximum 255 characters.
     pub dictionary_item_key: String
 }
 
@@ -80,9 +80,9 @@ pub struct UpdateDictionaryItemParams {
     pub service_id: String,
     /// Alphanumeric string identifying a Dictionary.
     pub dictionary_id: String,
-    /// Item key, maximum 256 characters.
+    /// Item key, maximum 255 characters.
     pub dictionary_item_key: String,
-    /// Item key, maximum 256 characters.
+    /// Item key, maximum 255 characters.
     pub item_key: Option<String>,
     /// Item value, maximum 8000 characters.
     pub item_value: Option<String>
@@ -95,9 +95,9 @@ pub struct UpsertDictionaryItemParams {
     pub service_id: String,
     /// Alphanumeric string identifying a Dictionary.
     pub dictionary_id: String,
-    /// Item key, maximum 256 characters.
+    /// Item key, maximum 255 characters.
     pub dictionary_item_key: String,
-    /// Item key, maximum 256 characters.
+    /// Item key, maximum 255 characters.
     pub item_key: Option<String>,
     /// Item value, maximum 8000 characters.
     pub item_value: Option<String>

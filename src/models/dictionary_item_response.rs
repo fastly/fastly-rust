@@ -10,7 +10,7 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct DictionaryItemResponse {
-    /// Item key, maximum 256 characters.
+    /// Item key, maximum 255 characters.
     #[serde(rename = "item_key", skip_serializing_if = "Option::is_none")]
     pub item_key: Option<String>,
     /// Item value, maximum 8000 characters.

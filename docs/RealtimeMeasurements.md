@@ -58,6 +58,8 @@ Name | Type | Description | Notes
 **otfp_shield_resp_body_bytes** | Option<**i64**> | Total body bytes delivered via a shield for the Fastly On-the-Fly Packaging service for video-on-demand. | 
 **otfp_shield_time** | Option<**f32**> | Total amount of time spent delivering a response via a shield from the Fastly On-the-Fly Packaging service for video-on-demand (in seconds). | 
 **otfp_deliver_time** | Option<**f32**> | Total amount of time spent delivering a response from the Fastly On-the-Fly Packaging service for video-on-demand (in seconds). | 
+**imgopto_input_image_bytes** | Option<**i64**> | The total image bytes that would have been delivered if the images had not been transformed by the Fastly Image Optimizer. Bytes are counted once per client request. Byte counts exclude shield traffic and requests where Fastly Image Optimizer proxied a request without attempting to transform it (e.g., file types that are not supported by Image Optimizer). | 
+**imgopto_output_image_bytes** | Option<**i64**> | The total image bytes delivered that have been transformed by the Fastly Image Optimizer. Bytes are counted once per client request. Byte counts exclude shield traffic and requests where Fastly Image Optimizer proxied a request without attempting to transform it (e.g., file types that are not supported by Image Optimizer). | 
 **imgopto_resp_header_bytes** | Option<**i64**> | Total header bytes delivered from the Fastly Image Optimizer service, including shield traffic. | 
 **imgopto_resp_body_bytes** | Option<**i64**> | Total body bytes delivered from the Fastly Image Optimizer service, including shield traffic. | 
 **imgopto_shield_resp_header_bytes** | Option<**i64**> | Total header bytes delivered via a shield from the Fastly Image Optimizer service. | 
@@ -342,6 +344,35 @@ Name | Type | Description | Notes
 **compute_service_bereq_http_error** | Option<**i32**> | Number of backend requests from a Compute service that failed at the HTTP protocol level. Sum of `compute_service_bereq_http_proto_v1_error`, `compute_service_bereq_http_proto_v2_error`, `compute_service_bereq_http_incomplete_error`, `compute_service_bereq_http_timeout_error`, and `compute_service_bereq_http_other_error`. | 
 **bot_challenges_pats_issued** | Option<**i32**> | Number of Private Access Token challenges issued. | 
 **bot_challenges_pats_succeeded** | Option<**i32**> | Number of successful Private Access Token challenge solutions processed. | 
+**bot_edge_requests_headless_count** | Option<**i32**> | Number of edge requests where a headless bot was detected. | 
+**status_499** | Option<**i32**> | Number of responses sent with status code 499 (Client Disconnected). | 
+**arc_requests** | Option<**i32**> | Number of requests received by AI Runtime Control. | 
+**ddos_challenge_complete_tokens_checked** | Option<**i32**> | The number of challenge-complete tokens checked while enforcing DDoS protection rules. | 
+**ddos_challenge_complete_tokens_passed** | Option<**i32**> | The number of challenge-complete tokens that passed validation while enforcing DDoS protection rules. | 
+**ddos_challenge_complete_tokens_failed** | Option<**i32**> | The number of challenge-complete tokens that failed validation while enforcing DDoS protection rules. | 
+**ddos_challenge_starts** | Option<**i32**> | The number of challenge-start tokens created while enforcing DDoS protection rules. | 
+**ddos_challenge_complete_tokens_issued** | Option<**i32**> | Number of challenge-complete tokens issued as a result of a DDoS action. For example, issuing a challenge-complete token after a series of CAPTCHA challenges ending in success. | 
+**ddos_challenges_issued** | Option<**i32**> | Number of challenges issued from a DDoS action. | 
+**ddos_challenges_succeeded** | Option<**i32**> | Number of successful challenge solutions processed as a result of a DDoS action. For example, a correct CAPTCHA solution. | 
+**ddos_challenges_failed** | Option<**i32**> | Number of failed challenge solutions processed as a result of a DDoS action. For example, an incorrect CAPTCHA solution. | 
+**ddos_challenges_pats_issued** | Option<**i32**> | Number of Private Access Token challenges issued as a result of a DDoS action. | 
+**ddos_challenges_pats_succeeded** | Option<**i32**> | Number of successful Private Access Token challenge solutions processed as a result of a DDoS action. | 
+**arc_ai_firewall_requests** | Option<**i32**> | Number of requests received by AI Firewall in AI Runtime Control. | 
+**arc_ai_firewall_blocked** | Option<**i32**> | Number of requests blocked by AI Firewall in AI Runtime Control. | 
+**bot_edge_challenge_complete_tokens_issued** | Option<**i32**> | The number of challenge-complete tokens issued as a result of a ContentGuard action. For example, issuing a challenge-complete token after a series of CAPTCHA challenges ending in success. | 
+**bot_edge_challenges_issued** | Option<**i32**> | The number of challenges issued as a result of a ContentGuard action. | 
+**bot_edge_challenges_succeeded** | Option<**i32**> | The number of successful challenge solutions processed as a result of a ContentGuard action. For example, a correct CAPTCHA solution. | 
+**bot_edge_challenges_failed** | Option<**i32**> | The number of failed challenge solutions processed as a result of a ContentGuard action. For example, an incorrect CAPTCHA solution. | 
+**bot_edge_challenges_pats_issued** | Option<**i32**> | The number of Private Access Token challenges issued as a result of a ContentGuard action. | 
+**bot_edge_challenges_pats_succeeded** | Option<**i32**> | The number of successful Private Access Token challenge solutions processed as a result of a ContentGuard action. | 
+**netprotect_gre_sent_bytes** | Option<**i32**> | Number of bytes sent via GRE tunnel. | 
+**netprotect_gre_sent_packets** | Option<**i32**> | Number of packets sent via GRE tunnel. | 
+**netprotect_received_bytes** | Option<**i32**> | Number of ingress bytes received for network protection. | 
+**netprotect_received_packets** | Option<**i32**> | Number of ingress packets received for network protection. | 
+**netprotect_firewall_dropped_bytes** | Option<**i32**> | Number of bytes dropped by network protection firewall. | 
+**netprotect_firewall_dropped_packets** | Option<**i32**> | Number of packets dropped by network protection firewall. | 
+**api_enforcement_allowed_requests_count** | Option<**i32**> | Number of requests allowed after evaluation by the API Enforcement engine. | 
+**api_enforcement_flagged_requests_count** | Option<**i32**> | Number of requests flagged after evaluation by the API Enforcement engine. | 
 
 [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

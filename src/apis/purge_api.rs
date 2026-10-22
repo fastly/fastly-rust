@@ -18,6 +18,8 @@ pub struct BulkPurgeTagParams {
     pub service_id: String,
     /// If present, this header triggers the purge to be 'soft', which marks the affected object as stale rather than making it inaccessible.  Typically set to \"1\" when used, but the value is not important.
     pub fastly_soft_purge: Option<i32>,
+    /// Set to `staging` to purge the cache of the service's [staging environment](https://www.fastly.com/documentation/guides/getting-started/services/working-with-staging/) instead of its production environment. If this header is not present, the purge applies to the production environment.
+    pub fastly_purge_environment: Option<String>,
     /// Purge multiple surrogate key tags using a request header. Not required if a JSON POST body is specified.
     pub surrogate_key: Option<String>,
     pub purge_response: Option<crate::models::PurgeResponse>
@@ -27,7 +29,9 @@ pub struct BulkPurgeTagParams {
 #[derive(Clone, Debug, Default)]
 pub struct PurgeAllParams {
     /// Alphanumeric string identifying the service.
-    pub service_id: String
+    pub service_id: String,
+    /// Set to `staging` to purge the cache of the service's [staging environment](https://www.fastly.com/documentation/guides/getting-started/services/working-with-staging/) instead of its production environment. If this header is not present, the purge applies to the production environment.
+    pub fastly_purge_environment: Option<String>
 }
 
 /// struct for passing parameters to the method [`purge_single_url`]
@@ -47,7 +51,9 @@ pub struct PurgeTagParams {
     /// Surrogate keys are used to efficiently purge content from cache. Instead of purging your entire site or individual URLs, you can tag related assets (like all images and descriptions associated with a single product) with surrogate keys, and these grouped URLs can be purged in a single request.
     pub surrogate_key: String,
     /// If present, this header triggers the purge to be 'soft', which marks the affected object as stale rather than making it inaccessible.  Typically set to \"1\" when used, but the value is not important.
-    pub fastly_soft_purge: Option<i32>
+    pub fastly_soft_purge: Option<i32>,
+    /// Set to `staging` to purge the cache of the service's [staging environment](https://www.fastly.com/documentation/guides/getting-started/services/working-with-staging/) instead of its production environment. If this header is not present, the purge applies to the production environment.
+    pub fastly_purge_environment: Option<String>
 }
 
 
@@ -87,6 +93,7 @@ pub async fn bulk_purge_tag(configuration: &mut configuration::Configuration, pa
     // unbox the parameters
     let service_id = params.service_id;
     let fastly_soft_purge = params.fastly_soft_purge;
+    let fastly_purge_environment = params.fastly_purge_environment;
     let surrogate_key = params.surrogate_key;
     let purge_response = params.purge_response;
 
@@ -101,6 +108,9 @@ pub async fn bulk_purge_tag(configuration: &mut configuration::Configuration, pa
     }
     if let Some(local_var_param_value) = fastly_soft_purge {
         local_var_req_builder = local_var_req_builder.header("fastly-soft-purge", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = fastly_purge_environment {
+        local_var_req_builder = local_var_req_builder.header("fastly-purge-environment", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = surrogate_key {
         local_var_req_builder = local_var_req_builder.header("surrogate-key", local_var_param_value.to_string());
@@ -148,6 +158,7 @@ pub async fn purge_all(configuration: &mut configuration::Configuration, params:
 
     // unbox the parameters
     let service_id = params.service_id;
+    let fastly_purge_environment = params.fastly_purge_environment;
 
 
     let local_var_client = &local_var_configuration.client;
@@ -157,6 +168,9 @@ pub async fn purge_all(configuration: &mut configuration::Configuration, params:
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+    if let Some(local_var_param_value) = fastly_purge_environment {
+        local_var_req_builder = local_var_req_builder.header("fastly-purge-environment", local_var_param_value.to_string());
     }
     if let Some(ref local_var_apikey) = local_var_configuration.api_key {
         let local_var_key = local_var_apikey.key.clone();
@@ -258,6 +272,7 @@ pub async fn purge_tag(configuration: &mut configuration::Configuration, params:
     let service_id = params.service_id;
     let surrogate_key = params.surrogate_key;
     let fastly_soft_purge = params.fastly_soft_purge;
+    let fastly_purge_environment = params.fastly_purge_environment;
 
 
     let local_var_client = &local_var_configuration.client;
@@ -270,6 +285,9 @@ pub async fn purge_tag(configuration: &mut configuration::Configuration, params:
     }
     if let Some(local_var_param_value) = fastly_soft_purge {
         local_var_req_builder = local_var_req_builder.header("fastly-soft-purge", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = fastly_purge_environment {
+        local_var_req_builder = local_var_req_builder.header("fastly-purge-environment", local_var_param_value.to_string());
     }
     if let Some(ref local_var_apikey) = local_var_configuration.api_key {
         let local_var_key = local_var_apikey.key.clone();

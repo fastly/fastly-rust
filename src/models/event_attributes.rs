@@ -158,6 +158,80 @@ pub enum EventType {
     LoggingDelete,
     #[serde(rename = "logging.update")]
     LoggingUpdate,
+    #[serde(rename = "ngwaf.agent_key.create")]
+    NgwafAgentKeyCreate,
+    #[serde(rename = "ngwaf.agent_key.delete")]
+    NgwafAgentKeyDelete,
+    #[serde(rename = "ngwaf.agent_key.update")]
+    NgwafAgentKeyUpdate,
+    #[serde(rename = "ngwaf.custom_signal.create")]
+    NgwafCustomSignalCreate,
+    #[serde(rename = "ngwaf.custom_signal.delete")]
+    NgwafCustomSignalDelete,
+    #[serde(rename = "ngwaf.custom_signal.update")]
+    NgwafCustomSignalUpdate,
+    #[serde(rename = "ngwaf.dashboard.create")]
+    NgwafDashboardCreate,
+    #[serde(rename = "ngwaf.dashboard.delete")]
+    NgwafDashboardDelete,
+    #[serde(rename = "ngwaf.dashboard.update")]
+    NgwafDashboardUpdate,
+    #[serde(rename = "ngwaf.default_dashboard.update")]
+    NgwafDefaultDashboardUpdate,
+    #[serde(rename = "ngwaf.event.update")]
+    NgwafEventUpdate,
+    #[serde(rename = "ngwaf.header_link.create")]
+    NgwafHeaderLinkCreate,
+    #[serde(rename = "ngwaf.header_link.delete")]
+    NgwafHeaderLinkDelete,
+    #[serde(rename = "ngwaf.header_link.update")]
+    NgwafHeaderLinkUpdate,
+    #[serde(rename = "ngwaf.list.create")]
+    NgwafListCreate,
+    #[serde(rename = "ngwaf.list.delete")]
+    NgwafListDelete,
+    #[serde(rename = "ngwaf.list.update")]
+    NgwafListUpdate,
+    #[serde(rename = "ngwaf.rate_limited_source.bulk_delete")]
+    NgwafRateLimitedSourceBulkDelete,
+    #[serde(rename = "ngwaf.rate_limited_source.delete")]
+    NgwafRateLimitedSourceDelete,
+    #[serde(rename = "ngwaf.redaction.create")]
+    NgwafRedactionCreate,
+    #[serde(rename = "ngwaf.redaction.delete")]
+    NgwafRedactionDelete,
+    #[serde(rename = "ngwaf.redaction.update")]
+    NgwafRedactionUpdate,
+    #[serde(rename = "ngwaf.request_report.create")]
+    NgwafRequestReportCreate,
+    #[serde(rename = "ngwaf.rule.create")]
+    NgwafRuleCreate,
+    #[serde(rename = "ngwaf.rule.delete")]
+    NgwafRuleDelete,
+    #[serde(rename = "ngwaf.rule.update")]
+    NgwafRuleUpdate,
+    #[serde(rename = "ngwaf.threshold.create")]
+    NgwafThresholdCreate,
+    #[serde(rename = "ngwaf.threshold.delete")]
+    NgwafThresholdDelete,
+    #[serde(rename = "ngwaf.threshold.update")]
+    NgwafThresholdUpdate,
+    #[serde(rename = "ngwaf.virtual_patch.update")]
+    NgwafVirtualPatchUpdate,
+    #[serde(rename = "ngwaf.workspace.create")]
+    NgwafWorkspaceCreate,
+    #[serde(rename = "ngwaf.workspace.delete")]
+    NgwafWorkspaceDelete,
+    #[serde(rename = "ngwaf.workspace.update")]
+    NgwafWorkspaceUpdate,
+    #[serde(rename = "ngwaf.workspace_alert.create")]
+    NgwafWorkspaceAlertCreate,
+    #[serde(rename = "ngwaf.workspace_alert.delete")]
+    NgwafWorkspaceAlertDelete,
+    #[serde(rename = "ngwaf.workspace_alert.update")]
+    NgwafWorkspaceAlertUpdate,
+    #[serde(rename = "ngwaf.workspace_alert_key.update")]
+    NgwafWorkspaceAlertKeyUpdate,
     #[serde(rename = "pool.create")]
     PoolCreate,
     #[serde(rename = "pool.delete")]

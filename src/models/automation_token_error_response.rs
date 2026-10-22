@@ -5,6 +5,7 @@
  *
  */
 
+/// AutomationTokenErrorResponse : Error response format used by automation token endpoints.
 
 
 
@@ -21,6 +22,7 @@ pub struct AutomationTokenErrorResponse {
 }
 
 impl AutomationTokenErrorResponse {
+    /// Error response format used by automation token endpoints.
     pub fn new() -> AutomationTokenErrorResponse {
         AutomationTokenErrorResponse {
             detail: None,

@@ -32,6 +32,8 @@ pub enum Mode {
     Log,
     #[serde(rename = "block")]
     Block,
+    #[serde(rename = "client_challenge")]
+    ClientChallenge,
 }
 
 impl Default for Mode {

@@ -6,7 +6,11 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | Option<**String**> | The name of the token. | 
 **role** | Option<**String**> |  | 
-**services** | Option<**Vec<String>**> | (Optional) The service IDs of the services the token will have access to. Separate service IDs with a space. If no services are specified, the token will have access to all services on the account.  | 
+**roles** | Option<[**Vec&lt;crate::models::AutomationTokenRole&gt;**](AutomationTokenRole.md)> | All roles assigned to the token. Each role includes an `id` and `name`. | 
+**services** | Option<**Vec<String>**> | The service IDs of the services the token has access to. Empty when `limit_services` is `false` (full access) or when the token has no service access. | 
+**limit_services** | Option<**bool**> | When `true`, the token is restricted to only the services in the `services` array. When `false`, the token has access to all services. | 
+**limit_workspaces** | Option<**bool**> | When `true`, the token is restricted to only the workspaces in the `workspaces` array. When `false`, the token has access to all workspaces. Only applies to roles that support workspace access. | 
+**workspaces** | Option<**Vec<String>**> | The workspace IDs of the workspaces the token has access to. Returns an empty array for tokens without workspace access. | 
 **scope** | Option<**String**> | A space-delimited list of authorization scope. | [default to Scope_Global]
 **expires_at** | Option<**String**> | (optional) A UTC timestamp of when the token will expire. | 
 **id** | Option<[**crate::models::ReadOnlyId**](ReadOnlyId.md)> |  | 

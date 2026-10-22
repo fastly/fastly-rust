@@ -10,7 +10,7 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct DdosProtectionRulePatch {
-    /// Action types for a rule. Supported action values are default, block, log, off. The default action value follows the current protection mode of the associated service.
+    /// Action types for a rule. Supported action values are default, block, log, off, client_challenge. The default action value follows the current protection mode of the associated service.
     #[serde(rename = "action", skip_serializing_if = "Option::is_none")]
     pub action: Option<String>,
 }

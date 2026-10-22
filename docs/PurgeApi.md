@@ -31,6 +31,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **service_id** | **String** | Alphanumeric string identifying the service. | [required] |
 **fastly_soft_purge** | Option\<**i32**> | If present, this header triggers the purge to be 'soft', which marks the affected object as stale rather than making it inaccessible.  Typically set to \"1\" when used, but the value is not important. |  |
+**fastly_purge_environment** | Option\<**String**> | Set to `staging` to purge the cache of the service's [staging environment](https://www.fastly.com/documentation/guides/getting-started/services/working-with-staging/) instead of its production environment. If this header is not present, the purge applies to the production environment. |  |
 **surrogate_key** | Option\<**String**> | Purge multiple surrogate key tags using a request header. Not required if a JSON POST body is specified. |  |
 **purge_response** | Option\<[**PurgeResponse**](PurgeResponse.md)> |  |  |
 
@@ -68,6 +69,7 @@ purge_all(cfg, params)
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **service_id** | **String** | Alphanumeric string identifying the service. | [required] |
+**fastly_purge_environment** | Option\<**String**> | Set to `staging` to purge the cache of the service's [staging environment](https://www.fastly.com/documentation/guides/getting-started/services/working-with-staging/) instead of its production environment. If this header is not present, the purge applies to the production environment. |  |
 
 ### Return type
 
@@ -141,6 +143,7 @@ Name | Type | Description  | Required | Notes
 **service_id** | **String** | Alphanumeric string identifying the service. | [required] |
 **surrogate_key** | **String** | Surrogate keys are used to efficiently purge content from cache. Instead of purging your entire site or individual URLs, you can tag related assets (like all images and descriptions associated with a single product) with surrogate keys, and these grouped URLs can be purged in a single request. | [required] |
 **fastly_soft_purge** | Option\<**i32**> | If present, this header triggers the purge to be 'soft', which marks the affected object as stale rather than making it inaccessible.  Typically set to \"1\" when used, but the value is not important. |  |
+**fastly_purge_environment** | Option\<**String**> | Set to `staging` to purge the cache of the service's [staging environment](https://www.fastly.com/documentation/guides/getting-started/services/working-with-staging/) instead of its production environment. If this header is not present, the purge applies to the production environment. |  |
 
 ### Return type
 
