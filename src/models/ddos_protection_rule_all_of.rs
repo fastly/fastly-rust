@@ -40,6 +40,9 @@ pub struct DdosProtectionRuleAllOf {
     /// Source IP prefix attribute.
     #[serde(rename = "source_ip_prefix", skip_serializing_if = "Option::is_none")]
     pub source_ip_prefix: Option<String>,
+    /// URL path attribute.
+    #[serde(rename = "path", skip_serializing_if = "Option::is_none")]
+    pub path: Option<String>,
     /// Attribute category for additional, unlisted attributes used in a rule.
     #[serde(rename = "additional_attributes", skip_serializing_if = "Option::is_none")]
     pub additional_attributes: Option<Vec<String>>,
@@ -58,6 +61,7 @@ impl DdosProtectionRuleAllOf {
             host: None,
             asn: None,
             source_ip_prefix: None,
+            path: None,
             additional_attributes: None,
         }
     }

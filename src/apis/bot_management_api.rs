@@ -106,6 +106,16 @@ pub struct BotManagementUpdateCategoryParams {
     pub bot_management_category: crate::models::BotManagementCategory
 }
 
+/// struct for passing parameters to the method [`bot_management_update_category_bots`]
+#[derive(Clone, Debug, Default)]
+pub struct BotManagementUpdateCategoryBotsParams {
+    /// The ID of the bot management workspace.
+    pub workspace_id: String,
+    /// The ID of the bot category.
+    pub category_id: String,
+    pub bot_management_category_bots: crate::models::BotManagementCategoryBots
+}
+
 /// struct for passing parameters to the method [`bot_management_update_workspace`]
 #[derive(Clone, Debug, Default)]
 pub struct BotManagementUpdateWorkspaceParams {
@@ -214,6 +224,18 @@ pub enum BotManagementUpdateBotError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum BotManagementUpdateCategoryError {
+    Status400(crate::models::BotManagementInvalidRequestError),
+    Status401(crate::models::BotManagementNotAuthenticatedError),
+    Status403(crate::models::BotManagementNotAllowedError),
+    Status404(crate::models::BotManagementNotFoundError),
+    Status429(crate::models::BotManagementRateLimitError),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`bot_management_update_category_bots`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum BotManagementUpdateCategoryBotsError {
     Status400(crate::models::BotManagementInvalidRequestError),
     Status401(crate::models::BotManagementNotAuthenticatedError),
     Status403(crate::models::BotManagementNotAllowedError),
@@ -454,7 +476,7 @@ pub async fn bot_management_list_bots(configuration: &mut configuration::Configu
     }
 }
 
-/// List all bot categories in a workspace's policy. Each category has an action that applies to every bot in the category. To list the bots themselves, use [list all bots in a workspace](#bot-management-list-bots) or [list bots in a category](#bot-management-list-category-bots).
+/// List all bot categories in a workspace's policy. Each category has an action that applies to every bot in the category that is set to `inherit`. To list the bots themselves, use [list all bots in a workspace](#bot-management-list-bots) or [list bots in a category](#bot-management-list-category-bots).
 pub async fn bot_management_list_categories(configuration: &mut configuration::Configuration, params: BotManagementListCategoriesParams) -> Result<crate::models::BotManagementCategoriesResponse, Error<BotManagementListCategoriesError>> {
     let local_var_configuration = configuration;
 
@@ -694,7 +716,7 @@ pub async fn bot_management_update_bot(configuration: &mut configuration::Config
     }
 }
 
-/// Set the action for a bot category. Every bot in the category configured with the 'inherit' action uses the action set for the category.
+/// Set the default action for a bot category. Bots set to `inherit` follow this action. Bots with their own action keep it. To remove every bot's own action in the category, use [set the action for all bots in a category](#bot-management-update-category-bots).
 pub async fn bot_management_update_category(configuration: &mut configuration::Configuration, params: BotManagementUpdateCategoryParams) -> Result<crate::models::BotManagementCategoryResponse, Error<BotManagementUpdateCategoryError>> {
     let local_var_configuration = configuration;
 
@@ -744,6 +766,61 @@ pub async fn bot_management_update_category(configuration: &mut configuration::C
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
         let local_var_entity: Option<BotManagementUpdateCategoryError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        Err(Error::ResponseError(local_var_error))
+    }
+}
+
+/// Set the action for every bot in a category. Setting `inherit` removes each bot's own action, so every bot follows the category's action. The category's own action is unchanged. The update applies to every bot in the category or to none, and repeating it gives the same result. The response lists every bot in the category, including bots that already inherited, and is not paginated.
+pub async fn bot_management_update_category_bots(configuration: &mut configuration::Configuration, params: BotManagementUpdateCategoryBotsParams) -> Result<crate::models::BotManagementBotsResponse, Error<BotManagementUpdateCategoryBotsError>> {
+    let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let workspace_id = params.workspace_id;
+    let category_id = params.category_id;
+    let bot_management_category_bots = params.bot_management_category_bots;
+
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!("{}/bot-management/v1/workspaces/{workspace_id}/policy/categories/{category_id}/bots", local_var_configuration.base_path, workspace_id=crate::apis::urlencode(workspace_id), category_id=crate::apis::urlencode(category_id));
+    let mut local_var_req_builder = local_var_client.request(reqwest::Method::PATCH, local_var_uri_str.as_str());
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+    if let Some(ref local_var_apikey) = local_var_configuration.api_key {
+        let local_var_key = local_var_apikey.key.clone();
+        let local_var_value = match local_var_apikey.prefix {
+            Some(ref local_var_prefix) => format!("{} {}", local_var_prefix, local_var_key),
+            None => local_var_key,
+        };
+        local_var_req_builder = local_var_req_builder.header("Fastly-Key", local_var_value);
+    };
+    local_var_req_builder = local_var_req_builder.json(&bot_management_category_bots);
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    if "PATCH" != "GET" && "PATCH" != "HEAD" {
+      let headers = local_var_resp.headers();
+      local_var_configuration.rate_limit_remaining = match headers.get("Fastly-RateLimit-Remaining") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => configuration::DEFAULT_RATELIMIT,
+      };
+      local_var_configuration.rate_limit_reset = match headers.get("Fastly-RateLimit-Reset") {
+          Some(v) => v.to_str().unwrap().parse().unwrap(),
+          None => 0,
+      };
+    }
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        serde_json::from_str(&local_var_content).map_err(Error::from)
+    } else {
+        let local_var_entity: Option<BotManagementUpdateCategoryBotsError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }

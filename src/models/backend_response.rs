@@ -40,6 +40,21 @@ pub struct BackendResponse {
     /// The hostname of the backend. May be used as an alternative to `address` to set the backend location.
     #[serde(rename = "hostname", skip_serializing_if = "Option::is_none")]
     pub hostname: Option<String>,
+    /// If the backend is using IAM authentication and the IAM system policy requires a matching external identifier, it should match this value. Your Fastly customer ID will be used if this attribute is not set.
+    #[serde(rename = "iam_external_id", skip_serializing_if = "Option::is_none")]
+    pub iam_external_id: Option<String>,
+    /// If the backend is using IAM authentication, the IAM signature will use this as the product element.
+    #[serde(rename = "iam_product", skip_serializing_if = "Option::is_none")]
+    pub iam_product: Option<String>,
+    /// If the backend is using IAM authentication, this region will be used for signing and access.
+    #[serde(rename = "iam_region", skip_serializing_if = "Option::is_none")]
+    pub iam_region: Option<String>,
+    /// If the backend is using IAM authentication, the fully qualified role string supplied by the storage vendor.
+    #[serde(rename = "iam_role", skip_serializing_if = "Option::is_none")]
+    pub iam_role: Option<String>,
+    /// A label that identifies the storage vendor. Providing a value in this field enables IAM usage, and all other IAM fields depend on its value.
+    #[serde(rename = "iam_vendor", skip_serializing_if = "Option::is_none")]
+    pub iam_vendor: Option<IamVendor>,
     /// IPv4 address of the backend. May be used as an alternative to `address` to set the backend location.
     #[serde(rename = "ipv4", skip_serializing_if = "Option::is_none")]
     pub ipv4: Option<String>,
@@ -158,6 +173,11 @@ impl BackendResponse {
             fetch_timeout: None,
             healthcheck: None,
             hostname: None,
+            iam_external_id: None,
+            iam_product: None,
+            iam_region: None,
+            iam_role: None,
+            iam_vendor: None,
             ipv4: None,
             ipv6: None,
             keepalive_time: None,
@@ -197,4 +217,16 @@ impl BackendResponse {
     }
 }
 
+/// A label that identifies the storage vendor. Providing a value in this field enables IAM usage, and all other IAM fields depend on its value.
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum IamVendor {
+    #[serde(rename = "aws")]
+    Aws,
+}
+
+impl Default for IamVendor {
+    fn default() -> IamVendor {
+        Self::Aws
+    }
+}
 

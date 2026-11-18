@@ -63,6 +63,8 @@ pub enum Region {
     EUEast,
     #[serde(rename = "EU-West")]
     EUWest,
+    #[serde(rename = "KSA-Central")]
+    KSACentral,
     #[serde(rename = "MX-North")]
     MXNorth,
     #[serde(rename = "MX-Central")]
@@ -121,6 +123,8 @@ pub enum StatsRegion {
     AsiaSouthkorea,
     #[serde(rename = "mexico")]
     Mexico,
+    #[serde(rename = "saudi_arabia")]
+    SaudiArabia,
 }
 
 impl Default for StatsRegion {
@@ -145,6 +149,8 @@ pub enum BillingRegion {
     Mexico,
     #[serde(rename = "North America")]
     NorthAmerica,
+    #[serde(rename = "Saudi Arabia")]
+    SaudiArabia,
     #[serde(rename = "South Korea")]
     SouthKorea,
     #[serde(rename = "South America")]

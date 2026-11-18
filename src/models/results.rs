@@ -1139,6 +1139,12 @@ pub struct Results {
     /// Number of requests flagged after evaluation by the API Enforcement engine.
     #[serde(rename = "api_enforcement_flagged_requests_count", skip_serializing_if = "Option::is_none")]
     pub api_enforcement_flagged_requests_count: Option<i32>,
+    /// Count of successful IAM authenticated backend requests.
+    #[serde(rename = "origin_fetch_iam_success_count", skip_serializing_if = "Option::is_none")]
+    pub origin_fetch_iam_success_count: Option<i32>,
+    /// Count of failed IAM authenticated backend requests.
+    #[serde(rename = "origin_fetch_iam_failure_count", skip_serializing_if = "Option::is_none")]
+    pub origin_fetch_iam_failure_count: Option<i32>,
     #[serde(rename = "service_id", skip_serializing_if = "Option::is_none")]
     pub service_id: Option<Box<String>>,
     /// Timestamp for the start of the time period being reported
@@ -1526,6 +1532,8 @@ impl Results {
             netprotect_firewall_dropped_packets: None,
             api_enforcement_allowed_requests_count: None,
             api_enforcement_flagged_requests_count: None,
+            origin_fetch_iam_success_count: None,
+            origin_fetch_iam_failure_count: None,
             service_id: None,
             start_time: None,
         }

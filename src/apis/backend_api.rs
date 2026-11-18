@@ -38,6 +38,16 @@ pub struct CreateBackendParams {
     pub healthcheck: Option<String>,
     /// The hostname of the backend. May be used as an alternative to `address` to set the backend location.
     pub hostname: Option<String>,
+    /// If the backend is using IAM authentication and the IAM system policy requires a matching external identifier, it should match this value. Your Fastly customer ID will be used if this attribute is not set.
+    pub iam_external_id: Option<String>,
+    /// If the backend is using IAM authentication, the IAM signature will use this as the product element.
+    pub iam_product: Option<String>,
+    /// If the backend is using IAM authentication, this region will be used for signing and access.
+    pub iam_region: Option<String>,
+    /// If the backend is using IAM authentication, the fully qualified role string supplied by the storage vendor.
+    pub iam_role: Option<String>,
+    /// A label that identifies the storage vendor. Providing a value in this field enables IAM usage, and all other IAM fields depend on its value.
+    pub iam_vendor: Option<String>,
     /// IPv4 address of the backend. May be used as an alternative to `address` to set the backend location.
     pub ipv4: Option<String>,
     /// IPv6 address of the backend. May be used as an alternative to `address` to set the backend location.
@@ -158,6 +168,16 @@ pub struct UpdateBackendParams {
     pub healthcheck: Option<String>,
     /// The hostname of the backend. May be used as an alternative to `address` to set the backend location.
     pub hostname: Option<String>,
+    /// If the backend is using IAM authentication and the IAM system policy requires a matching external identifier, it should match this value. Your Fastly customer ID will be used if this attribute is not set.
+    pub iam_external_id: Option<String>,
+    /// If the backend is using IAM authentication, the IAM signature will use this as the product element.
+    pub iam_product: Option<String>,
+    /// If the backend is using IAM authentication, this region will be used for signing and access.
+    pub iam_region: Option<String>,
+    /// If the backend is using IAM authentication, the fully qualified role string supplied by the storage vendor.
+    pub iam_role: Option<String>,
+    /// A label that identifies the storage vendor. Providing a value in this field enables IAM usage, and all other IAM fields depend on its value.
+    pub iam_vendor: Option<String>,
     /// IPv4 address of the backend. May be used as an alternative to `address` to set the backend location.
     pub ipv4: Option<String>,
     /// IPv6 address of the backend. May be used as an alternative to `address` to set the backend location.
@@ -272,6 +292,11 @@ pub async fn create_backend(configuration: &mut configuration::Configuration, pa
     let fetch_timeout = params.fetch_timeout;
     let healthcheck = params.healthcheck;
     let hostname = params.hostname;
+    let iam_external_id = params.iam_external_id;
+    let iam_product = params.iam_product;
+    let iam_region = params.iam_region;
+    let iam_role = params.iam_role;
+    let iam_vendor = params.iam_vendor;
     let ipv4 = params.ipv4;
     let ipv6 = params.ipv6;
     let keepalive_time = params.keepalive_time;
@@ -349,6 +374,21 @@ pub async fn create_backend(configuration: &mut configuration::Configuration, pa
     }
     if let Some(local_var_param_value) = hostname {
         local_var_form_params.insert("hostname", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = iam_external_id {
+        local_var_form_params.insert("iam_external_id", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = iam_product {
+        local_var_form_params.insert("iam_product", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = iam_region {
+        local_var_form_params.insert("iam_region", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = iam_role {
+        local_var_form_params.insert("iam_role", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = iam_vendor {
+        local_var_form_params.insert("iam_vendor", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = ipv4 {
         local_var_form_params.insert("ipv4", local_var_param_value.to_string());
@@ -645,6 +685,11 @@ pub async fn update_backend(configuration: &mut configuration::Configuration, pa
     let fetch_timeout = params.fetch_timeout;
     let healthcheck = params.healthcheck;
     let hostname = params.hostname;
+    let iam_external_id = params.iam_external_id;
+    let iam_product = params.iam_product;
+    let iam_region = params.iam_region;
+    let iam_role = params.iam_role;
+    let iam_vendor = params.iam_vendor;
     let ipv4 = params.ipv4;
     let ipv6 = params.ipv6;
     let keepalive_time = params.keepalive_time;
@@ -722,6 +767,21 @@ pub async fn update_backend(configuration: &mut configuration::Configuration, pa
     }
     if let Some(local_var_param_value) = hostname {
         local_var_form_params.insert("hostname", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = iam_external_id {
+        local_var_form_params.insert("iam_external_id", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = iam_product {
+        local_var_form_params.insert("iam_product", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = iam_region {
+        local_var_form_params.insert("iam_region", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = iam_role {
+        local_var_form_params.insert("iam_role", local_var_param_value.to_string());
+    }
+    if let Some(local_var_param_value) = iam_vendor {
+        local_var_form_params.insert("iam_vendor", local_var_param_value.to_string());
     }
     if let Some(local_var_param_value) = ipv4 {
         local_var_form_params.insert("ipv4", local_var_param_value.to_string());

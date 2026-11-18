@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **host** | Option<**String**> | Host attribute. | 
 **asn** | Option<**String**> | ASN attribute. | 
 **source_ip_prefix** | Option<**String**> | Source IP prefix attribute. | 
+**path** | Option<**String**> | URL path attribute. | 
 **additional_attributes** | Option<**Vec<String>**> | Attribute category for additional, unlisted attributes used in a rule. | 
 
 [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
